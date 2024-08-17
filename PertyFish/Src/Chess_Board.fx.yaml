@@ -631,15 +631,20 @@ Chess_Board As screen:
                 ZIndex: =4
 
             lblHeaderStatus As label:
-                Text: ="Text"
-                X: =120
-                Y: =80
+                Fill: =gblPF_UI_StatusFill
+                Text: =gblPF_UI_StatusText
+                Width: =lblHeaderMode.Width
+                X: =lblHeaderMode.X
+                Y: =lblHeaderMode.Y + lblHeaderMode.Height
                 ZIndex: =5
 
             lblHeaderDiagnosticMsg As label:
-                Text: ="Text"
-                X: =140
-                Y: =80
+                Fill: =gblPF_UI_DiagnosticFill
+                Height: =lblHeaderMode.Height
+                Text: =gblPF_UI_DiagnosticText
+                Width: =lblHeaderMode.Width
+                X: =lblHeaderStatus.X + lblHeaderStatus.Width
+                Y: =lblHeaderStatus.Y
                 ZIndex: =6
 
         conScoreSheet As groupContainer.manualLayoutContainer:
