@@ -8,8 +8,8 @@ Chess_Board As screen:
         conChessBoardWithCoordinates As groupContainer.manualLayoutContainer:
             Height: =560
             Width: =560
-            X: =40
-            Y: =40
+            X: =10
+            Y: =120
             ZIndex: =1
 
             galFileBottomLabels As gallery.galleryHorizontal:
@@ -588,4 +588,71 @@ Chess_Board As screen:
                         Width: =58
                         Y: =2
                         ZIndex: =1
+
+        conHeader As groupContainer.manualLayoutContainer:
+            Height: =120
+            Width: =Parent.Width
+            ZIndex: =2
+
+            lblHeaderGameTitle As label:
+                Align: =Align.Center
+                Color: =RGBA(221, 79, 14, 1)
+                Font: =Font.'Dancing Script'
+                Height: =55
+                Size: =34
+                Text: ="Perty Fish"
+                Width: =Parent.Width
+                ZIndex: =1
+
+            lblHeaderMode As label:
+                Fill: =gblPF_UI_ModeFill
+                Text: =gblPF_UI_ModeText
+                Width: =Parent.Width/2
+                Y: =lblHeaderGameTitle.Height
+                ZIndex: =2
+
+            lblHeaderThinking As label:
+                Fill: =gblPF_UI_ThinkingFill
+                Height: =lblHeaderMode.Height
+                Text: =gblPF_UI_ThinkingText
+                Width: =lblHeaderMode.Width
+                X: =lblHeaderMode.Width
+                Y: =lblHeaderMode.Y
+                ZIndex: =3
+
+            lblHeaderThinkingProgress As label:
+                Fill: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressFill
+                Height: =lblHeaderThinking.Height
+                Text: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressText
+                Visible: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressVisible
+                Width: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressWidth
+                X: =lblHeaderThinking.X
+                Y: =lblHeaderThinking.Y
+                ZIndex: =4
+
+            lblHeaderStatus As label:
+                Text: ="Text"
+                X: =120
+                Y: =80
+                ZIndex: =5
+
+            lblHeaderDiagnosticMsg As label:
+                Text: ="Text"
+                X: =140
+                Y: =80
+                ZIndex: =6
+
+        conScoreSheet As groupContainer.manualLayoutContainer:
+            Height: =conChessBoardWithCoordinates.Height
+            Width: =310
+            X: =conChessBoardWithCoordinates.X + conChessBoardWithCoordinates.Width + 10
+            Y: =conChessBoardWithCoordinates.Y
+            ZIndex: =3
+
+        conControls As groupContainer.manualLayoutContainer:
+            Height: =conChessBoardWithCoordinates.Height
+            Width: =(conEntireScreen.X + conEntireScreen.Width) - conChessBoardWithCoordinates.Width - conScoreSheet.Width - 30
+            X: =conScoreSheet.X + conScoreSheet.Width + 5
+            Y: =conScoreSheet.Y
+            ZIndex: =4
 
