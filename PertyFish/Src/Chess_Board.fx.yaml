@@ -1,0 +1,591 @@
+Chess_Board As screen:
+
+    conEntireScreen As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        Width: =Parent.Width
+        ZIndex: =1
+
+        conChessBoardWithCoordinates As groupContainer.manualLayoutContainer:
+            Height: =560
+            Width: =560
+            X: =40
+            Y: =40
+            ZIndex: =1
+
+            galFileBottomLabels As gallery.galleryHorizontal:
+                BorderColor: =RGBA(166, 166, 166, 1)
+                Height: =40
+                Items: |
+                    =With(
+                        {
+                            table: 
+                                Sort(
+                                    AddColumns(
+                                        RenameColumns(Sequence(8),Value,Rank), File,Mid("abcdefgh",Rank,1)
+                                    ),
+                                    File,SortOrder.Ascending
+                                )
+                        },
+                        table
+                    )
+                LoadingSpinner: =LoadingSpinner.Data
+                ShowScrollbar: =false
+                TemplatePadding: =0
+                TemplateSize: =60
+                Width: =480
+                X: =40
+                Y: =520
+                ZIndex: =1
+
+                lblFileBottom As label:
+                    Align: =Align.Center
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderThickness: =2
+                    Font: =Font.'Courier New'
+                    Height: =Parent.TemplateHeight
+                    OnSelect: =Select(Parent)
+                    Size: =18
+                    Text: =ThisItem.File
+                    Width: =Parent.TemplateWidth
+                    ZIndex: =1
+
+            galFileTopLabels As gallery.galleryHorizontal:
+                AccessibleLabel: ="test"
+                BorderColor: =RGBA(166, 166, 166, 1)
+                Height: =40
+                Items: |
+                    =With(
+                        {
+                            table: 
+                                Sort(
+                                    AddColumns(
+                                        RenameColumns(Sequence(8),Value,Rank), File,Mid("abcdefgh",Rank,1)
+                                    ),
+                                    File,SortOrder.Ascending
+                                )
+                        },
+                        table
+                    )
+                LoadingSpinner: =LoadingSpinner.Data
+                ShowScrollbar: =false
+                TemplatePadding: =0
+                TemplateSize: =60
+                Width: =480
+                X: =40
+                ZIndex: =2
+
+                lblFileTop As label:
+                    Align: =Align.Center
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderThickness: =2
+                    Color: =RGBA(51, 51, 51, 1)
+                    Font: =Font.'Courier New'
+                    Height: =Parent.TemplateHeight
+                    OnSelect: =Select(Parent)
+                    Size: =18
+                    Text: =ThisItem.File
+                    Width: =Parent.TemplateWidth
+                    ZIndex: =1
+
+            galRankRightLabels As gallery.galleryVertical:
+                BorderColor: =RGBA(166, 166, 166, 1)
+                Height: =480
+                Items: |-
+                    =With(
+                        {
+                            table: 
+                                Sort(
+                                    AddColumns(
+                                        RenameColumns(Sequence(8),Value,Rank),
+                                        File,Mid("abcdefgh",Rank,1)
+                                    ),
+                                    File,SortOrder.Descending
+                                )
+                        },
+                        table
+                    )
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                ShowScrollbar: =false
+                TemplatePadding: =0
+                TemplateSize: =60
+                Width: =40
+                X: =520
+                Y: =40
+                ZIndex: =3
+
+                lblRankRight As label:
+                    Align: =Align.Center
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderThickness: =2
+                    Color: =RGBA(51, 51, 51, 1)
+                    Font: =Font.'Courier New'
+                    Height: =Parent.TemplateHeight
+                    OnSelect: =Select(Parent)
+                    Size: =18
+                    Text: =Text(ThisItem.Rank)
+                    Width: =Parent.TemplateWidth
+                    ZIndex: =1
+
+            galRankLeftLabels As gallery.galleryVertical:
+                BorderColor: =RGBA(166, 166, 166, 1)
+                DelayItemLoading: =true
+                Height: =480
+                Items: |-
+                    =With(
+                        {
+                            table: 
+                                Sort(
+                                    AddColumns(
+                                        RenameColumns(Sequence(8),Value,Rank),
+                                        File,Mid("abcdefgh",Rank,1)
+                                    ),
+                                    File,SortOrder.Descending
+                                )
+                        },
+                        table
+                    )
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                ShowScrollbar: =false
+                TemplatePadding: =0
+                TemplateSize: =60
+                Width: =40
+                Y: =40
+                ZIndex: =4
+
+                lblRankLeft As label:
+                    Font: =Font.'Courier New'
+                    Height: =Parent.TemplateHeight
+                    OnSelect: =Select(Parent)
+                    Size: =18
+                    Text: =Text(ThisItem.Rank)
+                    Width: =30
+                    ZIndex: =1
+
+            conChessBoard As groupContainer.manualLayoutContainer:
+                BorderThickness: =1
+                Height: =480
+                Width: =480
+                X: =40
+                Y: =40
+                ZIndex: =5
+
+                galChessBoard As gallery.galleryHorizontal:
+                    DelayItemLoading: =true
+                    Height: =480
+                    Items: =Sequence(64,0)
+                    LoadingSpinner: =LoadingSpinner.Data
+                    ShowScrollbar: =false
+                    TemplatePadding: =0
+                    TemplateSize: =60
+                    Width: =480
+                    WrapCount: =8
+                    ZIndex: =1
+
+                    lblSquare As label:
+                        Align: =Align.Center
+                        BorderColor: |+
+                            =If(ThisItem.Value=gblPF_UI_selectedSqNum,
+                                // THEN
+                                SQUARE_BORDER_COLOR_SELECTED,
+                            
+                                // ELSE 
+                                If(
+                                    // THEN - which color is active ?
+                                    If(gblPF_UI_GameTurn=WHITE,
+                                        // THEN - need to add 8 to target square for en passant
+                                        IsBlank(
+                                            LookUp(colPF_MOVE_TREE, 
+                                                (nodeDepth=1) && (inactiveColorMoveRecord.sourceSquareNum=gblPF_UI_selectedSqNum) && (inactiveColorMoveRecord.targetSquareNum=ThisItem.Value) &&
+                                                (
+                                                    // a standard capture
+                                                    (inactiveColorMoveRecord.targetSquarePieceColor<>NO_COLOR) ||
+                                                    // an en passant capture
+                                                    ((inactiveColorMoveRecord.targetSquarePieceColor=NO_COLOR)  && (inactiveColorMoveRecord.captureSquareNum=inactiveColorMoveRecord.targetSquareNum+8))
+                                                )
+                                            )
+                                        ),
+                            
+                                        // ELSE - need to subtract 8 to target square for en passant
+                                        IsBlank(
+                                            LookUp(colPF_MOVE_TREE, 
+                                                (nodeDepth=1) && (inactiveColorMoveRecord.sourceSquareNum=gblPF_UI_selectedSqNum) && (inactiveColorMoveRecord.targetSquareNum=ThisItem.Value) &&
+                                                (
+                                                    // a standard capture
+                                                    (inactiveColorMoveRecord.targetSquarePieceColor<>NO_COLOR) ||
+                                                    // an en passant capture
+                                                    ((inactiveColorMoveRecord.targetSquarePieceColor=NO_COLOR)  && (inactiveColorMoveRecord.captureSquareNum=inactiveColorMoveRecord.targetSquareNum-8))
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    Self.Color,
+                                    Color.Red
+                                )
+                            )
+                            
+                        BorderThickness: =2
+                        Fill: |+
+                            =If(Mod(RoundDown(ThisItem.Value/8,0),2)=0,
+                                If(
+                                    Or(RoundDown(Mod(ThisItem.Value,2),0),Mod(RoundDown(ThisItem.Value/8,0),2)),
+                                    If(gblPF_UI_selectedSqNum=ThisItem.Value,SQUARE_DARK_COLOR_SELECTED,SQUARE_DARK_COLOR),
+                                    If(gblPF_UI_selectedSqNum=ThisItem.Value,SQUARE_LIGHT_COLOR_SELECTED,SQUARE_LIGHT_COLOR)
+                                ),
+                                If(
+                                    And(RoundDown(Mod(ThisItem.Value,2),0),Mod(RoundDown(ThisItem.Value/8,0),2)),
+                                    If(gblPF_UI_selectedSqNum=ThisItem.Value,SQUARE_LIGHT_COLOR_SELECTED,SQUARE_LIGHT_COLOR),
+                                    If(gblPF_UI_selectedSqNum=ThisItem.Value,SQUARE_DARK_COLOR_SELECTED,SQUARE_DARK_COLOR)
+                                )
+                            )
+                            
+                        Height: =58
+                        HoverBorderColor: |
+                            =If(gblPF_UI_Ready4Input,
+                                // if the square is occupied by a piece of the active color change the border when hovered over
+                                With(
+                                    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                            
+                                    With(
+                                        LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
+                            
+                                        If(gblPF_UI_selectedSqNum=EMPTY_SQUARE_NUM && UDF_PieceToIcon(UDF_getBitAtSqNum(gblPF_UI_DisplayedBoard, ThisItem.Value))=EMPTY_ICON,
+                                            Self.Fill,
+                                            If(
+                                                gblPF_UI_selectedSqNum=EMPTY_SQUARE_NUM &&
+                                                UDF_PieceToIcon(UDF_getBitAtSqNum(gblPF_UI_DisplayedBoard, ThisItem.Value))<>EMPTY_ICON && 
+                                                UDF_PieceToColor(UDF_getBitAtSqNum(gblPF_UI_DisplayedBoard, ThisItem.Value))=gblPF_UI_GameTurn,
+                                                SQUARE_BORDER_COLOR_HOVER,
+                                                Self.Fill
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        HoverColor: |-
+                            =If(gblPF_UI_Ready4Input,
+                                If(ThisItem.Value=gblPF_UI_selectedSqNum,
+                                    // THEN
+                                    SQUARE_BORDER_COLOR_SELECTED,
+                            
+                                    // ELSE 
+                                    If(
+                                        // THEN - which color is active ?
+                                        If(gblPF_UI_GameTurn=WHITE,
+                                            // THEN - need to add 8 to target square for en passant
+                                            IsBlank(
+                                                LookUp(colPF_MOVE_TREE, 
+                                                    (nodeDepth=1) && (inactiveColorMoveRecord.sourceSquareNum=gblPF_UI_selectedSqNum) && (inactiveColorMoveRecord.targetSquareNum=ThisItem.Value) &&
+                                                    (
+                                                        // a standard capture
+                                                        (inactiveColorMoveRecord.targetSquarePieceColor<>NO_COLOR) ||
+                                                        // an en passant capture
+                                                        ((inactiveColorMoveRecord.targetSquarePieceColor=NO_COLOR)  && (inactiveColorMoveRecord.captureSquareNum=inactiveColorMoveRecord.targetSquareNum+8))
+                                                    )
+                                                )
+                                            ),
+                            
+                                            // ELSE - need to subtract 8 to target square for en passant
+                                            IsBlank(
+                                                LookUp(colPF_MOVE_TREE, 
+                                                    (nodeDepth=1) && (inactiveColorMoveRecord.sourceSquareNum=gblPF_UI_selectedSqNum) && (inactiveColorMoveRecord.targetSquareNum=ThisItem.Value) &&
+                                                    (
+                                                        // a standard capture
+                                                        (inactiveColorMoveRecord.targetSquarePieceColor<>NO_COLOR) ||
+                                                        // an en passant capture
+                                                        ((inactiveColorMoveRecord.targetSquarePieceColor=NO_COLOR)  && (inactiveColorMoveRecord.captureSquareNum=inactiveColorMoveRecord.targetSquareNum-8))
+                                                    )
+                                                )
+                                            )
+                                        ),
+                                        Self.Color,
+                                        Color.Red
+                                    )
+                                ),
+                                Self.Color
+                            )
+                        OnSelect: |+
+                            =/*
+                            Use Cases:
+                                - Use Case #0 (Not ready to play)  - do not accept any input
+                                - Use Case #1 (1st click on empty square) gblPF_UI_selectedSqNum is EMPTY SQUARE NUM AND you clicked on an empty square and do nothing
+                                - Use Case #2 (a.k.a., unselect) Use Case #2 gblPF_UI_selectedSqNum is NOT EMPTY_SQUARE_NUM AND gblPF_UI_selectedSqNum IS the square you clicked on unselect the current square
+                                - Use Case #3 (a.k.a., move to unoccupied square) gblPF_UI_selectedSqNum is NOT EMPTY_SQUARE_NUM AND gblPF_UI_selectedSqNum is NOT the square you clicked on AND you clicked on an empty square then this is a move to an empty square
+                            
+                                - Use Case #4 (a.k.a., 1st click) if clicked square is NOT already selected AND  if clicked square is occupied by a piece of the same color as the active color then select the clicked square
+                                    - and any O icons and target borders get cleared out as well
+                                    - the gblPF_UI_selectedSqNum gets set to EMPTY_SQUARE_NUM
+                            
+                                - Use Case #6 (1st click on wrong color) if gblPF_UI_selectedSqNum is EMPTY SQUARE NUM AND you clicked on a square occupied by a piece of the inactive color then do nothing
+                                - Use Case #7 (a.k.a., capture move) gblPF_UI_selectedSqNum is NOT EMPTY_SQUARE_NUM AND if you clicked on a square occupied by a piece of the inactive color then this is a capture move
+                             */
+                            Select(Parent);
+                            
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                "lblSquare_BCB.OnSelect(): entered"
+                            });
+                            
+                            With(
+                                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                            
+                                With(
+                                    LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theCurrentNode,
+                            
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                        "lblSquare_BCB.OnSelect(): click detected on squareNum: " & ThisItem.Value &
+                                        " gblPF_UI_selectedSqNum: " & gblPF_UI_selectedSqNum &
+                                        " gblPF_UI_Ready4Input: " & gblPF_UI_Ready4Input
+                                    });
+                            
+                                    Switch(true,    
+                                        // -------  USE CASE #0 CHECK (Not ready to play) ---------------------------------------------------------------------------------------------------
+                                        Not(gblPF_UI_Ready4Input),
+                            
+                                            // Use Case #0 (Not ready to play) - do not accept any input
+                                            UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                            diagnosticText:     "Use Case #0: Not ready for user input - ignoring the click.",
+                                                            diagnosticFill:     COLOR_YELLOWish
+                                                        })
+                                            });
+                                            Blank(),
+                            
+                                        // -------  USE CASE #1 CHECK (1st click on empty square) ---------------------------------------------------------------------------------------------------
+                                        gblPF_UI_selectedSqNum=EMPTY_SQUARE_NUM && UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN), ThisItem.Value)=EMPTY_FILLER_ABBR, 
+                            
+                                            // Use Case #1 (1st click on empty square) gblPF_UI_selectedSqNum is EMPTY SQUARE NUM AND you clicked on an empty square and do nothing
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " lblSquare_BCB.OnSelect(): Use Case #1 (1st click on empty square) detected ThisItem.Value: " & ThisItem.Value
+                                            });
+                                            UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                            diagnosticText:     "Use Case #1: empty square selected as the source square - ignoring selection.",
+                                                            diagnosticFill:     COLOR_GREENish
+                                                        })
+                                            }),
+                            
+                                        // -------  USE CASE #2 CHECK (a.k.a., unselect) ---------------------------------------------------------------------------------------------------
+                                        gblPF_UI_selectedSqNum<>EMPTY_SQUARE_NUM && gblPF_UI_selectedSqNum=ThisItem.Value, 
+                            
+                                            // Use Case #2 (a.k.a., unselect) gblPF_UI_selectedSqNum is NOT EMPTY_SQUARE_NUM AND gblPF_UI_selectedSqNum IS the square you clicked on unselect the current square
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                            " lblSquare_BCB.OnSelect(): Use Case #2 (a.k.a., unselect) detected ThisItem.Value: " & ThisItem.Value});
+                                            Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);
+                                            UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                            // UI_sourceSqNum:     EMPTY_SQUARE_NUM,
+                                                            diagnosticText:     "Use Case #2: Unselecting selected SquareNum(" & ThisItem.Value & ") ",
+                                                            diagnosticFill:     COLOR_GREENish
+                                                        })
+                                            }),
+                            
+                                        // -------  USE CASE #3 CHECK (a.k.a., move to unoccupied square) ---------------------------------------------------------------------------------------------------
+                                        gblPF_UI_selectedSqNum<>ThisItem.Value && 
+                                            UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN), ThisItem.Value)=EMPTY_FILLER_ABBR, 
+                            
+                                            // Use Case #3 (a.k.a., move to unoccupied square) gblPF_UI_selectedSqNum is NOT EMPTY_SQUARE_NUM AND gblPF_UI_selectedSqNum is NOT the square you clicked on AND you clicked on 
+                                            // an empty square then this is a move to an empty square
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " lblSquare_BCB.OnSelect(): Use Case #3 (a.k.a., move to unoccupied square) detected gblPF_UI_selectedSqNum: " & gblPF_UI_selectedSqNum & 
+                                                " ThisItem.Value: " & ThisItem.Value
+                                            });
+                            
+                                            // see if this is a valid square - if so make the move
+                                            With(
+                                                LookUp(colPF_MOVE_TREE, 
+                                                    nodeDepth=1 && inactiveColorMoveRecord.sourceSquareNum=gblPF_UI_selectedSqNum && inactiveColorMoveRecord.targetSquareNum=ThisItem.Value &&
+                                                    (inactiveColorMoveRecord.promoteTo=EMPTY_ABBR || inactiveColorMoveRecord.promoteTo in "Q")
+                                                ) As theMoveTreeRecord,
+                            
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                    "lblSquare_BCB.OnSelect(): Use Case #3 (a.k.a., move to unoccupied square) invalid move detected sourceSquareNum: " & 
+                                                    gblPF_UI_selectedSqNum & " ThisItem.Value: " & ThisItem.Value &
+                                                    " targetSquareNum (from moveTree) : " &  theMoveTreeRecord.inactiveColorMoveRecord.targetSquareNum &
+                                                    " san: " & theMoveTreeRecord.inactiveColorMoveRecord.san & " IsBlank(theMoveTreeRecord): " & IsBlank(theMoveTreeRecord)
+                                                });
+                            
+                                                If(IsBlank(theMoveTreeRecord),
+                                                    // THEN - not a valid move
+                                                    UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                        uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                                    diagnosticText:     "Use Case #3: Invalid move - please try again ",
+                                                                    diagnosticFill:     COLOR_YELLOWish
+                                                                })
+                                                    }),
+                            
+                                                    // ELSE - valid move - make the move
+                                                    Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);
+                                                    Set(gblPF_UI_Ready4Input, false);
+                                                    UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                        uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                                    // UI_sourceSqNum:     EMPTY_SQUARE_NUM,
+                                                                    // UI_ready4Input:     false,
+                                                                    diagnosticText:     "Use Case #3: Processing the Player move -> san: " & theMoveTreeRecord.inactiveColorMoveRecord.san & 
+                                                                                        " pacn: " & theMoveTreeRecord.inactiveColorMoveRecord.pacn,
+                                                                    diagnosticFill:     COLOR_GREENish
+                                                                }),
+                                                        chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
+                                                                                pacn:     theMoveTreeRecord.inactiveColorMoveRecord.pacn
+                                                                            })
+                                                    });
+                            
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                        "lblSquare_BCB.OnSelect(): Use Case #3 (a.k.a., move to unoccupied square) calling Select(btnProcessGame_CB) "
+                                                    });
+                                                    // Select(btnProcessGame)
+                                                )
+                                            ),
+                            
+                                        // -------  USE CASE #4 CHECK (a.k.a., 1st click) ---------------------------------------------------------------------------------------------------
+                                        gblPF_UI_selectedSqNum<>ThisItem.Value && 
+                                            UDF_PieceToColor(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN), ThisItem.Value))=UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN), 
+                            
+                                            // Use Case #4 (a.k.a., 1st click) if clicked square is NOT already selected AND  if clicked square is occupied by a piece of 
+                                            //      the same color as the active color then select the clicked square
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                "lblSquare_BCB.OnSelect(): Use Case #4 (a.k.a., 1st click) detected ThisItem.Value: " & ThisItem.Value &
+                                                " CountRows(Filter(colPF_MOVE_TREE, nodeDepth=1 && inactiveColorMoveRecord.sourceSquareNum=ThisItem.Value)): " &
+                                                    CountRows(Filter(colPF_MOVE_TREE, nodeDepth=1 && inactiveColorMoveRecord.sourceSquareNum=ThisItem.Value))
+                                            });
+                            
+                                            // let's make sure the piece can be selected (i.e., there are some valid moves for it) before we mark it as selected
+                                            If(CountRows(Filter(colPF_MOVE_TREE, nodeDepth=1 && inactiveColorMoveRecord.sourceSquareNum=ThisItem.Value))>0, 
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                    " CountRows(Filter(colPF_MOVE_TREE, nodeDepth=1 && inactiveColorMoveRecord.sourceSquareNum=ThisItem.Value)) is > 0" &
+                                                    " ThisItem.Value: " & ThisItem.Value
+                                                });
+                                                Set(gblPF_UI_selectedSqNum, ThisItem.Value);
+                                                UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                    uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                                // UI_sourceSqNum:     ThisItem.Value,
+                                                                diagnosticText:     "Use Case #4: Selecting SquareNum(" & ThisItem.Value & ") " & UDF_sqNumToSqName(ThisItem.Value) & 
+                                                                                    " as source square of the move.",
+                                                                diagnosticFill:     COLOR_GREENish
+                                                            })
+                                                }),
+                            
+                                                
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                    " CountRows(Filter(colPF_MOVE_TREE, nodeDepth=1 && inactiveColorMoveRecord.sourceSquareNum=ThisItem.Value)) is <= 0" &
+                                                    " ThisItem.Value: " & ThisItem.Value
+                                                });
+                            
+                                                Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);
+                                                UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                    uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                                // UI_sourceSqNum:     EMPTY_SQUARE_NUM,
+                                                                diagnosticText:     "Use Case #4: No valid move associated with source SquareNum(" & ThisItem.Value & ") " & 
+                                                                                    UDF_sqNumToSqName(ThisItem.Value) & " ignoring click.",
+                                                                diagnosticFill:     COLOR_YELLOWish
+                                                            })
+                                                })
+                                            ),
+                            
+                                        // -------  USE CASE #6 CHECK (1st click on wrong color) -----------------------------------------------------------------------------------------------
+                                        gblPF_UI_selectedSqNum=EMPTY_SQUARE_NUM && 
+                                            UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN), ThisItem.Value)<>EMPTY_FILLER_ABBR &&
+                                            UDF_PieceToColor(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN), ThisItem.Value))<>UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN), 
+                            
+                                            // Use Case #6 (1st click on wrong color) if gblPF_UI_selectedSqNum is EMPTY SQUARE NUM AND you clicked on a square occupied by a piece of the inactive color then do nothing
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                "lblSquare_BCB.OnSelect(): Use Case #6 (1st click on wrong color) detected ThisItem.Value: " & ThisItem.Value
+                                            });
+                                            Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);
+                                            UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                            // UI_sourceSqNum:     EMPTY_SQUARE_NUM,
+                                                            diagnosticText:     "Use Case #6: 1st click on wrong color piece SquareNum(" & ThisItem.Value & ") " & 
+                                                                                UDF_sqNumToSqName(ThisItem.Value) & " ignoring click.",
+                                                            diagnosticFill:     COLOR_YELLOWish
+                                                        })
+                                            }),
+                            
+                                        // -------  USE CASE #7 CHECK (a.k.a., capture move) ---------------------------------------------------------------------------------------------------
+                                        gblPF_UI_selectedSqNum<>EMPTY_SQUARE_NUM && 
+                                            UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN), ThisItem.Value)<>EMPTY_FILLER_ABBR &&
+                                            UDF_PieceToColor(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN), ThisItem.Value))<>UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN),
+                            
+                                            // Use Case #7 (a.k.a., capture move) gblPF_UI_selectedSqNum is NOT EMPTY_SQUARE_NUM AND if you clicked on a square occupied by a piece 
+                                            // of the inactive color then this is a capture move
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                "lblSquare_BCB.OnSelect(): Use Case #7 (a.k.a., capture move) detected ThisItem.Value: " & ThisItem.Value
+                                            });
+                            
+                                            // see if this is a valid square - if so make the move
+                                            With(
+                                                LookUp(colPF_MOVE_TREE, 
+                                                    nodeDepth=1 && inactiveColorMoveRecord.sourceSquareNum=gblPF_UI_selectedSqNum && inactiveColorMoveRecord.targetSquareNum=ThisItem.Value &&
+                                                    (inactiveColorMoveRecord.promoteTo=EMPTY_ABBR || inactiveColorMoveRecord.promoteTo in "Q")
+                                                ) As theMoveTreeRecord,
+                            
+                                                If(IsBlank(theMoveTreeRecord),
+                                                    // THEN - not a valid move
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                        "lblSquare_BCB.OnSelect(): Use Case #7 (a.k.a., capture move) invalid move detected sourceSquareNum: " & gblPF_UI_selectedSqNum & 
+                                                        " ThisItem.Value: " & ThisItem.Value &
+                                                        " targetSquareNum (from moveTree) : " &  theMoveTreeRecord.inactiveColorMoveRecord.targetSquareNum &
+                                                        " san: " & theMoveTreeRecord.inactiveColorMoveRecord.san & " IsBlank(theMoveTreeRecord): " & IsBlank(theMoveTreeRecord)
+                                                    });
+                            
+                                                    UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                        uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                                    diagnosticText:     "Use Case #7: no move associated with target square SquareNum(" & ThisItem.Value & ") " & 
+                                                                                        UDF_sqNumToSqName(ThisItem.Value) & " ignoring click.",
+                                                                    diagnosticFill:     COLOR_YELLOWish
+                                                                })
+                                                    }),
+                            
+                                                    // ELSE - valid move - make the move
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                        "lblSquare_BCB.OnSelect(): Use Case #7 (a.k.a., capture move) valid move detected sourceSquareNum: " & gblPF_UI_selectedSqNum & 
+                                                        " ThisItem.Value: " & ThisItem.Value &
+                                                        " targetSquareNum (from moveTree) : " &  theMoveTreeRecord.inactiveColorMoveRecord.targetSquareNum &
+                                                        " san: " & theMoveTreeRecord.inactiveColorMoveRecord.san & 
+                                                        " pacn: " & theMoveTreeRecord.inactiveColorMoveRecord.pacn
+                                                    });
+                            
+                                                    Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);
+                                                    Set(gblPF_UI_Ready4Input, false);
+                                                    UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                        uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                                    // UI_sourceSqNum:     EMPTY_SQUARE_NUM,
+                                                                    // UI_ready4Input:     false,
+                                                                    diagnosticText:     "Use Case #7: Processing the Player move -> san: " & theMoveTreeRecord.inactiveColorMoveRecord.san & 
+                                                                                        " pacn: " & theMoveTreeRecord.inactiveColorMoveRecord.pacn,
+                                                                    diagnosticFill:     COLOR_GREENish
+                                                                }),
+                                                        chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
+                                                                                pacn:     theMoveTreeRecord.inactiveColorMoveRecord.pacn
+                                                                            })
+                                                    });
+                            
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                        "lblSquare_BCB.OnSelect(): Use Case #7 (a.k.a., capture move) calling Select(btnProcessGame_CB) "
+                                                    });
+                                                    // Select(btnProcessGame)
+                                                )   
+                                            )
+                                    )
+                                )
+                            );
+                            
+                            
+                            
+                        PaddingBottom: =0
+                        PaddingLeft: =1
+                        PaddingRight: =0
+                        PaddingTop: =1
+                        Size: =24
+                        Text: |+
+                            =UDF_PieceToIcon(
+                                UDF_getBitAtSqNum(
+                                    gblPF_UI_DisplayedBoard, 
+                                    ThisItem.Value
+                                )
+                            )
+                            
+                        Width: =58
+                        Y: =2
+                        ZIndex: =1
+

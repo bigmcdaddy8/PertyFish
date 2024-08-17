@@ -1,0 +1,682 @@
+App As appinfo:
+    BackEnabled: =true
+    Formulas: |+
+        =
+        // Perty Fish named formulas ------------------------------------------------------------------------
+        // named formulas
+        LF=Char(10);          // LF
+        CR=Char(13);          // CR
+        CRLF=CR & LF;
+        DOUBLEQUOTE=Char(34); // " <- double quote
+        
+        SQUARE_LIGHT_COLOR=Color.Bisque;
+        SQUARE_LIGHT_COLOR_SELECTED=Color.LightSteelBlue;
+        SQUARE_BORDER_COLOR_SELECTED=Color.LightSlateGray;
+        SQUARE_DARK_COLOR=Color.Peru;
+        SQUARE_DARK_COLOR_SELECTED=Color.LightSteelBlue;
+        SQUARE_BORDER_COLOR_HOVER=Color.Black;
+        
+        COLOR_REDish=RGBA(255, 72,51,1); // Red-ish
+        COLOR_WHITEish=RGBA(0, 0, 0, 0); // See-through White-ish
+        COLOR_YELLOWish=RGBA(235, 235, 82, 1); // Yellow-ish
+        COLOR_GREENish=RGBA(157, 249, 47, 1); // Green-ish
+        COLOR_LIGHT_GREYish=RGBA(241, 244, 249, 1); // light grey-ish
+        COLOR_SKY_BLUEish=RGBA(197, 229, 159, .5); // sky blue-ish  
+        
+        WHITE=0;BLACK=1;NO_COLOR=-1;BOTH_COLORS=2;NEITHER_COLOR=3;
+        EMPTY_SQUARE_NUM=64;
+        EMPTY_SQUARE_NAME="";
+        EMPTY_BOARD="################################################################";
+        EMPTY_ABBR="";EMPTY_FILLER_ABBR="#";ATTACKED_ABBR="X";EMPTY_ICON="";
+        ROOT_NODE_ID=0;EMPTY_NODE_ID=-1;
+        NO_DIRECTION=-1;N=1;NE=2;E=3;SE=4;S=5;SW=6;W=7;NW=8;
+        GET_LOG_INDEX=If(IsEmpty(colPF_logs),1,Max(colPF_logs, logOffset) + 1);
+        
+        WHITE_KING_ICON="♔";WHITE_QUEEN_ICON="♕";WHITE_ROOK_ICON="♖";WHITE_BISHOP_ICON="♗";WHITE_KNIGHT_ICON="♘";WHITE_PAWN_ICON="♙";
+        BLACK_KING_ICON="♚";BLACK_QUEEN_ICON="♛";BLACK_ROOK_ICON="♜";BLACK_BISHOP_ICON="♝";BLACK_KNIGHT_ICON="♞";BLACK_PAWN_ICON="♟";
+        GAME_PHASE_OPENING=1;GAME_PHASE_MIDDLE=2;GAME_PHASE_END=3;
+        
+        // universal square names set
+        UNIVERSAL_SQNAMES_SET="a1 a2 a3 a4 a5 a6 a7 a8 b1 b2 b3 b4 b5 b6 b7 b8 c1 c2 c3 c4 c5 c6 c7 c8 d1 d2 d3 d4 d5 d6 d7 d8 e1 e2 e3 e4 e5 e6 e7 e8 f1 f2 f3 f4 f5 f6 f7 f8 g1 g2 g3 g4 g5 g6 g7 g8 h1 h2 h3 h4 h5 h6 h7 h8";
+        
+        // -------------------------------------------------------------------------------------
+        GAME_STATUS_RECORD_PF={
+            whiteIsCheckmated:      false,
+            blackIsCheckmated:      false,
+            isStalemate:            false, // is this a stalemate ?
+            isDraw:                 false // is this a draw of some type ?
+        };
+        
+        MOVE_RECORD_PF={ 
+            san:                        "",        //  (e.g., "Nf3")
+            pacn:                       "",        // pure algebraic coordinate notation
+            sourceSquareNum:            EMPTY_SQUARE_NUM,   // square where piece is
+            sourceSquareName:           EMPTY_SQUARE_NAME,  // square where piece is
+            sourceSquareOccupier:       EMPTY_ABBR,
+            sourceSquarePieceColor:     NO_COLOR,
+            sourceSquareIcon:           EMPTY_ICON,
+            // the target square data is the square data of where the moving piece will end up, it is the data prior to the move
+            //  the target square may or may not be occupied prior to the move
+            targetSquareNum:            EMPTY_SQUARE_NUM,  // square to move piece to
+            targetSquareName:           EMPTY_SQUARE_NAME,
+            targetSquareOccupier:       EMPTY_ABBR,
+            targetSquarePieceColor:     NO_COLOR,         // color of the piece that is in target square - if empty in target square then NO_COLOR 
+            targetSquareIcon:           EMPTY_ICON,
+            // the capture square data is the square data of the square containing the piece that is captured during the move, it is the square data prior to the move
+            //  the capture square data will be "empty" if there is no capture, in non-en Passant captures the capture data is the same as the target square data,
+            //  in an en passant move the data will be of square where the pawn is captured
+            captureSquareNum:           EMPTY_SQUARE_NUM, 
+            captureSquareName:          EMPTY_SQUARE_NAME,
+            captureSquareOccupier:      EMPTY_ABBR, 
+            captureSquarePieceColor:    NO_COLOR, 
+            captureSquareIcon:          EMPTY_ICON,                              
+            promoteTo:                  EMPTY_ABBR,      
+            isISMDraw:                  false,          
+            is75MoveDraw:               false
+        };
+        
+        NODE_RECORD_PF={
+            nodeID:                             EMPTY_NODE_ID,
+            parentNodeID:                       EMPTY_NODE_ID,
+            nodeDepth:                          0,
+            preMoveFEN:                         "",
+            inactiveColorMoveRecord:            MOVE_RECORD_PF, // the actual move just made (D0), or a potential move that could be made (D1+)
+            postMoveFEN:                        "",
+            postMoveNumActiveChecks:            0,
+            postMoveCheckers:                   "",
+            postMovePUSHs:                      "",
+            postMovePINs_N:                     "",
+            postMovePINs_NE:                    "",
+            postMovePINs_E:                     "",
+            postMovePINs_SE:                    "",
+            postMovePINs_S:                     "",
+            postMovePINs_SW:                    "",
+            postMovePINs_W:                     "",
+            postMovePINs_NW:                    "",
+            postMovePINs:                       "",
+            postMovePINDirections:              "",
+            postMoveActiveKingDangerBoard:      EMPTY_BOARD,
+            postMoveGameStatus:                 GAME_STATUS_RECORD_PF
+        };
+        
+        PF_CHESS_ENGINE_DATA_RECORD={
+            moveHistoryHEADNodeID:          EMPTY_NODE_ID,
+            moveHistoryTAILNodeID:          EMPTY_NODE_ID,
+            moveTreeD0NodeID:               EMPTY_NODE_ID,
+            newNodeID:                      EMPTY_NODE_ID,
+            testNumber:                     -1,
+            startingFEN:                    "",
+            moveNumber:                     0,
+            runSingleTest:                  true,
+            testCount:                      0,
+            isGame:                         false,
+            playerColor:                    WHITE,
+            pacn:                           "",
+            tmpBoard:                       EMPTY_BOARD,
+            noActiveKingBoard:              EMPTY_BOARD,
+            sourceSqNum:                    EMPTY_SQUARE_NUM,
+            sourceSqName:                   EMPTY_SQUARE_NAME,
+            targetSqNum:                    EMPTY_SQUARE_NUM,
+            targetSqName:                   EMPTY_SQUARE_NAME,
+            pinneeSqName:                   EMPTY_SQUARE_NAME,
+            pinnerSqName:                   EMPTY_SQUARE_NAME,
+            pinnerPatternBroke:             false,
+            SAN_PIECECODE:                  "",
+            SAN_DISAMBIGUATION:             "",
+            SAN_DISAMBIGUATION_COUNT:       0,
+            SAN_DISAMBIGUATION_ROW_COUNT:   0,
+            SAN_DISAMBIGUATION_COL_COUNT:   0,
+            SAN_CAPTURE_FLAG:               "",
+            SAN_PROMOTION:                  "",
+            SAN_CHECK_CHECKMATE:            ""
+        };
+        
+        PF_UI_DATA_RECORD={
+            MaterialCountBestMove:      "",
+            LineBestMove:               "",
+            MaterialCountBestMoveMinus1:      "",
+            LineBestMoveMinus1:               "",
+            MaterialCountBestMoveMinus2:      "",
+            LineBestMoveMinus2:               "",
+            modeText:                   "Diagnostic Mode",
+            modeFill:                   COLOR_WHITEish,
+            diagnosticText:             "Under Construction",
+            diagnosticFill:             COLOR_YELLOWish,
+            statusText:                 "Test in progress",
+            statusFill:                 COLOR_GREENish,
+            thinkingText:               "Computer Sleeping...",
+            thinkingFill:               COLOR_LIGHT_GREYish,
+            thinkingProgressText:       "",
+            thinkingProgressFill:       COLOR_SKY_BLUEish,  
+            thinkingProgressVisible:    false,
+            thinkingProgressWidth:      0
+        };
+        
+        DYNAMIC_DATA_PF_NAME="DYNAMIC_DATA_PF";
+        
+        PF_DYNAMIC_DATA={
+            dataName:           DYNAMIC_DATA_PF_NAME,
+            chessEngineData:    PF_CHESS_ENGINE_DATA_RECORD,
+            uiData:             PF_UI_DATA_RECORD
+        };
+        
+        
+        // the multiplier for a one-square move/jump in each direction
+        KING_ONESQUARE_MOVE_TABLE=[ -8, -7,  1,  9,  8,  7, -1, -9];
+        QUEEN_ONESQUARE_MOVE_TABLE=[ -8, -7,  1,  9,  8,  7, -1, -9];
+        BISHOP_ONESQUARE_MOVE_TABLE=[  0, -7,  0,  9,  0,  7,  0, -9];
+        ROOK_ONESQUARE_MOVE_TABLE=[ -8,  0,  1,  0,  8,  0, -1,  0];
+        KNIGHT_ONESQUARE_MOVE_TABLE=[-15,-6,10,17,15,6,-10,-17];
+        PAWN_UW_ONESQUARE_MOVE_TABLE=[-8,0,0,0,0,0,0,0];
+        PAWN_OW_ONESQUARE_MOVE_TABLE=[0,-7,0,0,0,0,0,-9];
+        PAWN_UB_ONESQUARE_MOVE_TABLE=[0,0,0,0,8,0,0,0];
+        PAWN_OB_ONESQUARE_MOVE_TABLE=[0,0,0,9,0,7,0,0];
+        
+        K_X_DIRECTION=[0,1,1,1,0,-1,-1,-1];
+        K_Y_DIRECTION=[1,1,0,-1,-1,-1,0,1];
+        Q_X_DIRECTION=[0,1,1,1,0,-1,-1,-1];
+        Q_Y_DIRECTION=[1,1,0,-1,-1,-1,0,1];
+        R_X_DIRECTION=[0,0,1,0,0,0,-1,0];
+        R_Y_DIRECTION=[1,0,0,0,-1,0,0,0];
+        B_X_DIRECTION=[0,1,0,1,0,-1,0,-1];
+        B_Y_DIRECTION=[0,1,0,-1,0,-1,0,1];
+        N_X_DIRECTION=[1,2,2,1,-1,-2,-2,-1];
+        N_Y_DIRECTION=[2,1,-1,-2,-2,-1,1,2];
+        P_X_DIRECTION=[0,1,0,0,0,0,0,-1];
+        P_Y_DIRECTION=[1,1,0,0,0,0,0,1];
+        p_X_DIRECTION=[0,0,0,1,0,-1,0,0];
+        p_Y_DIRECTION=[0,0,0,-1,-1,-1,0,0];
+        
+        
+        PIECE_REACHABLE_SQUARES={
+            pieceUpper:     EMPTY_SQUARE_NAME,
+            sqNum:          EMPTY_SQUARE_NUM,
+            sqName:         EMPTY_SQUARE_NAME,
+            castle:         "",
+            eligibleSqNum:  EMPTY_SQUARE_NUM,
+            eligibleSqName: EMPTY_SQUARE_NAME,
+            slideOvers:     "",
+            theDirection:   NO_DIRECTION,
+            theDistance:    0
+        };
+        
+        
+        UDF_getFileNumFromFileName(file:Text):Number=Find(file,"abcdefgh");
+        UDF_getFileNameFromFileNum(fileNum:Number):Text=Index(["a","b","c","d","e","f","g","h"], fileNum).Value;
+        UDF_getFileNameFromSqName(sqName:Text):Text=Left(sqName,1);
+        UDF_getFileNumFromSqName(sqName:Text):Number=Find(UDF_getFileNameFromSqName(sqName),"abcdefgh");
+        UDF_getFileNumFromSqNum(sqNum:Number):Number=UDF_getFileNumFromSqName(UDF_sqNumToSqName(sqNum));
+        UDF_getFileNameFromSqNum(sqNum:Number):Text=Index(Split("abcdefgh",""),Mod(sqNum,8)+1).Value;
+        UDF_getRankFromSqName(sqName:Text):Number=Value(Right(Left(sqName,2),1)); // make sure the rare pawn promotion in pacn is removed
+        UDF_getRankFromSqNum(sqNum:Number):Number=(8 - RoundDown(sqNum/8, 0));
+        UDF_sqNameToSqNum(sqName:Text):Number=
+            If(IsBlank(sqName) || sqName="-",
+                // THEN
+                EMPTY_SQUARE_NUM,
+        
+                // ELSE
+                ((8 - UDF_getRankFromSqName(sqName)) * 8) + (UDF_getFileNumFromSqName(sqName) - 1)
+            );
+        UDF_sqNumToSqName(sqNum:Number):Text=
+            If( sqNum<0 || sqNum>=EMPTY_SQUARE_NUM,
+                // THEN
+                EMPTY_SQUARE_NAME,
+        
+                // ELSE
+                UDF_getFileNameFromSqNum(sqNum) & UDF_getRankFromSqNum(sqNum)
+            );
+        
+        UDF_getSqNumRelativeToSqNum(refSqNum:Number,x:Number,y:Number):Number=
+            If(refSqNum<0 || refSqNum>=EMPTY_SQUARE_NUM,
+                // THEN
+                EMPTY_SQUARE_NUM,
+        
+                // ELSE
+                Switch(true,
+                    (UDF_getRankFromSqNum(refSqNum) + y) > 8, EMPTY_SQUARE_NUM,
+                    (UDF_getRankFromSqNum(refSqNum) + y) < 1, EMPTY_SQUARE_NUM,
+                    (UDF_getFileNumFromSqName(UDF_sqNumToSqName(refSqNum)) + x) > 8, EMPTY_SQUARE_NUM,
+                    (UDF_getFileNumFromSqName(UDF_sqNumToSqName(refSqNum)) + x) < 1, EMPTY_SQUARE_NUM,
+                    refSqNum + x - (y * 8)
+                )
+            );
+        
+        
+        UDF_FEN_TO_PIECE_PLACMENT(fen:Text):Text=Index(Split(fen, " "),1).Value;
+        
+        UDF_FEN_TO_BOARD(fen:Text):Text=
+            Substitute(
+                Substitute(
+                    Substitute(
+                        Substitute(
+                            Substitute(
+                                Substitute(
+                                    Substitute(
+                                        Substitute(
+                                            Substitute(Index(Split(fen, " "),1).Value, "8", "11111111"),
+                                            "7", "1111111"),
+                                        "6", "111111"),
+                                    "5", "11111"),
+                                "4", "1111"),
+                            "3", "111"),
+                        "2", "11"),
+                    "/", ""),
+                "1", "#");
+        
+        UDF_BOARD_TO_FEN_PIECE_PLACEMENT(board:Text):Text=
+            Substitute(
+                Substitute(
+                    Substitute(
+                        Substitute(
+                            Substitute(
+                                Substitute(
+                                    Substitute(
+                                        Substitute(
+                                            Left(board,8) & "/" & Right(Left(board,16),8) & "/" & Right(Left(board,24),8) & "/" & 
+                                            Right(Left(board,32),8) & "/" & Right(Left(board,40),8) & "/" & Right(Left(board,48),8) & "/" & 
+                                            Right(Left(board,56),8) & "/" & Right(Left(board,64),8),
+                                            "########",
+                                            "8"
+                                        ), "#######", "7"
+                                    ), "######", "6"
+                                ), "#####", "5"
+                            ), "####", "4"
+                        ), "###", "3"
+                    ), "##", "2"
+                ), "#", "1"
+            );
+        
+        UDF_FEN_TO_ACTIVE_COLOR(fen:Text):Number=
+            If(Index(Split(fen, " "),2).Value="w",
+                // THEN
+                WHITE,
+        
+                // ELSE
+                BLACK
+            );
+        
+        UDF_FEN_TO_INACTIVE_COLOR(fen:Text):Number=
+            If(UDF_FEN_TO_ACTIVE_COLOR(fen)=WHITE,
+                // THEN
+                BLACK,
+        
+                // ELSE
+                WHITE
+            );
+        
+        UDF_FEN_TO_CASTLE_RIGHTS_ALL_TEXT(fen:Text):Text=Index(Split(fen, " "),3).Value;
+        UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_BOOL(fen:Text,color:Number,side:Text):Boolean=
+            Switch(true,
+                color=WHITE && side in "K", "K" exactin UDF_FEN_TO_CASTLE_RIGHTS_ALL_TEXT(fen),
+                color=WHITE && side in "Q", "Q" exactin UDF_FEN_TO_CASTLE_RIGHTS_ALL_TEXT(fen),
+                color=BLACK && side in "K", "k" exactin UDF_FEN_TO_CASTLE_RIGHTS_ALL_TEXT(fen),
+                color=BLACK && side in "Q", "q" exactin UDF_FEN_TO_CASTLE_RIGHTS_ALL_TEXT(fen),
+                false
+            );
+        
+        UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_TEXT(fen:Text,color:Number,side:Text):Text=
+            If(UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_BOOL(fen,color,side),
+                Switch(true,
+                    color=WHITE && side in "K", "K",
+                    color=WHITE && side in "Q", "Q",
+                    color=BLACK && side in "K", "k",
+                    color=BLACK && side in "Q", "q"
+                ),
+                "-"
+            );
+        
+        UDF_FEN_TO_ENPASSANT_SQNAME(fen:Text):Text=Index(Split(fen, " "),4).Value;  
+        UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),5).Value;  
+        UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),6).Value;  
+        
+        UDF_getBitAtSqNum(board:Text,sqNum:Number):Text=
+            If(sqNum<0 || sqNum>=EMPTY_SQUARE_NUM,
+                // THEN - handle the empty square number 
+                EMPTY_ABBR,
+        
+                // ELSE - get the value from the board
+                Right(Left(board,sqNum+1),1)
+            );
+        
+        UDF_setBitAtSqNum(board:Text,piece:Text,sqNum:Number):Text=
+            If(piece=EMPTY_ABBR,
+                Left(board,Max(0,sqNum)) & EMPTY_FILLER_ABBR & Right(board,Min(63,63-sqNum)),
+                Left(board,Max(0,sqNum)) & piece & Right(board,Min(63,63-sqNum))
+            );
+        
+        UDF_PieceToColor(piece:Text):Number=
+            If(piece=EMPTY_ABBR || piece=EMPTY_FILLER_ABBR,
+                // THEN there is no piece return NO_COLOR
+                NO_COLOR,
+        
+                // ELSE
+                If(piece exactin "KQRBNP", 
+                    // THEN
+                    WHITE,
+        
+                    // ELSE
+                    If(piece exactin "kqrbnp",
+                        // THEN
+                        BLACK,
+        
+                        // ELSE
+                        NO_COLOR
+                    )
+                )
+            );
+        UDF_ColorToStr(color:Number):Text=If(color=WHITE,"White","Black");
+        UDF_getOppositeColor(color:Number):Number=If(color=WHITE,BLACK,WHITE);
+        
+        UDF_PieceToIcon(piece:Text):Text=
+            Switch(true,
+                piece="K",  WHITE_KING_ICON,
+                piece="Q",  WHITE_QUEEN_ICON,
+                piece="R",  WHITE_ROOK_ICON,
+                piece="B",  WHITE_BISHOP_ICON,
+                piece="N",  WHITE_KNIGHT_ICON,
+                piece="P",  WHITE_PAWN_ICON,
+                piece="k",  BLACK_KING_ICON,
+                piece="q",  BLACK_QUEEN_ICON,
+                piece="r",  BLACK_ROOK_ICON,
+                piece="b",  BLACK_BISHOP_ICON,
+                piece="n",  BLACK_KNIGHT_ICON,
+                piece="p",  BLACK_PAWN_ICON,
+                EMPTY_ICON
+            );
+        
+        // end of Perty Fish named formulas ------------------------------------------------------------------------
+        
+    OnStart: |-
+        =
+        // start of Perty Fish App.OnStart ------------------------------------------------------------------------
+        ClearCollect(colPF_LEGAL_MOVES, Table(PIECE_REACHABLE_SQUARES));
+        
+        Concurrent(
+            // gloabl variables
+            Set(gblPF_PAUSE, false),
+            Set(gblPF_TMP_Boolean01, false),
+            Set(gblPF_TMP_Boolean02, false),
+            Set(gblPF_TMP_Boolean03, false),
+            Set(gblPF_TMP_Boolean04, false),
+            Set(gblPF_TMP_Boolean05, false),
+            Set(gblPF_TMP_Number01, -1),
+            Set(gblPF_TMP_Number02, -1),
+            Set(gblPF_TMP_Number011, -1),
+            Set(gblPF_TMP_Number012, -1),
+            Set(gblPF_TMP_Number013, -1),
+            Set(gblPF_TMP_Number014, -1),
+            Set(gblPF_TMP_Text01, ""),
+            Set(gblPF_TMP_Text02, ""),
+            Set(gblPF_TMP_Text03, ""),
+            Set(gblPF_TMP_Text04, ""),
+            Set(gblPF_TMP_Text05, ""),
+        
+            Set(gblPF_DEBUG_EVAL, true),
+            Set(gblPF_DEBUG_CE_UTILS, true),
+            Set(gblPF_DEBUG_EVAL_BASIC_EXCHANGE, true),
+            Set(gblPF_DEBUG_EVAL_BASIC_EXCHANGE_CALC, true),
+            Set(gblPF_DEBUG_EVAL_ENDGAME, true),
+            Set(gblPF_DEBUG_EVAL_ENDGAME_KR_K, false),
+            Set(gblPF_DEBUG_EVAL_FORK, true),
+            Set(gblPF_DEBUG_EVAL_GENERIC_TACTICS, true),
+            Set(gblPF_CLEAR_LOG_MOD, 3),
+        
+            Set(gblPF_BestMoveMaterial, "+0"),
+            Set(gblPF_BestMoveLine, "+0"),
+            Set(gblPF_BestMoveMaterial_M1, "+0"),
+            Set(gblPF_BestMoveLine_M1, "+0"),
+            Set(gblPF_BestMoveMaterial_M2, "+0"),
+            Set(gblPF_BestMoveLine_M2, "+0"),
+        
+            Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM),
+            Set(gblPF_UI_Ready4Input, false),
+            Set(gblPF_UI_DisplayedBoard, EMPTY_BOARD),
+            Set(gblPF_UI_DisplayedFEN, ""),
+            Set(gblPF_UI_GameTurn, WHITE),
+            Set(gblPF_UI_whiteCapturedPieces, ""),
+            Set(gblPF_UI_blackCapturedPieces, ""),
+            Set(gblPF_UI_MaterialValueOverall, 0),
+            Set(gblPF_UI_ModeText, ""),
+            Set(gblPF_UI_ThinkingText, ""),
+            Set(gblPF_UI_StatusText, "Starting Up..."),
+            Set(gblPF_UI_DiagnosticText, ""),
+            Set(gblPF_UI_ModeFill, COLOR_WHITEish),
+            Set(gblPF_UI_ThinkingFill, COLOR_WHITEish),
+            Set(gblPF_UI_StatusFill, COLOR_WHITEish),
+            Set(gblPF_UI_DiagnosticFill, COLOR_WHITEish),
+            Set(gblPF_UI_GamePhase, ""),
+        
+            // timer flags
+            Set(gblPF_TMR_RunNextTest, false),
+            Set(gblPF_TMR_MakeNextTestMove, false),
+            Set(gblPF_TMR_MakeNextGameMove, false),
+        
+            // Collections...
+            ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: ""})),
+            ClearCollect(colPF_MOVE_HISTORY, Table(NODE_RECORD_PF)),
+            ClearCollect(colPF_MOVE_TREE, Table(NODE_RECORD_PF)),
+            ClearCollect(colPF_DYNAMIC_DATA, Table(PF_DYNAMIC_DATA)),
+            ClearCollect(colPF_Timers,
+                Table({
+                    timerName:      "",
+                    startTime:      Now(),
+                    stopTime:       Now()
+            })),
+        
+            // start of colPF_LEGAL_MOVES collection initialization
+            ForAll(
+                ["K","Q","R","B","N","P","p"] As thePiece, // for every piece type that there is - PAWNs are direction sensitive - must have both cases
+        
+                ForAll (
+                    Sequence(64,0) As theSqNum, // go to each square and fill in table with all squares that are not off the board that the piece can move to
+        
+                    ForAll (
+                        Switch(true,
+                            thePiece.Value exactin "R", Sequence(4,1,2), // only moves N,E,S,W
+                            thePiece.Value exactin "B", Sequence(4,2,2), // only moves NE,SE,SW,NW
+                            thePiece.Value exactin "P", [1,2,8], // only moves N,NE,NW
+                            thePiece.Value exactin "p", [5,4,6], // only moves S,SE,SW
+                            Sequence(8) // moves in all eight directions N,NE,E,SE,S,SW,W,NW
+                        ) As theDirection,
+        
+                        ForAll (
+                            Switch(true,
+                                thePiece.Value exactin "KN", Sequence(1), // not a sliding piece can only move 1 jump
+                                thePiece.Value exactin "P" && theDirection.Value=1, Sequence(2),
+                                thePiece.Value exactin "P", Sequence(1),
+                                thePiece.Value exactin "p" && theDirection.Value=5, Sequence(2),
+                                thePiece.Value exactin "p", Sequence(1),
+                                Sequence(7) // a slider - can move anywhere from 1 up to and including 7 squares
+                            ) As theSkid, // a.k.a., the slide distance
+        
+                            If(UDF_getSqNumRelativeToSqNum(theSqNum.Value,
+                                    Switch(true,
+                                        thePiece.Value="K", Index(K_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        thePiece.Value="Q", Index(Q_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        thePiece.Value="R", Index(R_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        thePiece.Value="B", Index(B_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        thePiece.Value="P", Index(P_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        thePiece.Value="p", Index(p_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        Index(N_X_DIRECTION, theDirection.Value).Value * theSkid.Value
+                                    ),
+                                    Switch(true,
+                                        thePiece.Value="K", Index(K_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        thePiece.Value="Q", Index(Q_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        thePiece.Value="R", Index(R_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        thePiece.Value="B", Index(B_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        thePiece.Value="P", Index(P_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        thePiece.Value="p", Index(p_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                        Index(N_Y_DIRECTION, theDirection.Value).Value * theSkid.Value
+                                    ))<>EMPTY_SQUARE_NUM,
+                                // THEN - this square is on the board add it to list of possible moves
+                                Switch(true,
+                                    thePiece.Value="P" && UDF_getRankFromSqNum(theSqNum.Value)<>2 && theSkid.Value=2,
+                                        // WHITE PAWN can only move forward 2 squares when on the 2nd rank
+                                        Blank(),
+                                    thePiece.Value="P" && UDF_getRankFromSqNum(theSqNum.Value)=1,
+                                        // invalid position WHITE PAWN can not ever exist on 1st rank
+                                        Blank(),
+                                    thePiece.Value="p" && UDF_getRankFromSqNum(theSqNum.Value)<>7 && theSkid.Value=2,
+                                        // BLACK PAWN can only move forward 2 squares when on the 7th rank
+                                        Blank(),
+                                    thePiece.Value="p" && UDF_getRankFromSqNum(theSqNum.Value)=8,
+                                        // invalid position BLACK PAWN can not ever exist on 8th rank
+                                        Blank(),
+        
+                                    // default add move(s) to collection
+                                    ForAll (
+                                        Switch(true,
+                                            thePiece.Value exactin "P" && UDF_getRankFromSqNum(theSqNum.Value)=7, ["q","r","b","n"], // promotion possibilities
+                                            thePiece.Value exactin "p" && UDF_getRankFromSqNum(theSqNum.Value)=2, ["q","r","b","n"], // promotion possibilities
+        
+                                            // default
+                                            [""] // no promotion available
+                                        ) As thePromo,
+        
+                                        // default add move to collection
+                                        Collect(colPF_LEGAL_MOVES, 
+                                            { pieceUpper: thePiece.Value, sqNum: theSqNum.Value, sqName: UDF_sqNumToSqName(theSqNum.Value), castle: "-", eligibleSqNum: 
+                                                UDF_getSqNumRelativeToSqNum(theSqNum.Value,
+                                                    Switch(true,
+                                                        thePiece.Value="K", Index(K_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        thePiece.Value="Q", Index(Q_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        thePiece.Value="R", Index(R_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        thePiece.Value="B", Index(B_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        thePiece.Value="P", Index(P_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        thePiece.Value="p", Index(p_X_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        Index(N_X_DIRECTION, theDirection.Value).Value * theSkid.Value
+                                                    ),
+                                                    Switch(true,
+                                                        thePiece.Value="K", Index(K_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        thePiece.Value="Q", Index(Q_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        thePiece.Value="R", Index(R_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        thePiece.Value="B", Index(B_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        thePiece.Value="P", Index(P_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        thePiece.Value="p", Index(p_Y_DIRECTION, theDirection.Value).Value * theSkid.Value,
+                                                        Index(N_Y_DIRECTION, theDirection.Value).Value * theSkid.Value
+                                                    )
+                                                ),
+                                                eligibleSqName: thePromo.Value,
+                                                slideOvers:     "",
+                                                theDirection:   theDirection.Value,
+                                                theDistance:    theSkid.Value
+                                            }
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
+        
+        // Add castle moves
+        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 60, sqName: "e1", castle: "K", moveDirection: 3, eligibleSqNum: 62, eligibleSqName: "", slideOvers: "" });
+        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 60, sqName: "e1", castle: "Q", moveDirection: 7, eligibleSqNum: 58, eligibleSqName: "", slideOvers: "" });
+        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 4, sqName: "e8", castle: "k", moveDirection: 3, eligibleSqNum: 6, eligibleSqName: "", slideOvers: "" });
+        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 4, sqName: "e8", castle: "q", moveDirection: 7, eligibleSqNum: 2, eligibleSqName: "", slideOvers: "" });
+        
+        UpdateIf(colPF_LEGAL_MOVES, sqNum<>EMPTY_SQUARE_NUM, {
+            eligibleSqName: UDF_sqNumToSqName(eligibleSqNum) & eligibleSqName
+        });
+        
+        UpdateIf(colPF_LEGAL_MOVES, sqNum<>EMPTY_SQUARE_NUM && pieceUpper in "R", {
+            slideOvers:
+                        Concat(
+                            ForAll(
+                                Sequence(
+                                    Abs((sqNum-eligibleSqNum)/Index(ROOK_ONESQUARE_MOVE_TABLE, moveDirection).Value)-1,
+                                    sqNum + Index(ROOK_ONESQUARE_MOVE_TABLE, moveDirection).Value,
+                                    Index(ROOK_ONESQUARE_MOVE_TABLE, moveDirection).Value
+                                ) As aSlideOver,
+        
+                                UDF_sqNumToSqName(aSlideOver.Value)
+                            ),
+                            Value, " "
+                        )
+        });
+        
+        UpdateIf(colPF_LEGAL_MOVES, sqNum<>EMPTY_SQUARE_NUM && pieceUpper in "B", {
+            slideOvers:
+                        Concat(
+                            ForAll(
+                                Sequence(
+                                    Abs((sqNum-eligibleSqNum)/Index(BISHOP_ONESQUARE_MOVE_TABLE, moveDirection).Value)-1,
+                                    sqNum + Index(BISHOP_ONESQUARE_MOVE_TABLE, moveDirection).Value,
+                                    Index(BISHOP_ONESQUARE_MOVE_TABLE, moveDirection).Value
+                                ) As aSlideOver,
+        
+                                UDF_sqNumToSqName(aSlideOver.Value)
+                            ),
+                            Value, " "
+                        )
+        });
+        
+        UpdateIf(colPF_LEGAL_MOVES, sqNum<>EMPTY_SQUARE_NUM && pieceUpper in "Q", {
+            slideOvers:
+                        Concat(
+                            ForAll(
+                                Sequence(
+                                    Abs((sqNum-eligibleSqNum)/Index(QUEEN_ONESQUARE_MOVE_TABLE, moveDirection).Value)-1,
+                                    sqNum + Index(QUEEN_ONESQUARE_MOVE_TABLE, moveDirection).Value,
+                                    Index(QUEEN_ONESQUARE_MOVE_TABLE, moveDirection).Value
+                                ) As aSlideOver,
+        
+                                UDF_sqNumToSqName(aSlideOver.Value)
+                            ),
+                            Value, " "
+                        )
+        });
+        
+        UpdateIf(colPF_LEGAL_MOVES, 
+            sqNum<>EMPTY_SQUARE_NUM && pieceUpper exactin "P" && moveDirection=1 && UDF_getRankFromSqNum(sqNum)=2 && UDF_getRankFromSqNum(eligibleSqNum)=4, {
+                slideOvers:
+                            Concat(
+                                ForAll(
+                                    Sequence(
+                                        Abs((sqNum-eligibleSqNum)/Index(PAWN_UW_ONESQUARE_MOVE_TABLE, moveDirection).Value)-1,
+                                        sqNum + Index(PAWN_UW_ONESQUARE_MOVE_TABLE, moveDirection).Value,
+                                        Index(PAWN_UW_ONESQUARE_MOVE_TABLE, moveDirection).Value
+                                    ) As aSlideOver,
+        
+                                    UDF_sqNumToSqName(aSlideOver.Value)
+                                ),
+                                Value, " "
+                            )
+            }
+        );
+        
+        UpdateIf(colPF_LEGAL_MOVES, 
+            sqNum<>EMPTY_SQUARE_NUM && pieceUpper exactin "p" && moveDirection=5 && UDF_getRankFromSqNum(sqNum)=7 && UDF_getRankFromSqNum(eligibleSqNum)=5, {
+                slideOvers:
+                            Concat(
+                                ForAll(
+                                    Sequence(
+                                        Abs((sqNum-eligibleSqNum)/Index(PAWN_UB_ONESQUARE_MOVE_TABLE, moveDirection).Value)-1,
+                                        sqNum + Index(PAWN_UB_ONESQUARE_MOVE_TABLE, moveDirection).Value,
+                                        Index(PAWN_UB_ONESQUARE_MOVE_TABLE, moveDirection).Value
+                                    ) As aSlideOver,
+        
+                                    UDF_sqNumToSqName(aSlideOver.Value)
+                                ),
+                                Value, " "
+                            )
+            }
+        );
+        
+        Set(gblPF_UI_StatusText, "Started...");
+        
+        
+        
+        // end of Perty Fish App.OnStart ------------------------------------------------------------------------
+    StartScreen: =Chess_Board
+    Theme: =PowerAppsTheme
+
+    Host As hostControl.DefaultHostControlVariant:
+        OnCancel: =false
+        OnEdit: =false
+        OnNew: =false
+        OnSave: =false
+        OnView: =false
+
