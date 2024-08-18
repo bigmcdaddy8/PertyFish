@@ -3455,7 +3455,7 @@ Chess_Board As screen:
                                 LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID) As theD0ParentNode,
                     
                                 If(!IsBlank(theD0ParentNode),
-                                    Set(gblPF_UI_GamePhase, "Opening"),
+                                    Set(gblPF_UI_GamePhase, "OPENING"),
                                     Set(gblPF_UI_GamePhase, "")
                                 )
                             )
