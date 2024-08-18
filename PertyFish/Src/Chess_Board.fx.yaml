@@ -3484,9 +3484,15 @@ Chess_Board As screen:
                                 });
                                 Select(btnCheckTestResults)
                             )
-                        ),
+                        );
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " btnProcessGame.OnSelect(): DEBUG breakpoint 0001"
+                        }),
                     
                         // ELSE
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " btnProcessGame.OnSelect(): DEBUG breakpoint 0002  PAUSED"
+                        });
                         With(
                             LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                     
@@ -3505,6 +3511,12 @@ Chess_Board As screen:
                             )
                         )
                     );
+                    
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                        " btnProcessGame.OnSelect(): DEBUG breakpoint 0003  exiting"
+                    });
+                    
+                    
                     
                     
                 Text: ="Button"
