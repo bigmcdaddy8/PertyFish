@@ -2836,6 +2836,7 @@ Chess_Board As screen:
                                                 );
                     
                                                 comChessEngineFunctionsLocalLibrary.fEvaluateMove(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID);
+                                                
                     
                                                 With(
                                                     LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID) As theCurrentNode,

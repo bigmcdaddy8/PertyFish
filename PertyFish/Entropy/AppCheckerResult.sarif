@@ -65,7 +65,7 @@
                 },
                 "region": {
                   "charLength": 441,
-                  "charOffset": 130258,
+                  "charOffset": 130287,
                   "snippet": {
                     "text": "UDF_isSqNumAttacked(\n                                            // THEN\n                                            UDF_FEN_TO_BOARD(aD1Node.postMoveFEN),\n                                            UDF_SearchBoardForPiece(UDF_FEN_TO_BOARD(aD1Node.postMoveFEN), UDF_getACPieceABBR(aD1Node.postMoveFEN,\"K\")),\n                                            UDF_FEN_TO_INACTIVE_COLOR(aD1Node.postMoveFEN)\n                                        )"
                   }
@@ -105,7 +105,7 @@
                 },
                 "region": {
                   "charLength": 19,
-                  "charOffset": 158619,
+                  "charOffset": 158648,
                   "snippet": {
                     "text": "btnCheckTestResults"
                   }
@@ -145,7 +145,7 @@
                 },
                 "region": {
                   "charLength": 6,
-                  "charOffset": 158612,
+                  "charOffset": 158641,
                   "snippet": {
                     "text": "Select"
                   }
@@ -1176,36 +1176,6 @@
               },
               "properties": {
                 "member": "gblPF_TMP_Text05",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_DEBUG_EVAL",
                 "module": "App",
                 "type": "App"
               }

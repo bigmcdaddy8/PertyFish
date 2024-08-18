@@ -1,5 +1,6 @@
 {
   "ComponentIndexes": {
+    "comChessEngineFunctions": 4,
     "comUtilityFunctions": 3,
     "comUtilityFunctionsLibrary": 3
   },
@@ -15,6 +16,7 @@
     "btnStartGameFromBeginning": 43,
     "btnStartGameFromFEN": 46,
     "Chess_Board": 5,
+    "comChessEngineFunctions": 67,
     "comUtilityFunctions": 4,
     "comUtilityFunctionsLibrary": 66,
     "conChessBoard": 21,
@@ -72,6 +74,10 @@
     "UsingComponents": 65
   },
   "FunctionParamsInvariantScripts": {
+    "comChessEngineFunctions.fME_EvaluateMove_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ],
     "comUtilityFunctions.fUtilInitData_pInitType": [
       "100",
       "0"
@@ -83,16 +89,18 @@
       "0"
     ]
   },
-  "HeaderLastSavedDateTimeUTC": "08/18/2024 13:39:54",
+  "HeaderLastSavedDateTimeUTC": "08/18/2024 13:54:06",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,
   "LocalResourceFileNames": {},
   "LocalResourceRootPaths": {},
   "OrderComponentMetadata": {
+    "8c2bb0b54c6149c580a48882153f6ad1": 1,
     "b953a316546441b9933cc2e2000b7cbb": 0
   },
   "OrderComponentTemplate": {
+    "8c2bb0b54c6149c580a48882153f6ad1": 1,
     "b953a316546441b9933cc2e2000b7cbb": 0
   },
   "OrderDataSource": {
@@ -122,6 +130,7 @@
     "btnStartGameFromBeginning": {},
     "btnStartGameFromFEN": {},
     "Chess_Board": {},
+    "comChessEngineFunctions": {},
     "comUtilityFunctions": {},
     "comUtilityFunctionsLibrary": {},
     "conChessBoard": {},
@@ -191,6 +200,7 @@
     "btnStartGameFromBeginning": 40,
     "btnStartGameFromFEN": 41,
     "Chess_Board": 0,
+    "comChessEngineFunctions": 0,
     "comUtilityFunctions": 0,
     "comUtilityFunctionsLibrary": 58,
     "conChessBoard": 15,
