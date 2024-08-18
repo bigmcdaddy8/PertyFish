@@ -766,8 +766,6 @@ Chess_Board As screen:
                         
                         UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                             uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
-                                        //UI_ready4Input:     false,
-                                        //UI_sourceSqNum:     EMPTY_SQUARE_NUM,
                                         statusText:         "Game in progress..." ,
                                         statusFill:         COLOR_GREENish,
                                         diagnosticText:     If(radPlayerColor.Selected.Value="White" || radPlayerColor.Selected.Value="Both",

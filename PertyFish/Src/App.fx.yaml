@@ -186,7 +186,6 @@ App As appinfo:
             uiData:             PF_UI_DATA_RECORD
         };
         
-        
         // the multiplier for a one-square move/jump in each direction
         KING_ONESQUARE_MOVE_TABLE=[ -8, -7,  1,  9,  8,  7, -1, -9];
         QUEEN_ONESQUARE_MOVE_TABLE=[ -8, -7,  1,  9,  8,  7, -1, -9];
