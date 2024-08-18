@@ -102,7 +102,7 @@
       "zeroalltabindexes": true
     },
     "Author": "",
-    "BindingErrorCount": 0,
+    "BindingErrorCount": 327,
     "ContainsThirdPartyPcfControls": false,
     "DefaultConnectedDataSourceMaxGetRowsCount": 500,
     "DocumentAppType": "DesktopOrTablet",
@@ -115,7 +115,7 @@
     "DocumentType": "App",
     "EnableInstrumentation": false,
     "FileID": "24e9e9a6-36a0-4873-b05c-7f8e704ee8f1",
-    "Id": "24e9e9a6-36a0-4873-b05c-7f8e704ee8f1",
+    "Id": "d06e00cc-a857-4f26-85dc-6a1ef16b44eb",
     "InstrumentationKey": "",
     "LocalDatabaseReferences": "",
     "ManualOfflineProfileId": "",
@@ -137,6 +137,7 @@
   },
   "ScreenOrder": [
     "Chess_Board",
-    "Logging_Screen"
+    "Logging_Screen",
+    "UsingComponents"
   ]
 }

@@ -75,6 +75,29 @@ App As appinfo:
             is75MoveDraw:               false
         };
         
+        EVAL_RECORD_PF={
+            centipawn:      0,
+            heuristic01:    0,
+            heuristic02:    0,
+            heuristic03:    0,
+            heuristic04:    0,
+            heuristic05:    0,
+            heuristic06:    0,
+            heuristic07:    0,
+            heuristic08:    0,
+            heuristic09:    0,
+            heuristic10:    0,
+            heuristic11:    0,
+            heuristic12:    0,
+            heuristic13:    0,
+            heuristic14:    0,
+            heuristic15:    0,
+            heuristic16:    0,
+            heuristic17:    0,
+            heuristic18:    0,
+            heuristic19:    0
+        };
+        
         NODE_RECORD_PF={
             nodeID:                             EMPTY_NODE_ID,
             parentNodeID:                       EMPTY_NODE_ID,
@@ -96,7 +119,8 @@ App As appinfo:
             postMovePINs:                       "",
             postMovePINDirections:              "",
             postMoveActiveKingDangerBoard:      EMPTY_BOARD,
-            postMoveGameStatus:                 GAME_STATUS_RECORD_PF
+            postMoveGameStatus:                 GAME_STATUS_RECORD_PF,
+            postMoveEvalRecord:                 EVAL_RECORD_PF
         };
         
         PF_CHESS_ENGINE_DATA_RECORD={

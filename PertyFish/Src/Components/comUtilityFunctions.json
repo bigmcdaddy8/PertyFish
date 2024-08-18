@@ -1,0 +1,136 @@
+{
+  "ComponentAllowCustomization": true,
+  "ComponentChangedSinceFileImport": true,
+  "ComponentDefinitionInfo": {
+    "AllowAccessToGlobals": true,
+    "Children": [],
+    "ControlPropertyState": [
+      "Fill",
+      "Height",
+      "Width",
+      "X",
+      "Y",
+      "ZIndex",
+      {
+        "AFDDataSourceName": "",
+        "AutoRuleBindingEnabled": false,
+        "AutoRuleBindingString": "100",
+        "InvariantPropertyName": "fUtilInitData_pInitType",
+        "IsLockable": false,
+        "NameMapSourceSchema": "?"
+      },
+      {
+        "AFDDataSourceName": "",
+        "AutoRuleBindingEnabled": false,
+        "AutoRuleBindingString": "",
+        "InvariantPropertyName": "fUtilInitData",
+        "IsLockable": false,
+        "NameMapSourceSchema": "?"
+      }
+    ],
+    "LastModifiedTimestamp": "638595423372323418",
+    "Name": "comUtilityFunctions",
+    "Rules": [
+      {
+        "Category": "Data",
+        "InvariantScript": "0",
+        "Property": "fUtilInitData_pInitType",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "1",
+        "Property": "ZIndex",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "0",
+        "Property": "Y",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "0",
+        "Property": "X",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "640",
+        "Property": "Width",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "640",
+        "Property": "Height",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "RGBA(0, 0, 0, 0)",
+        "Property": "Fill",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Behavior",
+        "InvariantScript": "Switch(true,\r\n    pInitType=-1,\r\n        Blank(),\r\n\r\n    pInitType=1,\r\n        Set(gblPF_UI_whiteCapturedPieces, \"\");\r\n        Set(gblPF_UI_blackCapturedPieces, \"\");\r\n        ClearCollect(colPF_MOVE_HISTORY, Table(NODE_RECORD_PF));\r\n        ClearCollect(colPF_MOVE_TREE, Table(NODE_RECORD_PF));\r\n        RemoveIf(colPF_MOVE_HISTORY, nodeID<0);\r\n        RemoveIf(colPF_MOVE_TREE, nodeID<0),\r\n\r\n    pInitType=100,\r\n        ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: \"\"})),\r\n\r\n    // default\r\n    Set(gblPF_TMR_RunNextTest, false);\r\n    Set(gblPF_TMR_MakeNextTestMove, false);\r\n    Set(gblPF_TMR_MakeNextGameMove, false);\r\n    Set(gblPF_PAUSE, false);\r\n    Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);\r\n    Set(gblPF_UI_Ready4Input, false);\r\n    Set(gblPF_UI_DisplayedBoard, EMPTY_BOARD);\r\n    Set(gblPF_UI_DisplayedFEN, \"\");\r\n    Set(gblPF_UI_GameTurn, WHITE);\r\n    Set(gblPF_UI_whiteCapturedPieces, \"\");\r\n    Set(gblPF_UI_blackCapturedPieces, \"\");\r\n    Set(gblPF_UI_MaterialValueOverall, 0);\r\n    Set(gblPF_UI_ThinkingText, \"\"),\r\n    Set(gblPF_UI_StatusText, \"Restarting...\"),\r\n    Set(gblPF_UI_DiagnosticText, \"\"),\r\n    Set(gblPF_UI_ModeFill, COLOR_WHITEish),\r\n    Set(gblPF_UI_ThinkingFill, COLOR_WHITEish),\r\n    Set(gblPF_UI_StatusFill, COLOR_WHITEish),\r\n    Set(gblPF_UI_DiagnosticFill, COLOR_WHITEish),\r\n\r\n    ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: \"\"}));\r\n    ClearCollect(colPF_DYNAMIC_DATA, Table(PF_DYNAMIC_DATA));\r\n    Clear(colPF_Timers);\r\n\r\n    UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {\r\n        uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {\r\n                    UI_ready4Input:     gblPF_UI_Ready4Input,\r\n                    UI_sourceSqNum:     gblPF_UI_selectedSqNum,\r\n                    statusText:         gblPF_UI_StatusText,\r\n                    statusFill:         gblPF_UI_StatusFill,\r\n                    diagnosticText:     gblPF_UI_DiagnosticText,\r\n                    diagnosticFill:     gblPF_UI_DiagnosticFill\r\n                })\r\n    });\r\n\r\n    Reset(galChessBoard);\r\n);\r\n\r\n\r\n",
+        "Property": "fUtilInitData",
+        "RuleProviderType": "System"
+      }
+    ]
+  },
+  "ComponentManifest": {
+    "AllowAccessToGlobals": true,
+    "AllowCustomization": true,
+    "Description": "",
+    "Name": "comUtilityFunctions",
+    "TemplateGuid": "b953a316546441b9933cc2e2000b7cbb"
+  },
+  "ComponentType": "CanvasComponent",
+  "CustomGroupControlTemplateName": "",
+  "CustomProperties": [
+    {
+      "Category": 2,
+      "DisplayName": "fUtilInitData",
+      "Hidden": true,
+      "Name": "fUtilInitData",
+      "PropertyDataTypeKey": "Void",
+      "PropertyScopeKey": {
+        "PropertyScopeRuleNamespaceKey": "64",
+        "PropertyScopeRulesKey": [
+          {
+            "DisplayName": "fUtilInitData_pInitType",
+            "Name": "fUtilInitData_pInitType",
+            "PropertyDataTypeKey": "Number",
+            "ScopeVariableInfo": {
+              "DependencyType": "New",
+              "Description": "specify the initialization we want to do",
+              "IsRequired": true,
+              "ResolveExpands": false,
+              "ResolveSelects": false,
+              "ScopeVariableName": "pInitType"
+            },
+            "Tooltip": "specify the initialization we want to do",
+            "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Number\",\"EnumString\":\"\",\"Type\":[]}}"
+          }
+        ]
+      },
+      "Tooltip": "intiialize data",
+      "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Void\",\"EnumString\":\"\",\"Type\":[]}}"
+    }
+  ],
+  "FirstParty": true,
+  "Id": "http://microsoft.com/appmagic/Component",
+  "IsComponentLocked": false,
+  "IsComponentTemplate": true,
+  "IsCustomGroupControlTemplate": false,
+  "IsPcfControl": false,
+  "IsPremiumPcfControl": false,
+  "IsWidgetTemplate": false,
+  "LastModifiedTimestamp": "638595423372323418",
+  "Name": "b953a316546441b9933cc2e2000b7cbb",
+  "OverridableProperties": {},
+  "Version": "1.0"
+}
