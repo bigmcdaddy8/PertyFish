@@ -750,10 +750,10 @@ App As appinfo:
         );
         
         // Add castle moves
-        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 60, sqName: "e1", castle: "K", moveDirection: 3, eligibleSqNum: 62, eligibleSqName: "", slideOvers: "" });
-        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 60, sqName: "e1", castle: "Q", moveDirection: 7, eligibleSqNum: 58, eligibleSqName: "", slideOvers: "" });
-        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 4, sqName: "e8", castle: "k", moveDirection: 3, eligibleSqNum: 6, eligibleSqName: "", slideOvers: "" });
-        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 4, sqName: "e8", castle: "q", moveDirection: 7, eligibleSqNum: 2, eligibleSqName: "", slideOvers: "" });
+        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 60, sqName: "e1", castle: "K", theDirection: 3, eligibleSqNum: 62, eligibleSqName: "", slideOvers: "" });
+        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 60, sqName: "e1", castle: "Q", theDirection: 7, eligibleSqNum: 58, eligibleSqName: "", slideOvers: "" });
+        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 4, sqName: "e8", castle: "k", theDirection: 3, eligibleSqNum: 6, eligibleSqName: "", slideOvers: "" });
+        Collect(colPF_LEGAL_MOVES, { pieceUpper: "K", sqNum: 4, sqName: "e8", castle: "q", theDirection: 7, eligibleSqNum: 2, eligibleSqName: "", slideOvers: "" });
         
         UpdateIf(colPF_LEGAL_MOVES, sqNum<>EMPTY_SQUARE_NUM, {
             eligibleSqName: UDF_sqNumToSqName(eligibleSqNum) & eligibleSqName
@@ -764,9 +764,9 @@ App As appinfo:
                         Concat(
                             ForAll(
                                 Sequence(
-                                    Abs((sqNum-eligibleSqNum)/Index(ROOK_ONESQUARE_MOVE_TABLE, moveDirection).Value)-1,
-                                    sqNum + Index(ROOK_ONESQUARE_MOVE_TABLE, moveDirection).Value,
-                                    Index(ROOK_ONESQUARE_MOVE_TABLE, moveDirection).Value
+                                    Abs((sqNum-eligibleSqNum)/Index(ROOK_ONESQUARE_MOVE_TABLE, theDirection).Value)-1,
+                                    sqNum + Index(ROOK_ONESQUARE_MOVE_TABLE, theDirection).Value,
+                                    Index(ROOK_ONESQUARE_MOVE_TABLE, theDirection).Value
                                 ) As aSlideOver,
         
                                 UDF_sqNumToSqName(aSlideOver.Value)
@@ -780,9 +780,9 @@ App As appinfo:
                         Concat(
                             ForAll(
                                 Sequence(
-                                    Abs((sqNum-eligibleSqNum)/Index(BISHOP_ONESQUARE_MOVE_TABLE, moveDirection).Value)-1,
-                                    sqNum + Index(BISHOP_ONESQUARE_MOVE_TABLE, moveDirection).Value,
-                                    Index(BISHOP_ONESQUARE_MOVE_TABLE, moveDirection).Value
+                                    Abs((sqNum-eligibleSqNum)/Index(BISHOP_ONESQUARE_MOVE_TABLE, theDirection).Value)-1,
+                                    sqNum + Index(BISHOP_ONESQUARE_MOVE_TABLE, theDirection).Value,
+                                    Index(BISHOP_ONESQUARE_MOVE_TABLE, theDirection).Value
                                 ) As aSlideOver,
         
                                 UDF_sqNumToSqName(aSlideOver.Value)
@@ -796,9 +796,9 @@ App As appinfo:
                         Concat(
                             ForAll(
                                 Sequence(
-                                    Abs((sqNum-eligibleSqNum)/Index(QUEEN_ONESQUARE_MOVE_TABLE, moveDirection).Value)-1,
-                                    sqNum + Index(QUEEN_ONESQUARE_MOVE_TABLE, moveDirection).Value,
-                                    Index(QUEEN_ONESQUARE_MOVE_TABLE, moveDirection).Value
+                                    Abs((sqNum-eligibleSqNum)/Index(QUEEN_ONESQUARE_MOVE_TABLE, theDirection).Value)-1,
+                                    sqNum + Index(QUEEN_ONESQUARE_MOVE_TABLE, theDirection).Value,
+                                    Index(QUEEN_ONESQUARE_MOVE_TABLE, theDirection).Value
                                 ) As aSlideOver,
         
                                 UDF_sqNumToSqName(aSlideOver.Value)
@@ -808,14 +808,14 @@ App As appinfo:
         });
         
         UpdateIf(colPF_LEGAL_MOVES, 
-            sqNum<>EMPTY_SQUARE_NUM && pieceUpper exactin "P" && moveDirection=1 && UDF_getRankFromSqNum(sqNum)=2 && UDF_getRankFromSqNum(eligibleSqNum)=4, {
+            sqNum<>EMPTY_SQUARE_NUM && pieceUpper exactin "P" && theDirection=1 && UDF_getRankFromSqNum(sqNum)=2 && UDF_getRankFromSqNum(eligibleSqNum)=4, {
                 slideOvers:
                             Concat(
                                 ForAll(
                                     Sequence(
-                                        Abs((sqNum-eligibleSqNum)/Index(PAWN_UW_ONESQUARE_MOVE_TABLE, moveDirection).Value)-1,
-                                        sqNum + Index(PAWN_UW_ONESQUARE_MOVE_TABLE, moveDirection).Value,
-                                        Index(PAWN_UW_ONESQUARE_MOVE_TABLE, moveDirection).Value
+                                        Abs((sqNum-eligibleSqNum)/Index(PAWN_UW_ONESQUARE_MOVE_TABLE, theDirection).Value)-1,
+                                        sqNum + Index(PAWN_UW_ONESQUARE_MOVE_TABLE, theDirection).Value,
+                                        Index(PAWN_UW_ONESQUARE_MOVE_TABLE, theDirection).Value
                                     ) As aSlideOver,
         
                                     UDF_sqNumToSqName(aSlideOver.Value)
@@ -826,14 +826,14 @@ App As appinfo:
         );
         
         UpdateIf(colPF_LEGAL_MOVES, 
-            sqNum<>EMPTY_SQUARE_NUM && pieceUpper exactin "p" && moveDirection=5 && UDF_getRankFromSqNum(sqNum)=7 && UDF_getRankFromSqNum(eligibleSqNum)=5, {
+            sqNum<>EMPTY_SQUARE_NUM && pieceUpper exactin "p" && theDirection=5 && UDF_getRankFromSqNum(sqNum)=7 && UDF_getRankFromSqNum(eligibleSqNum)=5, {
                 slideOvers:
                             Concat(
                                 ForAll(
                                     Sequence(
-                                        Abs((sqNum-eligibleSqNum)/Index(PAWN_UB_ONESQUARE_MOVE_TABLE, moveDirection).Value)-1,
-                                        sqNum + Index(PAWN_UB_ONESQUARE_MOVE_TABLE, moveDirection).Value,
-                                        Index(PAWN_UB_ONESQUARE_MOVE_TABLE, moveDirection).Value
+                                        Abs((sqNum-eligibleSqNum)/Index(PAWN_UB_ONESQUARE_MOVE_TABLE, theDirection).Value)-1,
+                                        sqNum + Index(PAWN_UB_ONESQUARE_MOVE_TABLE, theDirection).Value,
+                                        Index(PAWN_UB_ONESQUARE_MOVE_TABLE, theDirection).Value
                                     ) As aSlideOver,
         
                                     UDF_sqNumToSqName(aSlideOver.Value)

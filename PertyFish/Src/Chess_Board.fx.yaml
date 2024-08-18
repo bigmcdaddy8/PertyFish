@@ -1722,8 +1722,8 @@ Chess_Board As screen:
                                                     Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
                                                     UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) in "P"
                                                 ) && (
-                                                    Not(IsBlank(theEligibleMove.moveDirection)) &&
-                                                    Text(theEligibleMove.moveDirection) in "15"
+                                                    Not(IsBlank(theEligibleMove.theDirection)) &&
+                                                    Text(theEligibleMove.theDirection) in "15"
                                                 ),
                                                     // PAWN NORTH-SOUTH moves are non-attacking moves - skip over them
                                                     Blank(),
@@ -1859,7 +1859,7 @@ Chess_Board As screen:
                                                     Not(IsBlank(UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value))) &&
                                                     UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value) in "P"
                                                 ) &&
-                                                Text(theEligibleMove.moveDirection) in "15",
+                                                Text(theEligibleMove.theDirection) in "15",
                                                     // PAWN NORTH-SOUTH moves are non-attacking moves - skip over them
                                                     Blank(),
                     
@@ -2144,7 +2144,7 @@ Chess_Board As screen:
                                                     Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum))) &&
                                                     UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum) in "P"
                                                 ) && 
-                                                Text(theEligibleMove.moveDirection) in "15" &&
+                                                Text(theEligibleMove.theDirection) in "15" &&
                                                 UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
                                                     // FILTERED - PAWN can not move forward to an occupied square
                                                     Blank(),
@@ -2154,7 +2154,7 @@ Chess_Board As screen:
                                                     Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum))) &&
                                                     UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum) in "P"
                                                 ) && 
-                                                Text(theEligibleMove.moveDirection) in "2468" &&
+                                                Text(theEligibleMove.theDirection) in "2468" &&
                                                 (
                                                     UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>theEligibleMove.eligibleSqName
@@ -2188,13 +2188,13 @@ Chess_Board As screen:
                                                 theEligibleMove.sqName in theD0ParentNode.postMovePINs && // is this a PINNED piece
                                                 If(theEligibleMove.sqName in 
                                                     Switch(true,
-                                                        theEligibleMove.moveDirection=1 || theEligibleMove.moveDirection=5,
+                                                        theEligibleMove.theDirection=1 || theEligibleMove.theDirection=5,
                                                             theD0ParentNode.postMovePINs_N & " " & theD0ParentNode.postMovePINs_S,
-                                                        theEligibleMove.moveDirection=2 || theEligibleMove.moveDirection=6,
+                                                        theEligibleMove.theDirection=2 || theEligibleMove.theDirection=6,
                                                             theD0ParentNode.postMovePINs_NE & " " & theD0ParentNode.postMovePINs_SW,
-                                                        theEligibleMove.moveDirection=3 || theEligibleMove.moveDirection=7,
+                                                        theEligibleMove.theDirection=3 || theEligibleMove.theDirection=7,
                                                             theD0ParentNode.postMovePINs_E & " " & theD0ParentNode.postMovePINs_W,
-                                                        theEligibleMove.moveDirection=4 || theEligibleMove.moveDirection=8,
+                                                        theEligibleMove.theDirection=4 || theEligibleMove.theDirection=8,
                                                             theD0ParentNode.postMovePINs_SE & " " & theD0ParentNode.postMovePINs_NW,
                                                         " "
                                                     ),false,true
@@ -2484,8 +2484,8 @@ Chess_Board As screen:
                                                                     ) &&
                                                                     UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
-                                                                    Text(theEligibleMove.moveDirection) in "2468",
-                                                                        If(Text(theEligibleMove.moveDirection) in "28",
+                                                                    Text(theEligibleMove.theDirection) in "2468",
+                                                                        If(Text(theEligibleMove.theDirection) in "28",
                                                                             UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),
                                                                             UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1)
                                                                         ),
@@ -2504,8 +2504,8 @@ Chess_Board As screen:
                                                                     ) &&
                                                                     UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
-                                                                    Text(theEligibleMove.moveDirection) in "2468",
-                                                                        If(Text(theEligibleMove.moveDirection) in "28",
+                                                                    Text(theEligibleMove.theDirection) in "2468",
+                                                                        If(Text(theEligibleMove.theDirection) in "28",
                                                                             UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1)),
                                                                             UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1))
                                                                         ),
@@ -2524,10 +2524,10 @@ Chess_Board As screen:
                                                                     ) &&
                                                                     UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
-                                                                    Text(theEligibleMove.moveDirection) in "2468",
+                                                                    Text(theEligibleMove.theDirection) in "2468",
                                                                         UDF_getBitAtSqNum(
                                                                             UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), 
-                                                                            If(Text(theEligibleMove.moveDirection) in "28",
+                                                                            If(Text(theEligibleMove.theDirection) in "28",
                                                                                 UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),
                                                                                 UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1)
                                                                             )
@@ -2547,11 +2547,11 @@ Chess_Board As screen:
                                                                     ) &&
                                                                     UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
-                                                                    Text(theEligibleMove.moveDirection) in "2468",
+                                                                    Text(theEligibleMove.theDirection) in "2468",
                                                                         UDF_PieceToColor(
                                                                             UDF_getBitAtSqNum(
                                                                                 UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), 
-                                                                                If(Text(theEligibleMove.moveDirection) in "28",
+                                                                                If(Text(theEligibleMove.theDirection) in "28",
                                                                                     UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),
                                                                                     UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1)
                                                                                 )
@@ -2572,11 +2572,11 @@ Chess_Board As screen:
                                                                     ) &&
                                                                     UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
-                                                                    Text(theEligibleMove.moveDirection) in "2468",
+                                                                    Text(theEligibleMove.theDirection) in "2468",
                                                                         UDF_PieceToIcon(
                                                                             UDF_getBitAtSqNum(
                                                                                 UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), 
-                                                                                If(Text(theEligibleMove.moveDirection) in "28",
+                                                                                If(Text(theEligibleMove.theDirection) in "28",
                                                                                     UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),
                                                                                     UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1)
                                                                                 )
@@ -2626,14 +2626,14 @@ Chess_Board As screen:
                                                                     ) &&
                                                                     UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
-                                                                    Text(theEligibleMove.moveDirection) in "2468",
+                                                                    Text(theEligibleMove.theDirection) in "2468",
                                                                         UDF_setBitAtSqNum(
                                                                             UDF_makeMovePACN(
                                                                                 UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),
                                                                                 UDF_createPACN(theEligibleMove.sqName, theEligibleMove.eligibleSqName)
                                                                             ),
                                                                             EMPTY_FILLER_ABBR,
-                                                                            If(Text(theEligibleMove.moveDirection) in "28",
+                                                                            If(Text(theEligibleMove.theDirection) in "28",
                                                                                 UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),
                                                                                 UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1)
                                                                             )
