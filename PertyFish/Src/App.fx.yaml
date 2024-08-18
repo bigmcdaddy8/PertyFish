@@ -272,6 +272,22 @@ App As appinfo:
         UDF_getPromoPACN(pacn:Text):Text=If(Right(pacn,1) exactin "qrbn",Right(pacn,1),"");
         UDF_createPACN(sourceSqName:Text,targetSqName:Text):Text=sourceSqName & targetSqName; // NOTE: the promo code is part of the targetSqName in this case
         
+        UDF_makeMovePACN(board:Text,pacn:Text):Text=
+            UDF_setBitAtSqNum(
+                UDF_setBitAtSqNum(
+                    board,
+                    If(IsBlank(UDF_getPromoPACN(pacn)),
+                        // place original piece type on the target square
+                        UDF_getBitAtSqNum(board,UDF_sqNameToSqNum(UDF_getSourceSqNamePACN(pacn))),
+                        // place promo piece type on the target square
+                        If(UDF_getRankFromSqName(UDF_getTargetSqNamePACN(pacn))=1,UDF_getPromoPACN(pacn),Upper(UDF_getPromoPACN(pacn)))
+                    ), 
+                    UDF_sqNameToSqNum(UDF_getTargetSqNamePACN(pacn))
+                ), 
+                EMPTY_FILLER_ABBR, 
+                UDF_sqNameToSqNum(UDF_getSourceSqNamePACN(pacn))
+            );
+        
         UDF_getBoardDistance(refSqName1:Text, refSqName2:Text):Number=
         	Max(
                 Abs(UDF_getFileNumFromSqName(refSqName1)-UDF_getFileNumFromSqName(refSqName2)), 
