@@ -353,6 +353,12 @@ App As appinfo:
         UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),5).Value;  
         UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),6).Value;  
         
+        UDF_CREATE_CASTLE_RIGHTS(wks:Text,wqs:Text,bks:Text,bqs:Text):Text=
+        	If(IsBlank(Substitute(wks,"-","") & Substitute(wqs,"-","") & Substitute(bks,"-","") & Substitute(bqs,"-","")),
+        		"-",
+        		Substitute(wks,"-","") & Substitute(wqs,"-","") & Substitute(bks,"-","") & Substitute(bqs,"-","")
+        	);
+            
         UDF_CREATE_FEN(board:Text,activeColor:Number,castleAvail:Text,enpassantSqName:Text,halfmoveClock:Number,fullmoveClock:Number):Text=
             UDF_BOARD_TO_FEN_PIECE_PLACEMENT(board) & " " & If(activeColor=WHITE,"w","b") & " " & 
             Substitute(Substitute(Substitute(castleAvail, "----", "-"),"---", "-"), "--", "-") &
