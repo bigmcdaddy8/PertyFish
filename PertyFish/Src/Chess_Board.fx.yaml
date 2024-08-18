@@ -1237,7 +1237,7 @@ Chess_Board As screen:
                         );
                      */
                                 If(!IsBlank(theD0ParentNode),
-                                    Set(gblPF_UI_GamePhase, "Opening"),
+                                    Set(gblPF_UI_GamePhase, "OPENING"),
                                     Set(gblPF_UI_GamePhase, "")
                                 )
                             )
