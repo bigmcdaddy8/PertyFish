@@ -1131,13 +1131,14 @@ Chess_Board As screen:
                     AutoPause: =false
                     DisplayMode: =DisplayMode.View
                     Duration: =If(radPlayerColor.SelectedText.Value="Neither",3000,500)
+                    Height: =27
                     OnTimerEnd: |-
                         =If(Mod(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.moveNumber,3)=0,
                             Clear(colPF_logs)
                         );
                         
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " tmrMakeNextGameMove_CB.OnTimerEnd(): entered gblPF_TMR_MakeNextGameMove: " & gblPF_TMR_MakeNextGameMove
+                            " tmrMakeNextGameMove.OnTimerEnd(): entered gblPF_TMR_MakeNextGameMove: " & gblPF_TMR_MakeNextGameMove
                         });
                         
                         Set(gblPF_TMR_MakeNextGameMove, false);
@@ -1162,14 +1163,14 @@ Chess_Board As screen:
                                     )
                                 );
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
-                                    "tmrMakeNextGameMove_CB.OnTimerEnd(): calling Select(btnProcessGame_CB)"
+                                    "tmrMakeNextGameMove.OnTimerEnd(): calling Select(btnProcessGame)"
                                 });
-                                Select(btnProcessGame_CB);
+                                Select(btnProcessGame);
                             )
                         );
                         
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
-                            "tmrMakeNextGameMove_CB.OnTimerEnd(): exiting gblPF_TMR_MakeNextGameMove: " & gblPF_TMR_MakeNextGameMove
+                            "tmrMakeNextGameMove.OnTimerEnd(): exiting gblPF_TMR_MakeNextGameMove: " & gblPF_TMR_MakeNextGameMove
                         });
                     OnTimerStart: |-
                         =Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
@@ -1180,15 +1181,18 @@ Chess_Board As screen:
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                             " tmrMakeNextGameMove_CB.OnTimerStart(): exiting gblPF_TMR_MakeNextTestMove: " & gblPF_TMR_MakeNextTestMove
                         });
+                    Size: =10
                     Start: =gblPF_TMR_MakeNextGameMove
-                    X: =120
-                    Y: =120
+                    Width: =98
+                    X: =12
+                    Y: =471
                     ZIndex: =12
 
                 radPlayerColor As radio:
                     Default: ="White"
                     Height: =43
                     Items: =["White", "Black", "Both", "Neither"]
+                    Layout: =Layout.Horizontal
                     RadioSize: =15
                     Size: =10
                     Width: =348
@@ -1197,8 +1201,8 @@ Chess_Board As screen:
                     ZIndex: =13
 
             conControlsSharedArea As groupContainer.manualLayoutContainer:
-                Width: =466
-                Y: =80
+                Height: =50
+                Width: =Parent.Width
                 ZIndex: =3
 
                 radMode As radio:

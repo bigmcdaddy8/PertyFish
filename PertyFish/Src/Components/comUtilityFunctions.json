@@ -28,7 +28,7 @@
         "NameMapSourceSchema": "?"
       }
     ],
-    "LastModifiedTimestamp": "638595423372323418",
+    "LastModifiedTimestamp": "638595815409206828",
     "Name": "comUtilityFunctions",
     "Rules": [
       {
@@ -41,31 +41,31 @@
         "Category": "Design",
         "InvariantScript": "1",
         "Property": "ZIndex",
-        "RuleProviderType": "System"
+        "RuleProviderType": "Unknown"
       },
       {
         "Category": "Design",
         "InvariantScript": "0",
         "Property": "Y",
-        "RuleProviderType": "System"
+        "RuleProviderType": "Unknown"
       },
       {
         "Category": "Design",
         "InvariantScript": "0",
         "Property": "X",
-        "RuleProviderType": "System"
+        "RuleProviderType": "Unknown"
       },
       {
         "Category": "Design",
         "InvariantScript": "640",
         "Property": "Width",
-        "RuleProviderType": "System"
+        "RuleProviderType": "Unknown"
       },
       {
         "Category": "Design",
         "InvariantScript": "640",
         "Property": "Height",
-        "RuleProviderType": "System"
+        "RuleProviderType": "Unknown"
       },
       {
         "Category": "Design",
@@ -75,7 +75,7 @@
       },
       {
         "Category": "Behavior",
-        "InvariantScript": "Switch(true,\r\n    pInitType=-1,\r\n        Blank(),\r\n\r\n    pInitType=1,\r\n        Set(gblPF_UI_whiteCapturedPieces, \"\");\r\n        Set(gblPF_UI_blackCapturedPieces, \"\");\r\n        ClearCollect(colPF_MOVE_HISTORY, Table(NODE_RECORD_PF));\r\n        ClearCollect(colPF_MOVE_TREE, Table(NODE_RECORD_PF));\r\n        RemoveIf(colPF_MOVE_HISTORY, nodeID<0);\r\n        RemoveIf(colPF_MOVE_TREE, nodeID<0),\r\n\r\n    pInitType=100,\r\n        ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: \"\"})),\r\n\r\n    // default\r\n    Set(gblPF_TMR_RunNextTest, false);\r\n    Set(gblPF_TMR_MakeNextTestMove, false);\r\n    Set(gblPF_TMR_MakeNextGameMove, false);\r\n    Set(gblPF_PAUSE, false);\r\n    Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);\r\n    Set(gblPF_UI_Ready4Input, false);\r\n    Set(gblPF_UI_DisplayedBoard, EMPTY_BOARD);\r\n    Set(gblPF_UI_DisplayedFEN, \"\");\r\n    Set(gblPF_UI_GameTurn, WHITE);\r\n    Set(gblPF_UI_whiteCapturedPieces, \"\");\r\n    Set(gblPF_UI_blackCapturedPieces, \"\");\r\n    Set(gblPF_UI_MaterialValueOverall, 0);\r\n    Set(gblPF_UI_ThinkingText, \"\"),\r\n    Set(gblPF_UI_StatusText, \"Restarting...\"),\r\n    Set(gblPF_UI_DiagnosticText, \"\"),\r\n    Set(gblPF_UI_ModeFill, COLOR_WHITEish),\r\n    Set(gblPF_UI_ThinkingFill, COLOR_WHITEish),\r\n    Set(gblPF_UI_StatusFill, COLOR_WHITEish),\r\n    Set(gblPF_UI_DiagnosticFill, COLOR_WHITEish),\r\n\r\n    ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: \"\"}));\r\n    ClearCollect(colPF_DYNAMIC_DATA, Table(PF_DYNAMIC_DATA));\r\n    Clear(colPF_Timers);\r\n\r\n    UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {\r\n        uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {\r\n                    UI_ready4Input:     gblPF_UI_Ready4Input,\r\n                    UI_sourceSqNum:     gblPF_UI_selectedSqNum,\r\n                    statusText:         gblPF_UI_StatusText,\r\n                    statusFill:         gblPF_UI_StatusFill,\r\n                    diagnosticText:     gblPF_UI_DiagnosticText,\r\n                    diagnosticFill:     gblPF_UI_DiagnosticFill\r\n                })\r\n    });\r\n\r\n    Reset(galChessBoard);\r\n);\r\n\r\n\r\n",
+        "InvariantScript": "Switch(true,\n    pInitType=-1,\n        Blank(),\n\n    pInitType=1,\n        Set(gblPF_UI_whiteCapturedPieces, \"\");\n        Set(gblPF_UI_blackCapturedPieces, \"\");\n        ClearCollect(colPF_MOVE_HISTORY, Table(NODE_RECORD_PF));\n        ClearCollect(colPF_MOVE_TREE, Table(NODE_RECORD_PF));\n        RemoveIf(colPF_MOVE_HISTORY, nodeID<0);\n        RemoveIf(colPF_MOVE_TREE, nodeID<0),\n\n    pInitType=100,\n        ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: \"\"})),\n\n    // default\n    Set(gblPF_TMR_RunNextTest, false);\n    Set(gblPF_TMR_MakeNextTestMove, false);\n    Set(gblPF_TMR_MakeNextGameMove, false);\n    Set(gblPF_PAUSE, false);\n    Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);\n    Set(gblPF_UI_Ready4Input, false);\n    Set(gblPF_UI_DisplayedBoard, EMPTY_BOARD);\n    Set(gblPF_UI_DisplayedFEN, \"\");\n    Set(gblPF_UI_GameTurn, WHITE);\n    Set(gblPF_UI_whiteCapturedPieces, \"\");\n    Set(gblPF_UI_blackCapturedPieces, \"\");\n    Set(gblPF_UI_MaterialValueOverall, 0);\n    Set(gblPF_UI_ThinkingText, \"\"),\n    Set(gblPF_UI_StatusText, \"Restarting...\"),\n    Set(gblPF_UI_DiagnosticText, \"\"),\n    Set(gblPF_UI_ModeFill, COLOR_WHITEish),\n    Set(gblPF_UI_ThinkingFill, COLOR_WHITEish),\n    Set(gblPF_UI_StatusFill, COLOR_WHITEish),\n    Set(gblPF_UI_DiagnosticFill, COLOR_WHITEish),\n\n    ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: \"\"}));\n    ClearCollect(colPF_DYNAMIC_DATA, Table(PF_DYNAMIC_DATA));\n    Clear(colPF_Timers);\n\n    UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {\n        uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {\n                    UI_ready4Input:     gblPF_UI_Ready4Input,\n                    UI_sourceSqNum:     gblPF_UI_selectedSqNum,\n                    statusText:         gblPF_UI_StatusText,\n                    statusFill:         gblPF_UI_StatusFill,\n                    diagnosticText:     gblPF_UI_DiagnosticText,\n                    diagnosticFill:     gblPF_UI_DiagnosticFill\n                })\n    });\n\n    Reset(galChessBoard);\n);\n\n\n",
         "Property": "fUtilInitData",
         "RuleProviderType": "System"
       }
@@ -98,7 +98,7 @@
       "Name": "fUtilInitData",
       "PropertyDataTypeKey": "Void",
       "PropertyScopeKey": {
-        "PropertyScopeRuleNamespaceKey": "64",
+        "PropertyScopeRuleNamespaceKey": "4",
         "PropertyScopeRulesKey": [
           {
             "DisplayName": "fUtilInitData_pInitType",
@@ -129,7 +129,7 @@
   "IsPcfControl": false,
   "IsPremiumPcfControl": false,
   "IsWidgetTemplate": false,
-  "LastModifiedTimestamp": "638595423372323418",
+  "LastModifiedTimestamp": "638595815409206828",
   "Name": "b953a316546441b9933cc2e2000b7cbb",
   "OverridableProperties": {},
   "Version": "1.0"

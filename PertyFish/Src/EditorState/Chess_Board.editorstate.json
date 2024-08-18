@@ -602,7 +602,7 @@
       "MetaDataIDKey": "",
       "Name": "btnPause",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 0,
+      "ParentIndex": 1,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -668,17 +668,17 @@
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -1365,7 +1365,7 @@
       "MetaDataIDKey": "",
       "Name": "btnStartGameFromFEN",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 5,
+      "ParentIndex": 4,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -1431,17 +1431,17 @@
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -2217,7 +2217,7 @@
       "MetaDataIDKey": "",
       "Name": "conControlsDiagnostics",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 1,
+      "ParentIndex": 2,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -2371,7 +2371,7 @@
       "MetaDataIDKey": "",
       "Name": "conControlsGame",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 2,
+      "ParentIndex": 3,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -2495,9 +2495,30 @@
         "BorderStyle",
         "Fill",
         "X",
-        "Y",
-        "Width",
-        "Height",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "80",
+          "InvariantPropertyName": "Y",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "466",
+          "InvariantPropertyName": "Width",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "200",
+          "InvariantPropertyName": "Height",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "DisplayMode",
         "LayoutMode",
         "LayoutDirection",
@@ -2525,7 +2546,7 @@
       "MetaDataIDKey": "",
       "Name": "conControlsSharedArea",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 3,
+      "ParentIndex": 0,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -2606,17 +2627,17 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -2970,7 +2991,7 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -2980,12 +3001,12 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -3157,7 +3178,7 @@
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -3327,7 +3348,7 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -3337,7 +3358,7 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -4841,7 +4862,7 @@
         {
           "Category": "Design",
           "PropertyName": "TemplateSize",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -4856,7 +4877,7 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5025,7 +5046,7 @@
       "MetaDataIDKey": "",
       "Name": "lblBoardGamePhase",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 7,
+      "ParentIndex": 6,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -5046,7 +5067,7 @@
         {
           "Category": "Design",
           "PropertyName": "Size",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5086,12 +5107,12 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5106,7 +5127,7 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5116,7 +5137,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5330,7 +5351,7 @@
       "MetaDataIDKey": "",
       "Name": "lblBoardGamePhaseHeader",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 10,
+      "ParentIndex": 9,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -5351,7 +5372,7 @@
         {
           "Category": "Design",
           "PropertyName": "Size",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5391,12 +5412,12 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5411,7 +5432,7 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5421,7 +5442,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5635,7 +5656,7 @@
       "MetaDataIDKey": "",
       "Name": "lblBoardReadyForInput",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 9,
+      "ParentIndex": 8,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -5656,7 +5677,7 @@
         {
           "Category": "Design",
           "PropertyName": "Size",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5696,12 +5717,12 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5716,7 +5737,7 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -5726,7 +5747,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -6930,7 +6951,7 @@
         {
           "Category": "Design",
           "PropertyName": "Size",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -6970,7 +6991,7 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -6990,7 +7011,7 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -7000,7 +7021,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -7292,7 +7313,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -8464,7 +8485,7 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -8474,7 +8495,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -9364,7 +9385,7 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -9379,12 +9400,12 @@
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -9399,7 +9420,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -9424,7 +9445,7 @@
         {
           "Category": "Design",
           "PropertyName": "Size",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -9689,7 +9710,7 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -9709,7 +9730,7 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -9719,7 +9740,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -9933,7 +9954,7 @@
       "MetaDataIDKey": "",
       "Name": "lblSelectedSqNum",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 12,
+      "ParentIndex": 11,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -9954,7 +9975,7 @@
         {
           "Category": "Design",
           "PropertyName": "Size",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -9994,12 +10015,12 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -10014,7 +10035,7 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -10024,7 +10045,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -10238,7 +10259,7 @@
       "MetaDataIDKey": "",
       "Name": "lblSelectedSquareNumHeader",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 11,
+      "ParentIndex": 10,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -10259,7 +10280,7 @@
         {
           "Category": "Design",
           "PropertyName": "Size",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -10299,12 +10320,12 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -10319,7 +10340,7 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -10329,7 +10350,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -10889,7 +10910,7 @@
       "MetaDataIDKey": "",
       "Name": "lblStartingFEN",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 6,
+      "ParentIndex": 5,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -10970,7 +10991,7 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -10980,7 +11001,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -11240,7 +11261,7 @@
         {
           "Category": "Design",
           "PropertyName": "Size",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -11275,22 +11296,22 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -11400,7 +11421,7 @@
         {
           "Category": "Design",
           "PropertyName": "RadioSize",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Behavior",
@@ -11425,7 +11446,14 @@
         "RadioSelectionFill",
         "RadioBackgroundFill",
         "RadioBorderColor",
-        "Layout",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "Layout.Vertical",
+          "InvariantPropertyName": "Layout",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "BorderColor",
         "DisabledBorderColor",
         "BorderStyle",
@@ -11552,7 +11580,7 @@
         {
           "Category": "Design",
           "PropertyName": "Size",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -11587,22 +11615,22 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -11672,7 +11700,7 @@
         {
           "Category": "Design",
           "PropertyName": "Layout",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -11712,7 +11740,7 @@
         {
           "Category": "Design",
           "PropertyName": "RadioSize",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         }
       ],
       "StyleName": "defaultRadioStyle",
@@ -11748,14 +11776,49 @@
         "FontWeight",
         "Align",
         "VerticalAlign",
-        "X",
-        "Y",
-        "Width",
-        "Height",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "120",
+          "InvariantPropertyName": "X",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "120",
+          "InvariantPropertyName": "Y",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "160",
+          "InvariantPropertyName": "Width",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "40",
+          "InvariantPropertyName": "Height",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "ZIndex",
         "BorderThickness",
         "FocusedBorderThickness",
-        "Size",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "13",
+          "InvariantPropertyName": "Size",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         {
           "AFDDataSourceName": "",
           "AutoRuleBindingEnabled": false,
@@ -11808,7 +11871,7 @@
       "MetaDataIDKey": "",
       "Name": "tmrMakeNextGameMove",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 4,
+      "ParentIndex": 12,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -11834,7 +11897,7 @@
         {
           "Category": "Design",
           "PropertyName": "Size",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -11854,7 +11917,7 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -11864,7 +11927,7 @@
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -11874,12 +11937,12 @@
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -12068,7 +12131,7 @@
       "MetaDataIDKey": "",
       "Name": "txtStartingFEN",
       "OptimizeForDevices": "Off",
-      "ParentIndex": 8,
+      "ParentIndex": 7,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -12129,7 +12192,7 @@
         {
           "Category": "Design",
           "PropertyName": "Height",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -12139,12 +12202,12 @@
         {
           "Category": "Design",
           "PropertyName": "Width",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
           "PropertyName": "Y",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
@@ -12154,7 +12217,7 @@
         {
           "Category": "Design",
           "PropertyName": "X",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         },
         {
           "Category": "Design",
