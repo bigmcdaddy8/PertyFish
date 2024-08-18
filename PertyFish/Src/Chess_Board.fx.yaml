@@ -172,10 +172,11 @@ Chess_Board As screen:
                 Y: =40
                 ZIndex: =5
 
-                galChessBoard As gallery.galleryHorizontal:
+                galChessBoard As gallery.galleryVertical:
                     DelayItemLoading: =true
                     Height: =480
                     Items: =Sequence(64,0)
+                    Layout: =Layout.Vertical
                     LoadingSpinner: =LoadingSpinner.Data
                     ShowScrollbar: =false
                     TemplatePadding: =0
@@ -227,8 +228,10 @@ Chess_Board As screen:
                             )
                             
                         BorderThickness: =2
-                        Fill: |+
-                            =If(Mod(RoundDown(ThisItem.Value/8,0),2)=0,
+                        Fill: |
+                            =
+                            
+                            If(Mod(RoundDown(ThisItem.Value/8,0),2)=0,
                                 If(
                                     Or(RoundDown(Mod(ThisItem.Value,2),0),Mod(RoundDown(ThisItem.Value/8,0),2)),
                                     If(gblPF_UI_selectedSqNum=ThisItem.Value,SQUARE_DARK_COLOR_SELECTED,SQUARE_DARK_COLOR),
@@ -240,9 +243,41 @@ Chess_Board As screen:
                                     If(gblPF_UI_selectedSqNum=ThisItem.Value,SQUARE_DARK_COLOR_SELECTED,SQUARE_DARK_COLOR)
                                 )
                             )
+                            /*
+                            IfError(
+                                With(
+                                    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                             
+                                    If(Mod(RoundDown(ThisItem.Value/8,0),2)=0,
+                                        If(
+                                            Or(RoundDown(Mod(ThisItem.Value,2),0),Mod(RoundDown(ThisItem.Value/8,0),2)),
+                                            If(theData.uiData.UI_sourceSqNum=ThisItem.Value,SQUARE_DARK_COLOR_SELECTED,SQUARE_DARK_COLOR),
+                                            If(theData.uiData.UI_sourceSqNum=ThisItem.Value,SQUARE_LIGHT_COLOR_SELECTED,SQUARE_LIGHT_COLOR)
+                                        ),
+                                        If(
+                                            And(RoundDown(Mod(ThisItem.Value,2),0),Mod(RoundDown(ThisItem.Value/8,0),2)),
+                                            If(theData.uiData.UI_sourceSqNum=ThisItem.Value,SQUARE_LIGHT_COLOR_SELECTED,SQUARE_LIGHT_COLOR),
+                                            If(theData.uiData.UI_sourceSqNum=ThisItem.Value,SQUARE_DARK_COLOR_SELECTED,SQUARE_DARK_COLOR)
+                                        )
+                                    )
+                                ),
+                                If(Mod(RoundDown(ThisItem.Value/8,0),2)=0,
+                                    If(
+                                        Or(RoundDown(Mod(ThisItem.Value,2),0),Mod(RoundDown(ThisItem.Value/8,0),2)),
+                                        SQUARE_DARK_COLOR,
+                                        SQUARE_LIGHT_COLOR
+                                    ),
+                                    If(
+                                        And(RoundDown(Mod(ThisItem.Value,2),0),Mod(RoundDown(ThisItem.Value/8,0),2)),
+                                        SQUARE_LIGHT_COLOR,
+                                        SQUARE_DARK_COLOR
+                                    )
+                                )
+                            )
+                             */
+                        FocusedBorderThickness: =8
                         Height: =58
-                        HoverBorderColor: |
+                        HoverBorderColor: |-
                             =If(gblPF_UI_Ready4Input,
                                 // if the square is occupied by a piece of the active color change the border when hovered over
                                 With(
@@ -432,9 +467,9 @@ Chess_Board As screen:
                                                     });
                             
                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                        "lblSquare_BCB.OnSelect(): Use Case #3 (a.k.a., move to unoccupied square) calling Select(btnProcessGame_CB) "
+                                                        "lblSquare_BCB.OnSelect(): Use Case #3 (a.k.a., move to unoccupied square) calling Select(btnProcessGame) "
                                                     });
-                                                    // Select(btnProcessGame)
+                                                    Select(btnProcessGame)
                                                 )
                                             ),
                             
@@ -562,9 +597,9 @@ Chess_Board As screen:
                                                     });
                             
                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                        "lblSquare_BCB.OnSelect(): Use Case #7 (a.k.a., capture move) calling Select(btnProcessGame_CB) "
+                                                        "lblSquare_BCB.OnSelect(): Use Case #7 (a.k.a., capture move) calling Select(btnProcessGame) "
                                                     });
-                                                    // Select(btnProcessGame)
+                                                    Select(btnProcessGame)
                                                 )   
                                             )
                                     )
@@ -578,14 +613,13 @@ Chess_Board As screen:
                         PaddingRight: =0
                         PaddingTop: =1
                         Size: =24
-                        Text: |+
+                        Text: |
                             =UDF_PieceToIcon(
                                 UDF_getBitAtSqNum(
                                     gblPF_UI_DisplayedBoard, 
                                     ThisItem.Value
                                 )
                             )
-                            
                         Width: =58
                         Y: =2
                         ZIndex: =1
