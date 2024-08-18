@@ -2992,6 +2992,7 @@ Chess_Board As screen:
                                                     "#",
                     
                                                     // ELSE
+                    /*
                                                     If(
                                                         aD1Node.postMoveNumActiveChecks>0 ||
                                                         (
@@ -3002,6 +3003,10 @@ Chess_Board As screen:
                                                                 UDF_FEN_TO_INACTIVE_COLOR(aD1Node.postMoveFEN)
                                                             )
                                                         ),
+                                                        // THEN
+                                                        "+",
+                     */
+                                                    If(aD1Node.postMoveNumActiveChecks>0,
                                                         // THEN
                                                         "+",
                     
