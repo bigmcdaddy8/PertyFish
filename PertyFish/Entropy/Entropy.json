@@ -1,6 +1,7 @@
 {
   "ComponentIndexes": {
     "comChessEngineFunctions": 4,
+    "comChessEngineFunctionsLibrary": 4,
     "comUtilityFunctions": 3,
     "comUtilityFunctionsLibrary": 3
   },
@@ -17,6 +18,7 @@
     "btnStartGameFromFEN": 46,
     "Chess_Board": 5,
     "comChessEngineFunctions": 67,
+    "comChessEngineFunctionsLibrary": 68,
     "comUtilityFunctions": 4,
     "comUtilityFunctionsLibrary": 66,
     "conChessBoard": 21,
@@ -84,12 +86,16 @@
     ]
   },
   "FunctionParamsInvariantScriptsOnInstances": {
+    "comChessEngineFunctionsLibrary.fME_EvaluateMove_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ],
     "comUtilityFunctionsLibrary.fUtilInitData_pInitType": [
       "100",
       "0"
     ]
   },
-  "HeaderLastSavedDateTimeUTC": "08/18/2024 13:54:06",
+  "HeaderLastSavedDateTimeUTC": "08/18/2024 14:02:00",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,
@@ -131,6 +137,7 @@
     "btnStartGameFromFEN": {},
     "Chess_Board": {},
     "comChessEngineFunctions": {},
+    "comChessEngineFunctionsLibrary": {},
     "comUtilityFunctions": {},
     "comUtilityFunctionsLibrary": {},
     "conChessBoard": {},
@@ -201,6 +208,7 @@
     "btnStartGameFromFEN": 41,
     "Chess_Board": 0,
     "comChessEngineFunctions": 0,
+    "comChessEngineFunctionsLibrary": 59,
     "comUtilityFunctions": 0,
     "comUtilityFunctionsLibrary": 58,
     "conChessBoard": 15,
@@ -263,6 +271,7 @@
   "VolatileProperties": {
     "AnalysisLoadTime": 1.2863038,
     "ControlCount": {
+      "8c2bb0b54c6149c580a48882153f6ad1": 1,
       "b953a316546441b9933cc2e2000b7cbb": 2,
       "button": 8,
       "gallery": 7,

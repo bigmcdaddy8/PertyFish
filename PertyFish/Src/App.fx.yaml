@@ -550,6 +550,17 @@ App As appinfo:
                 false
             );
         
+        UDF_isSqNumAttackedBySqNum(attackingPiece:Text, attackingSqNum:Number, attackedSqNum:Number):Boolean=
+            With(
+                LookUp(colPF_LEGAL_MOVES,
+                    sqNum=attackingSqNum && 
+                    eligibleSqNum=attackedSqNum && 
+                    pieceUpper=attackingPiece
+                ) As theEligibleMove,
+        
+                If(IsBlank(theEligibleMove),false,true)
+            );
+        
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
