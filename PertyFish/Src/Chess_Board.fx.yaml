@@ -6,6 +6,7 @@ Chess_Board As screen:
         ZIndex: =1
 
         conChessBoardWithCoordinates As groupContainer.manualLayoutContainer:
+            BorderThickness: =2
             Height: =560
             Width: =560
             X: =10
@@ -589,70 +590,12 @@ Chess_Board As screen:
                         Y: =2
                         ZIndex: =1
 
-        conHeader As groupContainer.manualLayoutContainer:
-            Height: =120
-            Width: =Parent.Width
-            ZIndex: =2
-
-            lblHeaderGameTitle As label:
-                Align: =Align.Center
-                Color: =RGBA(221, 79, 14, 1)
-                Font: =Font.'Dancing Script'
-                Height: =55
-                Size: =34
-                Text: ="Perty Fish"
-                Width: =Parent.Width
-                ZIndex: =1
-
-            lblHeaderMode As label:
-                Fill: =gblPF_UI_ModeFill
-                Text: =gblPF_UI_ModeText
-                Width: =Parent.Width/2
-                Y: =lblHeaderGameTitle.Height
-                ZIndex: =2
-
-            lblHeaderThinking As label:
-                Fill: =gblPF_UI_ThinkingFill
-                Height: =lblHeaderMode.Height
-                Text: =gblPF_UI_ThinkingText
-                Width: =lblHeaderMode.Width
-                X: =lblHeaderMode.Width
-                Y: =lblHeaderMode.Y
-                ZIndex: =3
-
-            lblHeaderThinkingProgress As label:
-                Fill: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressFill
-                Height: =lblHeaderThinking.Height
-                Text: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressText
-                Visible: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressVisible
-                Width: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressWidth
-                X: =lblHeaderThinking.X
-                Y: =lblHeaderThinking.Y
-                ZIndex: =4
-
-            lblHeaderStatus As label:
-                Fill: =gblPF_UI_StatusFill
-                Text: =gblPF_UI_StatusText
-                Width: =lblHeaderMode.Width
-                X: =lblHeaderMode.X
-                Y: =lblHeaderMode.Y + lblHeaderMode.Height
-                ZIndex: =5
-
-            lblHeaderDiagnosticMsg As label:
-                Fill: =gblPF_UI_DiagnosticFill
-                Height: =lblHeaderMode.Height
-                Text: =gblPF_UI_DiagnosticText
-                Width: =lblHeaderMode.Width
-                X: =lblHeaderStatus.X + lblHeaderStatus.Width
-                Y: =lblHeaderStatus.Y
-                ZIndex: =6
-
         conScoreSheet As groupContainer.manualLayoutContainer:
             Height: =conChessBoardWithCoordinates.Height
             Width: =310
             X: =conChessBoardWithCoordinates.X + conChessBoardWithCoordinates.Width + 10
             Y: =conChessBoardWithCoordinates.Y
-            ZIndex: =3
+            ZIndex: =2
 
             galScoreSheetPGN As gallery.galleryVertical:
                 DelayItemLoading: =true
@@ -724,7 +667,7 @@ Chess_Board As screen:
             Width: =(conEntireScreen.X + conEntireScreen.Width) - conChessBoardWithCoordinates.Width - conScoreSheet.Width - 30
             X: =conScoreSheet.X + conScoreSheet.Width + 5
             Y: =conScoreSheet.Y
-            ZIndex: =4
+            ZIndex: =3
 
             conControlsDiagnostics As groupContainer.manualLayoutContainer:
                 Height: =Parent.Height-conControlsSharedArea.Height
@@ -814,6 +757,41 @@ Chess_Board As screen:
 
                 btnStartGameFromBeginning As button:
                     Height: =23
+                    OnSelect: |
+                        =comUtilityFunctionsLibrary.fUtilInitData(100);
+                        
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " btnStartGameFromBeginning.OnSelect(): entered player color is: " & radPlayerColor.Selected.Value
+                        });
+                        
+                        UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                            uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                        //UI_ready4Input:     false,
+                                        //UI_sourceSqNum:     EMPTY_SQUARE_NUM,
+                                        statusText:         "Game in progress..." ,
+                                        statusFill:         COLOR_GREENish,
+                                        diagnosticText:     If(radPlayerColor.Selected.Value="White" || radPlayerColor.Selected.Value="Both",
+                                                                "Player's Turn coming up",
+                                                                "Computer's Turn coming up"
+                                                            ),
+                                        diagnosticFill:     COLOR_GREENish
+                                    }),
+                            chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
+                                                    startingFEN:    FEN_START_POSITION,
+                                                    moveNumber:     0,
+                                                    testNumber:     -1,
+                                                    testCount:      0,
+                                                    isGame:         true,
+                                                    playerColor:    Switch(true,
+                                                                        radPlayerColor.Selected.Value="White",   WHITE,
+                                                                        radPlayerColor.Selected.Value="Black",   BLACK,
+                                                                        radPlayerColor.Selected.Value="Both",    BOTH_COLORS,
+                                                                        radPlayerColor.Selected.Value="Neither", NEITHER_COLOR
+                                                                    )
+                                                })
+                        });
+                        
+                        Select(btnNewGame);
                     Size: =8
                     Text: ="Start from Beginning"
                     Width: =125
@@ -3657,7 +3635,7 @@ Chess_Board As screen:
             Width: =lblBestMoveLine_M1.Width
             X: =973
             Y: =lblBestMoveLine_M1.Y + lblBestMoveLine_M1.Height + 5
-            ZIndex: =5
+            ZIndex: =4
 
         lblBestMoveMaterial_M2 As label:
             BorderThickness: =1
@@ -3697,7 +3675,7 @@ Chess_Board As screen:
             Width: =lblBestMoveMaterial_M1.Width
             X: =908
             Y: =lblBestMoveMaterial_M1.Y + lblBestMoveMaterial_M1.Height + 5
-            ZIndex: =6
+            ZIndex: =5
 
         lblBestMoveLine_M1 As label:
             BorderThickness: =1
@@ -3737,7 +3715,7 @@ Chess_Board As screen:
             Width: =lblBestMoveLine.Width
             X: =973
             Y: =lblBestMoveLine.Y + lblBestMoveLine.Height + 5
-            ZIndex: =7
+            ZIndex: =6
 
         lblBestMoveMaterial_M1 As label:
             BorderThickness: =1
@@ -3777,7 +3755,7 @@ Chess_Board As screen:
             Width: =lblBestMoveMaterial.Width
             X: =908
             Y: =lblBestMoveMaterial.Y + lblBestMoveMaterial.Height + 5
-            ZIndex: =8
+            ZIndex: =7
 
         lblBestMoveLine As label:
             BorderThickness: =1
@@ -3814,7 +3792,7 @@ Chess_Board As screen:
                 )
             X: =973
             Y: =lblBestMoveMaterial.Y
-            ZIndex: =9
+            ZIndex: =8
 
         lblBestMoveMaterial As label:
             BorderThickness: =1
@@ -3852,7 +3830,7 @@ Chess_Board As screen:
             Width: =65
             X: =908
             Y: =690
-            ZIndex: =10
+            ZIndex: =9
 
         lblDisplayedFEN As label:
             Font: =Font.'Courier New'
@@ -3861,7 +3839,7 @@ Chess_Board As screen:
             Width: =875
             X: =10
             Y: =725
-            ZIndex: =11
+            ZIndex: =10
 
         btnGotoLogs As button:
             Height: =30
@@ -3871,7 +3849,7 @@ Chess_Board As screen:
             Width: =100
             X: =1250
             Y: =730
-            ZIndex: =12
+            ZIndex: =11
 
         lblBlackCapturedPieces As label:
             Height: =lblWhiteCapturedPieces.Height
@@ -3879,7 +3857,7 @@ Chess_Board As screen:
             Width: =lblWhiteCapturedPieces.Width
             X: =lblWhiteCapturedPieces.X + lblWhiteCapturedPieces.Width
             Y: =lblWhiteCapturedPieces.Y
-            ZIndex: =13
+            ZIndex: =12
 
         lblWhiteCapturedPieces As label:
             Height: =lblMaterialOverall.Height
@@ -3887,7 +3865,7 @@ Chess_Board As screen:
             Width: =400
             X: =lblMaterialOverall.X + lblMaterialOverall.Width
             Y: =lblMaterialOverall.Y
-            ZIndex: =14
+            ZIndex: =13
 
         lblMaterialOverall As label:
             Height: =20
@@ -3895,5 +3873,66 @@ Chess_Board As screen:
             Width: =65
             X: =10
             Y: =690
+            ZIndex: =14
+
+        conHeader As groupContainer.manualLayoutContainer:
+            Height: =120
+            Width: =Parent.Width
             ZIndex: =15
+
+            lblHeaderGameTitle As label:
+                Align: =Align.Center
+                Color: =RGBA(221, 79, 14, 1)
+                Font: =Font.'Dancing Script'
+                Height: =55
+                Size: =34
+                Text: ="Perty Fish"
+                Width: =Parent.Width
+                ZIndex: =1
+
+            lblHeaderMode As label:
+                Fill: =gblPF_UI_ModeFill
+                Height: =25
+                Text: =gblPF_UI_ModeText
+                Width: =Parent.Width/2
+                Y: =lblHeaderGameTitle.Height
+                ZIndex: =2
+
+            lblHeaderThinking As label:
+                Fill: =gblPF_UI_ThinkingFill
+                Height: =lblHeaderMode.Height
+                Text: =gblPF_UI_ThinkingText
+                Width: =lblHeaderMode.Width
+                X: =lblHeaderMode.Width
+                Y: =lblHeaderMode.Y
+                ZIndex: =3
+
+            lblHeaderThinkingProgress As label:
+                Fill: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressFill
+                Height: =lblHeaderThinking.Height
+                Text: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressText
+                Visible: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressVisible
+                Width: =LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData.thinkingProgressWidth
+                X: =lblHeaderThinking.X
+                Y: =lblHeaderThinking.Y
+                ZIndex: =4
+
+            lblHeaderStatus As label:
+                Fill: =gblPF_UI_StatusFill
+                FontWeight: =FontWeight.Bold
+                Height: =lblHeaderMode.Height
+                Text: =gblPF_UI_StatusText
+                Width: =lblHeaderMode.Width
+                X: =lblHeaderMode.X
+                Y: =lblHeaderMode.Y + lblHeaderMode.Height
+                ZIndex: =5
+
+            lblHeaderDiagnosticMsg As label:
+                Fill: =gblPF_UI_DiagnosticFill
+                Height: =lblHeaderMode.Height
+                Text: =gblPF_UI_DiagnosticText
+                Width: =lblHeaderMode.Width
+                X: =lblHeaderStatus.X + lblHeaderStatus.Width
+                Y: =lblHeaderStatus.Y
+                ZIndex: =6
 
