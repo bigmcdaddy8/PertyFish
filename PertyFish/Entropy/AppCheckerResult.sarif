@@ -1424,66 +1424,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "App.gblPF_UI_DisplayedFEN"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_UI_DisplayedFEN",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_UI_DisplayedFEN",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 3
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "App.gblPF_UI_MaterialValueOverall"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_UI_MaterialValueOverall",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_UI_MaterialValueOverall",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 3
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "App.gblPF_TMR_RunNextTest"
                 }
               ],

@@ -3619,3 +3619,281 @@ Chess_Board As screen:
                 Y: =5
                 ZIndex: =6
 
+        lblBestMoveLine_M2 As label:
+            BorderThickness: =1
+            Height: =lblBestMoveLine_M1.Height
+            Size: =11
+            Text: |-
+                =IfError(
+                    With(
+                        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                
+                        With(
+                            LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
+                
+                            With(
+                                Last(
+                                    FirstN(
+                                        Sort(
+                                            Filter(colPF_MOVE_TREE, nodeDepth=1), 
+                                            postMoveEvalRecord.centipawn, 
+                                            If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,
+                                                SortOrder.Descending,
+                                                SortOrder.Ascending
+                                            )
+                                        ), 3
+                                    )
+                                )
+                                As theMove,
+                
+                                Text(UDF_FEN_TO_FULLMOVE_COUNT(theD0ParentNode.postMoveFEN)) & 
+                                If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,". ","... ") & 
+                                theMove.inactiveColorMoveRecord.san
+                            )
+                        )
+                    ),
+                    ""
+                )
+            Width: =lblBestMoveLine_M1.Width
+            X: =973
+            Y: =lblBestMoveLine_M1.Y + lblBestMoveLine_M1.Height + 5
+            ZIndex: =5
+
+        lblBestMoveMaterial_M2 As label:
+            BorderThickness: =1
+            Height: =lblBestMoveMaterial_M1.Height
+            Size: =10
+            Text: |-
+                =IfError(
+                    With(
+                        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                
+                        With(
+                            LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
+                
+                            With(
+                                Last(
+                                    FirstN(
+                                        Sort(
+                                            Filter(colPF_MOVE_TREE, nodeDepth=1), 
+                                            postMoveEvalRecord.centipawn, 
+                                            If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,
+                                                SortOrder.Descending,
+                                                SortOrder.Ascending
+                                            )
+                                        ), 3
+                                    )
+                                )
+                                As theMove,
+                
+                                If(theMove.postMoveEvalRecord.centipawn>=0,"+","") &
+                                    Text(theMove.postMoveEvalRecord.centipawn/100, "##.00")
+                
+                            )
+                        )
+                    ),
+                    ""
+                )
+            Width: =lblBestMoveMaterial_M1.Width
+            X: =908
+            Y: =lblBestMoveMaterial_M1.Y + lblBestMoveMaterial_M1.Height + 5
+            ZIndex: =6
+
+        lblBestMoveLine_M1 As label:
+            BorderThickness: =1
+            Height: =lblBestMoveLine.Height
+            Size: =11
+            Text: |-
+                =IfError(
+                    With(
+                        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                
+                        With(
+                            LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
+                
+                            With(
+                                Last(
+                                    FirstN(
+                                        Sort(
+                                            Filter(colPF_MOVE_TREE, nodeDepth=1), 
+                                            postMoveEvalRecord.centipawn, 
+                                            If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,
+                                                SortOrder.Descending,
+                                                SortOrder.Ascending
+                                            )
+                                        ), 2
+                                    )
+                                )
+                                As theMove,
+                
+                                Text(UDF_FEN_TO_FULLMOVE_COUNT(theD0ParentNode.postMoveFEN)) & 
+                                If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,". ","... ") & 
+                                theMove.inactiveColorMoveRecord.san
+                            )
+                        )
+                    ),
+                    ""
+                )
+            Width: =lblBestMoveLine.Width
+            X: =973
+            Y: =lblBestMoveLine.Y + lblBestMoveLine.Height + 5
+            ZIndex: =7
+
+        lblBestMoveMaterial_M1 As label:
+            BorderThickness: =1
+            Height: =lblBestMoveMaterial.Height
+            Size: =10
+            Text: |-
+                =IfError(
+                    With(
+                        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                
+                        With(
+                            LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
+                
+                            With(
+                                Last(
+                                    FirstN(
+                                        Sort(
+                                            Filter(colPF_MOVE_TREE, nodeDepth=1), 
+                                            postMoveEvalRecord.centipawn, 
+                                            If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,
+                                                SortOrder.Descending,
+                                                SortOrder.Ascending
+                                            )
+                                        ), 2
+                                    )
+                                )
+                                As theMove,
+                
+                                If(theMove.postMoveEvalRecord.centipawn>=0,"+","") &
+                                    Text(theMove.postMoveEvalRecord.centipawn/100, "##.00")
+                
+                            )
+                        )
+                    ),
+                    ""
+                )
+            Width: =lblBestMoveMaterial.Width
+            X: =908
+            Y: =lblBestMoveMaterial.Y + lblBestMoveMaterial.Height + 5
+            ZIndex: =8
+
+        lblBestMoveLine As label:
+            BorderThickness: =1
+            Height: =lblBestMoveMaterial.Height
+            Size: =11
+            Text: |-
+                =IfError(
+                    With(
+                        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                
+                        With(
+                            LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
+                
+                            With(
+                                First(
+                                    Sort(
+                                        Filter(colPF_MOVE_TREE, nodeDepth=1), 
+                                        postMoveEvalRecord.centipawn, 
+                                        If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,
+                                            SortOrder.Descending,
+                                            SortOrder.Ascending
+                                        )
+                                    )
+                                )
+                                As theMove,
+                
+                                Text(UDF_FEN_TO_FULLMOVE_COUNT(theD0ParentNode.postMoveFEN)) & 
+                                If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,". ","... ") & 
+                                theMove.inactiveColorMoveRecord.san
+                            )
+                        )
+                    ),
+                    ""
+                )
+            X: =973
+            Y: =lblBestMoveMaterial.Y
+            ZIndex: =9
+
+        lblBestMoveMaterial As label:
+            BorderThickness: =1
+            Height: =20
+            Size: =10
+            Text: |-
+                =IfError(
+                    With(
+                        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                
+                        With(
+                            LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
+                
+                            With(
+                                First(
+                                    Sort(
+                                        Filter(colPF_MOVE_TREE, nodeDepth=1), 
+                                        postMoveEvalRecord.centipawn, 
+                                        If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,
+                                            SortOrder.Descending,
+                                            SortOrder.Ascending
+                                        )
+                                    )
+                                )
+                                As theMove,
+                
+                                If(theMove.postMoveEvalRecord.centipawn>=0,"+","") &
+                                    Text(theMove.postMoveEvalRecord.centipawn/100, "##.00")
+                
+                            )
+                        )
+                    ),
+                    ""
+                )
+            Width: =65
+            X: =908
+            Y: =690
+            ZIndex: =10
+
+        lblDisplayedFEN As label:
+            Font: =Font.'Courier New'
+            Text: |-
+                ="FEN: " & gblPF_UI_DisplayedFEN
+            Width: =875
+            X: =10
+            Y: =725
+            ZIndex: =11
+
+        btnGotoLogs As button:
+            Height: =30
+            OnSelect: =Navigate(Logging_Screen)
+            Size: =11
+            Text: ="Goto Logs"
+            Width: =100
+            X: =1250
+            Y: =730
+            ZIndex: =12
+
+        lblBlackCapturedPieces As label:
+            Height: =lblWhiteCapturedPieces.Height
+            Text: =gblPF_UI_blackCapturedPieces
+            Width: =lblWhiteCapturedPieces.Width
+            X: =lblWhiteCapturedPieces.X + lblWhiteCapturedPieces.Width
+            Y: =lblWhiteCapturedPieces.Y
+            ZIndex: =13
+
+        lblWhiteCapturedPieces As label:
+            Height: =lblMaterialOverall.Height
+            Text: =gblPF_UI_whiteCapturedPieces
+            Width: =400
+            X: =lblMaterialOverall.X + lblMaterialOverall.Width
+            Y: =lblMaterialOverall.Y
+            ZIndex: =14
+
+        lblMaterialOverall As label:
+            Height: =20
+            Text: =gblPF_UI_MaterialValueOverall
+            Width: =65
+            X: =10
+            Y: =690
+            ZIndex: =15
+
