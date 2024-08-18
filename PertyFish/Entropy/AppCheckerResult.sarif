@@ -182,7 +182,7 @@
                 },
                 "region": {
                   "charLength": 17,
-                  "charOffset": 1518,
+                  "charOffset": 1516,
                   "snippet": {
                     "text": "btnProcessGame_CB"
                   }
@@ -222,7 +222,7 @@
                 },
                 "region": {
                   "charLength": 6,
-                  "charOffset": 1511,
+                  "charOffset": 1509,
                   "snippet": {
                     "text": "Select"
                   }

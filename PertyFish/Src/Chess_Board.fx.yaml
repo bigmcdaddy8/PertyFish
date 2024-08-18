@@ -1136,7 +1136,6 @@ Chess_Board As screen:
                             Clear(colPF_logs)
                         );
                         
-                        
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                             " tmrMakeNextGameMove_CB.OnTimerEnd(): entered gblPF_TMR_MakeNextGameMove: " & gblPF_TMR_MakeNextGameMove
                         });
