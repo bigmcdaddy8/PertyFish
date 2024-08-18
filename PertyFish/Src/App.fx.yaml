@@ -353,6 +353,12 @@ App As appinfo:
         UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),5).Value;  
         UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),6).Value;  
         
+        UDF_CREATE_FEN(board:Text,activeColor:Number,castleAvail:Text,enpassantSqName:Text,halfmoveClock:Number,fullmoveClock:Number):Text=
+            UDF_BOARD_TO_FEN_PIECE_PLACEMENT(board) & " " & If(activeColor=WHITE,"w","b") & " " & 
+            Substitute(Substitute(Substitute(castleAvail, "----", "-"),"---", "-"), "--", "-") &
+            " " & If(enpassantSqName=EMPTY_ABBR || enpassantSqName=EMPTY_SQUARE_NAME,"-",enpassantSqName) &
+            " " & halfmoveClock & " " & fullmoveClock;
+            
         UDF_getBitAtSqNum(board:Text,sqNum:Number):Text=
             If(sqNum<0 || sqNum>=EMPTY_SQUARE_NUM,
                 // THEN - handle the empty square number 
@@ -406,6 +412,50 @@ App As appinfo:
                 piece="n",  BLACK_KNIGHT_ICON,
                 piece="p",  BLACK_PAWN_ICON,
                 EMPTY_ICON
+            );
+        
+        UDF_getPieceMaterialValue(piece:Text):Number=
+            Switch(true,
+                piece="K",  100,
+                piece="Q",  9,
+                piece="R",  5,
+                piece="B",  3,
+                piece="N",  3,
+                piece="P",  1,
+                piece="k",  -100,
+                piece="q",  -9,
+                piece="r",  -5,
+                piece="b",  -3,
+                piece="n",  -3,
+                piece="p",  -1,
+                0
+            );
+        
+        UDF_getPieceCentipawnMaterialValue(piece:Text, filter:Text):Number=
+            Switch(true,
+                piece="K" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                piece="Q" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                piece="R" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                piece="B" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                piece="N" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                piece="P" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                piece="k" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                piece="q" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                piece="r" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                piece="b" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                piece="n" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                piece="p" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
+                0
+            );
+        
+        UDF_calcCentipawnMaterialValue(fen:Text,filter:Text):Number=
+            Sum(
+                ForAll(
+                    Split(UDF_FEN_TO_PIECE_PLACMENT(fen), "") As thePiece,
+        
+                    UDF_getPieceCentipawnMaterialValue(thePiece.Value, filter)
+                ),
+                Value
             );
         
         // end of Perty Fish named formulas ------------------------------------------------------------------------

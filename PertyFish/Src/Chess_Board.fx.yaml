@@ -727,12 +727,15 @@ Chess_Board As screen:
             ZIndex: =4
 
             conControlsDiagnostics As groupContainer.manualLayoutContainer:
-                Width: =466
-                Y: =40
+                Height: =Parent.Height-conControlsSharedArea.Height
+                Visible: =Not(conControlsGame.Visible)
+                Width: =Parent.Width
+                Y: =conControlsSharedArea.Height
                 ZIndex: =1
 
             conControlsGame As groupContainer.manualLayoutContainer:
-                Width: =466
+                Height: =Parent.Height-conControlsSharedArea.Height
+                Width: =Parent.Width
                 Y: =60
                 ZIndex: =2
 
@@ -810,12 +813,16 @@ Chess_Board As screen:
                     ZIndex: =8
 
                 btnStartGameFromBeginning As button:
-                    Text: ="Button"
-                    X: =60
-                    Y: =60
+                    Height: =23
+                    Size: =8
+                    Text: ="Start from Beginning"
+                    Width: =125
+                    X: =12
+                    Y: =104
                     ZIndex: =9
 
                 btnStartGameFromFEN As button:
+                    Height: =23
                     OnSelect: |
                         =
                         
@@ -855,6 +862,7 @@ Chess_Board As screen:
                         });
                         
                         Select(btnNewGame);
+                    Size: =10
                     Text: ="Start from FEN"
                     Width: =125
                     X: =12
@@ -1243,8 +1251,16 @@ Chess_Board As screen:
                             With(
                                 LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID) As theD0ParentNode,
                     
+                    /*
+                    UDF_getGamePhaseStr(fen:Text):Text=
+                        Switch(true,
+                            UDF_getGamePhase(fen)=GAME_PHASE_OPENING,   "OPENING",
+                            UDF_getGamePhase(fen)=GAME_PHASE_MIDDLE,    "MIDDLE GAME",
+                            "END GAME"
+                        );
+                     */
                                 If(!IsBlank(theD0ParentNode),
-                                    Set(gblPF_UI_GamePhase, UDF_getGamePhaseStr(theD0ParentNode.postMoveFEN)),
+                                    Set(gblPF_UI_GamePhase, "Opening"),
                                     Set(gblPF_UI_GamePhase, "")
                                 )
                             )
@@ -1655,8 +1671,8 @@ Chess_Board As screen:
                                 Sequence(64,0) As theSqNum,
                     
                                 If(
-                                    Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) && 
-                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin UDF_getICPieceABBR(theD0ParentNode.postMoveFEN, "KQRBNP"),
+                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) && 
+                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin UDF_getICPieceABBR(theD0ParentNode.postMoveFEN, "KQRBNP"),
                                     // THEN - got an inactive piece
                     
                                     // loop through all of the pieces to count number of active CHECKERS
@@ -1666,13 +1682,13 @@ Chess_Board As screen:
                                             pieceUpper= // the PAWN is case sensitive since it is uni-directional
                                                 If(
                                                     (
-                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) in "P"
+                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) in "P"
                                                     ),
                                                     // THEN
-                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value),
+                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value),
                                                     // ELSE
-                                                    Upper(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))
+                                                    Upper(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))
                                                 ) &&
                                             eligibleSqNum=UDF_SearchBoardForPiece(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), UDF_getACPieceABBR(theD0ParentNode.postMoveFEN,"K"))
                                         ) As theEligibleMove,
@@ -1682,8 +1698,8 @@ Chess_Board As screen:
                                             // THEN - not BLOCKED - add additional filters here
                                             Switch(true,
                                                 (
-                                                    Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
-                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) in "P"
+                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
+                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) in "P"
                                                 ) && (
                                                     Not(IsBlank(theEligibleMove.moveDirection)) &&
                                                     Text(theEligibleMove.moveDirection) in "15"
@@ -1744,8 +1760,8 @@ Chess_Board As screen:
                     
                                 // for each inactive pieces, mark the target squares in the postMoveActiveKingDangerBoard w/ their piece type
                                 If(
-                                    Not(IsBlank(UDF_getPieceAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value))) &&
-                                    UDF_getPieceAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value) exactin 
+                                    Not(IsBlank(UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value))) &&
+                                    UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value) exactin 
                                         UDF_getICPieceABBR(theD0ParentNode.postMoveFEN,"KQRBNP"),
                     
                                     // THEN - got an inactive piece - loop through all of the moves to mark the attacked squares
@@ -1755,22 +1771,22 @@ Chess_Board As screen:
                                             pieceUpper= // the PAWN is case sensitive since it is uni-directional
                                                 If(
                                                     (
-                                                        Not(IsBlank(UDF_getPieceAtSqNum(
+                                                        Not(IsBlank(UDF_getBitAtSqNum(
                                                             LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,
                                                             theSqNum.Value
                                                         ))) &&
-                                                        UDF_getPieceAtSqNum(
+                                                        UDF_getBitAtSqNum(
                                                             LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,
                                                             theSqNum.Value
                                                         ) in "P"
                                                     ),
                                                     // THEN - it is a PAWN - leave the case alone
-                                                    UDF_getPieceAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,
+                                                    UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,
                                                         theSqNum.Value
                                                     ),
                     
                                                     // ELSE - it is something else - UPPER case it for the query
-                                                    Upper(UDF_getPieceAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,
+                                                    Upper(UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,
                                                         theSqNum.Value)
                                                     )
                                                 ) &&
@@ -1783,14 +1799,14 @@ Chess_Board As screen:
                                         // do not include this move if it is a slider and the overSlider squares are not un-occupied
                                         If(
                                             (
-                                                Not(IsBlank(UDF_getPieceAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value))) &&
-                                                UDF_getPieceAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value) exactin 
+                                                Not(IsBlank(UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value))) &&
+                                                UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value) exactin 
                                                     UDF_getICPieceABBR(theD0ParentNode.postMoveFEN,"KN") 
                                             ) ||
                                             (
                                                 (
-                                                    Not(IsBlank(UDF_getPieceAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value))) &&
-                                                    UDF_getPieceAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value) exactin 
+                                                    Not(IsBlank(UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value))) &&
+                                                    UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value) exactin 
                                                         UDF_getICPieceABBR(theD0ParentNode.postMoveFEN,"QRBP") 
                                                 ) &&
                                                 (
@@ -1802,7 +1818,7 @@ Chess_Board As screen:
                                                                 ForAll (
                                                                     Split(theEligibleMove.slideOvers, " ") As aSliderOver,
                     
-                                                                    If(UDF_getPieceAtSqNum(
+                                                                    If(UDF_getBitAtSqNum(
                                                                         LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard, 
                                                                         UDF_sqNameToSqNum(aSliderOver.Value))<>EMPTY_FILLER_ABBR,
                                                                         "BLOCKED", ""
@@ -1819,8 +1835,8 @@ Chess_Board As screen:
                                             // THEN - not BLOCKED - Add any additional filters here
                                             Switch(true,
                                                 (
-                                                    Not(IsBlank(UDF_getPieceAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value))) &&
-                                                    UDF_getPieceAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value) in "P"
+                                                    Not(IsBlank(UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value))) &&
+                                                    UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value) in "P"
                                                 ) &&
                                                 Text(theEligibleMove.moveDirection) in "15",
                                                     // PAWN NORTH-SOUTH moves are non-attacking moves - skip over them
@@ -1916,7 +1932,7 @@ Chess_Board As screen:
                                                             If(
                                                                 UDF_isPieceAC(
                                                                     theD0ParentNode.postMoveFEN,
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)
                                                                 ) && theData.chessEngineData.pinneeSqName=EMPTY_SQUARE_NAME && theData.chessEngineData.pinnerSqName=EMPTY_SQUARE_NAME,
                                                                 // THEN - found a potential pinnee
                                                                 UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
@@ -1928,11 +1944,11 @@ Chess_Board As screen:
                                                                 If(
                                                                     Not(UDF_isPieceAC(
                                                                         theD0ParentNode.postMoveFEN,
-                                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)
+                                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)
                                                                     )) && theData.chessEngineData.pinneeSqName<>EMPTY_SQUARE_NAME && theData.chessEngineData.pinnerSqName=EMPTY_SQUARE_NAME
                                                                     && (
-                                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum))) &&
-                                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum) in theEligiblePinPieces.eligiblePinners
+                                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum))) &&
+                                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum) in theEligiblePinPieces.eligiblePinners
                                                                     ),
                     
                                                                     // THEN - found a pinner
@@ -1967,7 +1983,7 @@ Chess_Board As screen:
                                                                         }
                                                                     ),
                     
-                                                                    If(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
+                                                                    If(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
                                                                         // THEN - pattern not met
                                                                         UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                                                                             chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
@@ -2059,8 +2075,8 @@ Chess_Board As screen:
                                 Sequence(64,0) As theSqNum,
                     
                                 If(
-                                    Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
-                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin UDF_getACPieceABBR(theD0ParentNode.postMoveFEN,"KQRBNP"),
+                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
+                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin UDF_getACPieceABBR(theD0ParentNode.postMoveFEN,"KQRBNP"),
                                     // THEN
                                     ForAll (
                                         SortByColumns(Filter(colPF_LEGAL_MOVES, 
@@ -2068,20 +2084,20 @@ Chess_Board As screen:
                                             pieceUpper= // the PAWN is case sensitive since it is uni-directional
                                                 If(
                                                     (
-                                                        Not(IsBlank(UDF_getPieceAtSqNum(
+                                                        Not(IsBlank(UDF_getBitAtSqNum(
                                                             UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),
                                                             theSqNum.Value
                                                         ) in "P")) &&
-                                                        UDF_getPieceAtSqNum(
+                                                        UDF_getBitAtSqNum(
                                                             UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),
                                                             theSqNum.Value
                                                         ) in "P"
                                                     ),
                                                     // THEN
-                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value),
+                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value),
                     
                                                     // ELSE
-                                                    Upper(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value))
+                                                    Upper(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value))
                                                 )
                                         ), "pieceUpper", SortOrder.Ascending, "eligibleSqName", SortOrder.Ascending) As theEligibleMove,
                     
@@ -2098,28 +2114,28 @@ Chess_Board As screen:
                                                     Blank(),
                     
                                                 // can't attack a piece of your own color // filter out moves to same color
-                                                UDF_PieceToColor(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))=UDF_PieceToColor(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)), 
+                                                UDF_PieceToColor(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))=UDF_PieceToColor(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)), 
                                                     // FILTERED - attacking same color
                                                     Blank(),
                     
                                                 // PAWN cannot move forward to an occupied square
                                                 (
-                                                    Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum))) &&
-                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum) in "P"
+                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum))) &&
+                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum) in "P"
                                                 ) && 
                                                 Text(theEligibleMove.moveDirection) in "15" &&
-                                                UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
+                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
                                                     // FILTERED - PAWN can not move forward to an occupied square
                                                     Blank(),
                     
                                                 // PAWN cannot move diagonally to an unoccupied square unless the source square is the en passant square
                                                 (
-                                                    Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum))) &&
-                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum) in "P"
+                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum))) &&
+                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum) in "P"
                                                 ) && 
                                                 Text(theEligibleMove.moveDirection) in "2468" &&
                                                 (
-                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
+                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>theEligibleMove.eligibleSqName
                                                 ),
                                                     // FILTERED - PAWN cannot move diagonally to an unoccupied square unless the source square is the en passant square
@@ -2127,13 +2143,13 @@ Chess_Board As screen:
                     
                                                 // KING cannot move to an attacked square
                                                 (
-                                                    Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum))) &&
-                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum) in "K"
+                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum))) &&
+                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum) in "K"
                                                 ) && 
-                                                Not(IsBlank(UDF_getPieceAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard,theEligibleMove.eligibleSqNum))) &&
+                                                Not(IsBlank(UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard,theEligibleMove.eligibleSqNum))) &&
                                                 (
-                                                    Not(IsBlank(UDF_getPieceAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard,theEligibleMove.eligibleSqNum))) &&
-                                                    UDF_getPieceAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard,theEligibleMove.eligibleSqNum) in "KQRBNP"
+                                                    Not(IsBlank(UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard,theEligibleMove.eligibleSqNum))) &&
+                                                    UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard,theEligibleMove.eligibleSqNum) in "KQRBNP"
                                                 ),
                                                     // FILTERED - KING cannot move to an attacked square
                                                     Blank(),
@@ -2141,8 +2157,8 @@ Chess_Board As screen:
                                                 // PINNED pieces can only move if they are sliders
                                                 theEligibleMove.sqName in theD0ParentNode.postMovePINs &&
                                                 (
-                                                    Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
-                                                    Not(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "QRBP")
+                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
+                                                    Not(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "QRBP")
                                                 ),
                                                     // FILTERED - PINNED pieces can only move if they are sliders
                                                     Blank(),
@@ -2168,7 +2184,7 @@ Chess_Board As screen:
                                                 
                                                 // is this a WHITE KS castle move ? if so let's check the conditions
                                                 (
-                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "K" &&
+                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "K" &&
                                                     Concatenate(theEligibleMove.sqName,theEligibleMove.eligibleSqName)="e1g1" &&
                                                     UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE
                                                 ) && 
@@ -2181,8 +2197,8 @@ Chess_Board As screen:
                                                             "K"
                                                         ) &&
                                                         theD0ParentNode.postMoveNumActiveChecks=0 &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),61)=EMPTY_FILLER_ABBR &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),62)=EMPTY_FILLER_ABBR &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),61)=EMPTY_FILLER_ABBR &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),62)=EMPTY_FILLER_ABBR &&
                                                         UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard, 61)=EMPTY_FILLER_ABBR &&
                                                         UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard, 62)=EMPTY_FILLER_ABBR
                                                     )
@@ -2197,8 +2213,8 @@ Chess_Board As screen:
                                                 // is this a WHITE QS castle move ? if so let's check the conditions
                                                 (
                                                     (
-                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "K"
+                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "K"
                                                     ) &&
                                                     Concatenate(theEligibleMove.sqName,theEligibleMove.eligibleSqName)="e1c1" &&
                                                     UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE
@@ -2212,9 +2228,9 @@ Chess_Board As screen:
                                                             "Q"
                                                         ) &&
                                                         theD0ParentNode.postMoveNumActiveChecks=0 &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),57)=EMPTY_FILLER_ABBR &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),58)=EMPTY_FILLER_ABBR &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),59)=EMPTY_FILLER_ABBR &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),57)=EMPTY_FILLER_ABBR &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),58)=EMPTY_FILLER_ABBR &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),59)=EMPTY_FILLER_ABBR &&
                                                         UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard, 58)=EMPTY_FILLER_ABBR &&
                                                         UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard, 59)=EMPTY_FILLER_ABBR
                                                     )
@@ -2225,8 +2241,8 @@ Chess_Board As screen:
                                                 // is this a BLACK KS castle move ? if so let's check the conditions
                                                 (
                                                     (
-                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "k"
+                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "k"
                                                     ) &&
                                                     Concatenate(theEligibleMove.sqName,theEligibleMove.eligibleSqName)="e8g8" &&
                                                     UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=BLACK
@@ -2240,8 +2256,8 @@ Chess_Board As screen:
                                                             "k"
                                                         ) &&
                                                         theD0ParentNode.postMoveNumActiveChecks=0 &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),5)=EMPTY_FILLER_ABBR &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),6)=EMPTY_FILLER_ABBR &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),5)=EMPTY_FILLER_ABBR &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),6)=EMPTY_FILLER_ABBR &&
                                                         UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard, 5)=EMPTY_FILLER_ABBR &&
                                                         UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard, 6)=EMPTY_FILLER_ABBR
                                                     )
@@ -2252,8 +2268,8 @@ Chess_Board As screen:
                                                 // is this a BLACK QS castle move ? if so let's check the conditions
                                                 (
                                                     (
-                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "k"
+                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "k"
                                                     ) &&
                                                     Concatenate(theEligibleMove.sqName,theEligibleMove.eligibleSqName)="e8c8" &&
                                                     UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=BLACK
@@ -2267,9 +2283,9 @@ Chess_Board As screen:
                                                             "q"
                                                         ) &&
                                                         theD0ParentNode.postMoveNumActiveChecks=0 &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),1)=EMPTY_FILLER_ABBR &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),2)=EMPTY_FILLER_ABBR &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),3)=EMPTY_FILLER_ABBR &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),1)=EMPTY_FILLER_ABBR &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),2)=EMPTY_FILLER_ABBR &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),3)=EMPTY_FILLER_ABBR &&
                                                         UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard, 2)=EMPTY_FILLER_ABBR &&
                                                         UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard, 3)=EMPTY_FILLER_ABBR
                                                     )
@@ -2281,13 +2297,13 @@ Chess_Board As screen:
                                                 (theD0ParentNode.postMoveNumActiveChecks=1) && 
                                                 Not(
                                                     (
-                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
-                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) in "K"
+                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value))) &&
+                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) in "K"
                                                     ) || (
                                                         UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)=theD0ParentNode.postMoveCheckers ||
                                                         ( // tricky one - have to consider the en passant move capturing the pawn who is placing us in check
                                                             // are we a PAWN ?
-                                                            UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value)=
+                                                            UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value)=
                                                                 If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,"P","p") &&
                                                             // are we moving to the en passant square ?
                                                             UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)=UDF_sqNameNoPromo(theEligibleMove.eligibleSqName) &&
@@ -2322,14 +2338,14 @@ Chess_Board As screen:
                                                 // looking for a move that moves the king
                                                 (theD0ParentNode.postMoveNumActiveChecks>=2) &&
                                                 (
-                                                    Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum))) &&
-                                                    Not(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum) in "K")
+                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum))) &&
+                                                    Not(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.sqNum) in "K")
                                                 ),
                                                     // FILTERED - CHECKERS >= 2 - has to be a king move
                                                     Blank(),
                     
                                                 theEligibleMove.castle exactin "KQ" &&
-                                                Not(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "K"),
+                                                Not(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "K"),
                                                     // FILTERED - an INVALID WHITE CASTLE
                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                         " btnProcessGame.OnSelect(): FILTERED - an INVALID WHITE CASTLE " &
@@ -2338,7 +2354,7 @@ Chess_Board As screen:
                                                     Blank(),
                     
                                                 theEligibleMove.castle exactin "kq" &&
-                                                Not(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "k"),
+                                                Not(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "k"),
                                                     // FILTERED - an INVALID BLACK CASTLE
                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                         " btnProcessGame.OnSelect(): FILTERED - an INVALID BLACK CASTLE " &
@@ -2364,8 +2380,8 @@ Chess_Board As screen:
                                                             san:
                                                                 Switch(true,
                                                                     (
-                                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
-                                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "K"
+                                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
+                                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "K"
                                                                     ) &&
                                                                     (
                                                                         Concatenate(theEligibleMove.sqName,theEligibleMove.eligibleSqName)="e1g1" ||
@@ -2374,8 +2390,8 @@ Chess_Board As screen:
                                                                         "O-O",
                     
                                                                     (
-                                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
-                                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "K"
+                                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
+                                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "K"
                                                                     ) &&
                                                                     (
                                                                         theEligibleMove.sqName & UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)="e1c1" ||
@@ -2385,7 +2401,7 @@ Chess_Board As screen:
                     
                                                                     // default - normal SAN processing
                                                                     If(theEligibleMove.pieceUpper in "P",
-                                                                        If(UDF_getPieceAtSqNum(
+                                                                        If(UDF_getBitAtSqNum(
                                                                             UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), 
                                                                             theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR,
                                                                             "",
@@ -2393,14 +2409,14 @@ Chess_Board As screen:
                                                                         ),
                                                                         theEligibleMove.pieceUpper
                                                                     ) & 
-                                                                    If(UDF_getPieceAtSqNum(
+                                                                    If(UDF_getBitAtSqNum(
                                                                         UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), 
                                                                         theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR,
                                                                         // THEN
                                                                         "",
                     
                                                                         If( // put in an x for a capture - unless the target is a KING
-                                                                            UDF_getPieceAtSqNum(
+                                                                            UDF_getBitAtSqNum(
                                                                                 UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), 
                                                                                 theEligibleMove.eligibleSqNum
                                                                             ) in "K",
@@ -2417,23 +2433,23 @@ Chess_Board As screen:
                                                             sourceSquareNum:    theSqNum.Value, 
                                                             sourceSquareName:   UDF_sqNumToSqName(theSqNum.Value),
                                                             sourceSquareOccupier:   
-                                                                If(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)=EMPTY_FILLER_ABBR,
+                                                                If(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)=EMPTY_FILLER_ABBR,
                                                                     EMPTY_ABBR, 
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)
                                                                 ),
-                                                            sourceSquarePieceColor: UDF_PieceToColor(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)),
-                                                            sourceSquareIcon:       UDF_PieceToIcon(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)),
+                                                            sourceSquarePieceColor: UDF_PieceToColor(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)),
+                                                            sourceSquareIcon:       UDF_PieceToIcon(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)),
                                                             // the target square data is the square data of where the moving piece will end up, it is the data prior to the move
                                                             // the target square may or may not be occupied prior to the move
                                                             targetSquareNum:        theEligibleMove.eligibleSqNum,
                                                             targetSquareName:       UDF_sqNameNoPromo(theEligibleMove.eligibleSqName), // avoid the promo code
                                                             targetSquareOccupier:   
-                                                                If(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR,
+                                                                If(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR,
                                                                     EMPTY_ABBR,
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)
                                                                 ),
-                                                            targetSquarePieceColor: UDF_PieceToColor(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),
-                                                            targetSquareIcon:       UDF_PieceToIcon(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),
+                                                            targetSquarePieceColor: UDF_PieceToColor(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),
+                                                            targetSquareIcon:       UDF_PieceToIcon(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),
                                                             // the capture square data is the square data of the square containing the piece that is captured during the move, 
                                                             //      it is the square data prior to the move
                                                             // the capture square data will be "empty" if there is no capture, in non-en Passant captures the capture data is the 
@@ -2442,10 +2458,10 @@ Chess_Board As screen:
                                                             captureSquareNum:
                                                                 Switch(true,
                                                                     (
-                                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
-                                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
+                                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
+                                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
                                                                     ) &&
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
                                                                     Text(theEligibleMove.moveDirection) in "2468",
                                                                         If(Text(theEligibleMove.moveDirection) in "28",
@@ -2453,7 +2469,7 @@ Chess_Board As screen:
                                                                             UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1)
                                                                         ),
                     
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
                                                                         theEligibleMove.eligibleSqNum,
                     
                                                                     // default
@@ -2462,10 +2478,10 @@ Chess_Board As screen:
                                                             captureSquareName:
                                                                 Switch(true,
                                                                     (
-                                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
-                                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
+                                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
+                                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
                                                                     ) &&
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
                                                                     Text(theEligibleMove.moveDirection) in "2468",
                                                                         If(Text(theEligibleMove.moveDirection) in "28",
@@ -2473,7 +2489,7 @@ Chess_Board As screen:
                                                                             UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1))
                                                                         ),
                     
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
                                                                         UDF_sqNameNoPromo(theEligibleMove.eligibleSqName),
                                                                         
                                                                     // default
@@ -2482,13 +2498,13 @@ Chess_Board As screen:
                                                             captureSquareOccupier:
                                                                 Switch(true,
                                                                     (
-                                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
-                                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
+                                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
+                                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
                                                                     ) &&
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
                                                                     Text(theEligibleMove.moveDirection) in "2468",
-                                                                        UDF_getPieceAtSqNum(
+                                                                        UDF_getBitAtSqNum(
                                                                             UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), 
                                                                             If(Text(theEligibleMove.moveDirection) in "28",
                                                                                 UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),
@@ -2496,8 +2512,8 @@ Chess_Board As screen:
                                                                             )
                                                                         ),
                     
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
-                                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum),
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
+                                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum),
                     
                                                                     // default
                                                                     EMPTY_ABBR
@@ -2505,14 +2521,14 @@ Chess_Board As screen:
                                                             captureSquarePieceColor:
                                                                 Switch(true,
                                                                     (
-                                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
-                                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
+                                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
+                                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
                                                                     ) &&
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
                                                                     Text(theEligibleMove.moveDirection) in "2468",
                                                                         UDF_PieceToColor(
-                                                                            UDF_getPieceAtSqNum(
+                                                                            UDF_getBitAtSqNum(
                                                                                 UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), 
                                                                                 If(Text(theEligibleMove.moveDirection) in "28",
                                                                                     UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),
@@ -2521,8 +2537,8 @@ Chess_Board As screen:
                                                                             )
                                                                         ),
                     
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
-                                                                        UDF_PieceToColor(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
+                                                                        UDF_PieceToColor(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),
                     
                                                                     // default
                                                                     NO_COLOR
@@ -2530,14 +2546,14 @@ Chess_Board As screen:
                                                             captureSquareIcon:
                                                                 Switch(true,
                                                                     (
-                                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
-                                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
+                                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
+                                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
                                                                     ) &&
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
                                                                     Text(theEligibleMove.moveDirection) in "2468",
                                                                         UDF_PieceToIcon(
-                                                                            UDF_getPieceAtSqNum(
+                                                                            UDF_getBitAtSqNum(
                                                                                 UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), 
                                                                                 If(Text(theEligibleMove.moveDirection) in "28",
                                                                                     UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),
@@ -2546,8 +2562,8 @@ Chess_Board As screen:
                                                                             )
                                                                         ),
                     
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
-                                                                        UDF_PieceToIcon(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,
+                                                                        UDF_PieceToIcon(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),
                     
                                                                     // default
                                                                     EMPTY_ICON
@@ -2584,10 +2600,10 @@ Chess_Board As screen:
                                                                 // create board to reflect the move - THE MOVE IS MADE HERE
                                                                 Switch(true, // for en passant moves need to clear out the en passant square
                                                                     (
-                                                                        Not(IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
-                                                                        UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
+                                                                        Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&
+                                                                        UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in "P"
                                                                     ) &&
-                                                                    UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
+                                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
                                                                     Text(theEligibleMove.moveDirection) in "2468",
                                                                         UDF_setPieceAtSqNum(
@@ -2682,11 +2698,11 @@ Chess_Board As screen:
                                                                                 Not(IsBlank(UDF_getFileNameFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName))) &&
                                                                                 UDF_getFileNameFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) in "a"
                                                                             ),
-                                                                                Not(IsBlank(UDF_getPieceAtSqNum(
+                                                                                Not(IsBlank(UDF_getBitAtSqNum(
                                                                                     theData.chessEngineData.tmpBoard,
                                                                                     UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,1,0)
                                                                                 ))) &&
-                                                                                UDF_getPieceAtSqNum(
+                                                                                UDF_getBitAtSqNum(
                                                                                     theData.chessEngineData.tmpBoard,
                                                                                     UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,1,0)
                                                                                 ) exactin "p",
@@ -2694,11 +2710,11 @@ Chess_Board As screen:
                                                                                 Not(IsBlank(UDF_getFileNameFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName))) &&
                                                                                 UDF_getFileNameFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) in "h"
                                                                             ),
-                                                                                Not(IsBlank(UDF_getPieceAtSqNum(
+                                                                                Not(IsBlank(UDF_getBitAtSqNum(
                                                                                     theData.chessEngineData.tmpBoard,
                                                                                     UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,-1,0)
                                                                                 ))) &&
-                                                                                UDF_getPieceAtSqNum(
+                                                                                UDF_getBitAtSqNum(
                                                                                     theData.chessEngineData.tmpBoard,
                                                                                     UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,-1,0)
                                                                                 ) exactin "p",
@@ -2706,21 +2722,21 @@ Chess_Board As screen:
                                                                             // default
                                                                             (
                                                                                 (
-                                                                                    Not(IsBlank(UDF_getPieceAtSqNum(
+                                                                                    Not(IsBlank(UDF_getBitAtSqNum(
                                                                                         theData.chessEngineData.tmpBoard,
                                                                                         UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,-1,0)
                                                                                     ))) &&
-                                                                                    UDF_getPieceAtSqNum(
+                                                                                    UDF_getBitAtSqNum(
                                                                                         theData.chessEngineData.tmpBoard,
                                                                                         UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,-1,0)
                                                                                     ) exactin "p"
                                                                                 ) ||
                                                                                 (
-                                                                                    Not(IsBlank(UDF_getPieceAtSqNum(
+                                                                                    Not(IsBlank(UDF_getBitAtSqNum(
                                                                                         theData.chessEngineData.tmpBoard,
                                                                                         UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,1,0)
                                                                                     ))) &&
-                                                                                    UDF_getPieceAtSqNum(
+                                                                                    UDF_getBitAtSqNum(
                                                                                         theData.chessEngineData.tmpBoard,
                                                                                         UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,1,0)
                                                                                     ) exactin "p"
@@ -2741,11 +2757,11 @@ Chess_Board As screen:
                                                                                 Not(IsBlank(UDF_getFileNameFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName))) &&
                                                                                 UDF_getFileNameFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) in "a"
                                                                             ),
-                                                                                Not(IsBlank(UDF_getPieceAtSqNum(
+                                                                                Not(IsBlank(UDF_getBitAtSqNum(
                                                                                     theData.chessEngineData.tmpBoard,
                                                                                     UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,1,0)
                                                                                 ))) &&
-                                                                                UDF_getPieceAtSqNum(
+                                                                                UDF_getBitAtSqNum(
                                                                                     theData.chessEngineData.tmpBoard,
                                                                                     UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,1,0)
                                                                                 ) exactin "P",
@@ -2753,11 +2769,11 @@ Chess_Board As screen:
                                                                                 Not(IsBlank(UDF_getFileNameFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName))) &&
                                                                                 UDF_getFileNameFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) in "h"
                                                                             ),
-                                                                                Not(IsBlank(UDF_getPieceAtSqNum(
+                                                                                Not(IsBlank(UDF_getBitAtSqNum(
                                                                                     theData.chessEngineData.tmpBoard,
                                                                                     UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,-1,0)
                                                                                 ))) &&
-                                                                                UDF_getPieceAtSqNum(
+                                                                                UDF_getBitAtSqNum(
                                                                                     theData.chessEngineData.tmpBoard,
                                                                                     UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,-1,0)
                                                                                 ) exactin "P",
@@ -2765,21 +2781,21 @@ Chess_Board As screen:
                                                                             // default
                                                                             (
                                                                                 (
-                                                                                    Not(IsBlank(UDF_getPieceAtSqNum(
+                                                                                    Not(IsBlank(UDF_getBitAtSqNum(
                                                                                         theData.chessEngineData.tmpBoard,
                                                                                         UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,-1,0)
                                                                                     ))) &&
-                                                                                    UDF_getPieceAtSqNum(
+                                                                                    UDF_getBitAtSqNum(
                                                                                         theData.chessEngineData.tmpBoard,
                                                                                         UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,-1,0)
                                                                                     ) exactin "P"
                                                                                 ) ||
                                                                                 (
-                                                                                    Not(IsBlank(UDF_getPieceAtSqNum(
+                                                                                    Not(IsBlank(UDF_getBitAtSqNum(
                                                                                         theData.chessEngineData.tmpBoard,
                                                                                         UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,1,0)
                                                                                     ))) &&
-                                                                                    UDF_getPieceAtSqNum(
+                                                                                    UDF_getBitAtSqNum(
                                                                                         theData.chessEngineData.tmpBoard,
                                                                                         UDF_getSqNumRelativeToSqNum(theCurrentNode.inactiveColorMoveRecord.targetSquareNum,1,0)
                                                                                     ) exactin "P"
@@ -3457,7 +3473,7 @@ Chess_Board As screen:
                                 LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID) As theD0ParentNode,
                     
                                 If(!IsBlank(theD0ParentNode),
-                                    Set(gblPF_UI_GamePhase, UDF_getGamePhaseStr(theD0ParentNode.postMoveFEN)),
+                                    Set(gblPF_UI_GamePhase, "Opening"),
                                     Set(gblPF_UI_GamePhase, "")
                                 )
                             )
