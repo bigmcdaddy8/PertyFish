@@ -710,6 +710,13 @@ Chess_Board As screen:
                 Y: =conControlsSharedArea.Height
                 ZIndex: =1
 
+                btnCheckTestGameResults As button:
+                    Text: ="Button"
+                    Visible: =false
+                    X: =40
+                    Y: =40
+                    ZIndex: =1
+
             conControlsGame As groupContainer.manualLayoutContainer:
                 Height: =Parent.Height-conControlsSharedArea.Height
                 Width: =Parent.Width
@@ -889,7 +896,7 @@ Chess_Board As screen:
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                     " btnCheckGameResults.OnSelect(): Game Test detected - redirecting to btnCheckGameTestResults testNumber: " & theData.chessEngineData.testNumber 
                                 });
-                                //Select(btnCheckGameTestResults),
+                                Select(btnCheckGameTestResults),
                         
                                 // ELSE - this is a Game
                                 /* ---------------------------------------------------------------------------------
