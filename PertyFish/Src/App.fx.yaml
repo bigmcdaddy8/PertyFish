@@ -265,6 +265,18 @@ App As appinfo:
                 )
             );
         
+        UDF_sqNameNoPromo(sqName:Text):Text=Left(sqName,2);
+        UDF_getPromo(sqName:Text):Text=If(Right(sqName,1) exactin "qrbn",Right(sqName,1),"");
+        UDF_getSourceSqNamePACN(pacn:Text):Text=Left(pacn,2);
+        UDF_getTargetSqNamePACN(pacn:Text):Text=Right(Left(pacn,4),2);
+        UDF_getPromoPACN(pacn:Text):Text=If(Right(pacn,1) exactin "qrbn",Right(pacn,1),"");
+        UDF_createPACN(sourceSqName:Text,targetSqName:Text):Text=sourceSqName & targetSqName; // NOTE: the promo code is part of the targetSqName in this case
+        
+        UDF_getBoardDistance(refSqName1:Text, refSqName2:Text):Number=
+        	Max(
+                Abs(UDF_getFileNumFromSqName(refSqName1)-UDF_getFileNumFromSqName(refSqName2)), 
+                Abs(UDF_getRankFromSqName(refSqName1)-UDF_getRankFromSqName(refSqName2))
+            );
         
         UDF_FEN_TO_PIECE_PLACMENT(fen:Text):Text=Index(Split(fen, " "),1).Value;
         
@@ -389,6 +401,13 @@ App As appinfo:
                 Left(board,Max(0,sqNum)) & piece & Right(board,Min(63,63-sqNum))
             );
         
+        UDF_getEPCaptureSqNum(fen:Text):Number=
+            UDF_getSqNumRelativeToSqNum(
+                UDF_sqNameToSqNum(UDF_FEN_TO_ENPASSANT_SQNAME(fen)),
+                0,
+                If(UDF_FEN_TO_ACTIVE_COLOR(fen)=WHITE,-1,1)
+            );
+            
         UDF_PieceToColor(piece:Text):Number=
             If(piece=EMPTY_ABBR || piece=EMPTY_FILLER_ABBR,
                 // THEN there is no piece return NO_COLOR
@@ -428,7 +447,10 @@ App As appinfo:
                 // ELSE
                 Upper(piece)
             );
-            
+        
+        UDF_isPieceAC(fen:Text,piece:Text):Boolean=
+            If(UDF_PieceToColor(piece)=UDF_FEN_TO_ACTIVE_COLOR(fen),true,false);
+        
         UDF_PieceToIcon(piece:Text):Text=
             Switch(true,
                 piece="K",  WHITE_KING_ICON,

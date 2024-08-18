@@ -23,1174 +23,6 @@
                   "relativeAddress": 0
                 },
                 "region": {
-                  "charLength": 280,
-                  "charOffset": 47729,
-                  "snippet": {
-                    "text": "UDF_isPieceAC(\n                                                theD0ParentNode.postMoveFEN,\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)\n                                            )"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_isPieceAC"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 48550,
-                  "snippet": {
-                    "text": "UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNameNoPromo"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 5,
-                  "charOffset": 48380,
-                  "snippet": {
-                    "text": "Patch"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Patch"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrInvalidArgs-Func",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 208,
-                  "charOffset": 48461,
-                  "snippet": {
-                    "text": "{\n                                                                        pinneeSqName:  UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)\n                                                                    }"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "pinneeSqName",
-              "Text",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrTypeError-Arg-Expected-Found",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 292,
-                  "charOffset": 48820,
-                  "snippet": {
-                    "text": "UDF_isPieceAC(\n                                                    theD0ParentNode.postMoveFEN,\n                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theEligibleMove.eligibleSqNum)\n                                                )"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_isPieceAC"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 3,
-                  "charOffset": 48816,
-                  "snippet": {
-                    "text": "Not"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Not"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrInvalidArgs-Func",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 50116,
-                  "snippet": {
-                    "text": "UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNameNoPromo"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 5,
-                  "charOffset": 49942,
-                  "snippet": {
-                    "text": "Patch"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Patch"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrInvalidArgs-Func",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 216,
-                  "charOffset": 50023,
-                  "snippet": {
-                    "text": "{\n                                                                            pinnerSqName:  UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)\n                                                                        }"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "pinnerSqName",
-              "Text",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrTypeError-Arg-Expected-Found",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 74445,
-                  "snippet": {
-                    "text": "UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNameNoPromo"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 74494,
-                  "snippet": {
-                    "text": "="
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Error",
-              "Text"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrIncompatibleTypesForEquality-Left-Right",
-          "ruleIndex": 3
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 75147,
-                  "snippet": {
-                    "text": "UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNameNoPromo"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 75146,
-                  "snippet": {
-                    "text": "="
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Text",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrIncompatibleTypesForEquality-Left-Right",
-          "ruleIndex": 3
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 50,
-                  "charOffset": 75394,
-                  "snippet": {
-                    "text": "UDF_getEPCaptureSqNum(theD0ParentNode.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_getEPCaptureSqNum"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 75376,
-                  "snippet": {
-                    "text": "UDF_sqNumToSqName"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToSqName"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrInvalidArgs-Func",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 75707,
-                  "snippet": {
-                    "text": "UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNameNoPromo"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 50,
-                  "charOffset": 77250,
-                  "snippet": {
-                    "text": "UDF_getEPCaptureSqNum(theD0ParentNode.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_getEPCaptureSqNum"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 77232,
-                  "snippet": {
-                    "text": "UDF_sqNumToSqName"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToSqName"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrInvalidArgs-Func",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 50,
-                  "charOffset": 77355,
-                  "snippet": {
-                    "text": "UDF_getEPCaptureSqNum(theD0ParentNode.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_getEPCaptureSqNum"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 82099,
-                  "snippet": {
-                    "text": "UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNameNoPromo"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 82236,
-                  "snippet": {
-                    "text": "UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNameNoPromo"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 70,
-                  "charOffset": 84614,
-                  "snippet": {
-                    "text": "UDF_createPACN(theEligibleMove.sqName, theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_createPACN"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 86056,
-                  "snippet": {
-                    "text": "UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNameNoPromo"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 90819,
-                  "snippet": {
-                    "text": "UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNameNoPromo"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 6,
-                  "charOffset": 89376,
-                  "snippet": {
-                    "text": "Switch"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Switch"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrInvalidArgs-Func",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 44,
-                  "charOffset": 97547,
-                  "snippet": {
-                    "text": "UDF_getPromo(theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_getPromo"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 5,
-                  "charOffset": 97541,
-                  "snippet": {
-                    "text": "Upper"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Upper"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrInvalidArgs-Func",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 5,
-                  "charOffset": 80615,
-                  "snippet": {
-                    "text": "Patch"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Patch"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrInvalidArgs-Func",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 16992,
-                  "charOffset": 80638,
-                  "snippet": {
-                    "text": "{\n                                        san:\n                                            Switch(true,\n                                                (\n                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&\n                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in \"K\"\n                                                ) &&\n                                                (\n                                                    Concatenate(theEligibleMove.sqName,theEligibleMove.eligibleSqName)=\"e1g1\" ||\n                                                    Concatenate(theEligibleMove.sqName,theEligibleMove.eligibleSqName)=\"e8g8\"\n                                                ),\n                                                    \"O-O\",\n\n                                                (\n                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&\n                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in \"K\"\n                                                ) &&\n                                                (\n                                                    theEligibleMove.sqName & UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)=\"e1c1\" ||\n                                                    theEligibleMove.sqName & UDF_sqNameNoPromo(theEligibleMove.eligibleSqName)=\"e8c8\"\n                                                ),\n                                                    \"O-O-O\",\n\n                                                // default - normal SAN processing\n                                                If(theEligibleMove.pieceUpper in \"P\",\n                                                    If(UDF_getBitAtSqNum(\n                                                        UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), \n                                                        theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR,\n                                                        \"\",\n                                                        UDF_getFileNameFromSqName(theEligibleMove.sqName)\n                                                    ),\n                                                    theEligibleMove.pieceUpper\n                                                ) & \n                                                If(UDF_getBitAtSqNum(\n                                                    UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), \n                                                    theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR,\n                                                    // THEN\n                                                    \"\",\n\n                                                    If( // put in an x for a capture - unless the target is a KING\n                                                        UDF_getBitAtSqNum(\n                                                            UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), \n                                                            theEligibleMove.eligibleSqNum\n                                                        ) in \"K\",\n                                                        // THEN\n                                                        \"\",\n\n                                                        // ELSE\n                                                        \"x\"\n                                                    )\n                                                ) &\n                                                UDF_sqNumToSqName(theEligibleMove.eligibleSqNum)\n                                            ),\n                                        pacn:               UDF_createPACN(theEligibleMove.sqName, theEligibleMove.eligibleSqName),\n                                        sourceSquareNum:    theSqNum.Value, \n                                        sourceSquareName:   UDF_sqNumToSqName(theSqNum.Value),\n                                        sourceSquareOccupier:   \n                                            If(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)=EMPTY_FILLER_ABBR,\n                                                EMPTY_ABBR, \n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)\n                                            ),\n                                        sourceSquarePieceColor: UDF_PieceToColor(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)),\n                                        sourceSquareIcon:       UDF_PieceToIcon(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theSqNum.Value)),\n                                        // the target square data is the square data of where the moving piece will end up, it is the data prior to the move\n                                        // the target square may or may not be occupied prior to the move\n                                        targetSquareNum:        theEligibleMove.eligibleSqNum,\n                                        targetSquareName:       UDF_sqNameNoPromo(theEligibleMove.eligibleSqName), // avoid the promo code\n                                        targetSquareOccupier:   \n                                            If(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR,\n                                                EMPTY_ABBR,\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)\n                                            ),\n                                        targetSquarePieceColor: UDF_PieceToColor(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),\n                                        targetSquareIcon:       UDF_PieceToIcon(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),\n                                        // the capture square data is the square data of the square containing the piece that is captured during the move, \n                                        //      it is the square data prior to the move\n                                        // the capture square data will be \"empty\" if there is no capture, in non-en Passant captures the capture data is the \n                                        // same as the target square data,\n                                        // in an en passant move the data will be of square where the pawn is captured\n                                        captureSquareNum:\n                                            Switch(true,\n                                                (\n                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&\n                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in \"P\"\n                                                ) &&\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&\n                                                UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>\"-\" &&\n                                                Text(theEligibleMove.moveDirection) in \"2468\",\n                                                    If(Text(theEligibleMove.moveDirection) in \"28\",\n                                                        UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),\n                                                        UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1)\n                                                    ),\n\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,\n                                                    theEligibleMove.eligibleSqNum,\n\n                                                // default\n                                                EMPTY_SQUARE_NUM\n                                            ),\n                                        captureSquareName:\n                                            Switch(true,\n                                                (\n                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&\n                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in \"P\"\n                                                ) &&\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&\n                                                UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>\"-\" &&\n                                                Text(theEligibleMove.moveDirection) in \"2468\",\n                                                    If(Text(theEligibleMove.moveDirection) in \"28\",\n                                                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1)),\n                                                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1))\n                                                    ),\n\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,\n                                                    UDF_sqNameNoPromo(theEligibleMove.eligibleSqName),\n                                                    \n                                                // default\n                                                EMPTY_SQUARE_NAME\n                                            ),\n                                        captureSquareOccupier:\n                                            Switch(true,\n                                                (\n                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&\n                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in \"P\"\n                                                ) &&\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&\n                                                UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>\"-\" &&\n                                                Text(theEligibleMove.moveDirection) in \"2468\",\n                                                    UDF_getBitAtSqNum(\n                                                        UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), \n                                                        If(Text(theEligibleMove.moveDirection) in \"28\",\n                                                            UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),\n                                                            UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1)\n                                                        )\n                                                    ),\n\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,\n                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum),\n\n                                                // default\n                                                EMPTY_ABBR\n                                            ),\n                                        captureSquarePieceColor:\n                                            Switch(true,\n                                                (\n                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&\n                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in \"P\"\n                                                ) &&\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&\n                                                UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>\"-\" &&\n                                                Text(theEligibleMove.moveDirection) in \"2468\",\n                                                    UDF_PieceToColor(\n                                                        UDF_getBitAtSqNum(\n                                                            UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), \n                                                            If(Text(theEligibleMove.moveDirection) in \"28\",\n                                                                UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),\n                                                                UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1)\n                                                            )\n                                                        )\n                                                    ),\n\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,\n                                                    UDF_PieceToColor(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),\n\n                                                // default\n                                                NO_COLOR\n                                            ),\n                                        captureSquareIcon:\n                                            Switch(true,\n                                                (\n                                                    Not(IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum))) &&\n                                                    UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.sqNum) in \"P\"\n                                                ) &&\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&\n                                                UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>\"-\" &&\n                                                Text(theEligibleMove.moveDirection) in \"2468\",\n                                                    UDF_PieceToIcon(\n                                                        UDF_getBitAtSqNum(\n                                                            UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), \n                                                            If(Text(theEligibleMove.moveDirection) in \"28\",\n                                                                UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,-1),\n                                                                UDF_getSqNumRelativeToSqNum(theEligibleMove.eligibleSqNum,0,1)\n                                                            )\n                                                        )\n                                                    ),\n\n                                                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)<>EMPTY_FILLER_ABBR,\n                                                    UDF_PieceToIcon(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)),\n\n                                                // default\n                                                EMPTY_ICON\n                                            ),\n                                        promoteTo:  Upper(UDF_getPromo(theEligibleMove.eligibleSqName))\n                                    }"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "pacn",
-              "Text",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrTypeError-Arg-Expected-Found",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
                   "charLength": 313,
                   "charOffset": 100554,
                   "snippet": {
@@ -1208,46 +40,6 @@
           "message": {
             "arguments": [
               "UDF_makeMovePACN"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 70,
-                  "charOffset": 100739,
-                  "snippet": {
-                    "text": "UDF_createPACN(theEligibleMove.sqName, theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_createPACN"
             ],
             "id": "issue"
           },
@@ -1328,46 +120,6 @@
           "message": {
             "arguments": [
               "UDF_makeMovePACN"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 70,
-                  "charOffset": 101581,
-                  "snippet": {
-                    "text": "UDF_createPACN(theEligibleMove.sqName, theEligibleMove.eligibleSqName)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_createPACN"
             ],
             "id": "issue"
           },
@@ -1944,7 +696,7 @@
             "level": "High"
           },
           "ruleId": "app-ErrUnknownNamespaceFunction",
-          "ruleIndex": 4
+          "ruleIndex": 3
         },
         {
           "locations": [
@@ -2024,7 +776,7 @@
             "level": "High"
           },
           "ruleId": "app-ErrInvalidName",
-          "ruleIndex": 5
+          "ruleIndex": 4
         },
         {
           "locations": [
@@ -2094,7 +846,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 6
+          "ruleIndex": 5
         },
         {
           "locations": [
@@ -2124,7 +876,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 7
+          "ruleIndex": 6
         },
         {
           "locations": [
@@ -2154,7 +906,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 6
+          "ruleIndex": 5
         },
         {
           "locations": [
@@ -2184,7 +936,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 7
+          "ruleIndex": 6
         },
         {
           "locations": [
@@ -2214,7 +966,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 6
+          "ruleIndex": 5
         },
         {
           "locations": [
@@ -2244,7 +996,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-FocusBorderShouldBeVisible",
-          "ruleIndex": 8
+          "ruleIndex": 7
         },
         {
           "locations": [
@@ -2274,7 +1026,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 6
+          "ruleIndex": 5
         },
         {
           "locations": [
@@ -2304,7 +1056,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 7
+          "ruleIndex": 6
         },
         {
           "locations": [
@@ -2334,7 +1086,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 6
+          "ruleIndex": 5
         },
         {
           "locations": [
@@ -2364,7 +1116,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 7
+          "ruleIndex": 6
         },
         {
           "locations": [
@@ -2394,7 +1146,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 6
+          "ruleIndex": 5
         },
         {
           "locations": [
@@ -2424,7 +1176,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 7
+          "ruleIndex": 6
         },
         {
           "locations": [
@@ -2454,7 +1206,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 6
+          "ruleIndex": 5
         },
         {
           "locations": [
@@ -2484,7 +1236,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 7
+          "ruleIndex": 6
         },
         {
           "locations": [
@@ -2514,7 +1266,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 7
+          "ruleIndex": 6
         },
         {
           "locations": [
@@ -2544,7 +1296,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 7
+          "ruleIndex": 6
         },
         {
           "locations": [
@@ -2574,7 +1326,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 7
+          "ruleIndex": 6
         },
         {
           "locations": [
@@ -2604,7 +1356,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 6
+          "ruleIndex": 5
         },
         {
           "locations": [
@@ -2634,7 +1386,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2664,7 +1416,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2694,7 +1446,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2724,7 +1476,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2754,7 +1506,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2784,7 +1536,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2814,7 +1566,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2844,7 +1596,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2874,7 +1626,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2904,7 +1656,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2934,7 +1686,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2964,7 +1716,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -2994,7 +1746,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3024,7 +1776,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3054,7 +1806,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3084,7 +1836,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3114,7 +1866,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3144,7 +1896,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3174,7 +1926,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3204,7 +1956,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3234,7 +1986,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3264,7 +2016,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3294,7 +2046,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3324,7 +2076,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3354,7 +2106,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3384,7 +2136,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3414,7 +2166,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3444,7 +2196,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3474,7 +2226,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3504,7 +2256,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3534,7 +2286,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3564,7 +2316,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         },
         {
           "locations": [
@@ -3594,7 +2346,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 9
+          "ruleIndex": 8
         }
       ],
       "tool": {
@@ -3639,24 +2391,6 @@
               },
               "properties": {
                 "componentType": "app",
-                "level": "High",
-                "primaryCategory": "formula",
-                "whyFix": ""
-              }
-            },
-            {
-              "id": "app-ErrIncompatibleTypesForEquality-Left-Right",
-              "messageStrings": {
-                "issue": {
-                  "text": "Incompatible types for comparison. These types can't be compared: {0}, {1}."
-                }
-              },
-              "properties": {
-                "componentType": "app",
-                "howToFix": [
-                  "You might need to convert the value to be the same type, such as converting a date string (e.g., \"12/31/2018\") to a date value.",
-                  "If you’re comparing records or tables, the field or column types must match exactly."
-                ],
                 "level": "High",
                 "primaryCategory": "formula",
                 "whyFix": ""
