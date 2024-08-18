@@ -14,7 +14,8 @@ comUtilityFunctions As CanvasComponent:
                         ClearCollect(colPF_MOVE_HISTORY, Table(NODE_RECORD_PF));
                         ClearCollect(colPF_MOVE_TREE, Table(NODE_RECORD_PF));
                         RemoveIf(colPF_MOVE_HISTORY, nodeID<0);
-                        RemoveIf(colPF_MOVE_TREE, nodeID<0),
+                        RemoveIf(colPF_MOVE_TREE, nodeID<0);
+                        Clear(colPF_Timers),
                 
                     pInitType=100,
                         ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: ""})),
@@ -32,13 +33,13 @@ comUtilityFunctions As CanvasComponent:
                     Set(gblPF_UI_whiteCapturedPieces, "");
                     Set(gblPF_UI_blackCapturedPieces, "");
                     Set(gblPF_UI_MaterialValueOverall, 0);
-                    Set(gblPF_UI_ThinkingText, ""),
-                    Set(gblPF_UI_StatusText, "Restarting..."),
-                    Set(gblPF_UI_DiagnosticText, ""),
-                    Set(gblPF_UI_ModeFill, COLOR_WHITEish),
-                    Set(gblPF_UI_ThinkingFill, COLOR_WHITEish),
-                    Set(gblPF_UI_StatusFill, COLOR_WHITEish),
-                    Set(gblPF_UI_DiagnosticFill, COLOR_WHITEish),
+                    Set(gblPF_UI_ThinkingText, "");
+                    Set(gblPF_UI_StatusText, "Restarting...");
+                    Set(gblPF_UI_DiagnosticText, "");
+                    Set(gblPF_UI_ModeFill, COLOR_WHITEish);
+                    Set(gblPF_UI_ThinkingFill, COLOR_WHITEish);
+                    Set(gblPF_UI_StatusFill, COLOR_WHITEish);
+                    Set(gblPF_UI_DiagnosticFill, COLOR_WHITEish);
                 
                     ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: ""}));
                     ClearCollect(colPF_DYNAMIC_DATA, Table(PF_DYNAMIC_DATA));

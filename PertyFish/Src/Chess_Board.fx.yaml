@@ -1249,6 +1249,7 @@ Chess_Board As screen:
                 OnSelect: |+
                     =
                     
+                    
                     If(Not(gblPF_PAUSE),
                     
                         With(

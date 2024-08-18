@@ -172,7 +172,7 @@
         {
           "Category": "Behavior",
           "PropertyName": "fUtilInitData",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "System"
         }
       ],
       "StyleName": "",
