@@ -777,9 +777,9 @@ Chess_Board As screen:
                     Height: =25
                     Size: =10
                     Text: |-
-                        ="Board Ready for Input:"
-                    Width: =60
-                    X: =202
+                        ="Board Ready for Input: " & gblPF_UI_Ready4Input
+                    Width: =200
+                    X: =12
                     Y: =273
                     ZIndex: =5
 
@@ -801,7 +801,7 @@ Chess_Board As screen:
                     Text: =gblPF_UI_GamePhase
                     Width: =120
                     X: =117
-                    Y: =198
+                    Y: =298
                     ZIndex: =7
 
                 txtStartingFEN As text:
@@ -1217,6 +1217,7 @@ Chess_Board As screen:
                     Default: ="Game"
                     Height: =37
                     Items: =["Game", "Diagnostics"]
+                    Layout: =Layout.Horizontal
                     OnSelect: |
                         =If(radMode.SelectedText.Value="Diagnostics",
                             // THEN
