@@ -492,15 +492,15 @@ App As appinfo:
         
         UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
             Switch(true,
-                IsBlank(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(fen),sqNum)),  false,
-                UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(fen),sqNum) exactin UDF_getACPieceABBR(fen,"KN"), true,
+                IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(fen),sqNum)),  false,
+                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(fen),sqNum) exactin UDF_getACPieceABBR(fen,"KN"), true,
                 distance=1, true,
                 !IsMatch(
                     Concat(
                         ForAll (
                             Split(slideOvers, " ") As aSliderOver,
         
-                            If(UDF_getPieceAtSqNum(UDF_FEN_TO_BOARD(fen), UDF_sqNameToSqNum(aSliderOver.Value))<>EMPTY_FILLER_ABBR,
+                            If(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(fen), UDF_sqNameToSqNum(aSliderOver.Value))<>EMPTY_FILLER_ABBR,
                                 "BLOCKED",
                                 ""
                             )
@@ -511,7 +511,7 @@ App As appinfo:
                 // default
                 false
             );
-            
+        
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-

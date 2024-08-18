@@ -1748,7 +1748,7 @@ Chess_Board As screen:
                             // populate the noActiveKingBoard board w/o the king - the no king board will be used as the attacks from 
                             UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                                 chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
-                                                        noActiveKingBoard:  UDF_setPieceAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),EMPTY_FILLER_ABBR,
+                                                        noActiveKingBoard:  UDF_setBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),EMPTY_FILLER_ABBR,
                                                                                 UDF_SearchBoardForPiece(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), UDF_getACPieceABBR(theD0ParentNode.postMoveFEN, "K"))
                                                                             )
                                                     })
@@ -1844,7 +1844,7 @@ Chess_Board As screen:
                     
                                                 // default
                                                 UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
-                                                    postMoveActiveKingDangerBoard:  UDF_setPieceAtSqNum(
+                                                    postMoveActiveKingDangerBoard:  UDF_setBitAtSqNum(
                                                                                         LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID).postMoveActiveKingDangerBoard,
                                                                                         theEligibleMove.pieceUpper,
                                                                                         theEligibleMove.eligibleSqNum
@@ -2606,7 +2606,7 @@ Chess_Board As screen:
                                                                     UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), theEligibleMove.eligibleSqNum)=EMPTY_FILLER_ABBR &&
                                                                     UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-" &&
                                                                     Text(theEligibleMove.moveDirection) in "2468",
-                                                                        UDF_setPieceAtSqNum(
+                                                                        UDF_setBitAtSqNum(
                                                                             UDF_makeMovePACN(
                                                                                 UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),
                                                                                 UDF_createPACN(theEligibleMove.sqName, theEligibleMove.eligibleSqName)
