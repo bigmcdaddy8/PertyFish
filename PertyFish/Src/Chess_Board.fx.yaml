@@ -1498,7 +1498,7 @@ Chess_Board As screen:
                                     If(UDF_FEN_TO_CASTLE_RIGHTS_ALL_TEXT(theD0ParentNode.postMoveFEN)<>"-",
                                         // THEN - there are some castle rights available - need to take a closer look to see if we need to take some away
                                         If(
-                                            UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE && 
+                                            UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE &&
                                             (
                                                 UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_BOOL(theD0ParentNode.postMoveFEN,WHITE,"K") ||
                                                 UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_BOOL(theD0ParentNode.postMoveFEN,WHITE,"Q")
