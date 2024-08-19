@@ -757,9 +757,9 @@ Chess_Board As screen:
                     Size: =10
                     Text: |-
                         ="Number of Legal Moves: " & If(gblPF_NumberofLegalMoves<0,"None",gblPF_NumberofLegalMoves)
-                    Width: =225
+                    Width: =250
                     X: =15
-                    Y: =455
+                    Y: =445
                     ZIndex: =1
 
                 lblPlayerColorHeader As label:
@@ -781,7 +781,7 @@ Chess_Board As screen:
                         ="Selected Square Num: " & If(gblPF_UI_selectedSqNum=64,"None",gblPF_UI_selectedSqNum & "(" & UDF_sqNumToSqName(gblPF_UI_selectedSqNum) & ")")
                     Width: =225
                     X: =15
-                    Y: =430
+                    Y: =420
                     ZIndex: =4
 
                 lblBoardReadyForInput As label:
