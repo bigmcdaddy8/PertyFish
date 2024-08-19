@@ -608,6 +608,7 @@ App As appinfo:
         
             Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM),
             Set(gblPF_UI_Ready4Input, false),
+            Set(gblPF_NumberofLegalMoves, -1),
             Set(gblPF_UI_DisplayedBoard, EMPTY_BOARD),
             Set(gblPF_UI_DisplayedFEN, ""),
             Set(gblPF_UI_GameTurn, WHITE),

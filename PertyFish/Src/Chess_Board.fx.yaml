@@ -755,7 +755,7 @@ Chess_Board As screen:
                     Height: =25
                     Size: =10
                     Text: |-
-                        ="Selected Square Num: " & If(gblPF_UI_selectedSqNum=64,"None",gblPF_UI_selectedSqNum & "(" & UDF_sqNumToSqName(gblPF_UI_selectedSqNum) & ")")
+                        ="Number of Legal Moves: " & If(gblPF_NumberofLegalMoves<0,"None",gblPF_NumberofLegalMoves)
                     Width: =225
                     X: =15
                     Y: =455
@@ -2905,6 +2905,8 @@ Chess_Board As screen:
                     
                             If(CountRows(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID))>0,
                                 // THEN
+                                Set(gblPF_NumberofLegalMoves, CountRows(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID)));
+                    
                                 ForAll(
                                     Sort(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID),inactiveColorMoveRecord.san) As aD1Node,
                     
@@ -2915,7 +2917,10 @@ Chess_Board As screen:
                                         " nodeDepth: " & aD1Node.nodeDepth & " # of checks: " & aD1Node.postMoveNumActiveChecks &
                                         " centipawn: " & aD1Node.postMoveEvalRecord.centipawn
                                     })
-                                )
+                                ),
+                    
+                                // ELSE
+                                Set(gblPF_NumberofLegalMoves, 0);
                             )
                         );
                         // END DUMP ===============================================================================================
