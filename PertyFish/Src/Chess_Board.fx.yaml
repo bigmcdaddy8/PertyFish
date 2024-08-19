@@ -758,7 +758,7 @@ Chess_Board As screen:
                     Text: |-
                         ="Number of Legal Moves: " & If(gblPF_NumberofLegalMoves<0,"None",gblPF_NumberofLegalMoves)
                     Width: =250
-                    X: =15
+                    X: =10
                     Y: =445
                     ZIndex: =1
 
@@ -780,7 +780,7 @@ Chess_Board As screen:
                     Text: |-
                         ="Selected Square Num: " & If(gblPF_UI_selectedSqNum=64,"None",gblPF_UI_selectedSqNum & "(" & UDF_sqNumToSqName(gblPF_UI_selectedSqNum) & ")")
                     Width: =225
-                    X: =15
+                    X: =10
                     Y: =420
                     ZIndex: =4
 
