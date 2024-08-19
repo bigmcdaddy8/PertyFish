@@ -15,7 +15,8 @@ comUtilityFunctions As CanvasComponent:
                         ClearCollect(colPF_MOVE_TREE, Table(NODE_RECORD_PF));
                         RemoveIf(colPF_MOVE_HISTORY, nodeID<0);
                         RemoveIf(colPF_MOVE_TREE, nodeID<0);
-                        Clear(colPF_Timers),
+                        Clear(colPF_Timers);
+                        Reset(galChessBoard),
                 
                     pInitType=100,
                         ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: ""})),
