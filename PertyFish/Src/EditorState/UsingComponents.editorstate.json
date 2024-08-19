@@ -90,7 +90,7 @@
         {
           "Category": "Behavior",
           "PropertyName": "fME_EvaluateMove",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "System"
         },
         {
           "Category": "Behavior",

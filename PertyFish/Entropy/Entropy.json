@@ -91,6 +91,10 @@
     "UsingComponents": 79
   },
   "FunctionParamsInvariantScripts": {
+    "comChessEngineFunctions.fME_EvaluateMove_BEGINNER_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ],
     "comChessEngineFunctions.fME_EvaluateMove_pNodeID": [
       "100",
       "EMPTY_NODE_ID"
@@ -101,6 +105,10 @@
     ]
   },
   "FunctionParamsInvariantScriptsOnInstances": {
+    "comChessEngineFunctionsLibrary.fME_EvaluateMove_BEGINNER_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ],
     "comChessEngineFunctionsLibrary.fME_EvaluateMove_pNodeID": [
       "100",
       "EMPTY_NODE_ID"
@@ -110,7 +118,7 @@
       "0"
     ]
   },
-  "HeaderLastSavedDateTimeUTC": "08/19/2024 22:44:23",
+  "HeaderLastSavedDateTimeUTC": "08/19/2024 22:53:13",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,
