@@ -765,7 +765,7 @@ Chess_Board As screen:
                 lblPlayerColorHeader As label:
                     Size: =10
                     Text: ="Player plays as..."
-                    X: =25
+                    X: =10
                     ZIndex: =2
 
                 lblStartingFEN As label:
@@ -1238,12 +1238,20 @@ Chess_Board As screen:
                     Height: =43
                     Items: =[CE_PF_RANDOM, CE_PF_BEGINNER]
                     Layout: =Layout.Horizontal
+                    OnChange: =Set(gblPF_UI_SelectedChessEngine, radChessEngine.Selected.Value)
                     RadioSize: =15
                     Size: =10
                     Width: =348
                     X: =25
                     Y: =100
                     ZIndex: =12
+
+                lblChessEngine As label:
+                    Size: =10
+                    Text: ="Computer Engine"
+                    X: =10
+                    Y: =68
+                    ZIndex: =13
 
             conControlsSharedArea As groupContainer.manualLayoutContainer:
                 Height: =50
