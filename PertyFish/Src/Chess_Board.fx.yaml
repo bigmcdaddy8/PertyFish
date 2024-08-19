@@ -765,7 +765,7 @@ Chess_Board As screen:
                 lblPlayerColorHeader As label:
                     Size: =10
                     Text: ="Player plays as..."
-                    X: =25
+                    X: =10
                     ZIndex: =2
 
                 lblStartingFEN As label:
@@ -1232,6 +1232,26 @@ Chess_Board As screen:
                     X: =25
                     Y: =33
                     ZIndex: =11
+
+                radChessEngine As radio:
+                    Default: =CE_PF_RANDOM
+                    Height: =43
+                    Items: =[CE_PF_RANDOM, CE_PF_BEGINNER]
+                    Layout: =Layout.Horizontal
+                    OnChange: =Set(gblPF_UI_SelectedChessEngine, radChessEngine.Selected.Value)
+                    RadioSize: =15
+                    Size: =10
+                    Width: =348
+                    X: =25
+                    Y: =100
+                    ZIndex: =12
+
+                lblChessEngine As label:
+                    Size: =10
+                    Text: ="Computer Engine"
+                    X: =10
+                    Y: =68
+                    ZIndex: =13
 
             conControlsSharedArea As groupContainer.manualLayoutContainer:
                 Height: =50
@@ -2859,7 +2879,13 @@ Chess_Board As screen:
                                                     )
                                                 );
                     
-                                                comChessEngineFunctionsLibrary.fME_EvaluateMove(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID);
+                                                Switch(true,
+                                                    gblPF_UI_SelectedChessEngine=CE_PF_BEGINNER,
+                                                        comChessEngineFunctionsLibrary.fME_EvaluateMove_BEGINNER(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID),
+                    
+                                                    // default
+                                                    comChessEngineFunctionsLibrary.fME_EvaluateMove(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID)
+                                                );
                     
                                                 With(
                                                     LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID) As theCurrentNode,

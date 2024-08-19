@@ -524,6 +524,36 @@
             {
               "logicalLocations": [
                 {
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radChessEngine.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radChessEngine.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "Chess_Board",
+                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radChessEngine"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 1
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
                   "fullyQualifiedName": "App.gblPF_TMP_Boolean01"
                 }
               ],
