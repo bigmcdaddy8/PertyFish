@@ -743,7 +743,7 @@ Chess_Board As screen:
                     Font: =Font.'Courier New'
                     Height: =25
                     Size: =11
-                    Text: =If(gblPF_UI_selectedSqNum=EMPTY_SQUARE_NUM,"None",gblPF_UI_selectedSqNum)
+                    Text: =If(gblPF_UI_selectedSqNum=64,"None",gblPF_UI_selectedSqNum)
                     Visible: =false
                     Width: =50
                     X: =185
@@ -755,7 +755,7 @@ Chess_Board As screen:
                     Height: =25
                     Size: =10
                     Text: |-
-                        ="Selected Square Num:" & If(gblPF_UI_selectedSqNum=EMPTY_SQUARE_NUM,"None",gblPF_UI_selectedSqNum)
+                        ="Selected Square Num:" & If(gblPF_UI_selectedSqNum=64,"None",gblPF_UI_selectedSqNum)
                     Width: =225
                     X: =15
                     Y: =431
