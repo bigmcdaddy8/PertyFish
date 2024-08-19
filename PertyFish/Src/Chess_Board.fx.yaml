@@ -785,15 +785,14 @@ Chess_Board As screen:
                     ZIndex: =4
 
                 lblBoardReadyForInput As label:
-                    Font: |-
-                        ="Board Ready for Input:"
+                    Font: =Font.'Courier New'
                     Height: =25
                     Size: =10
                     Text: |-
                         ="Board Ready for Input: " & gblPF_UI_Ready4Input
-                    Width: =200
-                    X: =12
-                    Y: =273
+                    Width: =250
+                    X: =10
+                    Y: =395
                     ZIndex: =5
 
                 txtStartingFEN As text:
