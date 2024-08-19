@@ -1,0 +1,49 @@
+Logging_Screen As screen:
+
+    conEntireLoggingScreen As groupContainer.manualLayoutContainer:
+        Height: =Parent.Height
+        Width: =Parent.Width
+        ZIndex: =1
+
+        galLogs As gallery.galleryVertical:
+            DelayItemLoading: =true
+            Height: =740
+            Items: =SortByColumns(colPF_logs, "logOffset")
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            TemplatePadding: =1
+            TemplateSize: =30
+            Width: =1200
+            X: =10
+            Y: =5
+            ZIndex: =1
+
+            lblLogEntry As label:
+                Font: =Font.'Courier New'
+                Height: =Parent.TemplateHeight
+                OnSelect: =Select(Parent)
+                PaddingBottom: =1
+                PaddingLeft: =2
+                PaddingTop: =1
+                Size: =10
+                Text: |-
+                    =ThisItem.logOffset & ": " & ThisItem.logEntry
+                Width: =Parent.Width-20
+                X: =5
+                Y: =5
+                ZIndex: =1
+
+        btnClearLog As button:
+            OnSelect: =Clear(colPF_logs);
+            Text: ="Clear Log"
+            X: =1192
+            Y: =48
+            ZIndex: =2
+
+        btnBackToChess_Board As button:
+            OnSelect: =Navigate(Chess_Board)
+            Text: ="continue"
+            X: =1192
+            Y: =142
+            ZIndex: =3
+

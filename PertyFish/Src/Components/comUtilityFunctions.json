@@ -1,0 +1,136 @@
+{
+  "ComponentAllowCustomization": true,
+  "ComponentChangedSinceFileImport": true,
+  "ComponentDefinitionInfo": {
+    "AllowAccessToGlobals": true,
+    "Children": [],
+    "ControlPropertyState": [
+      "Fill",
+      "Height",
+      "Width",
+      "X",
+      "Y",
+      "ZIndex",
+      {
+        "AFDDataSourceName": "",
+        "AutoRuleBindingEnabled": false,
+        "AutoRuleBindingString": "100",
+        "InvariantPropertyName": "fUtilInitData_pInitType",
+        "IsLockable": false,
+        "NameMapSourceSchema": "?"
+      },
+      {
+        "AFDDataSourceName": "",
+        "AutoRuleBindingEnabled": false,
+        "AutoRuleBindingString": "",
+        "InvariantPropertyName": "fUtilInitData",
+        "IsLockable": false,
+        "NameMapSourceSchema": "?"
+      }
+    ],
+    "LastModifiedTimestamp": "638597011802854692",
+    "Name": "comUtilityFunctions",
+    "Rules": [
+      {
+        "Category": "Data",
+        "InvariantScript": "0",
+        "Property": "fUtilInitData_pInitType",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "1",
+        "Property": "ZIndex",
+        "RuleProviderType": "Unknown"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "0",
+        "Property": "Y",
+        "RuleProviderType": "Unknown"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "0",
+        "Property": "X",
+        "RuleProviderType": "Unknown"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "640",
+        "Property": "Width",
+        "RuleProviderType": "Unknown"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "640",
+        "Property": "Height",
+        "RuleProviderType": "Unknown"
+      },
+      {
+        "Category": "Design",
+        "InvariantScript": "RGBA(0, 0, 0, 0)",
+        "Property": "Fill",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Behavior",
+        "InvariantScript": "Switch(true,\n    pInitType=-1,\n        Blank(),\n\n    pInitType=1,\n        Set(gblPF_UI_whiteCapturedPieces, \"\");\n        Set(gblPF_UI_blackCapturedPieces, \"\");\n        ClearCollect(colPF_MOVE_HISTORY, Table(NODE_RECORD_PF));\n        ClearCollect(colPF_MOVE_TREE, Table(NODE_RECORD_PF));\n        RemoveIf(colPF_MOVE_HISTORY, nodeID<0);\n        RemoveIf(colPF_MOVE_TREE, nodeID<0);\n        Clear(colPF_Timers);\n        Reset(galChessBoard),\n\n    pInitType=100,\n        ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: \"\"})),\n\n    // default\n    Set(gblPF_TMR_RunNextTest, false);\n    Set(gblPF_TMR_MakeNextTestMove, false);\n    Set(gblPF_TMR_MakeNextGameMove, false);\n    Set(gblPF_PAUSE, false);\n    Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);\n    Set(gblPF_UI_Ready4Input, false);\n    Set(gblPF_UI_DisplayedBoard, EMPTY_BOARD);\n    Set(gblPF_UI_DisplayedFEN, \"\");\n    Set(gblPF_UI_GameTurn, WHITE);\n    Set(gblPF_UI_whiteCapturedPieces, \"\");\n    Set(gblPF_UI_blackCapturedPieces, \"\");\n    Set(gblPF_UI_MaterialValueOverall, 0);\n    Set(gblPF_UI_ThinkingText, \"\");\n    Set(gblPF_UI_StatusText, \"Restarting...\");\n    Set(gblPF_UI_DiagnosticText, \"\");\n    Set(gblPF_UI_ModeFill, COLOR_WHITEish);\n    Set(gblPF_UI_ThinkingFill, COLOR_WHITEish);\n    Set(gblPF_UI_StatusFill, COLOR_WHITEish);\n    Set(gblPF_UI_DiagnosticFill, COLOR_WHITEish);\n\n    ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: \"\"}));\n    ClearCollect(colPF_DYNAMIC_DATA, Table(PF_DYNAMIC_DATA));\n    Clear(colPF_Timers);\n\n    UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {\n        uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {\n                    UI_ready4Input:     gblPF_UI_Ready4Input,\n                    UI_sourceSqNum:     gblPF_UI_selectedSqNum,\n                    statusText:         gblPF_UI_StatusText,\n                    statusFill:         gblPF_UI_StatusFill,\n                    diagnosticText:     gblPF_UI_DiagnosticText,\n                    diagnosticFill:     gblPF_UI_DiagnosticFill\n                })\n    });\n\n    Reset(galChessBoard);\n);\n\n\n",
+        "Property": "fUtilInitData",
+        "RuleProviderType": "System"
+      }
+    ]
+  },
+  "ComponentManifest": {
+    "AllowAccessToGlobals": true,
+    "AllowCustomization": true,
+    "Description": "",
+    "Name": "comUtilityFunctions",
+    "TemplateGuid": "b953a316546441b9933cc2e2000b7cbb"
+  },
+  "ComponentType": "CanvasComponent",
+  "CustomGroupControlTemplateName": "",
+  "CustomProperties": [
+    {
+      "Category": 2,
+      "DisplayName": "fUtilInitData",
+      "Hidden": true,
+      "Name": "fUtilInitData",
+      "PropertyDataTypeKey": "Void",
+      "PropertyScopeKey": {
+        "PropertyScopeRuleNamespaceKey": "4",
+        "PropertyScopeRulesKey": [
+          {
+            "DisplayName": "fUtilInitData_pInitType",
+            "Name": "fUtilInitData_pInitType",
+            "PropertyDataTypeKey": "Number",
+            "ScopeVariableInfo": {
+              "DependencyType": "New",
+              "Description": "specify the initialization we want to do",
+              "IsRequired": true,
+              "ResolveExpands": false,
+              "ResolveSelects": false,
+              "ScopeVariableName": "pInitType"
+            },
+            "Tooltip": "specify the initialization we want to do",
+            "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Number\",\"EnumString\":\"\",\"Type\":[]}}"
+          }
+        ]
+      },
+      "Tooltip": "intiialize data",
+      "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Void\",\"EnumString\":\"\",\"Type\":[]}}"
+    }
+  ],
+  "FirstParty": true,
+  "Id": "http://microsoft.com/appmagic/Component",
+  "IsComponentLocked": false,
+  "IsComponentTemplate": true,
+  "IsCustomGroupControlTemplate": false,
+  "IsPcfControl": false,
+  "IsPremiumPcfControl": false,
+  "IsWidgetTemplate": false,
+  "LastModifiedTimestamp": "638597011802854692",
+  "Name": "b953a316546441b9933cc2e2000b7cbb",
+  "OverridableProperties": {},
+  "Version": "1.0"
+}
