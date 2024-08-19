@@ -25,16 +25,18 @@ Let the world know that this project exists, in case there is some interest.
 Organize and document what needs to be worked on to move this project forward.
 #### Feature 0002 - Create regression testing capability
 In a private version I have built in regression testing, I may pull that forward or at least a simplified version of it. I ran into a problem where the sheer size (number of components) in that private version caused the program to basically become too large for the browser based Power Apps development tool to reliably load and save in a timely manner.
-#### Feature 0003 - Separate Engine logic into separate components
+#### Feature 0003 - Create smarter embedded chess engines
+Create smarter chess engines that are written using PowerFx
+##### Story 0003-01 Separate Engine logic into separate components
 To prevent the development of more complex chess engine logic from breaking previous table iterations, separate out the logic of the chess engines from each other and have a radio control where the use can select which engine they want to play against, selections something like...
 - PertyFish Random (~100 ELO)
-- PertyFish Simpleton (~200 ELO)
+- PertyFish Beginner (~200 ELO)
 - etc.
 #### Feature 0004 - Allow backup buttons for a user to undo a move
 Add a undo button for a human player to undo a move.
 #### Feature 0005 - Technical Documentation
 Document the details of this project used PowerFx to create a chess program. Items such as the collection formats, and how they are used. The board layout, use of FEN, the legal move table, etc.
-##### Story 0005-001 - Create Outline
+##### Story 0005-01 - Create Outline
 Create Outline of what and where technical documentation should be housed and what it should contain.
 #### Feature 0006 - User Documentation
 Document how a user plays chess within the PertyFish canvas app
