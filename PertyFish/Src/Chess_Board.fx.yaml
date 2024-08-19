@@ -1233,6 +1233,18 @@ Chess_Board As screen:
                     Y: =33
                     ZIndex: =11
 
+                radChessEngine As radio:
+                    Default: =CE_PF_RANDOM
+                    Height: =43
+                    Items: =[CE_PF_RANDOM, CE_PF_BEGINNER]
+                    Layout: =Layout.Horizontal
+                    RadioSize: =15
+                    Size: =10
+                    Width: =348
+                    X: =25
+                    Y: =100
+                    ZIndex: =12
+
             conControlsSharedArea As groupContainer.manualLayoutContainer:
                 Height: =50
                 Width: =Parent.Width
