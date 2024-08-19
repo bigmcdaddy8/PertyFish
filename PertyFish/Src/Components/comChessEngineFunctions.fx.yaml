@@ -137,6 +137,11 @@ comChessEngineFunctions As CanvasComponent:
                 );
                 
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_EvaluateMove(): exiting"});
+    fME_EvaluateMove_BEGINNER(pNodeID As Number):
+        pNodeID:
+            Default: =100
+        ThisProperty:
+            Default: =
     Fill: =RGBA(0, 0, 0, 0)
     Height: =640
     Width: =640

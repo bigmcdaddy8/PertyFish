@@ -195,5 +195,6 @@ UsingComponents As screen:
             );
             
             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_EvaluateMove(): exiting"});
+        fME_EvaluateMove_BEGINNER: =
         ZIndex: =2
 

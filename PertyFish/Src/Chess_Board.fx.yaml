@@ -2879,7 +2879,13 @@ Chess_Board As screen:
                                                     )
                                                 );
                     
-                                                comChessEngineFunctionsLibrary.fME_EvaluateMove(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID);
+                                                Switch(true,
+                                                    gblPF_UI_SelectedChessEngine=CE_PF_BEGINNER,
+                                                        comChessEngineFunctionsLibrary.fME_EvaluateMove_BEGINNER(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID),
+                    
+                                                    // default
+                                                    comChessEngineFunctionsLibrary.fME_EvaluateMove(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID)
+                                                );
                     
                                                 With(
                                                     LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID) As theCurrentNode,

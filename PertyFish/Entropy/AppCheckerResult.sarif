@@ -1424,36 +1424,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "App.gblPF_UI_SelectedChessEngine"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_UI_SelectedChessEngine",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_UI_SelectedChessEngine",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "App.gblPF_TMR_RunNextTest"
                 }
               ],
