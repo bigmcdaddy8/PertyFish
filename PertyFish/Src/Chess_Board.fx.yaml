@@ -744,7 +744,7 @@ Chess_Board As screen:
                     Height: =25
                     Size: =10
                     Text: |-
-                        ="Selected Square Num:" & If(gblPF_UI_selectedSqNum=64,"None",gblPF_UI_selectedSqNum)
+                        ="Selected Square Num: " & If(gblPF_UI_selectedSqNum=64,"None",gblPF_UI_selectedSqNum & "(" & UDF_sqNumToSqName(gblPF_UI_selectedSqNum) & ")")
                     Width: =225
                     X: =15
                     Y: =431
