@@ -746,6 +746,7 @@ Chess_Board As screen:
 
             conControlsGame As groupContainer.manualLayoutContainer:
                 Height: =Parent.Height-conControlsSharedArea.Height
+                Visible: =If(radMode.SelectedText.Value="Game",true,false)
                 Width: =Parent.Width
                 Y: =60
                 ZIndex: =2
