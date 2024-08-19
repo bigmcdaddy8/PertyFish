@@ -27,11 +27,8 @@ Organize and document what needs to be worked on to move this project forward.
 In a private version I have built in regression testing, I may pull that forward or at least a simplified version of it. I ran into a problem where the sheer size (number of components) in that private version caused the program to basically become too large for the browser based Power Apps development tool to reliably load and save in a timely manner.
 #### Feature 0003 - Create smarter embedded chess engines
 Create smarter chess engines that are written using PowerFx
-##### Story 0003-01 Separate Engine logic into separate components
-To prevent the development of more complex chess engine logic from breaking previous table iterations, separate out the logic of the chess engines from each other and have a radio control where the use can select which engine they want to play against, selections something like...
-- PertyFish Random (~100 ELO)
-- PertyFish Beginner (~200 ELO)
-- etc.
+##### Story 0003-02 Separate Player Choice
+In prepation for chess engine vs chess engine play in future add ability to specify for each player whether they are human or computer, and then add to controls the ability to specify a unique computer engine for each player.
 #### Feature 0004 - Allow backup buttons for a user to undo a move
 Add a undo button for a human player to undo a move.
 #### Feature 0005 - Technical Documentation
@@ -42,4 +39,9 @@ Create Outline of what and where technical documentation should be housed and wh
 Document how a user plays chess within the PertyFish canvas app
 
 
-
+## Completed Work
+##### Story 0003-01 Separate Engine logic into separate components
+To prevent the development of more complex chess engine logic from breaking previous table iterations, separate out the logic of the chess engines from each other and have a radio control where the use can select which engine they want to play against, selections something like...
+- PertyFish Random (~100 ELO)
+- PertyFish Beginner (~200 ELO)
+- etc.
