@@ -28,7 +28,7 @@ In a private version I have built in regression testing, I may pull that forward
 #### Feature 0003 - Create smarter embedded chess engines
 Create smarter chess engines that are written using PowerFx
 ##### Story 0003-02 Separate Player Choice
-In prepation for chess engine vs chess engine play in future add ability to specify for each player whether they are human or computer, and then add to controls the ability to specify a unique computer engine for each player.
+In preparation for chess engine vs chess engine play in the future, add ability for each player to specify whether they are human or computer, and then add to controls the ability for each player to specify which computer engine they will use (if they are a computer player).
 #### Feature 0004 - Allow backup buttons for a user to undo a move
 Add a undo button for a human player to undo a move.
 #### Feature 0005 - Technical Documentation
