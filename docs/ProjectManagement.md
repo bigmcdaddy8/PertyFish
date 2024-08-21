@@ -19,8 +19,8 @@ Use Github to make the project and source code publicly available. The files and
 I have no idea if anybody in the universe has any interest in a project like this. And if they did I have no idea how to properly run an OSS project, so I and this project probably won't draw much is any interest, that's OK, I am doing this because I currently find the subjects (OSS Project Management and a Chess Program that is a Low Code Canvas App) involved in this project interesting. I also have no idea how to market such a project, and like I said I am not sure I a ready to receive help because I have to idea on how to incorporate code changes from others.
 ##### Story 0001-03 - Project Marketing
 Let the world know that this project exists, in case there is some interest.
-##### Story 0001-04 - Project Management
-Organize and document what needs to be worked on to move this project forward.
+##### Story 0001-04 - Minor doc improvments
+The category that typo fixes and other minor updates are logged under. 
 #### Feature 0002 - Create regression testing capability
 In a private version I have built in regression testing, I may pull that forward or at least a simplified version of it. I ran into a problem where the sheer size (number of components) in that private version caused the program to basically become too large for the browser based Power Apps development tool to reliably load and save in a timely manner.
 #### Feature 0003 - Create smarter embedded chess engines
