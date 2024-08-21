@@ -100,6 +100,7 @@ Chess Engine Knowledge
 - The best place to start -> [Chess Programming Wiki](https://www.chessprogramming.org/Main_Page)
 - The Code Monkey King (Maksim (Maksym) Korzh) - the guy who inspired the madness for this project and several others. Starting with this You tube series [Bitboard CHESS ENGINE in C: intro](https://www.youtube.com/watch?v=QUNP-UjujBM)
 - Great artical [Peter Ellis Jones](https://peterellisjones.com/posts/generating-legal-chess-moves-efficiently/)
+- lots of chess EPD files - which contain FENs that can be used for perft tests [Chris Whittington EPD Collection](https://github.com/ChrisWhittington/Chess-EPDs) 
 
 
 
