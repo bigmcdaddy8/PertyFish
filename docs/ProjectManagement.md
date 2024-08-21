@@ -19,7 +19,7 @@ Use Github to make the project and source code publicly available. The files and
 I have no idea if anybody in the universe has any interest in a project like this. And if they did I have no idea how to properly run an OSS project, so I and this project probably won't draw much is any interest, that's OK, I am doing this because I currently find the subjects (OSS Project Management and a Chess Program that is a Low Code Canvas App) involved in this project interesting. I also have no idea how to market such a project, and like I said I am not sure I a ready to receive help because I have to idea on how to incorporate code changes from others.
 ##### Story 0001-03 - Project Marketing
 Let the world know that this project exists, in case there is some interest.
-##### Story 0001-04 - Minor doc improvments
+##### Story 0001-04 - Minor doc improvements
 The category that typo fixes and other minor updates are logged under. 
 ##### Story 0001-05 - Project Management Work
 Additions/Updates to the ProjectManagement documentation.
@@ -30,9 +30,9 @@ Create smarter chess engines that are written using PowerFx
 ##### Story 0003-02 Separate Player Choice
 In preparation for chess engine vs chess engine play in the future, add ability for each player to specify whether they are human or computer, and then add to controls the ability for each player to specify which computer engine they will use (if they are a computer player).
 ##### Story 0003-03 Add draw detection
-Program needs to be able to detect several standard DRAW situatations
+Program needs to be able to detect several standard DRAW situations
 - 3 move repetitions - may already be done
-- insuffcient material
+- insufficient material
 #### Feature 0004 - Allow backup buttons for a user to undo a move
 Add a undo button for a human player to undo a move.
 #### Feature 0005 - Technical Documentation
@@ -49,5 +49,5 @@ Create the outline for a respectable README, and then create stories for the wor
 ##### Story 0003-01 Separate Engine logic into separate components
 To prevent the development of more complex chess engine logic from breaking previous table iterations, separate out the logic of the chess engines from each other and have a radio control where the use can select which engine they want to play against, selections something like...
 - PertyFish Random (~100 ELO)
-- PertyFish Beginner (~200 ELO)
+- PertyFish Beginner (~??? ELO)
 - etc.
