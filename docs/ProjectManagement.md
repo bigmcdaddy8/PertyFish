@@ -15,8 +15,6 @@ Using Agile development methodology terms (in a very rough and causal manner) he
 ### Epic - Create a Chess Program as a Power Apps Canvas App using only PowerFx
 #### Feature 0001 - Make the project publicly available 
 Use Github to make the project and source code publicly available. The files and support documentation should mostly follow some best practice standards in this regard. As all of this is new to the project owner (PowerFx, Github, OSS) and this is the very first attempt at all the technical topics, strict adherence to any standard is not a requirement at this time because I do not want to commit to a direction that I don't understand, but would rather grow in a direction that makes sense to me and the project. Usually I find creating documentation boring (would rather write code), but the idea of a properly organized project and standard documentation does sounds intriguing and worthwhile.
-##### Story 0001-01 - README
-Create the outline for a respectable README, and then create stories for the work needed to create the major sections.
 ##### Story 0001-02 - Learn how to play well with others
 I have no idea if anybody in the universe has any interest in a project like this. And if they did I have no idea how to properly run an OSS project, so I and this project probably won't draw much is any interest, that's OK, I am doing this because I currently find the subjects (OSS Project Management and a Chess Program that is a Low Code Canvas App) involved in this project interesting. I also have no idea how to market such a project, and like I said I am not sure I a ready to receive help because I have to idea on how to incorporate code changes from others.
 ##### Story 0001-03 - Project Marketing
@@ -40,6 +38,8 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Completed Work
+##### Story 0001-01 - README
+Create the outline for a respectable README, and then create stories for the work needed to create the major sections.
 ##### Story 0003-01 Separate Engine logic into separate components
 To prevent the development of more complex chess engine logic from breaking previous table iterations, separate out the logic of the chess engines from each other and have a radio control where the use can select which engine they want to play against, selections something like...
 - PertyFish Random (~100 ELO)
