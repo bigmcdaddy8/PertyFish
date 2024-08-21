@@ -21,12 +21,18 @@ I have no idea if anybody in the universe has any interest in a project like thi
 Let the world know that this project exists, in case there is some interest.
 ##### Story 0001-04 - Minor doc improvments
 The category that typo fixes and other minor updates are logged under. 
+##### Story 0001-05 - Project Management Work
+Additions/Updates to the ProjectManagement documentation.
 #### Feature 0002 - Create regression testing capability
 In a private version I have built in regression testing, I may pull that forward or at least a simplified version of it. I ran into a problem where the sheer size (number of components) in that private version caused the program to basically become too large for the browser based Power Apps development tool to reliably load and save in a timely manner.
 #### Feature 0003 - Create smarter embedded chess engines
 Create smarter chess engines that are written using PowerFx
 ##### Story 0003-02 Separate Player Choice
 In preparation for chess engine vs chess engine play in the future, add ability for each player to specify whether they are human or computer, and then add to controls the ability for each player to specify which computer engine they will use (if they are a computer player).
+##### Story 0003-03 Add draw detection
+Program needs to be able to detect several standard DRAW situatations
+- 3 move repetitions - may already be done
+- insuffcient material
 #### Feature 0004 - Allow backup buttons for a user to undo a move
 Add a undo button for a human player to undo a move.
 #### Feature 0005 - Technical Documentation
