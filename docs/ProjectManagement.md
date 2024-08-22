@@ -31,7 +31,7 @@ Create smarter chess engines that are written using PowerFx
 In preparation for chess engine vs chess engine play in the future, add ability for each player to specify whether they are human or computer, and then add to controls the ability for each player to specify which computer engine they will use (if they are a computer player).
 ##### Story 0003-03 Add draw detection
 Program needs to be able to detect several standard DRAW situations
-- 3 move repetitions - may already be done
+- 3 move repetitions (DONE)
 - insufficient material
 #### Feature 0004 - Allow backup buttons for a user to undo a move
 Add a undo button for a human player to undo a move.
