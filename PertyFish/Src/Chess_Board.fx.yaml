@@ -1262,7 +1262,7 @@ Chess_Board As screen:
                     ZIndex: =13
 
                 radPlayer2Color As radio:
-                    Default: ="White"
+                    Default: ="Computer"
                     Height: =25
                     Items: =["White", "Black", "Computer"]
                     Layout: =Layout.Horizontal
