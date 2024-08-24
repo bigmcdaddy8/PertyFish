@@ -765,8 +765,8 @@ Chess_Board As screen:
                 lblPlayer1ColorHeader As label:
                     Height: =25
                     Size: =10
-                    Text: |-
-                        ="Player #1 plays as..."
+                    Text: ="White Pieces are played by..."
+                    Width: =200
                     X: =10
                     ZIndex: =2
 
@@ -848,7 +848,6 @@ Chess_Board As screen:
                         Select(btnNewGame);
                     Size: =8
                     Text: ="Start from Beginning"
-                    Visible: =If(radPlayer1Color.Selected.Value=radPlayer2Color.Selected.Value && radPlayer1Color.Selected.Value<>"Computer",false,true)
                     Width: =125
                     X: =10
                     Y: =244
@@ -901,7 +900,6 @@ Chess_Board As screen:
                         Select(btnNewGame);
                     Size: =10
                     Text: ="Start from FEN"
-                    Visible: =If(radPlayer1Color.Selected.Value=radPlayer2Color.Selected.Value && radPlayer1Color.Selected.Value<>"Computer",false,true)
                     Width: =125
                     X: =10
                     Y: =277
@@ -1239,9 +1237,9 @@ Chess_Board As screen:
                     ZIndex: =10
 
                 radPlayer1Color As radio:
-                    Default: ="White"
+                    Default: ="Human"
                     Height: =25
-                    Items: =["White", "Black", "Computer"]
+                    Items: =["Human", "Computer"]
                     Layout: =Layout.Horizontal
                     PaddingBottom: =0
                     PaddingTop: =0
@@ -1270,8 +1268,8 @@ Chess_Board As screen:
                 lblPlayer2ColorHeader As label:
                     Height: =25
                     Size: =10
-                    Text: |-
-                        ="Player #2 plays as..."
+                    Text: ="Black Pieces are played by..."
+                    Width: =200
                     X: =lblPlayer1ColorHeader.X
                     Y: =85
                     ZIndex: =13
@@ -1279,7 +1277,7 @@ Chess_Board As screen:
                 radPlayer2Color As radio:
                     Default: ="Computer"
                     Height: =25
-                    Items: =["White", "Black", "Computer"]
+                    Items: =["Human", "Computer"]
                     Layout: =Layout.Horizontal
                     PaddingBottom: =0
                     PaddingTop: =0
