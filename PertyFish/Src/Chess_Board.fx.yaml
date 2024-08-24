@@ -812,14 +812,15 @@ Chess_Board As screen:
                         =comUtilityFunctionsLibrary.fUtilInitData(100);
                         
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " btnStartGameFromBeginning.OnSelect(): entered player color is: " & radPlayer1Color.Selected.Value
+                            " btnStartGameFromBeginning.OnSelect(): entered player #1 color is: " & radPlayer1Color.Selected.Value &
+                            " player #2 color is: " & radPlayer2Color.Selected.Value
                         });
                         
                         UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                             uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
                                         statusText:         "Game in progress..." ,
                                         statusFill:         COLOR_GREENish,
-                                        diagnosticText:     If(radPlayer1Color.Selected.Value="White" || radPlayer1Color.Selected.Value="Both",
+                                        diagnosticText:     If(radPlayer1Color.Selected.Value="White",
                                                                 "Player's Turn coming up",
                                                                 "Computer's Turn coming up"
                                                             ),
@@ -831,11 +832,15 @@ Chess_Board As screen:
                                                     testNumber:     -1,
                                                     testCount:      0,
                                                     isGame:         true,
-                                                    playerColor:    Switch(true,
+                                                    player1Color:   Switch(true,
                                                                         radPlayer1Color.Selected.Value="White",   WHITE,
                                                                         radPlayer1Color.Selected.Value="Black",   BLACK,
-                                                                        radPlayer1Color.Selected.Value="Both",    BOTH_COLORS,
-                                                                        radPlayer1Color.Selected.Value="Neither", NEITHER_COLOR
+                                                                        radPlayer1Color.Selected.Value="Computer", NEITHER_COLOR
+                                                                    ),
+                                                    player2Color:   Switch(true,
+                                                                        radPlayer2Color.Selected.Value="White",   WHITE,
+                                                                        radPlayer2Color.Selected.Value="Black",   BLACK,
+                                                                        radPlayer2Color.Selected.Value="Computer", NEITHER_COLOR
                                                                     )
                                                 })
                         });
@@ -843,6 +848,7 @@ Chess_Board As screen:
                         Select(btnNewGame);
                     Size: =8
                     Text: ="Start from Beginning"
+                    Visible: =If(radPlayer1Color.Selected.Value=radPlayer2Color.Selected.Value && radPlayer1Color.Selected.Value<>"Computer",false,true)
                     Width: =125
                     X: =10
                     Y: =244
@@ -891,6 +897,7 @@ Chess_Board As screen:
                         Select(btnNewGame);
                     Size: =10
                     Text: ="Start from FEN"
+                    Visible: =If(radPlayer1Color.Selected.Value=radPlayer2Color.Selected.Value && radPlayer1Color.Selected.Value<>"Computer",false,true)
                     Width: =125
                     X: =10
                     Y: =277
