@@ -1232,11 +1232,13 @@ Chess_Board As screen:
                     Height: =25
                     Items: =["White", "Black", "Computer"]
                     Layout: =Layout.Horizontal
+                    PaddingBottom: =0
+                    PaddingTop: =0
                     RadioSize: =15
                     Size: =10
                     Width: =348
                     X: =25
-                    Y: =20
+                    Y: =25
                     ZIndex: =11
 
                 radPlayer1ChessEngine As radio:
@@ -1245,11 +1247,13 @@ Chess_Board As screen:
                     Items: =[CE_PF_RANDOM, CE_PF_BEGINNER]
                     Layout: =Layout.Horizontal
                     OnChange: =Set(gblPF_UI_SelectedChessEngine, radPlayer1ChessEngine.Selected.Value)
+                    PaddingBottom: =0
+                    PaddingTop: =0
                     RadioSize: =15
                     Size: =10
                     Width: =348
                     X: =25
-                    Y: =40
+                    Y: =45
                     ZIndex: =12
 
                 lblPlayer2ColorHeader As label:
@@ -1266,11 +1270,13 @@ Chess_Board As screen:
                     Height: =25
                     Items: =["White", "Black", "Computer"]
                     Layout: =Layout.Horizontal
+                    PaddingBottom: =0
+                    PaddingTop: =0
                     RadioSize: =15
                     Size: =10
                     Width: =348
                     X: =25
-                    Y: =105
+                    Y: =110
                     ZIndex: =14
 
                 radPlayer2ChessEngine As radio:
@@ -1279,11 +1285,13 @@ Chess_Board As screen:
                     Items: =[CE_PF_RANDOM, CE_PF_BEGINNER]
                     Layout: =Layout.Horizontal
                     OnChange: =Set(gblPF_UI_SelectedChessEngine, radPlayer2ChessEngine.Selected.Value)
+                    PaddingBottom: =0
+                    PaddingTop: =0
                     RadioSize: =15
                     Size: =10
                     Width: =348
                     X: =25
-                    Y: =125
+                    Y: =130
                     ZIndex: =15
 
             conControlsSharedArea As groupContainer.manualLayoutContainer:

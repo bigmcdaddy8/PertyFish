@@ -15770,9 +15770,23 @@
         "Italic",
         "Underline",
         "Strikethrough",
-        "PaddingTop",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "10",
+          "InvariantPropertyName": "PaddingTop",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "PaddingRight",
-        "PaddingBottom",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "10",
+          "InvariantPropertyName": "PaddingBottom",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "PaddingLeft",
         {
           "AFDDataSourceName": "",
@@ -15938,7 +15952,7 @@
         {
           "Category": "Design",
           "PropertyName": "PaddingBottom",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -15948,7 +15962,7 @@
         {
           "Category": "Design",
           "PropertyName": "PaddingTop",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -16103,9 +16117,23 @@
         "Italic",
         "Underline",
         "Strikethrough",
-        "PaddingTop",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "10",
+          "InvariantPropertyName": "PaddingTop",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "PaddingRight",
-        "PaddingBottom",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "10",
+          "InvariantPropertyName": "PaddingBottom",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "PaddingLeft",
         {
           "AFDDataSourceName": "",
@@ -16167,7 +16195,7 @@
         {
           "Category": "Design",
           "PropertyName": "PaddingTop",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -16177,7 +16205,7 @@
         {
           "Category": "Design",
           "PropertyName": "PaddingBottom",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -16417,9 +16445,23 @@
         "Italic",
         "Underline",
         "Strikethrough",
-        "PaddingTop",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "10",
+          "InvariantPropertyName": "PaddingTop",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "PaddingRight",
-        "PaddingBottom",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "10",
+          "InvariantPropertyName": "PaddingBottom",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "PaddingLeft",
         {
           "AFDDataSourceName": "",
@@ -16490,7 +16532,7 @@
         {
           "Category": "Design",
           "PropertyName": "PaddingTop",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -16500,7 +16542,7 @@
         {
           "Category": "Design",
           "PropertyName": "PaddingBottom",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -16750,9 +16792,23 @@
         "Italic",
         "Underline",
         "Strikethrough",
-        "PaddingTop",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "10",
+          "InvariantPropertyName": "PaddingTop",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "PaddingRight",
-        "PaddingBottom",
+        {
+          "AFDDataSourceName": "",
+          "AutoRuleBindingEnabled": false,
+          "AutoRuleBindingString": "10",
+          "InvariantPropertyName": "PaddingBottom",
+          "IsLockable": false,
+          "NameMapSourceSchema": "?"
+        },
         "PaddingLeft",
         {
           "AFDDataSourceName": "",
@@ -16909,7 +16965,7 @@
         {
           "Category": "Design",
           "PropertyName": "PaddingBottom",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
@@ -16919,7 +16975,7 @@
         {
           "Category": "Design",
           "PropertyName": "PaddingTop",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Design",
