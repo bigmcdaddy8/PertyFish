@@ -883,16 +883,14 @@ Chess_Board As screen:
                                                     testNumber:     -1,
                                                     testCount:      0,
                                                     isGame:         true,
-                                                    player1Color:   Switch(true,
-                                                                        radWhitePiecesPlayerType.Selected.Value="White",   WHITE,
-                                                                        radWhitePiecesPlayerType.Selected.Value="Black",   BLACK,
-                                                                        radWhitePiecesPlayerType.Selected.Value="Computer", NEITHER_COLOR
-                                                                    ),
-                                                    player2Color:   Switch(true,
-                                                                        radBlackPiecesPlayerType.Selected.Value="White",   WHITE,
-                                                                        radBlackPiecesPlayerType.Selected.Value="Black",   BLACK,
-                                                                        radBlackPiecesPlayerType.Selected.Value="Computer", NEITHER_COLOR
-                                                                    )
+                                                    whitePiecesPlayerType:  Switch(true,
+                                                                                radWhitePiecesPlayerType.Selected.Value="Human",   HUMAN,
+                                                                                COMPUTER
+                                                                            ),
+                                                    blackPiecesPlayerType:  Switch(true,
+                                                                                radBlackPiecesPlayerType.Selected.Value="Human",   HUMAN,
+                                                                                COMPUTER
+                                                                            )
                                                 })
                         });
                         
@@ -1076,12 +1074,14 @@ Chess_Board As screen:
                                         With(
                                             LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0Node,
                         
-                                            If(UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN)=theData.chessEngineData.player1Color || UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN)=theData.chessEngineData.player2Color,
-                                                // THEN - it is the player's turn
+                                            If(
+                                                (UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN)=WHITE && theData.chessEngineData.whitePiecesPlayerType=HUMAN) ||
+                                                (UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN)=BLACK && theData.chessEngineData.blackPiecesPlayerType=HUMAN),
+                                                // THEN - it is a player's turn
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " btnCheckGameResults.OnSelect(): player's turn UDF_FEN_TO_ACTIVE_COLOR(): " & UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN) &
-                                                    " player1Color: " & theData.chessEngineData.player1Color &
-                                                    " player2Color: " & theData.chessEngineData.player2Color
+                                                    " whitePiecesPlayerType: " & theData.chessEngineData.whitePiecesPlayerType &
+                                                    " blackPiecesPlayerType: " & theData.chessEngineData.blackPiecesPlayerType
                                                 });
                                                 Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);
                                                 Set(gblPF_UI_Ready4Input, true);
@@ -1090,9 +1090,8 @@ Chess_Board As screen:
                                                     uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
                                                                 statusText:         "Game in progress." ,
                                                                 statusFill:         COLOR_GREENish,
-                                                                diagnosticText:     "Player #" &
-                                                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN)=theData.chessEngineData.player1Color,"1","2") &
-                                                                                        "'s turn (" & UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN)) & ") - please make a move.",
+                                                                diagnosticText:     If(UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN)=WHITE,"White","Black") &
+                                                                                        " Pieces's turn - please make a move.",
                                                                 diagnosticFill:     COLOR_GREENish
                                                             }),
                                                     chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
@@ -1103,8 +1102,8 @@ Chess_Board As screen:
                                                 // ELSE - it is the computer's turn
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " btnCheckGameResults.OnSelect(): computer's turn UDF_FEN_TO_ACTIVE_COLOR(): " & UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN) &
-                                                    " player1Color: " & theData.chessEngineData.player1Color &
-                                                    " player2Color: " & theData.chessEngineData.player2Color
+                                                    " whitePiecesPlayerType: " & theData.chessEngineData.whitePiecesPlayerType &
+                                                    " blackPiecesPlayerType: " & theData.chessEngineData.blackPiecesPlayerType
                                                 });
                                                 With(
                                                     First(
@@ -1391,8 +1390,8 @@ Chess_Board As screen:
                                 // ELSE
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                     " btnProcessGame.OnSelect(): GAME_POST_PLAY game move #: " & theData.chessEngineData.moveNumber & 
-                                    " player1Color: " & theData.chessEngineData.player1Color &
-                                    " player2Color: " & theData.chessEngineData.player2Color &
+                                    " whitePiecesPlayerType: " & theData.chessEngineData.whitePiecesPlayerType &
+                                    " blackPiecesPlayerType: " & theData.chessEngineData.blackPiecesPlayerType &
                                     " current move pacn:" & theData.chessEngineData.pacn
                                 })
                             );
