@@ -3,7 +3,6 @@ App As appinfo:
     Formulas: |+
         =
         // Perty Fish named formulas ------------------------------------------------------------------------
-        // named formulas
         LF=Char(10);          // LF
         CR=Char(13);          // CR
         CRLF=CR & LF;
@@ -138,8 +137,6 @@ App As appinfo:
             runSingleTest:                  true,
             testCount:                      0,
             isGame:                         false,
-            player1Color:                   WHITE,
-            player2Color:                   BLACK,
             whitePiecesPlayerType:          HUMAN,
             blackPiecesPlayerType:          COMPUTER,
             pacn:                           "",
