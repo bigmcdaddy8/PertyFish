@@ -812,8 +812,7 @@ Chess_Board As screen:
                         =comUtilityFunctionsLibrary.fUtilInitData(100);
                         
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " btnStartGameFromBeginning.OnSelect(): entered player #1 color is: " & radPlayer1Color.Selected.Value &
-                            " player #2 color is: " & radPlayer2Color.Selected.Value
+                            " btnStartGameFromBeginning.OnSelect(): entered"
                         });
                         
                         UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
@@ -3637,8 +3636,8 @@ Chess_Board As screen:
                     
                             // ELSE
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " btnNewGame_CB.OnSelect(): NEW_GAME starting game - player1 is : " & theData.chessEngineData.player1Color &
-                                " player2 is : " & theData.chessEngineData.player2Color
+                                " btnNewGame_CB.OnSelect(): NEW_GAME starting game - whitePiecesPlayerType is : " & theData.chessEngineData.whitePiecesPlayerType &
+                                " blackPiecesPlayerType is : " & theData.chessEngineData.blackPiecesPlayerType
                             })
                         );
                         
@@ -3684,15 +3683,16 @@ Chess_Board As screen:
                     
                             If(theData.chessEngineData.isGame,
                                 // THEN
-                                If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=theData.chessEngineData.player1Color || UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=theData.chessEngineData.player2Color,
+                                If(
+                                    (UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE && theData.chessEngineData.whitePiecesPlayerType=HUMAN) ||
+                                    (UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=BLACK && theData.chessEngineData.blackPiecesPlayerType=HUMAN),
                                     // THEN - the player needs to make a move
                                     UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                                         uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
                                                     statusText:     "Game in Progress" ,
                                                     statusFill:     COLOR_GREENish,
-                                                    diagnosticText: "Player #" &
-                                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=theData.chessEngineData.player1Color,"1","2")&
-                                                                        "'s Turn coming up",
+                                                    diagnosticText: If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,"White","Black") & 
+                                                                        " Pieces's Turn coming up",
                                                     diagnosticFill: COLOR_GREENish
                                                 })
                                     }),

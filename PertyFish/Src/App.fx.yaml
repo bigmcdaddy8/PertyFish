@@ -23,6 +23,7 @@ App As appinfo:
         COLOR_LIGHT_GREYish=RGBA(241, 244, 249, 1); // light grey-ish
         COLOR_SKY_BLUEish=RGBA(197, 229, 159, .5); // sky blue-ish  
         
+        HUMAN=0;COMPUTER=1;
         WHITE=0;BLACK=1;NO_COLOR=-1;BOTH_COLORS=2;NEITHER_COLOR=3;
         EMPTY_SQUARE_NUM=64;
         EMPTY_SQUARE_NAME="";
@@ -139,6 +140,8 @@ App As appinfo:
             isGame:                         false,
             player1Color:                   WHITE,
             player2Color:                   BLACK,
+            whitePiecesPlayerType:          HUMAN,
+            blackPiecesPlayerType:          COMPUTER,
             pacn:                           "",
             tmpBoard:                       EMPTY_BOARD,
             noActiveKingBoard:              EMPTY_BOARD,
