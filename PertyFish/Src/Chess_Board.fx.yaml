@@ -831,16 +831,14 @@ Chess_Board As screen:
                                                     testNumber:     -1,
                                                     testCount:      0,
                                                     isGame:         true,
-                                                    player1Color:   Switch(true,
-                                                                        radWhitePiecesPlayerType.Selected.Value="White",   WHITE,
-                                                                        radWhitePiecesPlayerType.Selected.Value="Black",   BLACK,
-                                                                        radWhitePiecesPlayerType.Selected.Value="Computer", NEITHER_COLOR
-                                                                    ),
-                                                    player2Color:   Switch(true,
-                                                                        radBlackPiecesPlayerType.Selected.Value="White",   WHITE,
-                                                                        radBlackPiecesPlayerType.Selected.Value="Black",   BLACK,
-                                                                        radBlackPiecesPlayerType.Selected.Value="Computer", NEITHER_COLOR
-                                                                    )
+                                                    whitePiecesPlayerType:   Switch(true,
+                                                                                radWhitePiecesPlayerType.Selected.Value="Human",   HUMAN,
+                                                                                COMPUTER
+                                                                            ),
+                                                    blackPiecesPlayerType:  Switch(true,
+                                                                                radBlackPiecesPlayerType.Selected.Value="Human",   HUMAN,
+                                                                                COMPUTER
+                                                                            )
                                                 })
                         });
                         
