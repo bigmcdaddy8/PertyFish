@@ -885,11 +885,15 @@ Chess_Board As screen:
                                                     testNumber:     -1,
                                                     testCount:      0,
                                                     isGame:         true,
-                                                    playerColor:    Switch(true,
+                                                    player1Color:   Switch(true,
                                                                         radPlayer1Color.Selected.Value="White",   WHITE,
                                                                         radPlayer1Color.Selected.Value="Black",   BLACK,
-                                                                        radPlayer1Color.Selected.Value="Both",    BOTH_COLORS,
-                                                                        radPlayer1Color.Selected.Value="Neither", NEITHER_COLOR
+                                                                        radPlayer1Color.Selected.Value="Computer", NEITHER_COLOR
+                                                                    ),
+                                                    player2Color:   Switch(true,
+                                                                        radPlayer2Color.Selected.Value="White",   WHITE,
+                                                                        radPlayer2Color.Selected.Value="Black",   BLACK,
+                                                                        radPlayer2Color.Selected.Value="Computer", NEITHER_COLOR
                                                                     )
                                                 })
                         });
