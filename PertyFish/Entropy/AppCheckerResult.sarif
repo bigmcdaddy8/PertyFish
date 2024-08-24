@@ -404,19 +404,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer1Color.AccessibleLabel"
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesPlayerType.AccessibleLabel"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer1Color.AccessibleLabel",
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesPlayerType.AccessibleLabel",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "AccessibleLabel",
                 "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer1Color"
+                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesPlayerType"
               }
             }
           ],
@@ -434,19 +434,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer1ChessEngine.AccessibleLabel"
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesChessEngine.AccessibleLabel"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer1ChessEngine.AccessibleLabel",
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesChessEngine.AccessibleLabel",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "AccessibleLabel",
                 "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer1ChessEngine"
+                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesChessEngine"
               }
             }
           ],
@@ -464,19 +464,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer2Color.AccessibleLabel"
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesPlayerType.AccessibleLabel"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer2Color.AccessibleLabel",
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesPlayerType.AccessibleLabel",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "AccessibleLabel",
                 "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer2Color"
+                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesPlayerType"
               }
             }
           ],
@@ -494,19 +494,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer2ChessEngine.AccessibleLabel"
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesChessEngine.AccessibleLabel"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer2ChessEngine.AccessibleLabel",
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesChessEngine.AccessibleLabel",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "AccessibleLabel",
                 "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radPlayer2ChessEngine"
+                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesChessEngine"
               }
             }
           ],

@@ -819,7 +819,7 @@ Chess_Board As screen:
                             uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
                                         statusText:         "Game in progress..." ,
                                         statusFill:         COLOR_GREENish,
-                                        diagnosticText:     If(radPlayer1Color.Selected.Value="White",
+                                        diagnosticText:     If(radWhitePiecesPlayerType.Selected.Value="White",
                                                                 "Player's Turn coming up",
                                                                 "Computer's Turn coming up"
                                                             ),
@@ -832,14 +832,14 @@ Chess_Board As screen:
                                                     testCount:      0,
                                                     isGame:         true,
                                                     player1Color:   Switch(true,
-                                                                        radPlayer1Color.Selected.Value="White",   WHITE,
-                                                                        radPlayer1Color.Selected.Value="Black",   BLACK,
-                                                                        radPlayer1Color.Selected.Value="Computer", NEITHER_COLOR
+                                                                        radWhitePiecesPlayerType.Selected.Value="White",   WHITE,
+                                                                        radWhitePiecesPlayerType.Selected.Value="Black",   BLACK,
+                                                                        radWhitePiecesPlayerType.Selected.Value="Computer", NEITHER_COLOR
                                                                     ),
                                                     player2Color:   Switch(true,
-                                                                        radPlayer2Color.Selected.Value="White",   WHITE,
-                                                                        radPlayer2Color.Selected.Value="Black",   BLACK,
-                                                                        radPlayer2Color.Selected.Value="Computer", NEITHER_COLOR
+                                                                        radBlackPiecesPlayerType.Selected.Value="White",   WHITE,
+                                                                        radBlackPiecesPlayerType.Selected.Value="Black",   BLACK,
+                                                                        radBlackPiecesPlayerType.Selected.Value="Computer", NEITHER_COLOR
                                                                     )
                                                 })
                         });
@@ -861,7 +861,7 @@ Chess_Board As screen:
                         comUtilityFunctionsLibrary.fUtilInitData(100);
                         
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " btnStartGameFromFEN.OnSelect(): entered player color is: " & radPlayer1Color.Selected.Value &
+                            " btnStartGameFromFEN.OnSelect(): entered player color is: " & radWhitePiecesPlayerType.Selected.Value &
                             " FEN: " & txtStartingFEN.Text
                         });
                         
@@ -871,7 +871,7 @@ Chess_Board As screen:
                                         UI_sourceSqNum:     EMPTY_SQUARE_NUM,
                                         statusText:         "Game getting started..." ,
                                         statusFill:         COLOR_GREENish,
-                                        diagnosticText:     If(radPlayer1Color.Selected.Value="White" || radPlayer1Color.Selected.Value="Both",
+                                        diagnosticText:     If(radWhitePiecesPlayerType.Selected.Value="White" || radWhitePiecesPlayerType.Selected.Value="Both",
                                                                 "Player's Turn coming up",
                                                                 "Computer's Turn coming up"
                                                             ),
@@ -884,14 +884,14 @@ Chess_Board As screen:
                                                     testCount:      0,
                                                     isGame:         true,
                                                     player1Color:   Switch(true,
-                                                                        radPlayer1Color.Selected.Value="White",   WHITE,
-                                                                        radPlayer1Color.Selected.Value="Black",   BLACK,
-                                                                        radPlayer1Color.Selected.Value="Computer", NEITHER_COLOR
+                                                                        radWhitePiecesPlayerType.Selected.Value="White",   WHITE,
+                                                                        radWhitePiecesPlayerType.Selected.Value="Black",   BLACK,
+                                                                        radWhitePiecesPlayerType.Selected.Value="Computer", NEITHER_COLOR
                                                                     ),
                                                     player2Color:   Switch(true,
-                                                                        radPlayer2Color.Selected.Value="White",   WHITE,
-                                                                        radPlayer2Color.Selected.Value="Black",   BLACK,
-                                                                        radPlayer2Color.Selected.Value="Computer", NEITHER_COLOR
+                                                                        radBlackPiecesPlayerType.Selected.Value="White",   WHITE,
+                                                                        radBlackPiecesPlayerType.Selected.Value="Black",   BLACK,
+                                                                        radBlackPiecesPlayerType.Selected.Value="Computer", NEITHER_COLOR
                                                                     )
                                                 })
                         });
@@ -1177,7 +1177,7 @@ Chess_Board As screen:
                 tmrMakeNextGameMove As timer:
                     AutoPause: =false
                     DisplayMode: =DisplayMode.View
-                    Duration: =If(radPlayer1Color.SelectedText.Value="Neither",3000,500)
+                    Duration: =If(radWhitePiecesPlayerType.SelectedText.Value="Neither",3000,500)
                     Height: =27
                     OnTimerEnd: |-
                         =If(Mod(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.moveNumber,3)=0,
@@ -1235,7 +1235,7 @@ Chess_Board As screen:
                     Y: =471
                     ZIndex: =10
 
-                radPlayer1Color As radio:
+                radWhitePiecesPlayerType As radio:
                     Default: ="Human"
                     Height: =25
                     Items: =["Human", "Computer"]
@@ -1249,12 +1249,12 @@ Chess_Board As screen:
                     Y: =25
                     ZIndex: =11
 
-                radPlayer1ChessEngine As radio:
+                radWhitePiecesChessEngine As radio:
                     Default: =CE_PF_RANDOM
                     Height: =25
                     Items: =[CE_PF_RANDOM, CE_PF_BEGINNER]
                     Layout: =Layout.Horizontal
-                    OnChange: =Set(gblPF_UI_SelectedChessEngine, radPlayer1ChessEngine.Selected.Value)
+                    OnChange: =Set(gblPF_UI_SelectedChessEngine, radWhitePiecesChessEngine.Selected.Value)
                     PaddingBottom: =0
                     PaddingTop: =0
                     RadioSize: =15
@@ -1273,7 +1273,7 @@ Chess_Board As screen:
                     Y: =85
                     ZIndex: =13
 
-                radPlayer2Color As radio:
+                radBlackPiecesPlayerType As radio:
                     Default: ="Computer"
                     Height: =25
                     Items: =["Human", "Computer"]
@@ -1287,12 +1287,12 @@ Chess_Board As screen:
                     Y: =110
                     ZIndex: =14
 
-                radPlayer2ChessEngine As radio:
+                radBlackPiecesChessEngine As radio:
                     Default: =CE_PF_RANDOM
                     Height: =25
                     Items: =[CE_PF_RANDOM, CE_PF_BEGINNER]
                     Layout: =Layout.Horizontal
-                    OnChange: =Set(gblPF_UI_SelectedChessEngine, radPlayer2ChessEngine.Selected.Value)
+                    OnChange: =Set(gblPF_UI_SelectedChessEngine, radBlackPiecesChessEngine.Selected.Value)
                     PaddingBottom: =0
                     PaddingTop: =0
                     RadioSize: =15
