@@ -47,9 +47,13 @@ Program needs to be able to detect several standard DRAW situations
 - insufficient material
 
 
-#### Feature 0004 - Allow backup buttons for a user to undo a move
+#### Feature 0004 - Application Improvements
+
+##### Story 0004-01 Allow backup buttons for a user to undo a move
 Add a undo button for a human player to undo a move.
 
+##### Story 0004-02 Allow player to slect prmoteTo piece
+Add a radio button to pre-select the piece type the next pawn promotion move should promote to.
 
 #### Feature 0005 - Technical Documentation
 Document the details of this project used PowerFx to create a chess program. Items such as the collection formats, and how they are used. The board layout, use of FEN, the legal move table, etc.
@@ -60,6 +64,7 @@ Create Outline of what and where technical documentation should be housed and wh
 
 #### Feature 0006 - User Documentation
 Document how a user plays chess within the PertyFish canvas app
+
 
 
 
