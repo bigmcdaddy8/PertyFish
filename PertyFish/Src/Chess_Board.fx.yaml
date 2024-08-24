@@ -762,7 +762,7 @@ Chess_Board As screen:
                     Y: =445
                     ZIndex: =1
 
-                lblPlayer1ColorHeader As label:
+                lblWhitePiecesHeader As label:
                     Height: =25
                     Size: =10
                     Text: ="White Pieces are played by..."
@@ -1264,12 +1264,12 @@ Chess_Board As screen:
                     Y: =45
                     ZIndex: =12
 
-                lblPlayer2ColorHeader As label:
+                lblBlackPiecesHeader As label:
                     Height: =25
                     Size: =10
                     Text: ="Black Pieces are played by..."
                     Width: =200
-                    X: =lblPlayer1ColorHeader.X
+                    X: =lblWhitePiecesHeader.X
                     Y: =85
                     ZIndex: =13
 
