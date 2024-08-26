@@ -1247,7 +1247,7 @@ Chess_Board As screen:
                     ZIndex: =11
 
                 radWhitePiecesChessEngine As radio:
-                    Default: =CE_PF_RANDOM
+                    Default: =CE_PF_BEGINNER
                     Height: =25
                     Items: =[CE_PF_RANDOM, CE_PF_BEGINNER]
                     Layout: =Layout.Horizontal
@@ -1285,7 +1285,7 @@ Chess_Board As screen:
                     ZIndex: =14
 
                 radBlackPiecesChessEngine As radio:
-                    Default: =CE_PF_RANDOM
+                    Default: =CE_PF_BEGINNER
                     Height: =25
                     Items: =[CE_PF_RANDOM, CE_PF_BEGINNER]
                     Layout: =Layout.Horizontal
