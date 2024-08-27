@@ -41,12 +41,6 @@ Create smarter chess engines that are written using PowerFx
 ##### Story 0003-02 Separate Player Choice
 In preparation for chess engine vs chess engine play in the future, add ability for each player to specify whether they are human or computer, and then add to controls the ability for each player to specify which computer engine they will use (if they are a computer player).
 
-##### Story 0003-03 Add draw detection
-Program needs to be able to detect several standard DRAW situations
-- 3 move repetitions (DONE)
-- insufficient material
-
-
 #### Feature 0004 - Application Improvements
 
 ##### Story 0004-01 Allow backup buttons for a user to undo a move
@@ -71,10 +65,18 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Completed Work
+
+##### Story 0003-03 Add initial draw detection
+Program needs to be able to detect several standard DRAW situations
+- 3 move repetitions (DONE)
+- insufficient material (DONE)
+
 ##### Story 0002-01 perft D1 data
 Create infrastructure needed to build perft D1 files that be used for manually testing PertyFish
+
 ##### Story 0001-01 - README
 Create the outline for a respectable README, and then create stories for the work needed to create the major sections.
+
 ##### Story 0003-01 Separate Engine logic into separate components
 To prevent the development of more complex chess engine logic from breaking previous table iterations, separate out the logic of the chess engines from each other and have a radio control where the use can select which engine they want to play against, selections something like...
 - PertyFish Random (~100 ELO)
