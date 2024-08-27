@@ -1258,7 +1258,7 @@ Chess_Board As screen:
                     Size: =10
                     Width: =348
                     X: =25
-                    Y: =45
+                    Y: =52
                     ZIndex: =12
 
                 lblBlackPiecesHeader As label:
@@ -1267,7 +1267,7 @@ Chess_Board As screen:
                     Text: ="Black Pieces are played by..."
                     Width: =200
                     X: =lblWhitePiecesHeader.X
-                    Y: =85
+                    Y: =106
                     ZIndex: =13
 
                 radBlackPiecesPlayerType As radio:
@@ -1281,7 +1281,7 @@ Chess_Board As screen:
                     Size: =10
                     Width: =348
                     X: =25
-                    Y: =110
+                    Y: =131
                     ZIndex: =14
 
                 radBlackPiecesChessEngine As radio:
@@ -1296,7 +1296,7 @@ Chess_Board As screen:
                     Size: =10
                     Width: =348
                     X: =25
-                    Y: =130
+                    Y: =158
                     ZIndex: =15
 
             conControlsSharedArea As groupContainer.manualLayoutContainer:
