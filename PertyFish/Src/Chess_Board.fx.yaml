@@ -1363,7 +1363,7 @@ Chess_Board As screen:
                         - this is where the player, computer, or test has picked the move from D1 nodes
                         - promote D1 node to move tree D0
                         - get rid unused move tree D1 nodes
-                        - post move work 
+                        - post move work
                         - if KING or ROOK moved - take away castle rights as appropriate
                         */
                             // TIMER START - GAME_POST_PLAY ================================================================================
