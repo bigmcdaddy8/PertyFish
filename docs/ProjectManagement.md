@@ -38,8 +38,15 @@ In a private version I have built in regression testing, I may pull that forward
 #### Feature 0003 - Create smarter embedded chess engines
 Create smarter chess engines that are written using PowerFx
 
-##### Story 0003-02 Separate Player Choice
-In preparation for chess engine vs chess engine play in the future, add ability for each player to specify whether they are human or computer, and then add to controls the ability for each player to specify which computer engine they will use (if they are a computer player).
+##### Story 0003-03 Add standardized Game Phase detection
+Create a standard library method for determining which phase of the game a FEN is in.
+
+##### Story 0003-04 Add basic board preMove vs. postMove
+Do board evaluation that is performance friendly
+- material value
+- number of hanging pieces
+- number of attacked squares
+- number of protected squares
 
 #### Feature 0004 - Application Improvements
 
@@ -70,6 +77,9 @@ Document how a user plays chess within the PertyFish canvas app
 Program needs to be able to detect several standard DRAW situations
 - 3 move repetitions (DONE)
 - insufficient material (DONE)
+
+##### Story 0003-02 Separate Player Choice
+In preparation for chess engine vs chess engine play in the future, add ability for each player to specify whether they are human or computer, and then add to controls the ability for each player to specify which computer engine they will use (if they are a computer player).
 
 ##### Story 0002-01 perft D1 data
 Create infrastructure needed to build perft D1 files that be used for manually testing PertyFish
