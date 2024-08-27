@@ -85,165 +85,32 @@ UsingComponents As screen:
                     );
             
                     // determine which player's turn it is, and then see what their computer setting is currently set to
-                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)=WHITE,
-                        // THEN
+                    With(
+                        {
+                            selectedEngine: If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE, radWhitePiecesChessEngine.Selected.Value, radBlackPiecesChessEngine.Selected.Value)
+                        } As theEngine,
+            
                         Switch(true,
-                            radWhitePiecesChessEngine.Selected.Value=CE_PF_BEGINNER,
-                                comChessEngineFunctions.fME_EvaluateMove_BEGINNER(pNodeID),
-            
+                            theEngine.selectedEngine=CE_PF_200,
+                                comChessEngineFunctions.fME_Maniacal(pNodeID),
+                            theEngine.selectedEngine=CE_PF_300,
+                                comChessEngineFunctions.fME_Preschool(pNodeID),
+                            theEngine.selectedEngine=CE_PF_400,
+                                comChessEngineFunctions.fME_Kindergarten(pNodeID),
+                            
                             // default
-                            comChessEngineFunctions.fME_EvaluateMoveRandom(pNodeID)
-                        ),
-            
-                        // ELSE 
-                        Switch(true,
-                            radBlackPiecesChessEngine.Selected.Value=CE_PF_BEGINNER,
-                                comChessEngineFunctions.fME_EvaluateMove_BEGINNER(pNodeID),
-            
-                            // default
-                            comChessEngineFunctions.fME_EvaluateMoveRandom(pNodeID)
+                            comChessEngineFunctions.fME_Random(pNodeID)
                         )
                     )
                 )
             );
             
             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_EvaluateMove(): exiting"});
-        fME_EvaluateMove_BEGINNER: |
-            =If(gblPF_DEBUG_EVAL,
-                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                    " comChessEngineFunctions.fME_EvaluateMove_BEGINNER(): entered pNodeID: " & pNodeID
-                })
-            );
-            
-            With(
-                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
-            
-                With(
-                    LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
-            
-                    If(gblPF_DEBUG_EVAL,
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fME_EvaluateMove_BEGINNER(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
-                            " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
-                            " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
-                            " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
-                        })
-                    );
-            
-                    Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
-                        postMoveEvalRecord: 
-                            Patch(EVAL_RECORD_PF, {
-                                heuristic01:
-                                    0,
-                                heuristic02:
-                                    0,
-                                heuristic05:
-                                    0,
-                                heuristic11:
-                                    0,
-                                heuristic12:
-                                    0,
-                                heuristic13:
-                                    0,
-                                heuristic14:    
-                                    0,
-                                heuristic16:
-                                    0,
-                                heuristic17:
-                                    0,
-                                heuristic18:
-                                    0,
-                                // a pinch of randomness
-                                heuristic19:
-                                    RandBetween(-25,25)  // centipawns 
-                            })
-                    });
-            
-                    UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
-                        postMoveEvalRecord: 
-                            Patch(LookUp(colPF_MOVE_TREE, nodeID=pNodeID).postMoveEvalRecord, {
-                                centipawn:
-                                    With(
-                                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNodeUpdated,
-                                        
-                                        If(gblPF_DEBUG_EVAL,
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic01 (basic positioning) SUM BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic01
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic02 ME end game: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic02
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic05 (Hanging Piece Tactic) SUM BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic05
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic11 generic tactics BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic12 fork tactic BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic12
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic13 move to/from protection BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic13
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic14 castling BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic14
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic16 BNP moves in opening sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic17 passed PAWN BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic17
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic18 Post Square Table (PST) BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic18
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
-                                            })
-                                        );
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic01 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic02 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic03 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic04 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic05 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic06 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic07 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic08 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic09 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic10 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic12 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic13 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic14 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic15 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic17 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
-                                    )
-                            })
-                    })
-                );
-            
-                If(gblPF_DEBUG_EVAL,
-                    With(
-                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
-            
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fME_EvaluateMove_BEGINNER(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
-                            " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
-                            " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
-                        })
-                    )
-                )
-            );
-            
-            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_EvaluateMove_BEGINNER(): exiting"});
-        fME_EvaluateMoveRandom: |
+        fME_Kindergarten: |
             =
             If(gblPF_DEBUG_EVAL,
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                    " comChessEngineFunctions.fME_EvaluateMoveRandom(): entered pNodeID: " & pNodeID
+                    " comChessEngineFunctions.fME_Kindergarten(): entered pNodeID: " & pNodeID
                 })
             );
             
@@ -255,7 +122,7 @@ UsingComponents As screen:
             
                     If(gblPF_DEBUG_EVAL,
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fME_EvaluateMoveRandom(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " fME_Kindergarten(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                             " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                             " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
                             " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
@@ -362,7 +229,7 @@ UsingComponents As screen:
                         LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
             
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fME_EvaluateMoveRandom(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " fME_Kindergarten(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                             " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                             " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
                         })
@@ -370,6 +237,402 @@ UsingComponents As screen:
                 )
             );
             
-            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_EvaluateMoveRandom(): exiting"});
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_Kindergarten(): exiting"});
+        fME_Maniacal: |
+            =
+            If(gblPF_DEBUG_EVAL,
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                    " comChessEngineFunctions.fME_Maniacal(): entered pNodeID: " & pNodeID
+                })
+            );
+            
+            With(
+                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+            
+                With(
+                    LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+            
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " fME_Maniacal(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
+                            " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
+                            " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
+                        })
+                    );
+            
+                    Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
+                        postMoveEvalRecord: 
+                            Patch(EVAL_RECORD_PF, {
+                                heuristic01:
+                                    0,
+                                heuristic02:
+                                    0,
+                                heuristic05:
+                                    0,
+                                heuristic11:
+                                    0,
+                                heuristic12:
+                                    0,
+                                heuristic13:
+                                    0,
+                                heuristic14:    
+                                    0,
+                                heuristic16:
+                                    0,
+                                heuristic17:
+                                    0,
+                                heuristic18:
+                                    0,
+                                // a pinch of randomness
+                                heuristic19:
+                                    RandBetween(-25,25)  // centipawns 
+                            })
+                    });
+            
+                    UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
+                        postMoveEvalRecord: 
+                            Patch(LookUp(colPF_MOVE_TREE, nodeID=pNodeID).postMoveEvalRecord, {
+                                centipawn:
+                                    With(
+                                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNodeUpdated,
+                                        
+                                        If(gblPF_DEBUG_EVAL,
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic01 (basic positioning) SUM BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic01
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic02 ME end game: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic02
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic05 (Hanging Piece Tactic) SUM BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic05
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic11 generic tactics BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic12 fork tactic BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic12
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic13 move to/from protection BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic13
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic14 castling BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic14
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic16 BNP moves in opening sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic17 passed PAWN BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic17
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic18 Post Square Table (PST) BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic18
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
+                                            })
+                                        );
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic01 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic02 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic03 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic04 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic05 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic06 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic07 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic08 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic09 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic10 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic12 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic13 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic14 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic15 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic17 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
+                                    )
+                            })
+                    })
+                );
+            
+                If(gblPF_DEBUG_EVAL,
+                    With(
+                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+            
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " fME_Maniacal(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
+                            " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
+                        })
+                    )
+                )
+            );
+            
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_Maniacal(): exiting"});
+        fME_Preschool: |
+            =
+            If(gblPF_DEBUG_EVAL,
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                    " comChessEngineFunctions.fME_Preschool(): entered pNodeID: " & pNodeID
+                })
+            );
+            
+            With(
+                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+            
+                With(
+                    LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+            
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " fME_Preschool(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
+                            " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
+                            " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
+                        })
+                    );
+            
+                    Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
+                        postMoveEvalRecord: 
+                            Patch(EVAL_RECORD_PF, {
+                                heuristic01:
+                                    0,
+                                heuristic02:
+                                    0,
+                                heuristic05:
+                                    0,
+                                heuristic11:
+                                    0,
+                                heuristic12:
+                                    0,
+                                heuristic13:
+                                    0,
+                                heuristic14:    
+                                    0,
+                                heuristic16:
+                                    0,
+                                heuristic17:
+                                    0,
+                                heuristic18:
+                                    0,
+                                // a pinch of randomness
+                                heuristic19:
+                                    RandBetween(-25,25)  // centipawns 
+                            })
+                    });
+            
+                    UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
+                        postMoveEvalRecord: 
+                            Patch(LookUp(colPF_MOVE_TREE, nodeID=pNodeID).postMoveEvalRecord, {
+                                centipawn:
+                                    With(
+                                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNodeUpdated,
+                                        
+                                        If(gblPF_DEBUG_EVAL,
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic01 (basic positioning) SUM BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic01
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic02 ME end game: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic02
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic05 (Hanging Piece Tactic) SUM BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic05
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic11 generic tactics BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic12 fork tactic BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic12
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic13 move to/from protection BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic13
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic14 castling BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic14
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic16 BNP moves in opening sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic17 passed PAWN BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic17
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic18 Post Square Table (PST) BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic18
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
+                                            })
+                                        );
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic01 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic02 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic03 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic04 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic05 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic06 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic07 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic08 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic09 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic10 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic12 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic13 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic14 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic15 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic17 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
+                                    )
+                            })
+                    })
+                );
+            
+                If(gblPF_DEBUG_EVAL,
+                    With(
+                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+            
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " fME_Preschool(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
+                            " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
+                        })
+                    )
+                )
+            );
+            
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_Preschool(): exiting"});
+        fME_Random: |
+            =
+            If(gblPF_DEBUG_EVAL,
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                    " comChessEngineFunctions.fME_Random(): entered pNodeID: " & pNodeID
+                })
+            );
+            
+            With(
+                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+            
+                With(
+                    LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+            
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " fME_Random(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
+                            " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
+                            " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
+                        })
+                    );
+            
+                    Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
+                        postMoveEvalRecord: 
+                            Patch(EVAL_RECORD_PF, {
+                                heuristic01:
+                                    0,
+                                heuristic02:
+                                    0,
+                                heuristic05:
+                                    0,
+                                heuristic11:
+                                    0,
+                                heuristic12:
+                                    0,
+                                heuristic13:
+                                    0,
+                                heuristic14:    
+                                    0,
+                                heuristic16:
+                                    0,
+                                heuristic17:
+                                    0,
+                                heuristic18:
+                                    0,
+                                // a pinch of randomness
+                                heuristic19:
+                                    RandBetween(-25,25)  // centipawns 
+                            })
+                    });
+            
+                    UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
+                        postMoveEvalRecord: 
+                            Patch(LookUp(colPF_MOVE_TREE, nodeID=pNodeID).postMoveEvalRecord, {
+                                centipawn:
+                                    With(
+                                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNodeUpdated,
+                                        
+                                        If(gblPF_DEBUG_EVAL,
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic01 (basic positioning) SUM BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic01
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic02 ME end game: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic02
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic05 (Hanging Piece Tactic) SUM BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic05
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic11 generic tactics BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic12 fork tactic BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic12
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic13 move to/from protection BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic13
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic14 castling BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic14
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic16 BNP moves in opening sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic17 passed PAWN BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic17
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic18 Post Square Table (PST) BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic18
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
+                                            })
+                                        );
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic01 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic02 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic03 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic04 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic05 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic06 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic07 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic08 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic09 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic10 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic12 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic13 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic14 +
+                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic15 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic17 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
+                                    )
+                            })
+                    })
+                );
+            
+                If(gblPF_DEBUG_EVAL,
+                    With(
+                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+            
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " fME_Random(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
+                            " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
+                        })
+                    )
+                )
+            );
+            
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_Random(): exiting"});
         ZIndex: =2
 

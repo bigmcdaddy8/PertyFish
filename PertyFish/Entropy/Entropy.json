@@ -90,9 +90,35 @@
     "txtStartingFEN": 58,
     "UsingComponents": 83
   },
-  "FunctionParamsInvariantScripts": {},
-  "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "08/27/2024 20:42:20",
+  "FunctionParamsInvariantScripts": {
+    "comChessEngineFunctions.fME_Maniacal_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ],
+    "comChessEngineFunctions.fME_Preschool_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ],
+    "comChessEngineFunctions.fME_Random_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ]
+  },
+  "FunctionParamsInvariantScriptsOnInstances": {
+    "comChessEngineFunctionsLibrary.fME_Maniacal_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ],
+    "comChessEngineFunctionsLibrary.fME_Preschool_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ],
+    "comChessEngineFunctionsLibrary.fME_Random_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ]
+  },
+  "HeaderLastSavedDateTimeUTC": "08/27/2024 21:11:56",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,
