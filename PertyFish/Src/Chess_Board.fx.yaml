@@ -3476,7 +3476,7 @@ Chess_Board As screen:
                                                 whitePiecesCount_QRP:
                                                     Sum(
                                                         ForAll(
-                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                                                            Split(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), "") As thePiece,
                     
                                                             If (thePiece.Value exactin "QRP",1,0)
                                                         ), Value
@@ -3484,7 +3484,7 @@ Chess_Board As screen:
                                                 whitePiecesCount_B:
                                                     Sum(
                                                         ForAll(
-                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                                                            Split(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), "") As thePiece,
                     
                                                             If (thePiece.Value="B",1,0)
                                                         ), Value
@@ -3492,7 +3492,7 @@ Chess_Board As screen:
                                                 whitePiecesCount_N:
                                                     Sum(
                                                         ForAll(
-                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                                                            Split(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), "") As thePiece,
                     
                                                             If (thePiece.Value="N",1,0)
                                                         ), Value
@@ -3500,7 +3500,7 @@ Chess_Board As screen:
                                                 blackPiecesCount_qrp:
                                                     Sum(
                                                         ForAll(
-                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                                                            Split(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), "") As thePiece,
                     
                                                             If (thePiece.Value exactin "qrp",1,0)
                                                         ), Value
@@ -3508,7 +3508,7 @@ Chess_Board As screen:
                                                 blackPiecesCount_b:
                                                     Sum(
                                                         ForAll(
-                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                                                            Split(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), "") As thePiece,
                     
                                                             If (thePiece.Value="b",1,0)
                                                         ), Value
@@ -3516,7 +3516,7 @@ Chess_Board As screen:
                                                 blackPiecesCount_n:
                                                     Sum(
                                                         ForAll(
-                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                                                            Split(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN), "") As thePiece,
                     
                                                             If (thePiece.Value="n",1,0)
                                                         ), Value
