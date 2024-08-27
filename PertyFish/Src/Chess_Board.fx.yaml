@@ -3523,6 +3523,16 @@ Chess_Board As screen:
                                                     )
                                             } As localVars,
                     
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                " btnProcessGame.OnSelect(): DEBUG - ISM DRAW data dump" &
+                                                " whitePiecesCount_QRP: " & localVars.whitePiecesCount_QRP &
+                                                " whitePiecesCount_B: " & localVars.whitePiecesCount_B &
+                                                " whitePiecesCount_N: " & localVars.whitePiecesCount_N &
+                                                " blackPiecesCount_qrp: " & localVars.blackPiecesCount_qrp &
+                                                " blackPiecesCount_b: " & localVars.blackPiecesCount_b &
+                                                " blackPiecesCount_n: " & localVars.blackPiecesCount_n
+                                            });
+                    
                                             Switch(true,
                                                 localVars.whitePiecesCount_QRP > 0,  Blank(), // not an ISM draw
                                                 localVars.blackPiecesCount_qrp > 0,  Blank(), // not an ISM draw
@@ -3550,6 +3560,12 @@ Chess_Board As screen:
                                                                 Mod((UDF_getRankFromSqNum(UDF_SearchBoardForPiece(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),"b")) +
                                                                 UDF_getFileNumFromSqNum(UDF_SearchBoardForPiece(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),"b"))),2)
                                                         } As bishopSqColors,
+                    
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " btnProcessGame.OnSelect(): DEBUG - ISM DRAW data dump" &
+                                                            " whiteBSqColor: " & bishopSqColors.whiteBSqColor &
+                                                            " blackBSqColor: " & bishopSqColors.blackBSqColor
+                                                        });
                     
                                                         If (bishopSqColors.whiteBSqColor=bishopSqColors.blackBSqColor,
                                                             // THEN
@@ -3582,6 +3598,7 @@ Chess_Board As screen:
                                                         )
                                                     ),
                                                 
+                                                // default
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " btnProcessGame.OnSelect(): ISM DRAW detected setting isISMDraw & isDraw to true " &
                                                     " whitePiecesCount_QRP: " & localVars.whitePiecesCount_QRP &
