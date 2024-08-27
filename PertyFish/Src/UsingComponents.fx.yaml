@@ -93,6 +93,15 @@ UsingComponents As screen:
             
                             // default
                             comChessEngineFunctions.fME_EvaluateMoveRandom(pNodeID)
+                        ),
+            
+                        // ELSE 
+                        Switch(true,
+                            radBlackPiecesChessEngine.Selected.Value=CE_PF_BEGINNER,
+                                comChessEngineFunctions.fME_EvaluateMove_BEGINNER(pNodeID),
+            
+                            // default
+                            comChessEngineFunctions.fME_EvaluateMoveRandom(pNodeID)
                         )
                     )
                 )
@@ -246,7 +255,7 @@ UsingComponents As screen:
             
                     If(gblPF_DEBUG_EVAL,
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fME_EvaluateMove(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " fME_EvaluateMoveRandom(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                             " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                             " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
                             " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
@@ -353,7 +362,7 @@ UsingComponents As screen:
                         LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
             
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fME_EvaluateMove(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " fME_EvaluateMoveRandom(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                             " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                             " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
                         })
@@ -361,6 +370,6 @@ UsingComponents As screen:
                 )
             );
             
-            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_EvaluateMove(): exiting"});
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_EvaluateMoveRandom(): exiting"});
         ZIndex: =2
 
