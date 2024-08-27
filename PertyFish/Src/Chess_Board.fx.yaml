@@ -3447,6 +3447,118 @@ Chess_Board As screen:
                     
                     
                             // DRAWs - TODO...
+                    
+                            /*
+                             * Insuffcient material draw conditions
+                                King vs. King: Both players only have their kings left.
+                                King and Bishop vs. King: One player has a king and a bishop, while the other only has a king.
+                                King and Knight vs. King: One player has a king and a knight, while the other only has a king.
+                                King and Bishop vs. King and Bishop (same color bishops): Both players have a king and a bishop, but the bishops are on the same color squares.
+                             */
+                            With(
+                                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                    
+                                With(
+                                    LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
+                    
+                                    If(
+                                        Not(
+                                            theD0ParentNode.postMoveGameStatus.whiteIsCheckmated ||
+                                            theD0ParentNode.postMoveGameStatus.blackIsCheckmated ||
+                                            theD0ParentNode.postMoveGameStatus.isStalemate ||
+                                            theD0ParentNode.postMoveGameStatus.isDraw
+                                        ),
+                                        // THEN -  check for a insufficient material DRAW
+                    
+                                        With(
+                                            {
+                                                // in theD0ParentNode.Pos
+                                                whitePiecesCount_QRP:
+                                                    Sum(
+                                                        ForAll(
+                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                    
+                                                            If (thePiece.Value exactin "QRP",1,0)
+                                                        ), Value
+                                                    ),
+                                                whitePiecesCount_B:
+                                                    Sum(
+                                                        ForAll(
+                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                    
+                                                            If (thePiece.Value="B",1,0)
+                                                        ), Value
+                                                    ),
+                                                whitePiecesCount_N:
+                                                    Sum(
+                                                        ForAll(
+                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                    
+                                                            If (thePiece.Value="N",1,0)
+                                                        ), Value
+                                                    ),                        
+                                                blackPiecesCount_qrp:
+                                                    Sum(
+                                                        ForAll(
+                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                    
+                                                            If (thePiece.Value exactin "qrp",1,0)
+                                                        ), Value
+                                                    ),
+                                                blackPiecesCount_b:
+                                                    Sum(
+                                                        ForAll(
+                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                    
+                                                            If (thePiece.Value="b",1,0)
+                                                        ), Value
+                                                    ),
+                                                blackPiecesCount_n:
+                                                    Sum(
+                                                        ForAll(
+                                                            Split(theD0ParentNode.postMoveFEN, "") As thePiece,
+                    
+                                                            If (thePiece.Value="n",1,0)
+                                                        ), Value
+                                                    )
+                                            } As localVars,
+                    
+                                            Switch(true,
+                                                localVars.whitePiecesCount_QRP > 0,  Blank(), // not an ISM draw
+                                                localVars.blackPiecesCount_qrp > 0,  Blank(), // not an ISM draw
+                                                localVars.whitePiecesCount_B > 0 && localVars.whitePiecesCount_N > 0, Blank(), // not an ISM draw
+                                                localVars.blackPiecesCount_b > 0 && localVars.blackPiecesCount_n > 0, Blank(), // not an ISM draw
+                    
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                    " btnProcessGame.OnSelect(): ISM DRAW detected setting isISMDraw & isDraw to true " &
+                                                    " whitePiecesCount_QRP: " & localVars.whitePiecesCount_QRP &
+                                                    " whitePiecesCount_B: " & localVars.whitePiecesCount_B &
+                                                    " whitePiecesCount_N: " & localVars.whitePiecesCount_N &
+                                                    " blackPiecesCount_qrp: " & localVars.blackPiecesCount_qrp &
+                                                    " blackPiecesCount_b: " & localVars.blackPiecesCount_b &
+                                                    " blackPiecesCount_n: " & localVars.blackPiecesCount_n
+                                                });
+                    
+                                                UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
+                                                    inactiveColorMoveRecord:Patch(
+                                                                                LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID).inactiveColorMoveRecord,
+                                                                                {
+                                                                                    isISMDraw:  true
+                                                                                }
+                                                                            ),
+                                                    postMoveGameStatus:     Patch(
+                                                                                LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID).postMoveGameStatus,
+                                                                                {
+                                                                                    isDraw: true
+                                                                                }
+                                                                            )
+                                                })
+                                            )
+                                        )
+                                    )
+                                )
+                            );
+                    
                             // if the number of moves is >= 6 AND
                             //      latest board, board-2, and board-4 is all the same   AND  
                             //      board-1, board-3, and board-5 is all the same -> DRAW due to repeat postitions
@@ -3465,8 +3577,7 @@ Chess_Board As screen:
                                                 theD0ParentNode.postMoveGameStatus.isStalemate ||
                                                 theD0ParentNode.postMoveGameStatus.isDraw
                                             ),
-                                            // Then check for a position repeat draw
-                    
+                                            // THEN -  check for a position repeat draw
                                             With(
                                                 LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID) As theTail,
                     
@@ -3528,7 +3639,7 @@ Chess_Board As screen:
                                                                                 // THEN - we got ourselves a DRAW due to repeating postions
                     
                                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                    " btnProcessGame.OnSelect(): 3x position repeat DRAW detected sitting isDraw to true "
+                                                                                    " btnProcessGame.OnSelect(): 3x position repeat DRAW detected setting isDraw to true "
                                                                                 });
                     
                                                                                 UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
