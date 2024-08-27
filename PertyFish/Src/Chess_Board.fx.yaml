@@ -3534,8 +3534,10 @@ Chess_Board As screen:
                                             });
                     
                                             Switch(true,
-                                                localVars.whitePiecesCount_QRP > 0,  Blank(), // not an ISM draw
-                                                localVars.blackPiecesCount_qrp > 0,  Blank(), // not an ISM draw
+                                                localVars.whitePiecesCount_QRP > 0, Blank(), // not an ISM draw
+                                                localVars.blackPiecesCount_qrp > 0, Blank(), // not an ISM draw
+                                                localVars.whitePiecesCount_N >= 2,  Blank(), // not an ISM draw
+                                                localVars.blackPiecesCount_n >= 2,  Blank(), // not an ISM draw
                                                 localVars.whitePiecesCount_B > 0 && localVars.whitePiecesCount_N > 0, Blank(), // not an ISM draw
                                                 localVars.blackPiecesCount_b > 0 && localVars.blackPiecesCount_n > 0, Blank(), // not an ISM draw
                     
