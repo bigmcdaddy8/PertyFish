@@ -297,7 +297,7 @@ App As appinfo:
                 Abs(UDF_getRankFromSqName(refSqName1)-UDF_getRankFromSqName(refSqName2))
             );
         
-        UDF_FEN_TO_PIECE_PLACMENT(fen:Text):Text=Index(Split(fen, " "),1).Value;
+        UDF_FEN_TO_PIECE_PLACEMENT(fen:Text):Text=Index(Split(fen, " "),1).Value;
         
         UDF_FEN_TO_BOARD(fen:Text):Text=
             Substitute(

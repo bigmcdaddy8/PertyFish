@@ -14,890 +14,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "App.Formulas"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.Formulas",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 31,
-                  "charOffset": 20750,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(fen)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "Formulas",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "App.Formulas"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.Formulas",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 5,
-                  "charOffset": 20744,
-                  "snippet": {
-                    "text": "Split"
-                  }
-                }
-              },
-              "properties": {
-                "member": "Formulas",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Split"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrInvalidArgs-Func",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 47,
-                  "charOffset": 165011,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 165350,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus1.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 165695,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus2.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 166040,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus3.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 166385,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus4.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 166730,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus5.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 167075,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus6.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 167420,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus7.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 47,
-                  "charOffset": 167656,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 167704,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus4.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 167703,
-                  "snippet": {
-                    "text": "="
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Error",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrIncompatibleTypesForEquality-Left-Right",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 167822,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus1.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 167877,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus5.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 167876,
-                  "snippet": {
-                    "text": "="
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Error",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrIncompatibleTypesForEquality-Left-Right",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 167995,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus2.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 168050,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus6.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 168049,
-                  "snippet": {
-                    "text": "="
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Error",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrIncompatibleTypesForEquality-Left-Right",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 168168,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus3.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 54,
-                  "charOffset": 168223,
-                  "snippet": {
-                    "text": "UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus7.postMoveFEN)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_FEN_TO_PIECE_PLACEMENT"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.btnProcessGame.OnSelect",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 168222,
-                  "snippet": {
-                    "text": "="
-                  }
-                }
-              },
-              "properties": {
-                "member": "OnSelect",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.btnProcessGame"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Error",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrIncompatibleTypesForEquality-Left-Right",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "Chess_Board.conEntireScreen.conChessBoardWithCoordinates.galFileTopLabels.TabIndex"
                 }
               ],
@@ -921,7 +37,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 3
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -951,7 +67,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -981,7 +97,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 3
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1011,7 +127,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1041,7 +157,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 3
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1071,7 +187,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 3
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1101,7 +217,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1131,7 +247,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 3
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1161,7 +277,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1191,7 +307,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 3
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1221,7 +337,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1251,7 +367,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 3
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1281,7 +397,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1311,7 +427,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1341,7 +457,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1371,7 +487,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1401,7 +517,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1431,7 +547,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1461,7 +577,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 4
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1491,7 +607,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 3
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1521,7 +637,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1551,7 +667,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1581,7 +697,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1611,7 +727,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1641,7 +757,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1671,7 +787,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1701,7 +817,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1731,7 +847,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1761,7 +877,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1791,7 +907,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1821,7 +937,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1851,7 +967,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1881,7 +997,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1911,7 +1027,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1941,7 +1057,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1971,7 +1087,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2001,7 +1117,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2031,7 +1147,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2061,7 +1177,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2091,7 +1207,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2121,7 +1237,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2151,7 +1267,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2181,7 +1297,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2211,7 +1327,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2241,7 +1357,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2271,7 +1387,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2301,7 +1417,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2331,7 +1447,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2361,7 +1477,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2391,7 +1507,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 5
+          "ruleIndex": 2
         }
       ],
       "tool": {
@@ -2399,52 +1515,6 @@
           "fullName": "PowerApps app checker",
           "name": "PowerApps app checker",
           "rules": [
-            {
-              "id": "app-ErrUnknownFunction",
-              "messageStrings": {
-                "issue": {
-                  "text": "'{0}' is an unknown or unsupported function."
-                }
-              },
-              "properties": {
-                "componentType": "app",
-                "level": "High",
-                "primaryCategory": "formula",
-                "whyFix": ""
-              }
-            },
-            {
-              "id": "app-ErrInvalidArgs-Func",
-              "messageStrings": {
-                "issue": {
-                  "text": "The function '{0}' has some invalid arguments."
-                }
-              },
-              "properties": {
-                "componentType": "app",
-                "level": "High",
-                "primaryCategory": "formula",
-                "whyFix": ""
-              }
-            },
-            {
-              "id": "app-ErrIncompatibleTypesForEquality-Left-Right",
-              "messageStrings": {
-                "issue": {
-                  "text": "Incompatible types for comparison. These types can't be compared: {0}, {1}."
-                }
-              },
-              "properties": {
-                "componentType": "app",
-                "howToFix": [
-                  "You might need to convert the value to be the same type, such as converting a date string (e.g., \"12/31/2018\") to a date value.",
-                  "If you’re comparing records or tables, the field or column types must match exactly."
-                ],
-                "level": "High",
-                "primaryCategory": "formula",
-                "whyFix": ""
-              }
-            },
             {
               "id": "acc-TabIndexShouldBeDefinedForInteractiveControl",
               "messageStrings": {
