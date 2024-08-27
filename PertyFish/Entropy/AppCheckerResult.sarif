@@ -1484,17 +1484,17 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "App.gblPF_UI_SelectedChessEngine"
+                  "fullyQualifiedName": "App.gblPF_TMR_RunNextTest"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "App.gblPF_UI_SelectedChessEngine",
+                  "fullyQualifiedName": "App.gblPF_TMR_RunNextTest",
                   "relativeAddress": 0
                 }
               },
               "properties": {
-                "member": "gblPF_UI_SelectedChessEngine",
+                "member": "gblPF_TMR_RunNextTest",
                 "module": "App",
                 "type": "App"
               }
@@ -1514,17 +1514,17 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "App.gblPF_TMR_RunNextTest"
+                  "fullyQualifiedName": "App.gblPF_UI_SelectedChessEngine"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "App.gblPF_TMR_RunNextTest",
+                  "fullyQualifiedName": "App.gblPF_UI_SelectedChessEngine",
                   "relativeAddress": 0
                 }
               },
               "properties": {
-                "member": "gblPF_TMR_RunNextTest",
+                "member": "gblPF_UI_SelectedChessEngine",
                 "module": "App",
                 "type": "App"
               }

@@ -154,7 +154,10 @@ UsingComponents As screen:
                                     0,
                                 // a pinch of randomness
                                 heuristic19:
-                                    RandBetween(-25,25)  // centipawns 
+                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
+                                        If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P", RandBetween(0,25), RandBetween(-25,0)),
+                                        If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "N", RandBetween(-25,0), RandBetween(0,25))
+                                    )
                             })
                     });
             
