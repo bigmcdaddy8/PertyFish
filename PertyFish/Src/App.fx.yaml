@@ -35,7 +35,6 @@ App As appinfo:
         WHITE_KING_ICON="♔";WHITE_QUEEN_ICON="♕";WHITE_ROOK_ICON="♖";WHITE_BISHOP_ICON="♗";WHITE_KNIGHT_ICON="♘";WHITE_PAWN_ICON="♙";
         BLACK_KING_ICON="♚";BLACK_QUEEN_ICON="♛";BLACK_ROOK_ICON="♜";BLACK_BISHOP_ICON="♝";BLACK_KNIGHT_ICON="♞";BLACK_PAWN_ICON="♟";
         GAME_PHASE_OPENING=1;GAME_PHASE_MIDDLE=2;GAME_PHASE_END=3;
-        CE_PF_RANDOM="PertyFish Random";CE_PF_BEGINNER="PertyFish Beginner";CE_PF_INTERMEDIATE="PertyFish Intermediate";CE_PF_ADVANCED="PertyFish Advanced";
         CE_PF_100="Random";CE_PF_200="Maniacal";CE_PF_300="Pre-School";CE_PF_400="Kindergarten";
         CE_PF_NAMES=[CE_PF_100,CE_PF_200,CE_PF_300,CE_PF_400];
         
@@ -628,7 +627,6 @@ App As appinfo:
             Set(gblPF_UI_StatusFill, COLOR_WHITEish),
             Set(gblPF_UI_DiagnosticFill, COLOR_WHITEish),
             Set(gblPF_UI_GamePhase, ""),
-            Set(gblPF_UI_SelectedChessEngine, CE_PF_RANDOM),
         
             // timer flags
             Set(gblPF_TMR_RunNextTest, false),
