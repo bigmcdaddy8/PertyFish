@@ -3676,35 +3676,35 @@ Chess_Board As screen:
                                                                                 " btnProcessGame.OnSelect(): 3x position repeat DRAW detection "
                                                                             });
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board:    " & UDF_FEN_TO_PIECE_PLACMENT(theTail.postMoveFEN)
+                                                                                " board:    " & UDF_FEN_TO_PIECE_PLACEMENT(theTail.postMoveFEN)
                                                                             });
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                " board_m1: " & UDF_FEN_TO_PIECE_PLACMENT(theTail_minus1.postMoveFEN)
+                                                                                " board_m1: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus1.postMoveFEN)
                                                                             });
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m2: " & UDF_FEN_TO_PIECE_PLACMENT(theTail_minus2.postMoveFEN)
+                                                                                " board_m2: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus2.postMoveFEN)
                                                                             });
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m3: " & UDF_FEN_TO_PIECE_PLACMENT(theTail_minus3.postMoveFEN)
+                                                                                " board_m3: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus3.postMoveFEN)
                                                                             });
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m4: " & UDF_FEN_TO_PIECE_PLACMENT(theTail_minus4.postMoveFEN)
+                                                                                " board_m4: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus4.postMoveFEN)
                                                                             });
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m5: " & UDF_FEN_TO_PIECE_PLACMENT(theTail_minus5.postMoveFEN)
+                                                                                " board_m5: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus5.postMoveFEN)
                                                                             });
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m6: " & UDF_FEN_TO_PIECE_PLACMENT(theTail_minus6.postMoveFEN)
+                                                                                " board_m6: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus6.postMoveFEN)
                                                                             });
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m7: " & UDF_FEN_TO_PIECE_PLACMENT(theTail_minus7.postMoveFEN)
+                                                                                " board_m7: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus7.postMoveFEN)
                                                                             });
                     
                                                                             If(
-                                                                                UDF_FEN_TO_PIECE_PLACMENT(theTail.postMoveFEN)=UDF_FEN_TO_PIECE_PLACMENT(theTail_minus4.postMoveFEN) &&
-                                                                                UDF_FEN_TO_PIECE_PLACMENT(theTail_minus1.postMoveFEN)=UDF_FEN_TO_PIECE_PLACMENT(theTail_minus5.postMoveFEN) &&
-                                                                                UDF_FEN_TO_PIECE_PLACMENT(theTail_minus2.postMoveFEN)=UDF_FEN_TO_PIECE_PLACMENT(theTail_minus6.postMoveFEN) &&
-                                                                                UDF_FEN_TO_PIECE_PLACMENT(theTail_minus3.postMoveFEN)=UDF_FEN_TO_PIECE_PLACMENT(theTail_minus7.postMoveFEN),
+                                                                                UDF_FEN_TO_PIECE_PLACEMENT(theTail.postMoveFEN)=UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus4.postMoveFEN) &&
+                                                                                UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus1.postMoveFEN)=UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus5.postMoveFEN) &&
+                                                                                UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus2.postMoveFEN)=UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus6.postMoveFEN) &&
+                                                                                UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus3.postMoveFEN)=UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus7.postMoveFEN),
                                                                                 // THEN - we got ourselves a DRAW due to repeating postions
                     
                                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 

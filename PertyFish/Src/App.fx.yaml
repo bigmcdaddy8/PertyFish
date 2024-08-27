@@ -524,7 +524,7 @@ App As appinfo:
         UDF_calcCentipawnMaterialValue(fen:Text,filter:Text):Number=
             Sum(
                 ForAll(
-                    Split(UDF_FEN_TO_PIECE_PLACMENT(fen), "") As thePiece,
+                    Split(UDF_FEN_TO_PIECE_PLACEMENT(fen), "") As thePiece,
         
                     UDF_getPieceCentipawnMaterialValue(thePiece.Value, filter)
                 ),
