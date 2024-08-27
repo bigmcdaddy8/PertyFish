@@ -3529,6 +3529,59 @@ Chess_Board As screen:
                                                 localVars.whitePiecesCount_B > 0 && localVars.whitePiecesCount_N > 0, Blank(), // not an ISM draw
                                                 localVars.blackPiecesCount_b > 0 && localVars.blackPiecesCount_n > 0, Blank(), // not an ISM draw
                     
+                    
+                    /*
+                    To determine the color of a square on a chessboard given its square number, you can use the following formula:
+                    
+                    Calculate the row and column:
+                    Row: row = square_number // 8
+                    Column: column = square_number % 8
+                    Determine the color:
+                    If (row + column) % 2 == 0, the square is light.
+                    If (row + column) % 2 != 0, the square is dark.
+                     */
+                                                localVars.whitePiecesCount_B=1 && localVars.blackPiecesCount_b=1,
+                                                    With(
+                                                        {
+                                                            whiteBSqColor:  
+                                                                Mod((UDF_getRankFromSqNum(UDF_SearchBoardForPiece(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),"B")) +
+                                                                UDF_getFileNumFromSqNum(UDF_SearchBoardForPiece(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),"B"))),2),
+                                                            blackBSqColor:  
+                                                                Mod((UDF_getRankFromSqNum(UDF_SearchBoardForPiece(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),"b")) +
+                                                                UDF_getFileNumFromSqNum(UDF_SearchBoardForPiece(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),"b"))),2)
+                                                        } As bishopSqColors,
+                    
+                                                        If (bishopSqColors.whiteBSqColor=bishopSqColors.blackBSqColor,
+                                                            // THEN
+                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                " btnProcessGame.OnSelect(): ISM DRAW detected setting isISMDraw & isDraw to true " &
+                                                                " whitePiecesCount_QRP: " & localVars.whitePiecesCount_QRP &
+                                                                " whitePiecesCount_B: " & localVars.whitePiecesCount_B &
+                                                                " whitePiecesCount_N: " & localVars.whitePiecesCount_N &
+                                                                " blackPiecesCount_qrp: " & localVars.blackPiecesCount_qrp &
+                                                                " blackPiecesCount_b: " & localVars.blackPiecesCount_b &
+                                                                " blackPiecesCount_n: " & localVars.blackPiecesCount_n &
+                                                                " whiteBSqColor: " & bishopSqColors.whiteBSqColor &
+                                                                " blackBSqColor: " & bishopSqColors.blackBSqColor
+                                                            });
+                    
+                                                            UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
+                                                                inactiveColorMoveRecord:Patch(
+                                                                                            LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID).inactiveColorMoveRecord,
+                                                                                            {
+                                                                                                isISMDraw:  true
+                                                                                            }
+                                                                                        ),
+                                                                postMoveGameStatus:     Patch(
+                                                                                            LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID).postMoveGameStatus,
+                                                                                            {
+                                                                                                isDraw: true
+                                                                                            }
+                                                                                        )
+                                                            })
+                                                        )
+                                                    ),
+                                                
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " btnProcessGame.OnSelect(): ISM DRAW detected setting isISMDraw & isDraw to true " &
                                                     " whitePiecesCount_QRP: " & localVars.whitePiecesCount_QRP &
@@ -3538,7 +3591,6 @@ Chess_Board As screen:
                                                     " blackPiecesCount_b: " & localVars.blackPiecesCount_b &
                                                     " blackPiecesCount_n: " & localVars.blackPiecesCount_n
                                                 });
-                    
                                                 UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
                                                     inactiveColorMoveRecord:Patch(
                                                                                 LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID).inactiveColorMoveRecord,
