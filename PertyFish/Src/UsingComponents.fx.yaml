@@ -243,8 +243,23 @@ UsingComponents As screen:
                                 // a pinch of randomness
                                 heuristic19:
                                     If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
-                                        If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P", RandBetween(0,25), RandBetween(-25,0)),
-                                        If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "N", RandBetween(-25,0), RandBetween(0,25))
+                                        // THEN
+                                        Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
+                                            GAME_PHASE_OPENING,
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(0,25), RandBetween(-25,0)),
+                                            GAME_PHASE_MIDDLE,
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(0,25), RandBetween(-25,0)),
+                                            RandBetween(-25,25)
+                                        ),
+            
+                                        // ELSE
+                                        Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
+                                            GAME_PHASE_OPENING,
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(-25,0), RandBetween(0,25)),
+                                            GAME_PHASE_MIDDLE,
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(-25,0), RandBetween(0,25)),
+                                            RandBetween(-25,25)
+                                        )
                                     )
                             })
                     });
