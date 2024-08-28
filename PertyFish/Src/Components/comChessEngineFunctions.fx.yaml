@@ -281,7 +281,7 @@ comChessEngineFunctions As CanvasComponent:
                 =
                 If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                        " comChessEngineFunctions.fME_Preschool(): entered pNodeID: " & pNodeID
+                        " comChessEngineFunctions.fCE_300(): entered pNodeID: " & pNodeID
                     })
                 );
                 
@@ -293,7 +293,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                         If(gblPF_DEBUG_EVAL,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " fME_Preschool(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                                " fCE_300(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                                 " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                                 " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
                                 " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
@@ -400,7 +400,7 @@ comChessEngineFunctions As CanvasComponent:
                             LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
                 
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " fME_Preschool(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                                " fCE_300(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                                 " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                                 " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
                             })
@@ -408,7 +408,7 @@ comChessEngineFunctions As CanvasComponent:
                     )
                 );
                 
-                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_Preschool(): exiting"});
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_300(): exiting"});
     fCE_400(pNodeID As Number):
         pNodeID:
             Default: =EMPTY_NODE_ID
@@ -417,7 +417,7 @@ comChessEngineFunctions As CanvasComponent:
                 =
                 If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                        " comChessEngineFunctions.fME_Kindergarten(): entered pNodeID: " & pNodeID
+                        " comChessEngineFunctions.fCE_400(): entered pNodeID: " & pNodeID
                     })
                 );
                 
@@ -429,7 +429,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                         If(gblPF_DEBUG_EVAL,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " fME_Kindergarten(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                                " fCE_400(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                                 " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                                 " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
                                 " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
@@ -554,7 +554,7 @@ comChessEngineFunctions As CanvasComponent:
                             LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
                 
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " fME_Kindergarten(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                                " fCE_400(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                                 " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                                 " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
                             })
@@ -562,7 +562,7 @@ comChessEngineFunctions As CanvasComponent:
                     )
                 );
                 
-                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_Kindergarten(): exiting"});
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_400(): exiting"});
     fME_EvaluateMove(pNodeID As Number):
         pNodeID:
             Default: =EMPTY_NODE_ID
