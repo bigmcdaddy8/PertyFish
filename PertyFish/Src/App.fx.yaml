@@ -35,7 +35,7 @@ App As appinfo:
         WHITE_KING_ICON="♔";WHITE_QUEEN_ICON="♕";WHITE_ROOK_ICON="♖";WHITE_BISHOP_ICON="♗";WHITE_KNIGHT_ICON="♘";WHITE_PAWN_ICON="♙";
         BLACK_KING_ICON="♚";BLACK_QUEEN_ICON="♛";BLACK_ROOK_ICON="♜";BLACK_BISHOP_ICON="♝";BLACK_KNIGHT_ICON="♞";BLACK_PAWN_ICON="♟";
         GAME_PHASE_OPENING=1;GAME_PHASE_MIDDLE=2;GAME_PHASE_END=3;
-        CE_PF_100="Random";CE_PF_200="Maniacal";CE_PF_300="Preschool";CE_PF_400="Kindergarten";
+        CE_PF_100="Random";CE_PF_200="Bully";CE_PF_300="Preschool";CE_PF_400="Kindergarten";
         CE_PF_NAMES=[CE_PF_100,CE_PF_200,CE_PF_300,CE_PF_400];
         
         // universal square names set
