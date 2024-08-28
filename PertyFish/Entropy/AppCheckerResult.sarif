@@ -404,19 +404,49 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesPlayerType.AccessibleLabel"
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesCE.AccessibleLabel"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesPlayerType.AccessibleLabel",
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesCE.AccessibleLabel",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "AccessibleLabel",
                 "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesPlayerType"
+                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesCE"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 1
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesPromoteTo.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesPromoteTo.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "Chess_Board",
+                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesPromoteTo"
               }
             }
           ],
@@ -464,19 +494,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesPlayerType.AccessibleLabel"
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpBlackPiecesPromoteTo.AccessibleLabel"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesPlayerType.AccessibleLabel",
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpBlackPiecesPromoteTo.AccessibleLabel",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "AccessibleLabel",
                 "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesPlayerType"
+                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpBlackPiecesPromoteTo"
               }
             }
           ],
@@ -494,19 +524,49 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesPromoteTo.AccessibleLabel"
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesPlayerType.AccessibleLabel"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesPromoteTo.AccessibleLabel",
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesPlayerType.AccessibleLabel",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "AccessibleLabel",
                 "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesPromoteTo"
+                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radWhitePiecesPlayerType"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 1
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesPlayerType.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesPlayerType.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "Chess_Board",
+                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.radBlackPiecesPlayerType"
               }
             }
           ],
@@ -608,66 +668,6 @@
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
           "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesCE.AccessibleLabel"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesCE.AccessibleLabel",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "AccessibleLabel",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesCE"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpBlackPiecesPromoteTo.AccessibleLabel"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpBlackPiecesPromoteTo.AccessibleLabel",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "AccessibleLabel",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpBlackPiecesPromoteTo"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 1
         },
         {
           "locations": [

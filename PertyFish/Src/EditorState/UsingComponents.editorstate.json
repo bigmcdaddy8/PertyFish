@@ -25,14 +25,14 @@
           "IsLockable": false,
           "NameMapSourceSchema": "?"
         },
-        "fME_Random",
-        "fME_Random_pNodeID",
-        "fME_Maniacal",
-        "fME_Maniacal_pNodeID",
-        "fME_Preschool_pNodeID",
-        "fME_Preschool",
-        "fME_Kindergarten",
-        "fME_Kindergarten_pNodeID",
+        "fCE_100_pNodeID",
+        "fCE_100",
+        "fCE_200",
+        "fCE_200_pNodeID",
+        "fCE_300",
+        "fCE_300_pNodeID",
+        "fCE_400_pNodeID",
+        "fCE_400",
         "fME_getGamePhase_pFEN",
         "fME_getGamePhase"
       ],
@@ -62,27 +62,27 @@
         },
         {
           "Category": "Data",
-          "PropertyName": "fME_Random_pNodeID",
-          "RuleProviderType": "System"
-        },
-        {
-          "Category": "Data",
-          "PropertyName": "fME_Maniacal_pNodeID",
-          "RuleProviderType": "System"
-        },
-        {
-          "Category": "Data",
-          "PropertyName": "fME_Preschool_pNodeID",
-          "RuleProviderType": "System"
-        },
-        {
-          "Category": "Data",
-          "PropertyName": "fME_Kindergarten_pNodeID",
+          "PropertyName": "fCE_200_pNodeID",
           "RuleProviderType": "System"
         },
         {
           "Category": "Data",
           "PropertyName": "fME_getGamePhase_pFEN",
+          "RuleProviderType": "System"
+        },
+        {
+          "Category": "Data",
+          "PropertyName": "fCE_100_pNodeID",
+          "RuleProviderType": "System"
+        },
+        {
+          "Category": "Data",
+          "PropertyName": "fCE_300_pNodeID",
+          "RuleProviderType": "System"
+        },
+        {
+          "Category": "Data",
+          "PropertyName": "fCE_400_pNodeID",
           "RuleProviderType": "System"
         },
         {
@@ -117,27 +117,27 @@
         },
         {
           "Category": "Behavior",
-          "PropertyName": "fME_Random",
+          "PropertyName": "fCE_100",
           "RuleProviderType": "System"
         },
         {
           "Category": "Behavior",
-          "PropertyName": "fME_Maniacal",
+          "PropertyName": "fCE_300",
+          "RuleProviderType": "System"
+        },
+        {
+          "Category": "Behavior",
+          "PropertyName": "fCE_400",
+          "RuleProviderType": "System"
+        },
+        {
+          "Category": "Behavior",
+          "PropertyName": "fCE_200",
           "RuleProviderType": "System"
         },
         {
           "Category": "Behavior",
           "PropertyName": "fME_EvaluateMove",
-          "RuleProviderType": "System"
-        },
-        {
-          "Category": "Behavior",
-          "PropertyName": "fME_Preschool",
-          "RuleProviderType": "System"
-        },
-        {
-          "Category": "Behavior",
-          "PropertyName": "fME_Kindergarten",
           "RuleProviderType": "System"
         },
         {
