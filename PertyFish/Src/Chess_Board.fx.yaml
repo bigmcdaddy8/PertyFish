@@ -769,6 +769,104 @@ Chess_Board As screen:
                 Y: =60
                 ZIndex: =2
 
+                tmrPlayAnotherGame As timer:
+                    AutoPause: =false
+                    DisplayMode: =DisplayMode.View
+                    Duration: =10000
+                    Height: =27
+                    OnTimerEnd: |-
+                        =Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " tmrPlayAnotherGame.OnTimerEnd(): entered gblPF_TMR_PlayAnotherGame: " & gblPF_TMR_PlayAnotherGame
+                        });
+                        
+                        Set(gblPF_TMR_PlayAnotherGame, false);
+                        
+                        If(gblPF_UI_StartFromBeginning,
+                            // THEN - start another game from the beginning
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
+                                "tmrPlayAnotherGame.OnTimerEnd(): calling Select(btnStartGameFromBeginning)"
+                            });
+                            Select(btnStartGameFromBeginning),
+                        
+                            // ELSE - start another game from the FEN
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
+                                "tmrPlayAnotherGame.OnTimerEnd(): calling Select(btnStartGameFromFEN)"
+                            });
+                            Select(btnStartGameFromFEN)
+                        );
+                        
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
+                            "tmrPlayAnotherGame.OnTimerEnd(): exiting gblPF_TMR_PlayAnotherGame: " & gblPF_TMR_PlayAnotherGame
+                        });
+                    OnTimerStart: =
+                    Size: =10
+                    Start: =gblPF_TMR_MakeNextGameMove
+                    Width: =98
+                    X: =115
+                    Y: =470
+                    ZIndex: =1
+
+                tmrMakeNextGameMove As timer:
+                    AutoPause: =false
+                    DisplayMode: =DisplayMode.View
+                    Duration: =If(radWhitePiecesPlayerType.SelectedText.Value="Neither",3000,500)
+                    Height: =27
+                    OnTimerEnd: |-
+                        =If(Mod(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.moveNumber,3)=0,
+                            Clear(colPF_logs)
+                        );
+                        
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " tmrMakeNextGameMove.OnTimerEnd(): entered gblPF_TMR_MakeNextGameMove: " & gblPF_TMR_MakeNextGameMove
+                        });
+                        
+                        Set(gblPF_TMR_MakeNextGameMove, false);
+                        
+                        With(
+                            LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                        
+                            If(theData.chessEngineData.isGame,
+                                // THEN game still going
+                                If(theData.chessEngineData.testNumber<0,
+                                    // THEN - not a Game Test
+                                    With(
+                                        LookUp(colPF_MOVE_TREE, nodeDepth=1 && inactiveColorMoveRecord.pacn=theData.chessEngineData.pacn) As theMove,
+                        
+                                        UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                            uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                        diagnosticText:     "Computer's turn - san: " & theMove.inactiveColorMoveRecord.san &
+                                                                            " pacn: " & theMove.inactiveColorMoveRecord.pacn,
+                                                        diagnosticFill:     COLOR_GREENish
+                                                    })
+                                        })
+                                    )
+                                );
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
+                                    "tmrMakeNextGameMove.OnTimerEnd(): calling Select(btnProcessGame)"
+                                });
+                                Select(btnProcessGame);
+                            )
+                        );
+                        
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
+                            "tmrMakeNextGameMove.OnTimerEnd(): exiting gblPF_TMR_MakeNextGameMove: " & gblPF_TMR_MakeNextGameMove
+                        });
+                    OnTimerStart: |-
+                        =Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " tmrMakeNextGameMove_CB.OnTimerStart(): entered gblPF_TMR_MakeNextTestMove: " & gblPF_TMR_MakeNextTestMove
+                        });
+                        
+                        
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " tmrMakeNextGameMove_CB.OnTimerStart(): exiting gblPF_TMR_MakeNextTestMove: " & gblPF_TMR_MakeNextTestMove
+                        });
+                    Size: =10
+                    Start: =gblPF_TMR_MakeNextGameMove
+                    Width: =98
+                    X: =12
+                    Y: =471
+                    ZIndex: =2
+
                 lblNumberLegalMoves As label:
                     Font: =Font.'Courier New'
                     Height: =25
@@ -778,7 +876,7 @@ Chess_Board As screen:
                     Width: =250
                     X: =10
                     Y: =445
-                    ZIndex: =1
+                    ZIndex: =3
 
                 lblWhitePiecesHeader As label:
                     Height: =25
@@ -786,13 +884,13 @@ Chess_Board As screen:
                     Text: ="White Pieces are played by..."
                     Width: =200
                     X: =10
-                    ZIndex: =2
+                    ZIndex: =4
 
                 lblStartingFEN As label:
                     Text: ="FEN"
                     X: =10
                     Y: =308
-                    ZIndex: =3
+                    ZIndex: =5
 
                 lblSelectedSquareNum As label:
                     Font: =Font.'Courier New'
@@ -803,7 +901,7 @@ Chess_Board As screen:
                     Width: =225
                     X: =10
                     Y: =420
-                    ZIndex: =4
+                    ZIndex: =6
 
                 lblBoardReadyForInput As label:
                     Font: =Font.'Courier New'
@@ -814,7 +912,7 @@ Chess_Board As screen:
                     Width: =250
                     X: =10
                     Y: =395
-                    ZIndex: =5
+                    ZIndex: =7
 
                 txtStartingFEN As text:
                     Default: =""
@@ -822,7 +920,7 @@ Chess_Board As screen:
                     Width: =440
                     X: =10
                     Y: =340
-                    ZIndex: =6
+                    ZIndex: =8
 
                 btnStartGameFromBeginning As button:
                     Height: =23
@@ -832,6 +930,8 @@ Chess_Board As screen:
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                             " btnStartGameFromBeginning.OnSelect(): entered"
                         });
+                        
+                        Set(gblPF_UI_StartFromBeginning, true);
                         
                         UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                             uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
@@ -866,7 +966,7 @@ Chess_Board As screen:
                     Width: =125
                     X: =10
                     Y: =244
-                    ZIndex: =7
+                    ZIndex: =9
 
                 btnStartGameFromFEN As button:
                     Height: =23
@@ -880,6 +980,8 @@ Chess_Board As screen:
                             " btnStartGameFromFEN.OnSelect(): entered player color is: " & radWhitePiecesPlayerType.Selected.Value &
                             " FEN: " & txtStartingFEN.Text
                         });
+                        
+                        Set(gblPF_UI_StartFromBeginning, false);
                         
                         UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                             uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
@@ -916,7 +1018,7 @@ Chess_Board As screen:
                     Width: =125
                     X: =10
                     Y: =277
-                    ZIndex: =8
+                    ZIndex: =10
 
                 btnCheckGameResults As button:
                     OnSelect: |
@@ -972,7 +1074,29 @@ Chess_Board As screen:
                                             chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
                                                                     isGame:         false
                                                                 })
-                                        })
+                                        });
+                        
+                                        With (
+                                            {
+                                                winCount:   Index(Split(Trim(lblWLT),"-"), 1).Value + If(theD0ParentNode.postMoveGameStatus.blackIsCheckmated,1,0),
+                                                loseCount:  Index(Split(Trim(lblWLT),"-"), 2).Value + If(theD0ParentNode.postMoveGameStatus.whiteIsCheckmated,1,0),
+                                                tieCount:   Index(Split(Trim(lblWLT),"-"), 3).Value
+                                            } As theWLTCounts,
+                        
+                                            // update lblWlt
+                                            UpdateContext({ lblWLT: theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount});
+                        
+                                            // If chkGameRepeat is checked
+                                            If(chkGame_Repeat.Value && Sum(theWLTCounts.winCount,theWLTCounts.loseCount,theWLTCounts.tieCount)<Value(txtGameRepitions.Text),
+                                                // THEN - play another game
+                                                Set(gblPF_TMR_PlayAnotherGame, false);
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                    " btnCheckCompleteTestResults.OnSelect(): TEST_COMPLETE calling Reset(tmrPlayAnotherGame)"
+                                                });
+                                                Reset(tmrPlayAnotherGame);
+                                                Set(gblPF_TMR_PlayAnotherGame, true)
+                                            )
+                                        )
                                     )
                                 );
                         
@@ -1017,7 +1141,18 @@ Chess_Board As screen:
                                                     chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
                                                                             isGame:         false
                                                                         })
-                                                })
+                                                });
+                        
+                                                With (
+                                                    {
+                                                        winCount:   Index(Split(Trim(lblWLT),"-"), 1).Value,
+                                                        loseCount:  Index(Split(Trim(lblWLT),"-"), 2).Value,
+                                                        tieCount:   Index(Split(Trim(lblWLT),"-"), 3).Value + 1
+                                                    } As theWLTCounts,
+                        
+                                                    // update lblWlt
+                                                    UpdateContext({ lblWLT: theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount})
+                                                )
                                             )
                                         );
                         
@@ -1071,7 +1206,18 @@ Chess_Board As screen:
                                                     chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
                                                                             isGame:         false
                                                                         })
-                                                })
+                                                });
+                        
+                                                With (
+                                                    {
+                                                        winCount:   Index(Split(Trim(lblWLT),"-"), 1).Value,
+                                                        loseCount:  Index(Split(Trim(lblWLT),"-"), 2).Value,
+                                                        tieCount:   Index(Split(Trim(lblWLT),"-"), 3).Value + 1
+                                                    } As theWLTCounts,
+                        
+                                                    // update lblWlt
+                                                    UpdateContext({ lblWLT: theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount})
+                                                )
                                             )
                                         );
                         
@@ -1155,7 +1301,6 @@ Chess_Board As screen:
                                                     });
                         
                                                     // ready to make the next move in this game
-                                                    // Set(gblPF_TMR_MakeNextGameMove, false);Set(gblPF_TMR_MakeNextGameMove, true);Set(gblPF_TMR_MakeNextGameMove, false);
                                                     Set(gblPF_TMR_MakeNextGameMove, false);
                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                         " btnCheckCompleteTestResults.OnSelect(): TEST_COMPLETE calling Reset(tmrMakeNextGameMove)"
@@ -1187,68 +1332,7 @@ Chess_Board As screen:
                     Visible: =false
                     X: =100
                     Y: =100
-                    ZIndex: =9
-
-                tmrMakeNextGameMove As timer:
-                    AutoPause: =false
-                    DisplayMode: =DisplayMode.View
-                    Duration: =If(radWhitePiecesPlayerType.SelectedText.Value="Neither",3000,500)
-                    Height: =27
-                    OnTimerEnd: |-
-                        =If(Mod(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.moveNumber,3)=0,
-                            Clear(colPF_logs)
-                        );
-                        
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " tmrMakeNextGameMove.OnTimerEnd(): entered gblPF_TMR_MakeNextGameMove: " & gblPF_TMR_MakeNextGameMove
-                        });
-                        
-                        Set(gblPF_TMR_MakeNextGameMove, false);
-                        
-                        With(
-                            LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
-                        
-                            If(theData.chessEngineData.isGame,
-                                // THEN game still going
-                                If(theData.chessEngineData.testNumber<0,
-                                    // THEN - not a Game Test
-                                    With(
-                                        LookUp(colPF_MOVE_TREE, nodeDepth=1 && inactiveColorMoveRecord.pacn=theData.chessEngineData.pacn) As theMove,
-                        
-                                        UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
-                                            uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
-                                                        diagnosticText:     "Computer's turn - san: " & theMove.inactiveColorMoveRecord.san &
-                                                                            " pacn: " & theMove.inactiveColorMoveRecord.pacn,
-                                                        diagnosticFill:     COLOR_GREENish
-                                                    })
-                                        })
-                                    )
-                                );
-                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
-                                    "tmrMakeNextGameMove.OnTimerEnd(): calling Select(btnProcessGame)"
-                                });
-                                Select(btnProcessGame);
-                            )
-                        );
-                        
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
-                            "tmrMakeNextGameMove.OnTimerEnd(): exiting gblPF_TMR_MakeNextGameMove: " & gblPF_TMR_MakeNextGameMove
-                        });
-                    OnTimerStart: |-
-                        =Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " tmrMakeNextGameMove_CB.OnTimerStart(): entered gblPF_TMR_MakeNextTestMove: " & gblPF_TMR_MakeNextTestMove
-                        });
-                        
-                        
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " tmrMakeNextGameMove_CB.OnTimerStart(): exiting gblPF_TMR_MakeNextTestMove: " & gblPF_TMR_MakeNextTestMove
-                        });
-                    Size: =10
-                    Start: =gblPF_TMR_MakeNextGameMove
-                    Width: =98
-                    X: =12
-                    Y: =471
-                    ZIndex: =10
+                    ZIndex: =11
 
                 radWhitePiecesPlayerType As radio:
                     Default: ="Human"
@@ -1262,7 +1346,7 @@ Chess_Board As screen:
                     Width: =215
                     X: =25
                     Y: =25
-                    ZIndex: =11
+                    ZIndex: =12
 
                 lblBlackPiecesHeader As label:
                     Height: =25
@@ -1295,7 +1379,7 @@ Chess_Board As screen:
                     Width: =150
                     X: =radWhitePiecesPlayerType.X + radWhitePiecesPlayerType.Width
                     Y: =radWhitePiecesPlayerType.Y
-                    ZIndex: =16
+                    ZIndex: =15
 
                 drpBlackPiecesCE As dropdown:
                     Default: =CE_PF_400
@@ -1305,7 +1389,7 @@ Chess_Board As screen:
                     Width: =150
                     X: =radBlackPiecesPlayerType.X + radBlackPiecesPlayerType.Width
                     Y: =radBlackPiecesPlayerType.Y
-                    ZIndex: =17
+                    ZIndex: =16
 
                 drpWhitePiecesPromoteTo As dropdown:
                     Default: ="Q"
@@ -1316,7 +1400,7 @@ Chess_Board As screen:
                     Width: =70
                     X: =drpWhitePiecesCE.X + drpWhitePiecesCE.Width
                     Y: =radWhitePiecesPlayerType.Y
-                    ZIndex: =18
+                    ZIndex: =17
 
                 drpBlackPiecesPromoteTo As dropdown:
                     Default: ="q"
@@ -1327,45 +1411,28 @@ Chess_Board As screen:
                     Width: =70
                     X: =drpBlackPiecesCE.X + drpBlackPiecesCE.Width
                     Y: =drpBlackPiecesCE.Y
+                    ZIndex: =18
+
+                chkGame_Repeat As checkbox:
+                    CheckboxSize: =20
+                    Height: =25
+                    OnUncheck: |-
+                        =UpdateContext({lblWLT: "0 - 0 - 0"})
+                    Size: =10
+                    Text: ="Repeat x"
+                    Width: =90
+                    X: =166
+                    Y: =258
                     ZIndex: =19
 
-                chkSfB_Repeat As checkbox:
-                    CheckboxSize: =20
+                txtGameRepitions As text:
+                    Default: ="2"
                     Height: =25
                     Size: =10
-                    Text: ="Repeat x"
-                    Width: =90
-                    X: =btnStartGameFromBeginning.X + btnStartGameFromBeginning.Width + 10
-                    Y: =btnStartGameFromBeginning.Y
+                    Width: =50
+                    X: =chkGame_Repeat.X + chkGame_Repeat.Width
+                    Y: =chkGame_Repeat.Y
                     ZIndex: =20
-
-                chkSfF_Repeat As checkbox:
-                    CheckboxSize: =20
-                    Height: =25
-                    Size: =10
-                    Text: ="Repeat x"
-                    Width: =90
-                    X: =btnStartGameFromFEN.X + btnStartGameFromFEN.Width + 10
-                    Y: =btnStartGameFromFEN.Y
-                    ZIndex: =21
-
-                txtSfB_Repitions As text:
-                    Default: ="2"
-                    Height: =25
-                    Size: =10
-                    Width: =50
-                    X: =chkSfB_Repeat.X + chkSfB_Repeat.Width
-                    Y: =chkSfB_Repeat.Y
-                    ZIndex: =22
-
-                txtSfF_Repitions As text:
-                    Default: ="2"
-                    Height: =25
-                    Size: =10
-                    Width: =50
-                    X: =chkSfF_Repeat.X + chkSfF_Repeat.Width
-                    Y: =chkSfF_Repeat.Y
-                    ZIndex: =23
 
                 lblWLT As label:
                     Align: =Align.Center
@@ -1375,7 +1442,7 @@ Chess_Board As screen:
                     Width: =100
                     X: =326
                     Y: =276
-                    ZIndex: =24
+                    ZIndex: =21
 
                 lblWLT_Header As label:
                     Align: =Align.Center
@@ -1384,7 +1451,7 @@ Chess_Board As screen:
                     Text: ="Win - Lose - Draw"
                     X: =310
                     Y: =244
-                    ZIndex: =25
+                    ZIndex: =22
 
                 txtMoveLimit As text:
                     Default: ="75"
@@ -1393,7 +1460,7 @@ Chess_Board As screen:
                     Width: =50
                     X: =lblMaxMoveLimitHeader.X + lblMaxMoveLimitHeader.Width
                     Y: =lblMaxMoveLimitHeader.Y
-                    ZIndex: =26
+                    ZIndex: =23
 
                 lblMaxMoveLimitHeader As label:
                     Height: =25
@@ -1401,7 +1468,7 @@ Chess_Board As screen:
                     Text: ="Max. Move Limit"
                     Width: =115
                     Y: =122
-                    ZIndex: =27
+                    ZIndex: =24
 
             conControlsSharedArea As groupContainer.manualLayoutContainer:
                 Height: =50

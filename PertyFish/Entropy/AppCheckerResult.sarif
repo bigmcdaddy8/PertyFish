@@ -674,49 +674,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.txtSfB_Repitions.AccessibleLabel"
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.txtGameRepitions.AccessibleLabel"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.txtSfB_Repitions.AccessibleLabel",
+                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.txtGameRepitions.AccessibleLabel",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "AccessibleLabel",
                 "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.txtSfB_Repitions"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.txtSfF_Repitions.AccessibleLabel"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.txtSfF_Repitions.AccessibleLabel",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "AccessibleLabel",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.txtSfF_Repitions"
+                "type": "Chess_Board.conEntireScreen.conControls.conControlsGame.txtGameRepitions"
               }
             }
           ],
@@ -1244,96 +1214,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_CE_UTILS"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_CE_UTILS",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_DEBUG_CE_UTILS",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_BASIC_EXCHANGE"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_BASIC_EXCHANGE",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_DEBUG_EVAL_BASIC_EXCHANGE",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_BASIC_EXCHANGE_CALC"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_BASIC_EXCHANGE_CALC",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_DEBUG_EVAL_BASIC_EXCHANGE_CALC",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_ENDGAME"
                 }
               ],
@@ -1345,96 +1225,6 @@
               },
               "properties": {
                 "member": "gblPF_DEBUG_EVAL_ENDGAME",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_ENDGAME_KR_K"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_ENDGAME_KR_K",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_DEBUG_EVAL_ENDGAME_KR_K",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_FORK"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_FORK",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_DEBUG_EVAL_FORK",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_GENERIC_TACTICS"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_GENERIC_TACTICS",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_DEBUG_EVAL_GENERIC_TACTICS",
                 "module": "App",
                 "type": "App"
               }
@@ -1645,6 +1435,36 @@
               },
               "properties": {
                 "member": "gblPF_TMR_RunNextTest",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedVariables",
+          "ruleIndex": 2
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.gblPF_DEBUG"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.gblPF_DEBUG",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "gblPF_DEBUG",
                 "module": "App",
                 "type": "App"
               }

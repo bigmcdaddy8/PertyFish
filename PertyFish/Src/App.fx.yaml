@@ -592,14 +592,9 @@ App As appinfo:
             Set(gblPF_TMP_Text04, ""),
             Set(gblPF_TMP_Text05, ""),
         
+            Set(gblPF_DEBUG, true),
             Set(gblPF_DEBUG_EVAL, true),
-            Set(gblPF_DEBUG_CE_UTILS, true),
-            Set(gblPF_DEBUG_EVAL_BASIC_EXCHANGE, true),
-            Set(gblPF_DEBUG_EVAL_BASIC_EXCHANGE_CALC, true),
             Set(gblPF_DEBUG_EVAL_ENDGAME, true),
-            Set(gblPF_DEBUG_EVAL_ENDGAME_KR_K, false),
-            Set(gblPF_DEBUG_EVAL_FORK, true),
-            Set(gblPF_DEBUG_EVAL_GENERIC_TACTICS, true),
             Set(gblPF_CLEAR_LOG_MOD, 3),
         
             Set(gblPF_BestMoveMaterial, "+0"),
@@ -626,12 +621,12 @@ App As appinfo:
             Set(gblPF_UI_ThinkingFill, COLOR_WHITEish),
             Set(gblPF_UI_StatusFill, COLOR_WHITEish),
             Set(gblPF_UI_DiagnosticFill, COLOR_WHITEish),
+            Set(gblPF_UI_StartFromBeginning, false),
             Set(gblPF_UI_GamePhase, ""),
         
             // timer flags
-            Set(gblPF_TMR_RunNextTest, false),
-            Set(gblPF_TMR_MakeNextTestMove, false),
             Set(gblPF_TMR_MakeNextGameMove, false),
+            Set(gblPF_TMR_PlayAnotherGame, false),
         
             // Collections...
             ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: ""})),
