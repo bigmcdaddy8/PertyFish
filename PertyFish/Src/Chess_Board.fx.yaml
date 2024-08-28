@@ -3563,7 +3563,7 @@ Chess_Board As screen:
                                             " moveNumber: " & UDF_FEN_TO_FULLMOVE_COUNT(theD0ParentNode.postMoveFEN)
                                         });
                     
-                                        If(theData.chessEngineData.moveNumber>Value(txtMoveLimit.Text),
+                                        If(UDF_FEN_TO_FULLMOVE_COUNT(theD0ParentNode.postMoveFEN)>Value(txtMoveLimit.Text),
                                             // THEN we have hit the move limit
                                             UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
                                                 inactiveColorMoveRecord:Patch(
