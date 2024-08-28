@@ -38,9 +38,6 @@ In a private version I have built in regression testing, I may pull that forward
 #### Feature 0003 - Create smarter embedded chess engines
 Create smarter chess engines that are written using PowerFx
 
-##### Story 0003-03 Add standardized Game Phase detection
-Create a standard library method for determining which phase of the game a FEN is in.
-
 ##### Story 0003-04 Add basic board preMove vs. postMove
 Do board evaluation that is performance friendly
 - material value
@@ -72,6 +69,8 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Completed Work
+##### Story 0003-03 Add standardized Game Phase detection
+Create a standard library method for determining which phase of the game a FEN is in.
 
 ##### Story 0003-03 Add initial draw detection
 Program needs to be able to detect several standard DRAW situations
