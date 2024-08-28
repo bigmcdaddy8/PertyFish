@@ -38,16 +38,31 @@ In a private version I have built in regression testing, I may pull that forward
 #### Feature 0003 - Create smarter embedded chess engines
 Create smarter chess engines that are written using PowerFx
 
-##### Story 0003-04 Add basic board preMove vs. postMove
-Do board evaluation that is performance friendly
-- material value
-- number of hanging pieces
-- number of attacked squares
-- number of protected squares
+##### Story 0003-04 200 (Bully)
+- Elevate evaluation of capturing moves.
+- Change in basic material value  preMove vs. postMove
 
-##### Story 0003-05 Bully
-##### Story 0003-06 Preschool
-##### Story 0003-07 Kindergarten
+##### Story 0003-05 300 (Preschool)
+- Handle basic move evaluations.
+- - be aware if source square is attacked
+- - be aware if target square is attacked
+- - be aware if source square is protected 
+- - be aware if target square is protected
+- Simple awareness of game phase to aid in move selection
+- Simple board strength analysis
+- - number of attacked squares
+- - number of protected squares
+
+##### Story 0003-06 400 (Kindergarten)
+- Do simple exchange calculation
+- Look for simple tactics
+- - look for hung pieces
+- - look for forks
+- Very simple end game plan.
+
+##### Story 0003-07 Create ability to test computer vs. computer
+- maintain win-loss-draw
+- be able to specify how many times to play
 
 
 #### Feature 0004 - Application Improvements
