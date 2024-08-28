@@ -1341,16 +1341,17 @@ Chess_Board As screen:
                             With(
                                 LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID) As theD0ParentNode,
                     
-                    /*
-                    UDF_getGamePhaseStr(fen:Text):Text=
-                        Switch(true,
-                            UDF_getGamePhase(fen)=GAME_PHASE_OPENING,   "OPENING",
-                            UDF_getGamePhase(fen)=GAME_PHASE_MIDDLE,    "MIDDLE GAME",
-                            "END GAME"
-                        );
-                     */
                                 If(!IsBlank(theD0ParentNode),
-                                    Set(gblPF_UI_GamePhase, "OPENING"),
+                                    // THEN
+                                    Set(gblPF_UI_GamePhase, 
+                                        Switch(comChessEngineFunctionsLibrary.fME_getGamePhase(theD0ParentNode.postMoveFEN),
+                                            GAME_PHASE_OPENING, "OPENING",
+                                            GAME_PHASE_MIDDLE, "MIDDLE GAME",
+                                            "END GAME"
+                                        )
+                                    ),
+                    
+                                    // ELSE
                                     Set(gblPF_UI_GamePhase, "")
                                 )
                             )
@@ -3757,7 +3758,16 @@ Chess_Board As screen:
                                 LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID) As theD0ParentNode,
                     
                                 If(!IsBlank(theD0ParentNode),
-                                    Set(gblPF_UI_GamePhase, "OPENING"),
+                                    // THEN
+                                    Set(gblPF_UI_GamePhase, 
+                                        Switch(comChessEngineFunctionsLibrary.fME_getGamePhase(theD0ParentNode.postMoveFEN),
+                                            GAME_PHASE_OPENING, "OPENING",
+                                            GAME_PHASE_MIDDLE, "MIDDLE GAME",
+                                            "END GAME"
+                                        )
+                                    ),
+                    
+                                    // ELSE
                                     Set(gblPF_UI_GamePhase, "")
                                 )
                             )
