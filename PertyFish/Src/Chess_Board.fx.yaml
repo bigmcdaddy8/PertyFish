@@ -1329,6 +1329,80 @@ Chess_Board As screen:
                     Y: =drpBlackPiecesCE.Y
                     ZIndex: =19
 
+                chkSfB_Repeat As checkbox:
+                    CheckboxSize: =20
+                    Height: =25
+                    Size: =10
+                    Text: ="Repeat x"
+                    Width: =90
+                    X: =btnStartGameFromBeginning.X + btnStartGameFromBeginning.Width + 10
+                    Y: =btnStartGameFromBeginning.Y
+                    ZIndex: =20
+
+                chkSfF_Repeat As checkbox:
+                    CheckboxSize: =20
+                    Height: =25
+                    Size: =10
+                    Text: ="Repeat x"
+                    Width: =90
+                    X: =btnStartGameFromFEN.X + btnStartGameFromFEN.Width + 10
+                    Y: =btnStartGameFromFEN.Y
+                    ZIndex: =21
+
+                txtSfB_Repitions As text:
+                    Default: ="2"
+                    Height: =25
+                    Size: =10
+                    Width: =50
+                    X: =chkSfB_Repeat.X + chkSfB_Repeat.Width
+                    Y: =chkSfB_Repeat.Y
+                    ZIndex: =22
+
+                txtSfF_Repitions As text:
+                    Default: ="2"
+                    Height: =25
+                    Size: =10
+                    Width: =50
+                    X: =chkSfF_Repeat.X + chkSfF_Repeat.Width
+                    Y: =chkSfF_Repeat.Y
+                    ZIndex: =23
+
+                lblWLT As label:
+                    Align: =Align.Center
+                    Height: =25
+                    Size: =10
+                    Text: ="0 - 0 - 0"
+                    Width: =100
+                    X: =326
+                    Y: =276
+                    ZIndex: =24
+
+                lblWLT_Header As label:
+                    Align: =Align.Center
+                    Height: =25
+                    Size: =10
+                    Text: ="Win - Lose - Draw"
+                    X: =310
+                    Y: =244
+                    ZIndex: =25
+
+                txtMoveLimit As text:
+                    Default: ="75"
+                    Height: =25
+                    Size: =10
+                    Width: =50
+                    X: =lblMaxMoveLimitHeader.X + lblMaxMoveLimitHeader.Width
+                    Y: =lblMaxMoveLimitHeader.Y
+                    ZIndex: =26
+
+                lblMaxMoveLimitHeader As label:
+                    Height: =25
+                    Size: =10
+                    Text: ="Max. Move Limit"
+                    Width: =115
+                    Y: =122
+                    ZIndex: =27
+
             conControlsSharedArea As groupContainer.manualLayoutContainer:
                 Height: =50
                 Width: =Parent.Width
