@@ -1294,6 +1294,7 @@ Chess_Board As screen:
                     Height: =25
                     Items: =["Q","R","B","N"]
                     Size: =10
+                    Visible: =If(radWhitePiecesPlayerType.Selected.Value="Human",true,false)
                     Width: =70
                     X: =drpWhitePiecesCE.X + drpWhitePiecesCE.Width
                     Y: =radWhitePiecesPlayerType.Y
@@ -1304,6 +1305,7 @@ Chess_Board As screen:
                     Height: =25
                     Items: =["Q","R","B","N"]
                     Size: =10
+                    Visible: =If(radBlackPiecesPlayerType.Selected.Value="Human",true,false)
                     Width: =70
                     X: =drpBlackPiecesCE.X + drpBlackPiecesCE.Width
                     Y: =drpBlackPiecesCE.Y
