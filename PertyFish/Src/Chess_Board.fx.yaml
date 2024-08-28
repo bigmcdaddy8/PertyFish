@@ -3543,9 +3543,46 @@ Chess_Board As screen:
                                 })
                             );
                     
-                    
-                    
                             // DRAWs - TODO...
+                            With(
+                                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                    
+                                With(
+                                    LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
+                    
+                                    If(
+                                        Not(
+                                            theD0ParentNode.postMoveGameStatus.whiteIsCheckmated ||
+                                            theD0ParentNode.postMoveGameStatus.blackIsCheckmated ||
+                                            theD0ParentNode.postMoveGameStatus.isStalemate ||
+                                            theD0ParentNode.postMoveGameStatus.isDraw
+                                        ),
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                            " btnProcessGame.OnSelect(): DEBUG looking for Move Limit DRAW " &
+                                            " Move Limit: " & txtMoveLimit.Text &
+                                            " moveNumber: " & theData.chessEngineData.moveNumber
+                                        });
+                    
+                                        If(theData.chessEngineData.moveNumber>=Value(txtMoveLimit.Text),
+                                            // THEN we have hit the move limit
+                                            UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
+                                                inactiveColorMoveRecord:Patch(
+                                                                            LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID).inactiveColorMoveRecord,
+                                                                            {
+                                                                                is75MoveDraw:  true
+                                                                            }
+                                                                        ),
+                                                postMoveGameStatus:     Patch(
+                                                                            LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID).postMoveGameStatus,
+                                                                            {
+                                                                                isDraw: true
+                                                                            }
+                                                                        )
+                                            })
+                                        )
+                                    )
+                                )
+                            );
                     
                             /*
                              * Insuffcient material draw conditions
