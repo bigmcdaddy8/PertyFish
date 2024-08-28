@@ -83,9 +83,25 @@
         "IsLockable": false,
         "NameMapSourceSchema": "?"
       },
-      "fME_Kindergarten_pNodeID"
+      "fME_Kindergarten_pNodeID",
+      {
+        "AFDDataSourceName": "",
+        "AutoRuleBindingEnabled": false,
+        "AutoRuleBindingString": "\"Text\"",
+        "InvariantPropertyName": "fME_getGamePhase_pFEN",
+        "IsLockable": false,
+        "NameMapSourceSchema": "?"
+      },
+      {
+        "AFDDataSourceName": "",
+        "AutoRuleBindingEnabled": false,
+        "AutoRuleBindingString": "100",
+        "InvariantPropertyName": "fME_getGamePhase",
+        "IsLockable": false,
+        "NameMapSourceSchema": "?"
+      }
     ],
-    "LastModifiedTimestamp": "638603941594512948",
+    "LastModifiedTimestamp": "638604007359332373",
     "Name": "comChessEngineFunctions",
     "Rules": [
       {
@@ -116,6 +132,12 @@
         "Category": "Data",
         "InvariantScript": "EMPTY_NODE_ID",
         "Property": "fME_Kindergarten_pNodeID",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Data",
+        "InvariantScript": "\"\"",
+        "Property": "fME_getGamePhase_pFEN",
         "RuleProviderType": "System"
       },
       {
@@ -182,6 +204,12 @@
         "Category": "Behavior",
         "InvariantScript": "\nIf(gblPF_DEBUG_EVAL,\n    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n        \" comChessEngineFunctions.fME_Kindergarten(): entered pNodeID: \" & pNodeID\n    })\n);\n\nWith(\n    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,\n\n    With(\n        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,\n\n        If(gblPF_DEBUG_EVAL,\n            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") & \n                \" fME_Kindergarten(): san: \" & theCurrentNode.inactiveColorMoveRecord.san &\n                \" pacn: \" & theCurrentNode.inactiveColorMoveRecord.pacn &\n                \" move color: \" & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &\n                \" captureSquareOccupier: \" & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier\n            })\n        );\n\n        Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {\n            postMoveEvalRecord: \n                Patch(EVAL_RECORD_PF, {\n                    heuristic01:\n                        0,\n                    heuristic02:\n                        0,\n                    heuristic05:\n                        0,\n                    heuristic11:\n                        0,\n                    heuristic12:\n                        0,\n                    heuristic13:\n                        0,\n                    heuristic14:    \n                        0,\n                    heuristic16:\n                        0,\n                    heuristic17:\n                        0,\n                    heuristic18:\n                        0,\n                    // a pinch of randomness\n                    heuristic19:\n                        If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,\n                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in \"P\", RandBetween(0,25), RandBetween(-25,0)),\n                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in \"N\", RandBetween(-25,0), RandBetween(0,25))\n                        )\n                })\n        });\n\n        UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {\n            postMoveEvalRecord: \n                Patch(LookUp(colPF_MOVE_TREE, nodeID=pNodeID).postMoveEvalRecord, {\n                    centipawn:\n                        With(\n                            LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNodeUpdated,\n                            \n                            If(gblPF_DEBUG_EVAL,\n                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                                    \" heuristic01 (basic positioning) SUM BONUS/PENALTY sub-total: \" & theCurrentNodeUpdated.postMoveEvalRecord.heuristic01\n                                });\n                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                                    \" heuristic02 ME end game: \" & theCurrentNodeUpdated.postMoveEvalRecord.heuristic02\n                                });\n                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                                    \" heuristic05 (Hanging Piece Tactic) SUM BONUS/PENALTY sub-total: \" & theCurrentNodeUpdated.postMoveEvalRecord.heuristic05\n                                });\n                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                                    \" heuristic11 generic tactics BONUS/PENALTY sub-total: \" & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11\n                                });\n                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                                    \" heuristic12 fork tactic BONUS/PENALTY sub-total: \" & theCurrentNodeUpdated.postMoveEvalRecord.heuristic12\n                                });\n                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                                    \" heuristic13 move to/from protection BONUS/PENALTY sub-total: \" & theCurrentNodeUpdated.postMoveEvalRecord.heuristic13\n                                });\n                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                                    \" heuristic14 castling BONUS/PENALTY sub-total: \" & theCurrentNodeUpdated.postMoveEvalRecord.heuristic14\n                                });\n                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                                    \" heuristic16 BNP moves in opening sub-total: \" & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16\n                                });\n                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                                    \" heuristic17 passed PAWN BONUS/PENALTY sub-total: \" & theCurrentNodeUpdated.postMoveEvalRecord.heuristic17\n                                });\n                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                                    \" heuristic18 Post Square Table (PST) BONUS/PENALTY sub-total: \" & theCurrentNodeUpdated.postMoveEvalRecord.heuristic18\n                                });\n                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                                    \" heuristic19 the God of Randomness BONUS/PENALTY sub-total: \" & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19\n                                })\n                            );\n                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic01 +\n                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic02 +\n                            // theCurrentNodeUpdated.postMoveEvalRecord.heuristic03 +\n                            // theCurrentNodeUpdated.postMoveEvalRecord.heuristic04 +\n                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic05 +\n                            // theCurrentNodeUpdated.postMoveEvalRecord.heuristic06 +\n                            // theCurrentNodeUpdated.postMoveEvalRecord.heuristic07 +\n                            // theCurrentNodeUpdated.postMoveEvalRecord.heuristic08 +\n                            // theCurrentNodeUpdated.postMoveEvalRecord.heuristic09 +\n                            // theCurrentNodeUpdated.postMoveEvalRecord.heuristic10 +\n                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +\n                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic12 +\n                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic13 +\n                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic14 +\n                            // theCurrentNodeUpdated.postMoveEvalRecord.heuristic15 +\n                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +\n                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic17 +\n                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +\n                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic19\n                        )\n                })\n        })\n    );\n\n    If(gblPF_DEBUG_EVAL,\n        With(\n            LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,\n\n            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") & \n                \" fME_Kindergarten(): san: \" & theCurrentNode.inactiveColorMoveRecord.san &\n                \" pacn: \" & theCurrentNode.inactiveColorMoveRecord.pacn &\n                \" centipawn: \" & theCurrentNode.postMoveEvalRecord.centipawn\n            })\n        )\n    )\n);\n\nCollect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") & \" fME_Kindergarten(): exiting\"});\n",
         "Property": "fME_Kindergarten",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Behavior",
+        "InvariantScript": "If(gblPF_DEBUG_EVAL,\r\n    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\r\n        \" comChessEngineFunctions.fME_getGamePhase(): entered pFEN: \" & pFEN\r\n    })\r\n);\r\n\r\nWith (\r\n    {\r\n        board:  UDF_FEN_TO_BOARD(pFEN),\r\n        ppd:    UDF_FEN_TO_PIECE_PLACEMENT(pFEN)\r\n    } As theBoard,\r\n\r\n    With (\r\n        {\r\n            whiteTotalDevelopment: Sum(\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,51)=\"P\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,52)=\"P\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,56)=\"R\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,57)=\"N\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,58)=\"B\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,59)=\"Q\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,60)=\"K\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,61)=\"B\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,62)=\"N\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,63)=\"R\",0,1)\r\n                                ),\r\n            blackTotalDevelopment: Sum(\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,11)=\"p\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,12)=\"p\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,0)=\"r\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,1)=\"n\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,2)=\"b\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,3)=\"q\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,4)=\"k\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,5)=\"b\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,6)=\"n\",0,1),\r\n                                    If(UDF_getBitAtSqNum(theBoard.board,7)=\"r\",0,1)\r\n                                ),\r\n            whiteTotalMaterial: Sum(\r\n                                    ForAll(\r\n                                        Split(theBoard.ppd, \"\") As thePiece,\r\n\r\n                                        UDF_getPieceCentipawnMaterialValue(thePiece.Value, \"QRBNP\")\r\n                                    ),\r\n                                    Value\r\n                                ),\r\n            blackTotalMaterial: Abs(\r\n                                    Sum(\r\n                                        ForAll(\r\n                                            Split(theBoard.ppd, \"\") As thePiece,\r\n\r\n                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, \"qrbnp\")\r\n                                        ),\r\n                                        Value\r\n                                    )\r\n                                )\r\n        } As theMaterial,\r\n\r\n        If(UDF_FEN_TO_ACTIVE_COLOR(pFEN)=WHITE,\r\n            // THEN\r\n            Switch(true,\r\n                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=3000 && \r\n                theMaterial.whiteTotalDevelopment<5 &&\r\n                UDF_FEN_TO_FULLMOVE_COUNT(pFEN)<=10,\r\n                    GAME_PHASE_OPENING,\r\n                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=1700,\r\n                    GAME_PHASE_MIDDLE,\r\n\r\n                // default\r\n                GAME_PHASE_END\r\n            ),\r\n\r\n            // ELSE\r\n            Switch(true,\r\n                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=3000 && \r\n                theMaterial.blackTotalDevelopment<5 &&\r\n                UDF_FEN_TO_FULLMOVE_COUNT(pFEN)<=10,\r\n                    GAME_PHASE_OPENING,\r\n                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=1700,\r\n                    GAME_PHASE_MIDDLE,\r\n\r\n                // default\r\n                GAME_PHASE_END\r\n            )\r\n        )\r\n    )\r\n);\r\n",
+        "Property": "fME_getGamePhase",
         "RuleProviderType": "System"
       }
     ]
@@ -340,6 +368,35 @@
       },
       "Tooltip": "A custom property",
       "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Void\",\"EnumString\":\"\",\"Type\":[]}}"
+    },
+    {
+      "Category": 2,
+      "DisplayName": "fME_getGamePhase",
+      "Hidden": true,
+      "Name": "fME_getGamePhase",
+      "PropertyDataTypeKey": "Number",
+      "PropertyScopeKey": {
+        "PropertyScopeRuleNamespaceKey": "4",
+        "PropertyScopeRulesKey": [
+          {
+            "DisplayName": "fME_getGamePhase_pFEN",
+            "Name": "fME_getGamePhase_pFEN",
+            "PropertyDataTypeKey": "String",
+            "ScopeVariableInfo": {
+              "DependencyType": "New",
+              "Description": "FEN to evaulate game phase on",
+              "IsRequired": true,
+              "ResolveExpands": false,
+              "ResolveSelects": false,
+              "ScopeVariableName": "pFEN"
+            },
+            "Tooltip": "FEN to evaulate game phase on",
+            "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"String\",\"EnumString\":\"\",\"Type\":[]}}"
+          }
+        ]
+      },
+      "Tooltip": "determine if OPENING, MIDDLE, or END game",
+      "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Number\",\"EnumString\":\"\",\"Type\":[]}}"
     }
   ],
   "FirstParty": true,
@@ -350,7 +407,7 @@
   "IsPcfControl": false,
   "IsPremiumPcfControl": false,
   "IsWidgetTemplate": false,
-  "LastModifiedTimestamp": "638603941594512948",
+  "LastModifiedTimestamp": "638604007359332373",
   "Name": "8c2bb0b54c6149c580a48882153f6ad1",
   "OverridableProperties": {},
   "Version": "1.0"

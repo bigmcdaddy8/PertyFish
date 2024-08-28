@@ -48,6 +48,98 @@ comChessEngineFunctions As CanvasComponent:
                 );
                 
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_EvaluateMove(): exiting"});
+    fME_getGamePhase(pFEN As String):
+        pFEN:
+            Default: =""
+        ThisProperty:
+            Default: |
+                =If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                        " comChessEngineFunctions.fME_getGamePhase(): entered pFEN: " & pFEN
+                    })
+                );
+                
+                With (
+                    {
+                        board:  UDF_FEN_TO_BOARD(pFEN),
+                        ppd:    UDF_FEN_TO_PIECE_PLACEMENT(pFEN)
+                    } As theBoard,
+                
+                    With (
+                        {
+                            whiteTotalDevelopment: Sum(
+                                                    If(UDF_getBitAtSqNum(theBoard.board,51)="P",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,52)="P",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,56)="R",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,57)="N",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,58)="B",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,59)="Q",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,60)="K",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,61)="B",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,62)="N",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,63)="R",0,1)
+                                                ),
+                            blackTotalDevelopment: Sum(
+                                                    If(UDF_getBitAtSqNum(theBoard.board,11)="p",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,12)="p",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,0)="r",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,1)="n",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,2)="b",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,3)="q",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,4)="k",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,5)="b",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,6)="n",0,1),
+                                                    If(UDF_getBitAtSqNum(theBoard.board,7)="r",0,1)
+                                                ),
+                            whiteTotalMaterial: Sum(
+                                                    ForAll(
+                                                        Split(theBoard.ppd, "") As thePiece,
+                
+                                                        UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNP")
+                                                    ),
+                                                    Value
+                                                ),
+                            blackTotalMaterial: Abs(
+                                                    Sum(
+                                                        ForAll(
+                                                            Split(theBoard.ppd, "") As thePiece,
+                
+                                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, "qrbnp")
+                                                        ),
+                                                        Value
+                                                    )
+                                                )
+                        } As theMaterial,
+                
+                        If(UDF_FEN_TO_ACTIVE_COLOR(pFEN)=WHITE,
+                            // THEN
+                            Switch(true,
+                                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=3000 && 
+                                theMaterial.whiteTotalDevelopment<5 &&
+                                UDF_FEN_TO_FULLMOVE_COUNT(pFEN)<=10,
+                                    GAME_PHASE_OPENING,
+                                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=1700,
+                                    GAME_PHASE_MIDDLE,
+                
+                                // default
+                                GAME_PHASE_END
+                            ),
+                
+                            // ELSE
+                            Switch(true,
+                                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=3000 && 
+                                theMaterial.blackTotalDevelopment<5 &&
+                                UDF_FEN_TO_FULLMOVE_COUNT(pFEN)<=10,
+                                    GAME_PHASE_OPENING,
+                                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=1700,
+                                    GAME_PHASE_MIDDLE,
+                
+                                // default
+                                GAME_PHASE_END
+                            )
+                        )
+                    )
+                );
     fME_Kindergarten(pNodeID As Number):
         pNodeID:
             Default: =EMPTY_NODE_ID

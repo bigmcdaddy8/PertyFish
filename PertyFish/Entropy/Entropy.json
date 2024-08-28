@@ -91,6 +91,10 @@
     "UsingComponents": 83
   },
   "FunctionParamsInvariantScripts": {
+    "comChessEngineFunctions.fME_getGamePhase_pFEN": [
+      "\"Text\"",
+      "\"\""
+    ],
     "comChessEngineFunctions.fME_Maniacal_pNodeID": [
       "100",
       "EMPTY_NODE_ID"
@@ -105,6 +109,10 @@
     ]
   },
   "FunctionParamsInvariantScriptsOnInstances": {
+    "comChessEngineFunctionsLibrary.fME_getGamePhase_pFEN": [
+      "\"Text\"",
+      "\"\""
+    ],
     "comChessEngineFunctionsLibrary.fME_Maniacal_pNodeID": [
       "100",
       "EMPTY_NODE_ID"
@@ -118,7 +126,7 @@
       "EMPTY_NODE_ID"
     ]
   },
-  "HeaderLastSavedDateTimeUTC": "08/27/2024 22:23:18",
+  "HeaderLastSavedDateTimeUTC": "08/28/2024 00:12:22",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,
