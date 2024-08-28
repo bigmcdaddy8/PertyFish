@@ -45,13 +45,15 @@ Do board evaluation that is performance friendly
 - number of attacked squares
 - number of protected squares
 
+##### Story 0003-05 Bully
+##### Story 0003-06 Preschool
+##### Story 0003-07 Kindergarten
+
+
 #### Feature 0004 - Application Improvements
 
 ##### Story 0004-01 Allow backup buttons for a user to undo a move
 Add a undo button for a human player to undo a move.
-
-##### Story 0004-02 Allow player to slect prmoteTo piece
-Add a radio button to pre-select the piece type the next pawn promotion move should promote to.
 
 #### Feature 0005 - Technical Documentation
 Document the details of this project used PowerFx to create a chess program. Items such as the collection formats, and how they are used. The board layout, use of FEN, the legal move table, etc.
@@ -69,6 +71,10 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Completed Work
+
+##### Story 0004-02 Allow player to select promoteTo piece
+Add a control to allow player pre-select the piece type the next pawn promotion move should promote to.
+
 ##### Story 0003-03 Add standardized Game Phase detection
 Create a standard library method for determining which phase of the game a FEN is in.
 
