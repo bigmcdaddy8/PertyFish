@@ -33,6 +33,10 @@
     "conHeader": 8,
     "conScoreSheet": 32,
     "conScoreSheetHeader": 33,
+    "drpBlackPiecesCE": 88,
+    "drpBlackPiecesPromoteTo": 90,
+    "drpWhitePiecesCE": 87,
+    "drpWhitePiecesPromoteTo": 89,
     "galChessBoard": 23,
     "galFileBottomLabels": 29,
     "galFileTopLabels": 16,
@@ -81,10 +85,8 @@
     "lblWhiteCapturedPieces": 66,
     "lblWhitePiecesHeader": 48,
     "Logging_Screen": 76,
-    "radBlackPiecesChessEngine": 54,
     "radBlackPiecesPlayerType": 53,
     "radMode": 40,
-    "radWhitePiecesChessEngine": 50,
     "radWhitePiecesPlayerType": 49,
     "tmrMakeNextGameMove": 62,
     "txtStartingFEN": 58,
@@ -126,7 +128,7 @@
       "EMPTY_NODE_ID"
     ]
   },
-  "HeaderLastSavedDateTimeUTC": "08/28/2024 00:45:21",
+  "HeaderLastSavedDateTimeUTC": "08/28/2024 15:37:24",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,
@@ -142,6 +144,7 @@
   },
   "OrderDataSource": {
     "CustomGallerySample": 0,
+    "DropDownSample": 2,
     "RadioSample": 1
   },
   "OrderGroupControls": {},
@@ -149,12 +152,13 @@
   "OrderTemplate": {},
   "OrderXMLTemplate": {
     "button": 4,
+    "dropdown": 5,
     "gallery": 2,
     "groupContainer": 0,
     "label": 1,
     "radio": 3,
-    "text": 5,
-    "timer": 6
+    "text": 6,
+    "timer": 7
   },
   "OverridablePropertiesEntry": {
     "App": {},
@@ -185,6 +189,10 @@
     "conHeader": {},
     "conScoreSheet": {},
     "conScoreSheetHeader": {},
+    "drpBlackPiecesCE": {},
+    "drpBlackPiecesPromoteTo": {},
+    "drpWhitePiecesCE": {},
+    "drpWhitePiecesPromoteTo": {},
     "galChessBoard": {},
     "galFileBottomLabels": {},
     "galFileTopLabels": {},
@@ -233,10 +241,8 @@
     "lblWhiteCapturedPieces": {},
     "lblWhitePiecesHeader": {},
     "Logging_Screen": {},
-    "radBlackPiecesChessEngine": {},
     "radBlackPiecesPlayerType": {},
     "radMode": {},
-    "radWhitePiecesChessEngine": {},
     "radWhitePiecesPlayerType": {},
     "tmrMakeNextGameMove": {},
     "txtStartingFEN": {},
@@ -273,6 +279,10 @@
     "conHeader": 1,
     "conScoreSheet": 25,
     "conScoreSheetHeader": 26,
+    "drpBlackPiecesCE": 0,
+    "drpBlackPiecesPromoteTo": 0,
+    "drpWhitePiecesCE": 0,
+    "drpWhitePiecesPromoteTo": 0,
     "galChessBoard": 16,
     "galFileBottomLabels": 22,
     "galFileTopLabels": 9,
@@ -321,10 +331,8 @@
     "lblWhiteCapturedPieces": 59,
     "lblWhitePiecesHeader": 41,
     "Logging_Screen": 73,
-    "radBlackPiecesChessEngine": 47,
     "radBlackPiecesPlayerType": 46,
     "radMode": 33,
-    "radWhitePiecesChessEngine": 43,
     "radWhitePiecesPlayerType": 42,
     "tmrMakeNextGameMove": 55,
     "txtStartingFEN": 51,
@@ -336,11 +344,12 @@
   "RuleScreenIdWithoutScreen": {},
   "TemplateVersions": {},
   "VolatileProperties": {
-    "AnalysisLoadTime": 1.8823604,
+    "AnalysisLoadTime": 2.1586137,
     "ControlCount": {
       "8c2bb0b54c6149c580a48882153f6ad1": 2,
       "b953a316546441b9933cc2e2000b7cbb": 2,
       "button": 11,
+      "dropdown": 4,
       "gallery": 7,
       "galleryTemplate": 7,
       "groupContainer": 11,
@@ -350,7 +359,7 @@
       "text": 1,
       "timer": 1
     },
-    "DeserializationLoadTime": 1.349248
+    "DeserializationLoadTime": 1.4443356
   },
   "WasLocalDatabaseReferencesEmpty": true
 }

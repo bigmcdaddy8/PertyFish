@@ -87,7 +87,7 @@ UsingComponents As screen:
                     // determine which player's turn it is, and then see what their computer setting is currently set to
                     With(
                         {
-                            selectedEngine: If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE, radWhitePiecesChessEngine.Selected.Value, radBlackPiecesChessEngine.Selected.Value)
+                            selectedEngine: If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE, drpWhitePiecesCE.Selected.Value, drpBlackPiecesCE.Selected.Value)
                         } As theEngine,
             
                         Switch(true,

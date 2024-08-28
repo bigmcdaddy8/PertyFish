@@ -1238,28 +1238,13 @@ Chess_Board As screen:
                     Items: =["Human", "Computer"]
                     Layout: =Layout.Horizontal
                     PaddingBottom: =0
-                    PaddingTop: =0
+                    PaddingTop: =5
                     RadioSize: =15
                     Size: =10
-                    Width: =348
+                    Width: =215
                     X: =25
                     Y: =25
                     ZIndex: =11
-
-                radWhitePiecesChessEngine As radio:
-                    Default: =Last(CE_PF_NAMES).Value
-                    Height: =45
-                    Items: =CE_PF_NAMES
-                    Layout: =Layout.Horizontal
-                    OnChange: =Set(gblPF_UI_SelectedChessEngine, radWhitePiecesChessEngine.Selected.Value)
-                    PaddingBottom: =0
-                    PaddingTop: =0
-                    RadioSize: =15
-                    Size: =10
-                    Width: =348
-                    X: =25
-                    Y: =52
-                    ZIndex: =12
 
                 lblBlackPiecesHeader As label:
                     Height: =25
@@ -1267,7 +1252,7 @@ Chess_Board As screen:
                     Text: ="Black Pieces are played by..."
                     Width: =200
                     X: =lblWhitePiecesHeader.X
-                    Y: =106
+                    Y: =57
                     ZIndex: =13
 
                 radBlackPiecesPlayerType As radio:
@@ -1276,28 +1261,53 @@ Chess_Board As screen:
                     Items: =["Human", "Computer"]
                     Layout: =Layout.Horizontal
                     PaddingBottom: =0
-                    PaddingTop: =0
+                    PaddingTop: =5
                     RadioSize: =15
                     Size: =10
-                    Width: =348
+                    Width: =215
                     X: =25
-                    Y: =131
+                    Y: =82
                     ZIndex: =14
 
-                radBlackPiecesChessEngine As radio:
-                    Default: =Last(CE_PF_NAMES).Value
-                    Height: =45
+                drpWhitePiecesCE As dropdown:
+                    Default: =CE_PF_400
+                    Height: =25
                     Items: =CE_PF_NAMES
-                    Layout: =Layout.Horizontal
-                    OnChange: =Set(gblPF_UI_SelectedChessEngine, radBlackPiecesChessEngine.Selected.Value)
-                    PaddingBottom: =0
-                    PaddingTop: =0
-                    RadioSize: =15
                     Size: =10
-                    Width: =348
-                    X: =25
-                    Y: =158
-                    ZIndex: =15
+                    Width: =150
+                    X: =radWhitePiecesPlayerType.X + radWhitePiecesPlayerType.Width
+                    Y: =radWhitePiecesPlayerType.Y
+                    ZIndex: =16
+
+                drpBlackPiecesCE As dropdown:
+                    Default: =CE_PF_400
+                    Height: =25
+                    Items: =CE_PF_NAMES
+                    Size: =10
+                    Width: =150
+                    X: =radBlackPiecesPlayerType.X + radBlackPiecesPlayerType.Width
+                    Y: =radBlackPiecesPlayerType.Y
+                    ZIndex: =17
+
+                drpWhitePiecesPromoteTo As dropdown:
+                    Default: ="Q"
+                    Height: =25
+                    Items: =["Q","R","B","N"]
+                    Size: =10
+                    Width: =70
+                    X: =drpWhitePiecesCE.X + drpWhitePiecesCE.Width
+                    Y: =radWhitePiecesPlayerType.Y
+                    ZIndex: =18
+
+                drpBlackPiecesPromoteTo As dropdown:
+                    Default: ="Q"
+                    Height: =25
+                    Items: =["Q","R","B","N"]
+                    Size: =10
+                    Width: =70
+                    X: =drpBlackPiecesCE.X + drpBlackPiecesCE.Width
+                    Y: =drpBlackPiecesCE.Y
+                    ZIndex: =19
 
             conControlsSharedArea As groupContainer.manualLayoutContainer:
                 Height: =50
