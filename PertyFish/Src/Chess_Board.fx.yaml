@@ -431,7 +431,16 @@ Chess_Board As screen:
                                             With(
                                                 LookUp(colPF_MOVE_TREE, 
                                                     nodeDepth=1 && inactiveColorMoveRecord.sourceSquareNum=gblPF_UI_selectedSqNum && inactiveColorMoveRecord.targetSquareNum=ThisItem.Value &&
-                                                    (inactiveColorMoveRecord.promoteTo=EMPTY_ABBR || inactiveColorMoveRecord.promoteTo in "Q")
+                                                    (
+                                                        inactiveColorMoveRecord.promoteTo=EMPTY_ABBR || 
+                                                        If(inactiveColorMoveRecord.sourceSquarePieceColor=WHITE,
+                                                            // THEN
+                                                            inactiveColorMoveRecord.promoteTo in drpWhitePiecesPromoteTo.Selected.Value,
+                            
+                                                            // ELSE
+                                                            inactiveColorMoveRecord.promoteTo in drpBlackPiecesPromoteTo.Selected.Value
+                                                        )
+                                                    )
                                                 ) As theMoveTreeRecord,
                             
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -552,7 +561,16 @@ Chess_Board As screen:
                                             With(
                                                 LookUp(colPF_MOVE_TREE, 
                                                     nodeDepth=1 && inactiveColorMoveRecord.sourceSquareNum=gblPF_UI_selectedSqNum && inactiveColorMoveRecord.targetSquareNum=ThisItem.Value &&
-                                                    (inactiveColorMoveRecord.promoteTo=EMPTY_ABBR || inactiveColorMoveRecord.promoteTo in "Q")
+                                                    (
+                                                        inactiveColorMoveRecord.promoteTo=EMPTY_ABBR || 
+                                                        If(inactiveColorMoveRecord.sourceSquarePieceColor=WHITE,
+                                                            // THEN
+                                                            inactiveColorMoveRecord.promoteTo in drpWhitePiecesPromoteTo.Selected.Value,
+                            
+                                                            // ELSE
+                                                            inactiveColorMoveRecord.promoteTo in drpBlackPiecesPromoteTo.Selected.Value
+                                                        )
+                                                    )
                                                 ) As theMoveTreeRecord,
                             
                                                 If(IsBlank(theMoveTreeRecord),
@@ -1301,9 +1319,9 @@ Chess_Board As screen:
                     ZIndex: =18
 
                 drpBlackPiecesPromoteTo As dropdown:
-                    Default: ="Q"
+                    Default: ="q"
                     Height: =25
-                    Items: =["Q","R","B","N"]
+                    Items: =["q","r","b","n"]
                     Size: =10
                     Visible: =If(radBlackPiecesPlayerType.Selected.Value="Human",true,false)
                     Width: =70
