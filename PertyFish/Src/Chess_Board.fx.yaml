@@ -3560,10 +3560,10 @@ Chess_Board As screen:
                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                             " btnProcessGame.OnSelect(): DEBUG looking for Move Limit DRAW " &
                                             " Move Limit: " & txtMoveLimit.Text &
-                                            " moveNumber: " & theData.chessEngineData.moveNumber
+                                            " moveNumber: " & UDF_FEN_TO_FULLMOVE_COUNT(theD0ParentNode.postMoveFEN)
                                         });
                     
-                                        If(theData.chessEngineData.moveNumber>=Value(txtMoveLimit.Text),
+                                        If(theData.chessEngineData.moveNumber>Value(txtMoveLimit.Text),
                                             // THEN we have hit the move limit
                                             UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
                                                 inactiveColorMoveRecord:Patch(
@@ -3811,7 +3811,7 @@ Chess_Board As screen:
                     
                     
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                " btnProcessGame.OnSelect(): 3x position repeat DRAW detection "
+                                                                                " btnProcessGame.OnSelect(): DEBUG - looking for 3x position repeat DRAW "
                                                                             });
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                                                 " board:    " & UDF_FEN_TO_PIECE_PLACEMENT(theTail.postMoveFEN)
