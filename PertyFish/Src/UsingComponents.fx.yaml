@@ -65,7 +65,7 @@ UsingComponents As screen:
             =
             If(gblPF_DEBUG_EVAL,
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                    " comChessEngineFunctions.fME_Random(): entered pNodeID: " & pNodeID
+                    " comChessEngineFunctions.fCE_100(): entered pNodeID: " & pNodeID
                 })
             );
             
@@ -77,7 +77,7 @@ UsingComponents As screen:
             
                     If(gblPF_DEBUG_EVAL,
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fME_Random(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " fCE_100(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                             " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                             " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
                             " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
@@ -184,7 +184,7 @@ UsingComponents As screen:
                         LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
             
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fME_Random(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " fCE_100(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                             " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                             " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
                         })
@@ -192,12 +192,12 @@ UsingComponents As screen:
                 )
             );
             
-            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_Random(): exiting"});
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_100(): exiting"});
         fCE_200: |
             =
             If(gblPF_DEBUG_EVAL,
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                    " comChessEngineFunctions.fCE_100(): entered pNodeID: " & pNodeID
+                    " comChessEngineFunctions.fCE_200(): entered pNodeID: " & pNodeID
                 })
             );
             
@@ -209,7 +209,7 @@ UsingComponents As screen:
             
                     If(gblPF_DEBUG_EVAL,
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fCE_100(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " fCE_200(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                             " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                             " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
                             " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
@@ -318,7 +318,7 @@ UsingComponents As screen:
                         LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
             
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fCE_100(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                            " fCE_200(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
                             " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
                             " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
                         })
@@ -326,7 +326,7 @@ UsingComponents As screen:
                 )
             );
             
-            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_100(): exiting"});
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_200(): exiting"});
         fCE_300: |
             =
             If(gblPF_DEBUG_EVAL,
