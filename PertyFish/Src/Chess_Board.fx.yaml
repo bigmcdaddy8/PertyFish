@@ -1078,9 +1078,9 @@ Chess_Board As screen:
                         
                                         With (
                                             {
-                                                winCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 1).Value + If(theD0ParentNode.postMoveGameStatus.blackIsCheckmated,1,0),
-                                                loseCount:  Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 2).Value + If(theD0ParentNode.postMoveGameStatus.whiteIsCheckmated,1,0),
-                                                tieCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 3).Value
+                                                winCount:   Index(Split(Trim(gblPF_UI_WLT),"-"), 1).Value + If(theD0ParentNode.postMoveGameStatus.blackIsCheckmated,1,0),
+                                                loseCount:  Index(Split(Trim(gblPF_UI_WLT),"-"), 2).Value + If(theD0ParentNode.postMoveGameStatus.whiteIsCheckmated,1,0),
+                                                tieCount:   Index(Split(Trim(gblPF_UI_WLT),"-"), 3).Value
                                             } As theWLTCounts,
                         
                                             Set(gblPF_UI_WLT, theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount);
@@ -1144,9 +1144,9 @@ Chess_Board As screen:
                         
                                                 With (
                                                     {
-                                                        winCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 1).Value,
-                                                        loseCount:  Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 2).Value,
-                                                        tieCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 3).Value + 1
+                                                        winCount:   Index(Split(Trim(gblPF_UI_WLT),"-"), 1).Value,
+                                                        loseCount:  Index(Split(Trim(gblPF_UI_WLT),"-"), 2).Value,
+                                                        tieCount:   Index(Split(Trim(gblPF_UI_WLT),"-"), 3).Value + 1
                                                     } As theWLTCounts,
                         
                                                     Set(gblPF_UI_WLT, theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount);
@@ -1219,9 +1219,9 @@ Chess_Board As screen:
                         
                                                 With (
                                                     {
-                                                        winCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 1).Value,
-                                                        loseCount:  Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 2).Value,
-                                                        tieCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 3).Value + 1
+                                                        winCount:   Index(Split(Trim(gblPF_UI_WLT),"-"), 1).Value,
+                                                        loseCount:  Index(Split(Trim(gblPF_UI_WLT),"-"), 2).Value,
+                                                        tieCount:   Index(Split(Trim(gblPF_UI_WLT),"-"), 3).Value + 1
                                                     } As theWLTCounts,
                         
                                                     Set(gblPF_UI_WLT, theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount);
