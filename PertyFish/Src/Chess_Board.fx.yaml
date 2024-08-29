@@ -663,6 +663,8 @@ Chess_Board As screen:
                     )
                 Layout: =Layout.Vertical
                 LoadingSpinner: =LoadingSpinner.Data
+                NavigationStep: =10
+                ShowNavigation: =true
                 TemplateSize: =25
                 Width: =Parent.Width
                 Y: =35
