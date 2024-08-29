@@ -776,8 +776,10 @@ Chess_Board As screen:
                     Height: =27
                     OnTimerEnd: |-
                         =Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " tmrPlayAnotherGame.OnTimerEnd(): entered"
+                            " tmrPlayAnotherGame.OnTimerEnd(): entered gblPF_TMR_PlayAnotherGame: " & gblPF_TMR_PlayAnotherGame
                         });
+                        
+                        Set(gblPF_TMR_PlayAnotherGame, false);
                         
                         If(gblPF_UI_StartFromBeginning,
                             // THEN - start another game from the beginning
@@ -794,11 +796,11 @@ Chess_Board As screen:
                         );
                         
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
-                            "tmrPlayAnotherGame.OnTimerEnd(): exiting"
+                            "tmrPlayAnotherGame.OnTimerEnd(): exiting gblPF_TMR_PlayAnotherGame: " & gblPF_TMR_PlayAnotherGame
                         });
                     OnTimerStart: =
                     Size: =10
-                    Start: =gblPF_TMR_MakeNextGameMove
+                    Start: =gblPF_TMR_PlayAnotherGame
                     Width: =98
                     X: =115
                     Y: =470
@@ -1086,10 +1088,12 @@ Chess_Board As screen:
                                             // If chkGameRepeat is checked
                                             If(chkGame_Repeat.Value && Sum(theWLTCounts.winCount,theWLTCounts.loseCount,theWLTCounts.tieCount)<Value(txtGameRepitions.Text),
                                                 // THEN - play another game
+                                                Set(gblPF_TMR_PlayAnotherGame, false);
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " btnCheckCompleteTestResults.OnSelect(): GAME_CHECKMATE calling Reset(tmrPlayAnotherGame)"
                                                 });
-                                                Reset(tmrPlayAnotherGame)
+                                                Reset(tmrPlayAnotherGame);
+                                                Set(gblPF_TMR_PlayAnotherGame, true)
                                             )
                                         )
                                     )
@@ -1150,10 +1154,12 @@ Chess_Board As screen:
                                                     // If chkGameRepeat is checked
                                                     If(chkGame_Repeat.Value && Sum(theWLTCounts.winCount,theWLTCounts.loseCount,theWLTCounts.tieCount)<Value(txtGameRepitions.Text),
                                                         // THEN - play another game
+                                                        Set(gblPF_TMR_PlayAnotherGame, false);
                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                             " btnCheckCompleteTestResults.OnSelect(): GAME_STALEMATE calling Reset(tmrPlayAnotherGame)"
                                                         });
-                                                        Reset(tmrPlayAnotherGame)
+                                                        Reset(tmrPlayAnotherGame);
+                                                        Set(gblPF_TMR_PlayAnotherGame, true)
                                                     )
                                                 )
                                             )
@@ -1223,10 +1229,12 @@ Chess_Board As screen:
                                                     // If chkGameRepeat is checked
                                                     If(chkGame_Repeat.Value && Sum(theWLTCounts.winCount,theWLTCounts.loseCount,theWLTCounts.tieCount)<Value(txtGameRepitions.Text),
                                                         // THEN - play another game
+                                                        Set(gblPF_TMR_PlayAnotherGame, false);
                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                             " btnCheckCompleteTestResults.OnSelect(): GAME_DRAW calling Reset(tmrPlayAnotherGame)"
                                                         });
-                                                        Reset(tmrPlayAnotherGame)
+                                                        Reset(tmrPlayAnotherGame);
+                                                        Set(gblPF_TMR_PlayAnotherGame, true)
                                                     )
                                                 )
                                             )

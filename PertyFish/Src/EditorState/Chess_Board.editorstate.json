@@ -19331,7 +19331,7 @@
         {
           "Category": "Data",
           "PropertyName": "Start",
-          "RuleProviderType": "Unknown"
+          "RuleProviderType": "User"
         },
         {
           "Category": "Data",

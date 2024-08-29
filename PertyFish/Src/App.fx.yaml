@@ -627,6 +627,7 @@ App As appinfo:
         
             // timer flags
             Set(gblPF_TMR_MakeNextGameMove, false),
+            Set(gblPF_TMR_PlayAnotherGame, false),
         
             // Collections...
             ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: ""})),
