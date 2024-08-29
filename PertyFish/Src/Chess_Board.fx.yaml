@@ -1203,7 +1203,7 @@ Chess_Board As screen:
                                                                 statusText:         
                                                                     Switch(true,
                                                                         theD0ParentNode.inactiveColorMoveRecord.isISMDraw,  "Game Over - Insufficient Material Draw",
-                                                                        theD0ParentNode.inactiveColorMoveRecord.is75MoveDraw,  "Game Over - 75 move Draw",
+                                                                        theD0ParentNode.inactiveColorMoveRecord.is75MoveDraw,  "Game Over - Draw reached maximum move limit (" & txtMoveLimit.Text & ")",
                         
                                                                         // default
                                                                         "Game Over - 3x repeated position Draw" 
