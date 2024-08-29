@@ -623,6 +623,7 @@ App As appinfo:
             Set(gblPF_UI_DiagnosticFill, COLOR_WHITEish),
             Set(gblPF_UI_StartFromBeginning, false),
             Set(gblPF_UI_GamePhase, ""),
+            Set(gblPF_UI_WLT, "0 - 0 - 0"),
         
             // timer flags
             Set(gblPF_TMR_MakeNextGameMove, false),

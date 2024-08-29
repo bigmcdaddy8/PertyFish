@@ -614,66 +614,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Logging_Screen.conEntireLoggingScreen.galLogs.AccessibleLabel"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Logging_Screen.conEntireLoggingScreen.galLogs.AccessibleLabel",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "AccessibleLabel",
-                "module": "Logging_Screen",
-                "type": "Logging_Screen.conEntireLoggingScreen.galLogs"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Logging_Screen.conEntireLoggingScreen.galLogs.TabIndex"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Logging_Screen.conEntireLoggingScreen.galLogs.TabIndex",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "TabIndex",
-                "module": "Logging_Screen",
-                "type": "Logging_Screen.conEntireLoggingScreen.galLogs"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.txtGameRepitions.AccessibleLabel"
                 }
               ],
@@ -728,6 +668,66 @@
           },
           "ruleId": "acc-AccessibleLabelNeeded",
           "ruleIndex": 1
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Logging_Screen.conEntireLoggingScreen.galLogs.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "Logging_Screen.conEntireLoggingScreen.galLogs.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "Logging_Screen",
+                "type": "Logging_Screen.conEntireLoggingScreen.galLogs"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 1
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Logging_Screen.conEntireLoggingScreen.galLogs.TabIndex"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "Logging_Screen.conEntireLoggingScreen.galLogs.TabIndex",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "TabIndex",
+                "module": "Logging_Screen",
+                "type": "Logging_Screen.conEntireLoggingScreen.galLogs"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1214,6 +1214,36 @@
             {
               "logicalLocations": [
                 {
+                  "fullyQualifiedName": "App.gblPF_DEBUG"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.gblPF_DEBUG",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "gblPF_DEBUG",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedVariables",
+          "ruleIndex": 2
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
                   "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_ENDGAME"
                 }
               ],
@@ -1454,19 +1484,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "App.gblPF_DEBUG"
+                  "fullyQualifiedName": "Chess_Board.lblWLT"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "App.gblPF_DEBUG",
+                  "fullyQualifiedName": "Chess_Board.lblWLT",
                   "relativeAddress": 0
                 }
               },
               "properties": {
-                "member": "gblPF_DEBUG",
-                "module": "App",
-                "type": "App"
+                "member": "lblWLT",
+                "module": "Chess_Board",
+                "type": "Chess_Board"
               }
             }
           ],

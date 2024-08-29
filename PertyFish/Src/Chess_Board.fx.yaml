@@ -1078,20 +1078,19 @@ Chess_Board As screen:
                         
                                         With (
                                             {
-                                                winCount:   Index(Split(Trim(lblWLT),"-"), 1).Value + If(theD0ParentNode.postMoveGameStatus.blackIsCheckmated,1,0),
-                                                loseCount:  Index(Split(Trim(lblWLT),"-"), 2).Value + If(theD0ParentNode.postMoveGameStatus.whiteIsCheckmated,1,0),
-                                                tieCount:   Index(Split(Trim(lblWLT),"-"), 3).Value
+                                                winCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 1).Value + If(theD0ParentNode.postMoveGameStatus.blackIsCheckmated,1,0),
+                                                loseCount:  Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 2).Value + If(theD0ParentNode.postMoveGameStatus.whiteIsCheckmated,1,0),
+                                                tieCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 3).Value
                                             } As theWLTCounts,
                         
-                                            // update lblWlt
-                                            UpdateContext({ lblWLT: theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount});
+                                            Set(gblPF_UI_WLT, theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount);
                         
                                             // If chkGameRepeat is checked
                                             If(chkGame_Repeat.Value && Sum(theWLTCounts.winCount,theWLTCounts.loseCount,theWLTCounts.tieCount)<Value(txtGameRepitions.Text),
                                                 // THEN - play another game
                                                 Set(gblPF_TMR_PlayAnotherGame, false);
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                    " btnCheckCompleteTestResults.OnSelect(): TEST_COMPLETE calling Reset(tmrPlayAnotherGame)"
+                                                    " btnCheckCompleteTestResults.OnSelect(): GAME_CHECKMATE calling Reset(tmrPlayAnotherGame)"
                                                 });
                                                 Reset(tmrPlayAnotherGame);
                                                 Set(gblPF_TMR_PlayAnotherGame, true)
@@ -1145,13 +1144,23 @@ Chess_Board As screen:
                         
                                                 With (
                                                     {
-                                                        winCount:   Index(Split(Trim(lblWLT),"-"), 1).Value,
-                                                        loseCount:  Index(Split(Trim(lblWLT),"-"), 2).Value,
-                                                        tieCount:   Index(Split(Trim(lblWLT),"-"), 3).Value + 1
+                                                        winCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 1).Value,
+                                                        loseCount:  Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 2).Value,
+                                                        tieCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 3).Value + 1
                                                     } As theWLTCounts,
                         
-                                                    // update lblWlt
-                                                    UpdateContext({ lblWLT: theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount})
+                                                    Set(gblPF_UI_WLT, theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount);
+                        
+                                                    // If chkGameRepeat is checked
+                                                    If(chkGame_Repeat.Value && Sum(theWLTCounts.winCount,theWLTCounts.loseCount,theWLTCounts.tieCount)<Value(txtGameRepitions.Text),
+                                                        // THEN - play another game
+                                                        Set(gblPF_TMR_PlayAnotherGame, false);
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " btnCheckCompleteTestResults.OnSelect(): GAME_STALEMATE calling Reset(tmrPlayAnotherGame)"
+                                                        });
+                                                        Reset(tmrPlayAnotherGame);
+                                                        Set(gblPF_TMR_PlayAnotherGame, true)
+                                                    )
                                                 )
                                             )
                                         );
@@ -1210,13 +1219,23 @@ Chess_Board As screen:
                         
                                                 With (
                                                     {
-                                                        winCount:   Index(Split(Trim(lblWLT),"-"), 1).Value,
-                                                        loseCount:  Index(Split(Trim(lblWLT),"-"), 2).Value,
-                                                        tieCount:   Index(Split(Trim(lblWLT),"-"), 3).Value + 1
+                                                        winCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 1).Value,
+                                                        loseCount:  Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 2).Value,
+                                                        tieCount:   Index(Split(Trim(gblPF_TMR_PlayAnotherGame),"-"), 3).Value + 1
                                                     } As theWLTCounts,
                         
-                                                    // update lblWlt
-                                                    UpdateContext({ lblWLT: theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount})
+                                                    Set(gblPF_UI_WLT, theWLTCounts.winCount & " - " & theWLTCounts.loseCount & " - " & theWLTCounts.tieCount);
+                        
+                                                    // If chkGameRepeat is checked
+                                                    If(chkGame_Repeat.Value && Sum(theWLTCounts.winCount,theWLTCounts.loseCount,theWLTCounts.tieCount)<Value(txtGameRepitions.Text),
+                                                        // THEN - play another game
+                                                        Set(gblPF_TMR_PlayAnotherGame, false);
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " btnCheckCompleteTestResults.OnSelect(): GAME_DRAW calling Reset(tmrPlayAnotherGame)"
+                                                        });
+                                                        Reset(tmrPlayAnotherGame);
+                                                        Set(gblPF_TMR_PlayAnotherGame, true)
+                                                    )
                                                 )
                                             )
                                         );
@@ -1438,7 +1457,7 @@ Chess_Board As screen:
                     Align: =Align.Center
                     Height: =25
                     Size: =10
-                    Text: ="0 - 0 - 0"
+                    Text: =gblPF_UI_WLT
                     Width: =100
                     X: =326
                     Y: =276
