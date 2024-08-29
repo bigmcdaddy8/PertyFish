@@ -650,7 +650,6 @@ Chess_Board As screen:
             ZIndex: =2
 
             galScoreSheetPGN As gallery.galleryVertical:
-                Default: =Last(Self.AllItems)
                 DelayItemLoading: =true
                 Height: =Parent.Height - conScoreSheetHeader.Height
                 Items: |
@@ -663,8 +662,6 @@ Chess_Board As screen:
                     )
                 Layout: =Layout.Vertical
                 LoadingSpinner: =LoadingSpinner.Data
-                NavigationStep: =10
-                ShowNavigation: =true
                 TemplateSize: =25
                 Width: =Parent.Width
                 Y: =35
