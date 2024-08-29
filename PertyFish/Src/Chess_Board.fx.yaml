@@ -2209,7 +2209,7 @@ Chess_Board As screen:
                                             Sequence(7, 1) As theStep,
                     
                                             With(
-                                                // reset on every step in order to try and stay current w/ updates
+                                                // reload on every iteration/step in order to try and stay current w/ updates
                                                 LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                     
                                                 If(
@@ -3109,7 +3109,7 @@ Chess_Board As screen:
                                                                         "-"
                                                                     ),
                     
-                                                                    If( // a pawn move or a capture resets the halfmove count
+                                                                    If( // a pawn move or a capture resets the halfmove count to zero
                                                                         (
                                                                             Not(IsBlank(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier)) &&
                                                                             theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P"
@@ -3630,11 +3630,7 @@ Chess_Board As screen:
                                         chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
                                                                 moveHistoryTAILNodeID:  LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID
                                                             })
-                                    });
-                    
-                                    If(CountRows(colPF_MOVE_HISTORY)>=15,
-                                        Reset(galScoreSheetPGN)  // auto scroll to bottom of PGN sheet
-                                    )
+                                    })
                                 );
                     
                                 // TIMER END - GAME_MOVE_HISTORY_D0 ================================================================================
