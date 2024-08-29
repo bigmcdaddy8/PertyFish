@@ -3630,7 +3630,11 @@ Chess_Board As screen:
                                         chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
                                                                 moveHistoryTAILNodeID:  LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID
                                                             })
-                                    })
+                                    });
+                    
+                                    If(CountRows(colPF_MOVE_HISTORY)>=15,
+                                        Reset(galScoreSheetPGN)
+                                    )
                                 );
                     
                                 // TIMER END - GAME_MOVE_HISTORY_D0 ================================================================================
