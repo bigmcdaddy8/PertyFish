@@ -1214,36 +1214,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "App.gblPF_DEBUG"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_DEBUG",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_DEBUG",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "App.gblPF_DEBUG_EVAL_ENDGAME"
                 }
               ],

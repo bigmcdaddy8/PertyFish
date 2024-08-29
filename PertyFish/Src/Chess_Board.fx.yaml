@@ -1013,7 +1013,7 @@ Chess_Board As screen:
                         });
                         
                         Select(btnNewGame);
-                    Size: =10
+                    Size: =8
                     Text: ="Start from FEN"
                     Width: =125
                     X: =10
@@ -1464,11 +1464,11 @@ Chess_Board As screen:
 
                 lblWLT_Header As label:
                     Align: =Align.Center
-                    Height: =25
                     Size: =10
-                    Text: ="Win - Lose - Draw"
+                    Text: ="White Pieces" & CRLF & "Win - Lose - Draw"
+                    VerticalAlign: =VerticalAlign.Top
                     X: =310
-                    Y: =244
+                    Y: =235
                     ZIndex: =22
 
                 txtMoveLimit As text:
@@ -1487,6 +1487,25 @@ Chess_Board As screen:
                     Width: =115
                     Y: =122
                     ZIndex: =24
+
+                btnClearWLT As button:
+                    Height: =23
+                    OnSelect: |+
+                        =
+                        If(gblPF_DEBUG,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                " btnClearWLT.OnSelect(): entered WLT: " & lblWLT.Text
+                            })
+                        );
+                        
+                        Set(gblPF_UI_WLT, "0 - 0 - 0");
+                        
+                    Size: =8
+                    Text: ="Clear"
+                    Width: =50
+                    X: =350
+                    Y: =305
+                    ZIndex: =25
 
             conControlsSharedArea As groupContainer.manualLayoutContainer:
                 Height: =50
