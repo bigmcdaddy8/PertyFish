@@ -655,7 +655,7 @@ Chess_Board As screen:
                 Items: |
                     =
                     Sequence((LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.moveNumber + 1)/2,
-                        If(IsBlank(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.startingFEN),
+                        If(IsBlankOrError(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.startingFEN),
                             1,
                             UDF_FEN_TO_FULLMOVE_COUNT(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.startingFEN)
                         )
