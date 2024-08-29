@@ -1478,36 +1478,6 @@
           },
           "ruleId": "app-UnusedVariables",
           "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Chess_Board.lblWLT"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.lblWLT",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "lblWLT",
-                "module": "Chess_Board",
-                "type": "Chess_Board"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 2
         }
       ],
       "tool": {

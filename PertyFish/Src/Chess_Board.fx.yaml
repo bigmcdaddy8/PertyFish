@@ -776,10 +776,8 @@ Chess_Board As screen:
                     Height: =27
                     OnTimerEnd: |-
                         =Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " tmrPlayAnotherGame.OnTimerEnd(): entered gblPF_TMR_PlayAnotherGame: " & gblPF_TMR_PlayAnotherGame
+                            " tmrPlayAnotherGame.OnTimerEnd(): entered"
                         });
-                        
-                        Set(gblPF_TMR_PlayAnotherGame, false);
                         
                         If(gblPF_UI_StartFromBeginning,
                             // THEN - start another game from the beginning
@@ -796,7 +794,7 @@ Chess_Board As screen:
                         );
                         
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
-                            "tmrPlayAnotherGame.OnTimerEnd(): exiting gblPF_TMR_PlayAnotherGame: " & gblPF_TMR_PlayAnotherGame
+                            "tmrPlayAnotherGame.OnTimerEnd(): exiting"
                         });
                     OnTimerStart: =
                     Size: =10
@@ -1088,12 +1086,10 @@ Chess_Board As screen:
                                             // If chkGameRepeat is checked
                                             If(chkGame_Repeat.Value && Sum(theWLTCounts.winCount,theWLTCounts.loseCount,theWLTCounts.tieCount)<Value(txtGameRepitions.Text),
                                                 // THEN - play another game
-                                                Set(gblPF_TMR_PlayAnotherGame, false);
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " btnCheckCompleteTestResults.OnSelect(): GAME_CHECKMATE calling Reset(tmrPlayAnotherGame)"
                                                 });
-                                                Reset(tmrPlayAnotherGame);
-                                                Set(gblPF_TMR_PlayAnotherGame, true)
+                                                Reset(tmrPlayAnotherGame)
                                             )
                                         )
                                     )
@@ -1154,12 +1150,10 @@ Chess_Board As screen:
                                                     // If chkGameRepeat is checked
                                                     If(chkGame_Repeat.Value && Sum(theWLTCounts.winCount,theWLTCounts.loseCount,theWLTCounts.tieCount)<Value(txtGameRepitions.Text),
                                                         // THEN - play another game
-                                                        Set(gblPF_TMR_PlayAnotherGame, false);
                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                             " btnCheckCompleteTestResults.OnSelect(): GAME_STALEMATE calling Reset(tmrPlayAnotherGame)"
                                                         });
-                                                        Reset(tmrPlayAnotherGame);
-                                                        Set(gblPF_TMR_PlayAnotherGame, true)
+                                                        Reset(tmrPlayAnotherGame)
                                                     )
                                                 )
                                             )
@@ -1229,12 +1223,10 @@ Chess_Board As screen:
                                                     // If chkGameRepeat is checked
                                                     If(chkGame_Repeat.Value && Sum(theWLTCounts.winCount,theWLTCounts.loseCount,theWLTCounts.tieCount)<Value(txtGameRepitions.Text),
                                                         // THEN - play another game
-                                                        Set(gblPF_TMR_PlayAnotherGame, false);
                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                             " btnCheckCompleteTestResults.OnSelect(): GAME_DRAW calling Reset(tmrPlayAnotherGame)"
                                                         });
-                                                        Reset(tmrPlayAnotherGame);
-                                                        Set(gblPF_TMR_PlayAnotherGame, true)
+                                                        Reset(tmrPlayAnotherGame)
                                                     )
                                                 )
                                             )
@@ -1435,8 +1427,7 @@ Chess_Board As screen:
                 chkGame_Repeat As checkbox:
                     CheckboxSize: =20
                     Height: =25
-                    OnUncheck: |-
-                        =UpdateContext({lblWLT: "0 - 0 - 0"})
+                    OnUncheck: =Set(gblPF_UI_WLT, "0 - 0 - 0")
                     Size: =10
                     Text: ="Repeat x"
                     Width: =90
