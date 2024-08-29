@@ -60,10 +60,6 @@ Create smarter chess engines that are written using PowerFx
 - - look for forks
 - Very simple end game plan.
 
-##### Story 0003-07 Create ability to test computer vs. computer
-- maintain win-loss-draw
-- be able to specify how many times to play
-
 
 #### Feature 0004 - Application Improvements
 
@@ -86,6 +82,9 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Completed Work
+##### Story 0003-07 Create ability to test computer vs. computer
+- maintain win-loss-draw
+- be able to specify how many times to play
 
 ##### Story 0004-02 Allow player to select promoteTo piece
 Add a control to allow player pre-select the piece type the next pawn promotion move should promote to.
