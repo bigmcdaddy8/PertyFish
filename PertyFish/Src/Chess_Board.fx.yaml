@@ -650,6 +650,7 @@ Chess_Board As screen:
             ZIndex: =2
 
             galScoreSheetPGN As gallery.galleryVertical:
+                Default: =Last(Self.AllItems)
                 DelayItemLoading: =true
                 Height: =Parent.Height - conScoreSheetHeader.Height
                 Items: |
