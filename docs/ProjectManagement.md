@@ -38,9 +38,6 @@ In a private version I have built in regression testing, I may pull that forward
 #### Feature 0003 - Create smarter embedded chess engines
 Create smarter chess engines that are written using PowerFx
 
-##### Story 0003-04 200 (Bully)
-- Elevate evaluation of capturing moves.
-- Change in basic material value  preMove vs. postMove
 
 ##### Story 0003-05 300 (Preschool)
 - Handle basic move evaluations.
@@ -82,6 +79,10 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Completed Work
+##### Story 0003-04 Chess Engine Development 200 (Bully)
+- Elevate evaluation of capturing moves.
+- Change in basic material value  preMove vs. postMove
+
 ##### Story 0003-07 Create ability to test computer vs. computer
 - maintain win-loss-draw
 - be able to specify how many times to play
