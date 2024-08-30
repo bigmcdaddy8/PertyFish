@@ -84,12 +84,14 @@ comChessEngineFunctions As CanvasComponent:
                     )
                 );
                 
-                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_100(): exiting"});
+                If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_100(): exiting"})
+                )
     fCE_200(pNodeID As Number):
         pNodeID:
             Default: =EMPTY_NODE_ID
         ThisProperty:
-            Default: |
+            Default: |+
                 =
                 If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -177,7 +179,10 @@ comChessEngineFunctions As CanvasComponent:
                     )
                 );
                 
-                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_200(): exiting"});
+                If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_200(): exiting"})
+                )
+                
     fCE_300(pNodeID As Number):
         pNodeID:
             Default: =EMPTY_NODE_ID
@@ -300,13 +305,13 @@ comChessEngineFunctions As CanvasComponent:
                 
                 If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_300(): exiting"})
-                );
+                )
                 
     fCE_400(pNodeID As Number):
         pNodeID:
             Default: =EMPTY_NODE_ID
         ThisProperty:
-            Default: |
+            Default: |+
                 =
                 If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -455,14 +460,17 @@ comChessEngineFunctions As CanvasComponent:
                     )
                 );
                 
-                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_400(): exiting"});
+                If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_400(): exiting"})
+                )
+                
     fME_END_GAME(pVersion As Number, pNodeID As Number):
         pVersion:
             Default: =100
         pNodeID:
             Default: =EMPTY_NODE_ID
         ThisProperty:
-            Default: |+
+            Default: |
                 =If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                         " comChessEngineFunctions.fME_END_GAME(): entered pVersion: " & pVersion &
@@ -517,8 +525,9 @@ comChessEngineFunctions As CanvasComponent:
                             )
                         )
                     )
-                ); 
+                );
                 
+                // no exit logging or will mess up return code
     fME_EvaluateMove(pNodeID As Number):
         pNodeID:
             Default: =EMPTY_NODE_ID

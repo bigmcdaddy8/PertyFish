@@ -142,8 +142,10 @@ UsingComponents As screen:
                 )
             );
             
-            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_100(): exiting"});
-        fCE_200: |
+            If(gblPF_DEBUG_EVAL,
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_100(): exiting"})
+            )
+        fCE_200: |+
             =
             If(gblPF_DEBUG_EVAL,
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -231,7 +233,10 @@ UsingComponents As screen:
                 )
             );
             
-            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_200(): exiting"});
+            If(gblPF_DEBUG_EVAL,
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_200(): exiting"})
+            )
+            
         fCE_300: |+
             =
             If(gblPF_DEBUG_EVAL,
@@ -350,9 +355,9 @@ UsingComponents As screen:
             
             If(gblPF_DEBUG_EVAL,
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_300(): exiting"})
-            );
+            )
             
-        fCE_400: |
+        fCE_400: |+
             =
             If(gblPF_DEBUG_EVAL,
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -501,8 +506,11 @@ UsingComponents As screen:
                 )
             );
             
-            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_400(): exiting"});
-        fME_END_GAME: |+
+            If(gblPF_DEBUG_EVAL,
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_400(): exiting"})
+            )
+            
+        fME_END_GAME: |
             =If(gblPF_DEBUG_EVAL,
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                     " comChessEngineFunctions.fME_END_GAME(): entered pVersion: " & pVersion &
@@ -557,8 +565,9 @@ UsingComponents As screen:
                         )
                     )
                 )
-            ); 
+            );
             
+            // no exit logging or will mess up return code
         fME_EvaluateMove: |
             =
             If(gblPF_DEBUG_EVAL,
