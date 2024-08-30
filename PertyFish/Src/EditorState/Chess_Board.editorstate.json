@@ -7821,7 +7821,7 @@
         {
           "Category": "Design",
           "PropertyName": "NavigationStep",
-          "RuleProviderType": "User"
+          "RuleProviderType": "Unknown"
         }
       ],
       "StyleName": "defaultGalleryStyle",

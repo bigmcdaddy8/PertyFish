@@ -258,29 +258,28 @@ UsingComponents As screen:
                     Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
                         postMoveEvalRecord: 
                             Patch(EVAL_RECORD_PF, {
-                                heuristic01:
-                                    0,
-                                heuristic02:
-                                    0,
-                                heuristic05:
-                                    0,
                                 heuristic11:
-                                    0,
-                                heuristic12:
-                                    0,
-                                heuristic13:
-                                    0,
-                                heuristic14:    
-                                    0,
-                                heuristic16:
-                                    0,
-                                heuristic17:
-                                    0,
-                                heuristic18:
-                                    0,
-                                // a pinch of randomness
+                                    Sum(
+                                        ForAll(
+                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.postMoveFEN), "") As thePiece,
+            
+                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                        ),
+                                        Value
+                                    ) -
+                                    Sum(
+                                        ForAll(
+                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.preMoveFEN), "") As thePiece,
+            
+                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                        ),
+                                        Value
+                                    ),
                                 heuristic19:
-                                    RandBetween(-25,25)  // centipawns 
+                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
+                                        If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
+                                        If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(-25,0), RandBetween(0,25))
+                                    )
                             })
                     });
             
@@ -293,58 +292,16 @@ UsingComponents As screen:
                                         
                                         If(gblPF_DEBUG_EVAL,
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic01 (basic positioning) SUM BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic01
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic02 ME end game: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic02
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic05 (Hanging Piece Tactic) SUM BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic05
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic11 generic tactics BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic12 fork tactic BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic12
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic13 move to/from protection BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic13
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic14 castling BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic14
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic16 BNP moves in opening sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic17 passed PAWN BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic17
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic18 Post Square Table (PST) BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic18
+                                                " heuristic11 Basic Material BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                 " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
                                             })
                                         );
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic01 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic02 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic03 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic04 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic05 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic06 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic07 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic08 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic09 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic10 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic12 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic13 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic14 +
-                                        // theCurrentNodeUpdated.postMoveEvalRecord.heuristic15 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic17 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
+                                        Sum(
+                                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic11,
+                                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
+                                        )
                                     )
                             })
                     })
