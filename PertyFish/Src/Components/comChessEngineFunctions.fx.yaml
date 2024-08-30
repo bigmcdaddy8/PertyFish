@@ -200,8 +200,12 @@ comChessEngineFunctions As CanvasComponent:
                 
                     If(gblPF_DEBUG_EVAL,
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fCE_300(): DEBUG board pre-update dump" &
-                            " whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard &
+                            " fCE_300(): DEBUG board pre-update dump"
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                             " blackStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.blackStrongSqBoard 
                         })
                     );
@@ -211,8 +215,12 @@ comChessEngineFunctions As CanvasComponent:
                 
                     If(gblPF_DEBUG_EVAL,
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fCE_300(): DEBUG board post-update dump" &
-                            " whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard &
+                            " fCE_300(): DEBUG board post-update dump"
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                             " blackStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.blackStrongSqBoard 
                         })
                     )
@@ -235,11 +243,14 @@ comChessEngineFunctions As CanvasComponent:
                         })
                     );
                 
-                    Patch(localVars.evalRecord, {
-                        heuristic19:    If(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentNode.preMoveFEN)=WHITE,
-                                            If(localVars.theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
-                                            If(localVars.theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(-25,0), RandBetween(0,25))
-                                        )
+                    Patch(localVars, {
+                        evalRecord:
+                            Patch(localVars.evalRecord, {
+                                heuristic19:    If(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentNode.preMoveFEN)=WHITE,
+                                                    If(localVars.theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
+                                                    If(localVars.theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(-25,0), RandBetween(0,25))
+                                                )
+                            })
                     });
                 
                 
