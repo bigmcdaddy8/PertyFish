@@ -26,7 +26,7 @@ App As appinfo:
         WHITE=0;BLACK=1;NO_COLOR=-1;BOTH_COLORS=2;NEITHER_COLOR=3;
         EMPTY_SQUARE_NUM=64;
         EMPTY_SQUARE_NAME="";
-        EMPTY_BOARD="################################################################";
+        EMPTY_BOARD="################################################################";BLANK_BOARD="";
         EMPTY_ABBR="";EMPTY_FILLER_ABBR="#";ATTACKED_ABBR="X";EMPTY_ICON="";
         ROOT_NODE_ID=0;EMPTY_NODE_ID=-1;
         NO_DIRECTION=-1;N=1;NE=2;E=3;SE=4;S=5;SW=6;W=7;NW=8;
@@ -35,8 +35,8 @@ App As appinfo:
         WHITE_KING_ICON="♔";WHITE_QUEEN_ICON="♕";WHITE_ROOK_ICON="♖";WHITE_BISHOP_ICON="♗";WHITE_KNIGHT_ICON="♘";WHITE_PAWN_ICON="♙";
         BLACK_KING_ICON="♚";BLACK_QUEEN_ICON="♛";BLACK_ROOK_ICON="♜";BLACK_BISHOP_ICON="♝";BLACK_KNIGHT_ICON="♞";BLACK_PAWN_ICON="♟";
         GAME_PHASE_OPENING=1;GAME_PHASE_MIDDLE=2;GAME_PHASE_END=3;
-        CE_PF_100="Random";CE_PF_200="Bully";CE_PF_300="Preschool";CE_PF_400="Kindergarten";
-        CE_PF_NAMES=[CE_PF_100,CE_PF_200,CE_PF_300,CE_PF_400];
+        CE_PF_100="Random";CE_PF_200="Bully";CE_PF_300="Preschool";CE_PF_400="Kindergarten";CE_PF_500="1st Grade";CE_PF_600="2nd Grade";
+        CE_PF_NAMES=[CE_PF_100,CE_PF_200,CE_PF_300,CE_PF_400,CE_PF_500,CE_PF_600];
         
         // universal square names set
         UNIVERSAL_SQNAMES_SET="a1 a2 a3 a4 a5 a6 a7 a8 b1 b2 b3 b4 b5 b6 b7 b8 c1 c2 c3 c4 c5 c6 c7 c8 d1 d2 d3 d4 d5 d6 d7 d8 e1 e2 e3 e4 e5 e6 e7 e8 f1 f2 f3 f4 f5 f6 f7 f8 g1 g2 g3 g4 g5 g6 g7 g8 h1 h2 h3 h4 h5 h6 h7 h8";
@@ -99,7 +99,9 @@ App As appinfo:
             heuristic16:    0,
             heuristic17:    0,
             heuristic18:    0,
-            heuristic19:    0
+            heuristic19:    0,
+            whiteStrongSqBoard: BLANK_BOARD,
+            blackStrongSqBoard: BLANK_BOARD
         };
         
         NODE_RECORD_PF={

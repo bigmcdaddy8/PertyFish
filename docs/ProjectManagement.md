@@ -39,7 +39,7 @@ In a private version I have built in regression testing, I may pull that forward
 Create smarter chess engines that are written using PowerFx
 
 
-##### Story 0003-05 300 (Preschool)
+##### Story 0003-05 Developing CE_PF_300 (Preschool)
 - Handle basic move evaluations.
 - - be aware if source square is attacked
 - - be aware if target square is attacked
@@ -50,7 +50,7 @@ Create smarter chess engines that are written using PowerFx
 - - number of attacked squares
 - - number of protected squares
 
-##### Story 0003-06 400 (Kindergarten)
+##### Story 0003-06 400 Developing CE_PF_300 (Kindergarten)
 - Do simple exchange calculation
 - Look for simple tactics
 - - look for hung pieces
@@ -62,6 +62,9 @@ Create smarter chess engines that are written using PowerFx
 
 ##### Story 0004-01 Allow backup buttons for a user to undo a move
 Add a undo button for a human player to undo a move.
+
+##### Story 0004-02 Wrap log statements in a DEBUG check
+Improve performance by putting log statements in an appropriate DEBUG check and then reduce logging levels
 
 #### Feature 0005 - Technical Documentation
 Document the details of this project used PowerFx to create a chess program. Items such as the collection formats, and how they are used. The board layout, use of FEN, the legal move table, etc.
