@@ -182,7 +182,7 @@ comChessEngineFunctions As CanvasComponent:
         pNodeID:
             Default: =EMPTY_NODE_ID
         ThisProperty:
-            Default: |
+            Default: |+
                 =
                 If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -191,23 +191,54 @@ comChessEngineFunctions As CanvasComponent:
                 );
                 
                 With(
-                    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                    LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
                 
-                    With(
-                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " fCE_300(): DEBUG board pre-update dump" &
+                            " whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard &
+                            " blackStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.blackStrongSqBoard 
+                        })
+                    );
                 
-                        If(gblPF_DEBUG_EVAL,
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " fCE_300(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
-                                " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
-                                " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
-                                " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
-                            })
-                        );
+                    comChessEngineFunctions.fME_prepNode(100, theCurrentNode.parentNodeID);
+                    comChessEngineFunctions.fME_prepNode(100, pNodeID);
                 
-                        comChessEngineFunctions.fME_prepNode(100, theCurrentNode.parentNodeID);
-                        comChessEngineFunctions.fME_prepNode(100, pNodeID);
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " fCE_300(): DEBUG board post-update dump" &
+                            " whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard &
+                            " blackStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.blackStrongSqBoard 
+                        })
+                    )
+                );
                 
+                With(
+                    {
+                        theData:        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME),
+                        theCurrentNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
+                        evalRecord:     EVAL_RECORD_PF
+                    } As localVars,
+                
+                
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " fCE_300(): san: " & localVars.theCurrentNode.inactiveColorMoveRecord.san &
+                            " pacn: " & localVars.theCurrentNode.inactiveColorMoveRecord.pacn &
+                            " move color: " & UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentNode.preMoveFEN) &
+                            " captureSquareOccupier: " & localVars.theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
+                        })
+                    );
+                
+                    Patch(localVars.evalRecord, {
+                        heuristic19:    If(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentNode.preMoveFEN)=WHITE,
+                                            If(localVars.theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
+                                            If(localVars.theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(-25,0), RandBetween(0,25))
+                                        )
+                    });
+                
+                
+                /*
                         Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
                             postMoveEvalRecord: 
                                 Patch(EVAL_RECORD_PF, {
@@ -243,49 +274,34 @@ comChessEngineFunctions As CanvasComponent:
                                         )
                                 })
                         });
-                
-                        UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
-                            postMoveEvalRecord: 
-                                Patch(LookUp(colPF_MOVE_TREE, nodeID=pNodeID).postMoveEvalRecord, {
-                                    centipawn:
-                                        With(
-                                            LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNodeUpdated,
-                                            
-                                            If(gblPF_DEBUG_EVAL,
-                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                    " heuristic11 Basic Material BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
-                                                });
-                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                    " heuristic15 END_GAME BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic15
-                                                });
-                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                    " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
-                                                })
-                                            );
-                                            Sum(
-                                                theCurrentNodeUpdated.postMoveEvalRecord.heuristic11,
-                                                theCurrentNodeUpdated.postMoveEvalRecord.heuristic15,
-                                                theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
-                                            )
-                                        )
-                                })
+                 */
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " heuristic11 Basic Material BONUS/PENALTY sub-total: " & localVars.evalRecord.heuristic11
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " heuristic15 END_GAME BONUS/PENALTY sub-total: " & localVars.evalRecord.heuristic15
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & localVars.evalRecord.heuristic19
                         })
                     );
-                
-                    If(gblPF_DEBUG_EVAL,
-                        With(
-                            LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
-                
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " fCE_300(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
-                                " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
-                                " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
+                    UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
+                        postMoveEvalRecord: 
+                            Patch(localVars.evalRecord, {
+                                centipawn:  Sum(
+                                                localVars.evalRecord.heuristic11,
+                                                localVars.evalRecord.heuristic15,
+                                                localVars.evalRecord.heuristic19
+                                            )
                             })
-                        )
-                    )
+                    })
                 );
                 
-                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_300(): exiting"});
+                If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_300(): exiting"})
+                );
+                
     fCE_400(pNodeID As Number):
         pNodeID:
             Default: =EMPTY_NODE_ID
@@ -683,7 +699,28 @@ comChessEngineFunctions As CanvasComponent:
                 
                 If(pNodeID<>EMPTY_NODE_ID,
                     // THEN - get to work
-                    Blank()
+                    With(
+                        {
+                            theData:            LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME),
+                            theCurrentNode:     LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
+                            whiteStrongSqBoard: EMPTY_BOARD,
+                            blackStrongSqBoard: EMPTY_BOARD
+                        } As localVars,
+                
+                        If(
+                            localVars.whiteStrongSqBoard<>localVars.theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard || 
+                            localVars.blackStrongSqBoard<>localVars.theCurrentNode.postMoveEvalRecord.blackStrongSqBoard,
+                            // THEN - update the boards
+                            
+                            UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
+                                postMoveEvalRecord: 
+                                    Patch(LookUp(colPF_MOVE_TREE, nodeID=pNodeID).postMoveEvalRecord, {
+                                        whiteStrongSqBoard: localVars.whiteStrongSqBoard,
+                                        blackStrongSqBoard: localVars.blackStrongSqBoard
+                                    })
+                            })
+                        )
+                    )
                 );
                 
                 If(gblPF_DEBUG_EVAL,
