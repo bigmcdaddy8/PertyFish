@@ -3258,21 +3258,28 @@ Chess_Board As screen:
                         */
                     
                         // THEN - TIMER START - GAME_SAN_D1 ================================================================================
-                        If(IsBlank(LookUp(colPF_Timers, timerName="btnProcessGame.GAME_SAN_D1")),
-                            Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_SAN_D1",startTime:Now(),stopTime:Blank()}),
-                            UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_SAN_D1", { startTime: Now() })
+                        If(gblPF_DEBUG_TIMERS,
+                            If(IsBlank(LookUp(colPF_Timers, timerName="btnProcessGame.GAME_SAN_D1")),
+                                Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_SAN_D1",startTime:Now(),stopTime:Blank()}),
+                                UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_SAN_D1", { startTime: Now() })
+                            )
                         );
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " btnProcessGame.OnSelect(): GAME_SAN_D1 getting started...   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
-                        });
                     
-                        With(
-                            LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
-                    
+                        If(gblPF_DEBUG,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " btnProcessGame.OnSelect(): GAME_SAN_D1 test #: " & theData.chessEngineData.testNumber & 
-                                " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount
+                                " btnProcessGame.OnSelect(): GAME_SAN_D1 getting started...   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
                             })
+                        );
+                    
+                        If(gblPF_DEBUG,
+                            With(
+                                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                    
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                    " btnProcessGame.OnSelect(): GAME_SAN_D1 test #: " & theData.chessEngineData.testNumber & 
+                                    " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount
+                                })
+                            )
                         );
                     
                         ForAll (
@@ -3431,46 +3438,53 @@ Chess_Board As screen:
                         );
                     
                         // TIMER END - GAME_SAN_D1 ================================================================================
-                        UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_SAN_D1", { stopTime: Now() });
-                        With(
-                            LookUp(colPF_Timers, timerName="btnProcessGame.GAME_SAN_D1") As theTimer,
+                        If(gblPF_DEBUG_TIMERS,
+                            UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_SAN_D1", { stopTime: Now() });
+                            With(
+                                LookUp(colPF_Timers, timerName="btnProcessGame.GAME_SAN_D1") As theTimer,
                     
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                    " btnProcessGame.OnSelect(): GAME_SAN_D1 " &
+                                    Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
+                                })
+                            )
+                        );
+                    
+                        If(gblPF_DEBUG,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " btnProcessGame.OnSelect(): " &
-                                Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
+                                " btnProcessGame.OnSelect(): GAME_SAN_D1 finished   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
                             })
                         );
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " btnProcessGame.OnSelect(): GAME_SAN_D1 finished   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                        });
                     
-                        With(
-                            LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
-                    
+                        If(gblPF_DEBUG,
                             With(
-                                LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
+                                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                     
-                                ForAll(
-                                    Sequence(3) As theCount,
+                                With(
+                                    LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
                     
-                                    With(
-                                        Last(
-                                            FirstN(
-                                                Sort(
-                                                    Filter(colPF_MOVE_TREE, nodeDepth=1),
-                                                    postMoveEvalRecord.centipawn, 
-                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,SortOrder.Descending,SortOrder.Ascending)
-                                                ), theCount.Value
-                                            ) 
-                                        ) As theTopMoves,
+                                    ForAll(
+                                        Sequence(3) As theCount,
                     
-                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                            " btnProcessGame.OnSelect(): pre-GAME_STATUS_POST_D1 DEBUG dumping current top moves" & 
-                                            " count: " & theCount.Value &
-                                            " san: " & theTopMoves.inactiveColorMoveRecord.san & 
-                                            " pacn: " & theTopMoves.inactiveColorMoveRecord.pacn &
-                                            " centipawn: " & theTopMoves.postMoveEvalRecord.centipawn
-                                        })
+                                        With(
+                                            Last(
+                                                FirstN(
+                                                    Sort(
+                                                        Filter(colPF_MOVE_TREE, nodeDepth=1),
+                                                        postMoveEvalRecord.centipawn, 
+                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,SortOrder.Descending,SortOrder.Ascending)
+                                                    ), theCount.Value
+                                                ) 
+                                            ) As theTopMoves,
+                    
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                " btnProcessGame.OnSelect(): pre-GAME_STATUS_POST_D1 DEBUG dumping current top moves" & 
+                                                " count: " & theCount.Value &
+                                                " san: " & theTopMoves.inactiveColorMoveRecord.san & 
+                                                " pacn: " & theTopMoves.inactiveColorMoveRecord.pacn &
+                                                " centipawn: " & theTopMoves.postMoveEvalRecord.centipawn
+                                            })
+                                        )
                                     )
                                 )
                             )
@@ -3490,22 +3504,29 @@ Chess_Board As screen:
                         */
                     
                         // THEN - TIMER START - GAME_STATUS ================================================================================
-                        If(IsBlank(LookUp(colPF_Timers, timerName="btnProcessGame.GAME_STATUS_POST_D1")),
-                            Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_STATUS_POST_D1",startTime:Now(),stopTime:Blank()}),
-                            UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_STATUS_POST_D1", { startTime: Now() })
+                        If(gblPF_DEBUG_TIMERS,
+                            If(IsBlank(LookUp(colPF_Timers, timerName="btnProcessGame.GAME_STATUS_POST_D1")),
+                                Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_STATUS_POST_D1",startTime:Now(),stopTime:Blank()}),
+                                UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_STATUS_POST_D1", { startTime: Now() })
+                            )
                         );
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " btnProcessGame.OnSelect(): GAME_STATUS_POST_D1 getting started  vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
-                        });
+                    
+                        If(gblPF_DEBUG,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                " btnProcessGame.OnSelect(): GAME_STATUS_POST_D1 getting started  vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
+                            })
+                        );
                     
                         With(
                             LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                     
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " btnProcessGame.OnSelect(): GAME_STATUS_POST_D1 test #: " & theData.chessEngineData.testNumber & 
-                                " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount &
-                                " isGame: " & theData.chessEngineData.isGame
-                            });
+                            If(gblPF_DEBUG,
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                    " btnProcessGame.OnSelect(): GAME_STATUS_POST_D1 test #: " & theData.chessEngineData.testNumber & 
+                                    " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount &
+                                    " isGame: " & theData.chessEngineData.isGame
+                                })
+                            );
                     
                             With(
                                 LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
@@ -3588,18 +3609,23 @@ Chess_Board As screen:
                     
                     
                         // TIMER END - GAME_STATUS ================================================================================
-                        UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_STATUS_POST_D1", { stopTime: Now() });
-                        With(
-                            LookUp(colPF_Timers, timerName="btnProcessGame.GAME_STATUS_POST_D1") As theTimer,
+                        If(gblPF_DEBUG_TIMERS,
+                            UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_STATUS_POST_D1", { stopTime: Now() });
+                            With(
+                                LookUp(colPF_Timers, timerName="btnProcessGame.GAME_STATUS_POST_D1") As theTimer,
                     
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                    " btnProcessGame.OnSelect(): " &
+                                    Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
+                                })
+                            )
+                        );
+                    
+                        If(gblPF_DEBUG,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " btnProcessGame.OnSelect(): " &
-                                Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
+                                " btnProcessGame.OnSelect(): GAME_STATUS_POST_D1  finished   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
                             })
                         );
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " btnProcessGame.OnSelect(): GAME_STATUS_POST_D1  finished   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                        });
                     
                         /* -----------------------------------------------------------------------------------------------------------------------------------------------------------
                         GAME_MOVE_HISTORY_D0
@@ -3614,18 +3640,23 @@ Chess_Board As screen:
                     
                             If(theData.chessEngineData.moveNumber>=1,
                                 // THEN - TIMER START - GAME_MOVE_HISTORY_D0 ================================================================================
-                                If(IsBlank(LookUp(colPF_Timers, timerName="btnProcessGame.GAME_MOVE_HISTORY_D0")),
-                                    Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_MOVE_HISTORY_D0",startTime:Now(),stopTime:Blank()}),
-                                    UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_MOVE_HISTORY_D0", { startTime: Now() })
+                                If(gblPF_DEBUG_TIMERS,
+                                    If(IsBlank(LookUp(colPF_Timers, timerName="btnProcessGame.GAME_MOVE_HISTORY_D0")),
+                                        Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_MOVE_HISTORY_D0",startTime:Now(),stopTime:Blank()}),
+                                        UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_MOVE_HISTORY_D0", { startTime: Now() })
+                                    )
                                 );
-                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                    " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 getting started   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
-                                });
                     
-                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                    " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 test #: " & theData.chessEngineData.testNumber & 
-                                    " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount
-                                });
+                                If(gblPF_DEBUG,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 getting started   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
+                                    });
+                    
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 test #: " & theData.chessEngineData.testNumber & 
+                                        " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount
+                                    })
+                                );
                     
                                 If(CountRows(colPF_MOVE_HISTORY)=0,
                                     // THEN - this is the first move of game - need to make it the root node in move history collection 
@@ -3665,18 +3696,23 @@ Chess_Board As screen:
                                 );
                     
                                 // TIMER END - GAME_MOVE_HISTORY_D0 ================================================================================
-                                UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_MOVE_HISTORY_D0", { stopTime: Now() });
-                                With(
-                                    LookUp(colPF_Timers, timerName="btnProcessGame.GAME_MOVE_HISTORY_D0") As theTimer,
+                                If(gblPF_DEBUG_TIMERS,
+                                    UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_MOVE_HISTORY_D0", { stopTime: Now() });
+                                    With(
+                                        LookUp(colPF_Timers, timerName="btnProcessGame.GAME_MOVE_HISTORY_D0") As theTimer,
                     
-                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                        " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 " &
-                                        Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
-                                    })
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                            " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 " &
+                                            Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
+                                        })
+                                    )
                                 );
-                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                    " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 finished  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                                })
+                    
+                                If(gblPF_DEBUG,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 finished  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+                                    })
+                                )
                             );
                     
                             // DRAWs - TODO...
@@ -3693,11 +3729,6 @@ Chess_Board As screen:
                                             theD0ParentNode.postMoveGameStatus.isStalemate ||
                                             theD0ParentNode.postMoveGameStatus.isDraw
                                         ),
-                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                            " btnProcessGame.OnSelect(): DEBUG looking for Move Limit DRAW " &
-                                            " Move Limit: " & txtMoveLimit.Text &
-                                            " moveNumber: " & UDF_FEN_TO_FULLMOVE_COUNT(theD0ParentNode.postMoveFEN)
-                                        });
                     
                                         If(UDF_FEN_TO_FULLMOVE_COUNT(theD0ParentNode.postMoveFEN)>Value(txtMoveLimit.Text),
                                             // THEN we have hit the move limit
@@ -3795,16 +3826,6 @@ Chess_Board As screen:
                                                     )
                                             } As localVars,
                     
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                " btnProcessGame.OnSelect(): DEBUG - ISM DRAW data dump" &
-                                                " whitePiecesCount_QRP: " & localVars.whitePiecesCount_QRP &
-                                                " whitePiecesCount_B: " & localVars.whitePiecesCount_B &
-                                                " whitePiecesCount_N: " & localVars.whitePiecesCount_N &
-                                                " blackPiecesCount_qrp: " & localVars.blackPiecesCount_qrp &
-                                                " blackPiecesCount_b: " & localVars.blackPiecesCount_b &
-                                                " blackPiecesCount_n: " & localVars.blackPiecesCount_n
-                                            });
-                    
                                             Switch(true,
                                                 localVars.whitePiecesCount_QRP > 0, Blank(), // not an ISM draw
                                                 localVars.blackPiecesCount_qrp > 0, Blank(), // not an ISM draw
@@ -3834,12 +3855,6 @@ Chess_Board As screen:
                                                                 Mod((UDF_getRankFromSqNum(UDF_SearchBoardForPiece(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),"b")) +
                                                                 UDF_getFileNumFromSqNum(UDF_SearchBoardForPiece(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),"b"))),2)
                                                         } As bishopSqColors,
-                    
-                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                            " btnProcessGame.OnSelect(): DEBUG - ISM DRAW data dump" &
-                                                            " whiteBSqColor: " & bishopSqColors.whiteBSqColor &
-                                                            " blackBSqColor: " & bishopSqColors.blackBSqColor
-                                                        });
                     
                                                         If (bishopSqColors.whiteBSqColor=bishopSqColors.blackBSqColor,
                                                             // THEN
@@ -3873,15 +3888,17 @@ Chess_Board As screen:
                                                     ),
                                                 
                                                 // default
-                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                    " btnProcessGame.OnSelect(): ISM DRAW detected setting isISMDraw & isDraw to true " &
-                                                    " whitePiecesCount_QRP: " & localVars.whitePiecesCount_QRP &
-                                                    " whitePiecesCount_B: " & localVars.whitePiecesCount_B &
-                                                    " whitePiecesCount_N: " & localVars.whitePiecesCount_N &
-                                                    " blackPiecesCount_qrp: " & localVars.blackPiecesCount_qrp &
-                                                    " blackPiecesCount_b: " & localVars.blackPiecesCount_b &
-                                                    " blackPiecesCount_n: " & localVars.blackPiecesCount_n
-                                                });
+                                                If(gblPF_DEBUG,
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                        " btnProcessGame.OnSelect(): ISM DRAW detected setting isISMDraw & isDraw to true " &
+                                                        " whitePiecesCount_QRP: " & localVars.whitePiecesCount_QRP &
+                                                        " whitePiecesCount_B: " & localVars.whitePiecesCount_B &
+                                                        " whitePiecesCount_N: " & localVars.whitePiecesCount_N &
+                                                        " blackPiecesCount_qrp: " & localVars.blackPiecesCount_qrp &
+                                                        " blackPiecesCount_b: " & localVars.blackPiecesCount_b &
+                                                        " blackPiecesCount_n: " & localVars.blackPiecesCount_n
+                                                    })
+                                                );
                                                 UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
                                                     inactiveColorMoveRecord:Patch(
                                                                                 LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID).inactiveColorMoveRecord,
@@ -3945,34 +3962,35 @@ Chess_Board As screen:
                                                                         With(
                                                                             LookUp(colPF_MOVE_HISTORY, nodeID=theTail_minus6.parentNodeID) As theTail_minus7,
                     
-                    
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                " btnProcessGame.OnSelect(): DEBUG - looking for 3x position repeat DRAW "
-                                                                            });
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board:    " & UDF_FEN_TO_PIECE_PLACEMENT(theTail.postMoveFEN)
-                                                                            });
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                " board_m1: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus1.postMoveFEN)
-                                                                            });
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m2: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus2.postMoveFEN)
-                                                                            });
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m3: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus3.postMoveFEN)
-                                                                            });
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m4: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus4.postMoveFEN)
-                                                                            });
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m5: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus5.postMoveFEN)
-                                                                            });
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m6: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus6.postMoveFEN)
-                                                                            });
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " board_m7: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus7.postMoveFEN)
-                                                                            });
+                                                                            If(gblPF_DEBUG,
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " btnProcessGame.OnSelect(): DEBUG - looking for 3x position repeat DRAW "
+                                                                                });
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                                    " board:    " & UDF_FEN_TO_PIECE_PLACEMENT(theTail.postMoveFEN)
+                                                                                });
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " board_m1: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus1.postMoveFEN)
+                                                                                });
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                                    " board_m2: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus2.postMoveFEN)
+                                                                                });
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                                    " board_m3: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus3.postMoveFEN)
+                                                                                });
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                                    " board_m4: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus4.postMoveFEN)
+                                                                                });
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                                    " board_m5: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus5.postMoveFEN)
+                                                                                });
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                                    " board_m6: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus6.postMoveFEN)
+                                                                                });
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                                    " board_m7: " & UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus7.postMoveFEN)
+                                                                                })
+                                                                            );
                     
                                                                             If(
                                                                                 UDF_FEN_TO_PIECE_PLACEMENT(theTail.postMoveFEN)=UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus4.postMoveFEN) &&
@@ -3981,9 +3999,11 @@ Chess_Board As screen:
                                                                                 UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus3.postMoveFEN)=UDF_FEN_TO_PIECE_PLACEMENT(theTail_minus7.postMoveFEN),
                                                                                 // THEN - we got ourselves a DRAW due to repeating postions
                     
-                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                    " btnProcessGame.OnSelect(): 3x position repeat DRAW detected setting isDraw to true "
-                                                                                });
+                                                                                If(gblPF_DEBUG,
+                                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                        " btnProcessGame.OnSelect(): 3x position repeat DRAW detected setting isDraw to true "
+                                                                                    })
+                                                                                );
                     
                                                                                 UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
                                                                                     postMoveGameStatus:     Patch(
@@ -4051,9 +4071,6 @@ Chess_Board As screen:
                         )
                     );
                     
-                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                        " btnProcessGame.OnSelect(): DEBUG breakpoint 0003  exiting"
-                    });
                     
                     
                     

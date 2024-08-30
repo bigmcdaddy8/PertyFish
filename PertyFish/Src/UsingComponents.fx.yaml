@@ -749,25 +749,61 @@ UsingComponents As screen:
             If(pNodeID<>EMPTY_NODE_ID,
                 // THEN - get to work
                 With(
-                    {
-                        theData:            LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME),
-                        theCurrentNode:     LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
-                        whiteStrongSqBoard: EMPTY_BOARD,
-                        blackStrongSqBoard: EMPTY_BOARD
-                    } As localVars,
+                    LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
             
-                    If(
-                        localVars.whiteStrongSqBoard<>localVars.theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard || 
-                        localVars.blackStrongSqBoard<>localVars.theCurrentNode.postMoveEvalRecord.blackStrongSqBoard,
-                        // THEN - update the boards
-                        
-                        UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
-                            postMoveEvalRecord: 
-                                Patch(LookUp(colPF_MOVE_TREE, nodeID=pNodeID).postMoveEvalRecord, {
-                                    whiteStrongSqBoard: localVars.whiteStrongSqBoard,
-                                    blackStrongSqBoard: localVars.blackStrongSqBoard
-                                })
-                        })
+                    With(
+                        {
+                            theData:            LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME),
+                            preMoveBoard:       UDF_FEN_TO_BOARD(theCurrentNode.preMoveFEN),
+                            postMoveBoard:      UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN),
+                            colorMakingMove:    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN),
+                            whiteStrongSqBoard: EMPTY_BOARD,
+                            blackStrongSqBoard: EMPTY_BOARD
+                        } As localVars,
+            
+                        ForAll(
+                            Sequence(64,0) As theSqNum,
+            
+                            With(
+                                {
+                                    preMoveBit:     UDF_getBitAtSqNum(localVars.preMoveBoard,theSqNum.Value),
+                                    postMoveBit:    UDF_getBitAtSqNum(localVars.postMoveBoard,theSqNum.Value)
+                                } As localVars2,
+            
+                                If(localVars2.preMoveBit=EMPTY_FILLER_ABBR,EMPTY_FILLER_ABBR,
+                                    // THEN - we got a piece - get its' moves and filter them
+                                    ForAll(
+                                        Filter(colPF_LEGAL_MOVES,
+                                            sqNum=theSqNum.Value &&
+                                            // the PAWN is case sensitive since it is uni-directional
+                                            pieceUpper= If(localVars2.preMoveBit in "P",localVars2.preMoveBit,Upper(localVars2.preMoveBit))
+                                        ) As theEligibleMove,
+            
+                                        UDF_setBitAtSqNum(localVars.whiteStrongSqBoard, ATTACKED_ABBR, theSqNum.Value)
+                                    )
+                                )
+                            )
+                        );
+            
+            /*
+                                        // do not include this move if it is a slider and the overSlider squares are not un-occupied
+                                        Switch(true,
+                                            UDF_isPathClearOnBoard(localVars.preMoveBoard, theSqNum.Value, theEligibleMove.theDistance, theEligibleMove.slideOvers),
+                                                
+             */
+            
+                        If(
+                            localVars.whiteStrongSqBoard<>theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard || 
+                            localVars.blackStrongSqBoard<>theCurrentNode.postMoveEvalRecord.blackStrongSqBoard,
+                            // THEN - update the boards
+                            UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
+                                postMoveEvalRecord: 
+                                    Patch(theCurrentNode.postMoveEvalRecord, {
+                                        whiteStrongSqBoard: localVars.whiteStrongSqBoard,
+                                        blackStrongSqBoard: localVars.blackStrongSqBoard
+                                    })
+                            })
+                        )
                     )
                 )
             );
