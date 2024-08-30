@@ -104,15 +104,23 @@
     "comChessEngineFunctions.fME_END_GAME_pNodeID": [
       "100",
       "EMPTY_NODE_ID"
+    ],
+    "comChessEngineFunctions.fME_prepNode_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
     ]
   },
   "FunctionParamsInvariantScriptsOnInstances": {
     "comChessEngineFunctionsLibrary.fME_END_GAME_pNodeID": [
       "100",
       "EMPTY_NODE_ID"
+    ],
+    "comChessEngineFunctionsLibrary.fME_prepNode_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
     ]
   },
-  "HeaderLastSavedDateTimeUTC": "08/30/2024 10:06:01",
+  "HeaderLastSavedDateTimeUTC": "08/30/2024 10:17:47",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,

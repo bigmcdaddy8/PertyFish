@@ -255,6 +255,9 @@ UsingComponents As screen:
                         })
                     );
             
+                    comChessEngineFunctions.fME_prepNode(100, theCurrentNode.parentNodeID);
+                    comChessEngineFunctions.fME_prepNode(100, pNodeID);
+            
                     Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
                         postMoveEvalRecord: 
                             Patch(EVAL_RECORD_PF, {
@@ -548,11 +551,6 @@ UsingComponents As screen:
                 })
             );
             
-            
-            
-            	
-            
-            
             With(
                 LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
             
@@ -701,5 +699,24 @@ UsingComponents As screen:
                     )
                 )
             );
+        fME_prepNode: |+
+            =If(gblPF_DEBUG_EVAL,
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                    " comChessEngineFunctions.fME_prepNode(): entered pVersion: " & pVersion &
+                    " pNodeID: " & pNodeID
+                })
+            );
+            
+            If(pNodeID<>EMPTY_NODE_ID,
+                // THEN - get to work
+                Blank()
+            );
+            
+            If(gblPF_DEBUG_EVAL,
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                    " comChessEngineFunctions.fME_prepNode(): exiting"
+                })
+            );
+            
         ZIndex: =2
 
