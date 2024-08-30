@@ -226,7 +226,13 @@ comChessEngineFunctions As CanvasComponent:
                                             Value
                                         ),
                                     heuristic15:
-                                        If(comChessEngineFunctions.fME_getGamePhase(pNodeID)=GAME_PHASE_END,comChessEngineFunctions.fME_END_GAME(100,pNodeID),0),
+                                        With (
+                                            {
+                                                centipawnAdj: If(comChessEngineFunctions.fME_getGamePhase(pNodeID)=GAME_PHASE_END,comChessEngineFunctions.fME_END_GAME(100,pNodeID),0)
+                                            } As localVars,
+                
+                                            If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,localVars.centipawnAdj,0 - localVars.centipawnAdj)
+                                        ),
                                     heuristic19:
                                         If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
                                             If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
@@ -437,15 +443,63 @@ comChessEngineFunctions As CanvasComponent:
         pNodeID:
             Default: =EMPTY_NODE_ID
         ThisProperty:
-            Default: |
+            Default: |+
                 =If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                        " comChessEngineFunctions.fME_END_GAME(): entered pNodeID: " & pNodeID
+                        " comChessEngineFunctions.fME_END_GAME(): entered pVersion: " & pVersion &
+                        " pNodeID: " & pNodeID
                     })
                 );
                 
+                With(
+                    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                 
-                0
+                    With(
+                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+                
+                        If(gblPF_DEBUG_EVAL,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                " fME_END_GAME(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                                " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
+                                " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
+                                " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
+                            })
+                        );
+                
+                        Sum(0,
+                            With (
+                                {
+                                    ppd:    UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.postMoveFEN),
+                                    filterScreen: If(UDF_FEN_TO_INACTIVE_COLOR(theCurrentNode.postMoveFEN)=WHITE,"QRBNP","qrbnp")
+                                } As localVars,
+                
+                                With(
+                                    {
+                                        totalOpponentMaterial: Sum(
+                                                                ForAll(
+                                                                    Split(localVars.ppd, "") As thePiece,
+                
+                                                                    UDF_getPieceCentipawnMaterialValue(thePiece.Value, localVars.filterScreen)
+                                                                ),
+                                                                Value
+                                                            )
+                                    } As localVars,
+                
+                                    If(localVars.totalOpponentMaterial<>0,
+                                        // THEN
+                                        0,
+                
+                                        // ELSE - we are playing against king only
+                                        Sum(0,
+                                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P", 25, 0)
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                ); 
+                
     fME_EvaluateMove(pNodeID As Number):
         pNodeID:
             Default: =EMPTY_NODE_ID
