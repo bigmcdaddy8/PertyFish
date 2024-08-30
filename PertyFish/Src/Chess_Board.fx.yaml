@@ -1903,14 +1903,16 @@ Chess_Board As screen:
                             );
                     
                             // TIMER END - GAME_POST_PLAY ================================================================================
-                            UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_POST_PLAY", { stopTime: Now() });
-                            With(
-                                LookUp(colPF_Timers, timerName="btnProcessGame.GAME_POST_PLAY") As theTimer,
+                            If(gblPF_DEBUG_TIMERS,
+                                UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_POST_PLAY", { stopTime: Now() });
+                                With(
+                                    LookUp(colPF_Timers, timerName="btnProcessGame.GAME_POST_PLAY") As theTimer,
                     
-                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                    " btnProcessGame.OnSelect(): GAME_POST_PLAY " &
-                                    Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
-                                })
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " btnProcessGame.OnSelect(): GAME_POST_PLAY " &
+                                        Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
+                                    })
+                                )
                             );
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                 " btnProcessGame.OnSelect(): GAME_POST_PLAY finished  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
