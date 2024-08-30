@@ -776,6 +776,7 @@ comChessEngineFunctions As CanvasComponent:
                                 )
                             );
                 
+                
                 /*
                                             // do not include this move if it is a slider and the overSlider squares are not un-occupied
                                             Switch(true,
