@@ -471,6 +471,15 @@ UsingComponents As screen:
             );
             
             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_400(): exiting"});
+        fME_END_GAME: |
+            =If(gblPF_DEBUG_EVAL,
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                    " comChessEngineFunctions.fME_END_GAME(): entered pNodeID: " & pNodeID
+                })
+            );
+            
+            
+            0
         fME_EvaluateMove: |
             =
             If(gblPF_DEBUG_EVAL,

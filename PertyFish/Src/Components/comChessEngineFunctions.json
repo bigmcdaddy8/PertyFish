@@ -78,9 +78,26 @@
         "InvariantPropertyName": "fME_getGamePhase",
         "IsLockable": false,
         "NameMapSourceSchema": "?"
+      },
+      "fME_END_GAME_pVersion",
+      {
+        "AFDDataSourceName": "",
+        "AutoRuleBindingEnabled": false,
+        "AutoRuleBindingString": "100",
+        "InvariantPropertyName": "fME_END_GAME_pNodeID",
+        "IsLockable": false,
+        "NameMapSourceSchema": "?"
+      },
+      {
+        "AFDDataSourceName": "",
+        "AutoRuleBindingEnabled": false,
+        "AutoRuleBindingString": "100",
+        "InvariantPropertyName": "fME_END_GAME",
+        "IsLockable": false,
+        "NameMapSourceSchema": "?"
       }
     ],
-    "LastModifiedTimestamp": "638605759773344869",
+    "LastModifiedTimestamp": "638605762932423150",
     "Name": "comChessEngineFunctions",
     "Rules": [
       {
@@ -117,6 +134,18 @@
         "Category": "Data",
         "InvariantScript": "EMPTY_NODE_ID",
         "Property": "fCE_400_pNodeID",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Data",
+        "InvariantScript": "100",
+        "Property": "fME_END_GAME_pVersion",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Data",
+        "InvariantScript": "EMPTY_NODE_ID",
+        "Property": "fME_END_GAME_pNodeID",
         "RuleProviderType": "System"
       },
       {
@@ -189,6 +218,12 @@
         "Category": "Behavior",
         "InvariantScript": "If(gblPF_DEBUG_EVAL,\n    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n        \" comChessEngineFunctions.fME_getGamePhase(): entered pFEN: \" & pFEN\n    })\n);\n\nWith (\n    {\n        board:  UDF_FEN_TO_BOARD(pFEN),\n        ppd:    UDF_FEN_TO_PIECE_PLACEMENT(pFEN)\n    } As theBoard,\n\n    With (\n        {\n            whiteTotalDevelopment: Sum(\n                                    If(UDF_getBitAtSqNum(theBoard.board,51)=\"P\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,52)=\"P\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,56)=\"R\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,57)=\"N\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,58)=\"B\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,59)=\"Q\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,60)=\"K\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,61)=\"B\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,62)=\"N\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,63)=\"R\",0,1)\n                                ),\n            blackTotalDevelopment: Sum(\n                                    If(UDF_getBitAtSqNum(theBoard.board,11)=\"p\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,12)=\"p\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,0)=\"r\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,1)=\"n\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,2)=\"b\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,3)=\"q\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,4)=\"k\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,5)=\"b\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,6)=\"n\",0,1),\n                                    If(UDF_getBitAtSqNum(theBoard.board,7)=\"r\",0,1)\n                                ),\n            whiteTotalMaterial: Sum(\n                                    ForAll(\n                                        Split(theBoard.ppd, \"\") As thePiece,\n\n                                        UDF_getPieceCentipawnMaterialValue(thePiece.Value, \"QRBNP\")\n                                    ),\n                                    Value\n                                ),\n            blackTotalMaterial: Abs(\n                                    Sum(\n                                        ForAll(\n                                            Split(theBoard.ppd, \"\") As thePiece,\n\n                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, \"qrbnp\")\n                                        ),\n                                        Value\n                                    )\n                                )\n        } As theMaterial,\n\n        If(UDF_FEN_TO_ACTIVE_COLOR(pFEN)=WHITE,\n            // THEN\n            Switch(true,\n                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=3000 && \n                theMaterial.whiteTotalDevelopment<5 &&\n                UDF_FEN_TO_FULLMOVE_COUNT(pFEN)<=10,\n                    GAME_PHASE_OPENING,\n                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=1700,\n                    GAME_PHASE_MIDDLE,\n\n                // default\n                GAME_PHASE_END\n            ),\n\n            // ELSE\n            Switch(true,\n                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=3000 && \n                theMaterial.blackTotalDevelopment<5 &&\n                UDF_FEN_TO_FULLMOVE_COUNT(pFEN)<=10,\n                    GAME_PHASE_OPENING,\n                Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=1700,\n                    GAME_PHASE_MIDDLE,\n\n                // default\n                GAME_PHASE_END\n            )\n        )\n    )\n);\n",
         "Property": "fME_getGamePhase",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Behavior",
+        "InvariantScript": "If(gblPF_DEBUG_EVAL,\r\n    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\r\n        \" comChessEngineFunctions.fME_END_GAME(): entered pNodeID: \" & pNodeID\r\n    })\r\n);\r\n\r\n\r\n0\r\n",
+        "Property": "fME_END_GAME",
         "RuleProviderType": "System"
       }
     ]
@@ -376,6 +411,50 @@
       },
       "Tooltip": "determine if OPENING, MIDDLE, or END game",
       "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Number\",\"EnumString\":\"\",\"Type\":[]}}"
+    },
+    {
+      "Category": 2,
+      "DisplayName": "fME_END_GAME",
+      "Hidden": true,
+      "Name": "fME_END_GAME",
+      "PropertyDataTypeKey": "Number",
+      "PropertyScopeKey": {
+        "PropertyScopeRuleNamespaceKey": "4",
+        "PropertyScopeRulesKey": [
+          {
+            "DisplayName": "fME_END_GAME_pVersion",
+            "Name": "fME_END_GAME_pVersion",
+            "PropertyDataTypeKey": "Number",
+            "ScopeVariableInfo": {
+              "DependencyType": "New",
+              "Description": "API version",
+              "IsRequired": true,
+              "ResolveExpands": false,
+              "ResolveSelects": false,
+              "ScopeVariableName": "pVersion"
+            },
+            "Tooltip": "API version",
+            "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Number\",\"EnumString\":\"\",\"Type\":[]}}"
+          },
+          {
+            "DisplayName": "fME_END_GAME_pNodeID",
+            "Name": "fME_END_GAME_pNodeID",
+            "PropertyDataTypeKey": "Number",
+            "ScopeVariableInfo": {
+              "DependencyType": "New",
+              "Description": "node containg the move to evaluate",
+              "IsRequired": true,
+              "ResolveExpands": false,
+              "ResolveSelects": false,
+              "ScopeVariableName": "pNodeID"
+            },
+            "Tooltip": "node containg the move to evaluate",
+            "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Number\",\"EnumString\":\"\",\"Type\":[]}}"
+          }
+        ]
+      },
+      "Tooltip": "evaulate move in END GAME",
+      "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Number\",\"EnumString\":\"\",\"Type\":[]}}"
     }
   ],
   "FirstParty": true,
@@ -386,7 +465,7 @@
   "IsPcfControl": false,
   "IsPremiumPcfControl": false,
   "IsWidgetTemplate": false,
-  "LastModifiedTimestamp": "638605759773344869",
+  "LastModifiedTimestamp": "638605762932423150",
   "Name": "8c2bb0b54c6149c580a48882153f6ad1",
   "OverridableProperties": {},
   "Version": "1.0"

@@ -100,9 +100,19 @@
     "txtStartingFEN": 65,
     "UsingComponents": 93
   },
-  "FunctionParamsInvariantScripts": {},
-  "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "08/30/2024 00:52:59",
+  "FunctionParamsInvariantScripts": {
+    "comChessEngineFunctions.fME_END_GAME_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ]
+  },
+  "FunctionParamsInvariantScriptsOnInstances": {
+    "comChessEngineFunctionsLibrary.fME_END_GAME_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ]
+  },
+  "HeaderLastSavedDateTimeUTC": "08/30/2024 00:58:14",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,
