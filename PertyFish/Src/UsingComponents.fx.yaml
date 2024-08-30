@@ -275,6 +275,8 @@ UsingComponents As screen:
                                         ),
                                         Value
                                     ),
+                                heuristic15:
+                                    If(comChessEngineFunctions.fME_getGamePhase(pNodeID)=GAME_PHASE_END,comChessEngineFunctions.fME_END_GAME(100,pNodeID),0),
                                 heuristic19:
                                     If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
                                         If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
@@ -295,11 +297,15 @@ UsingComponents As screen:
                                                 " heuristic11 Basic Material BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic15 END_GAME BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic15
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                 " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
                                             })
                                         );
                                         Sum(
                                             theCurrentNodeUpdated.postMoveEvalRecord.heuristic11,
+                                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic15,
                                             theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
                                         )
                                     )
