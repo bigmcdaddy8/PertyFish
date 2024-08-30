@@ -2341,14 +2341,18 @@ Chess_Board As screen:
                         - this state creates all of the legal D1 nodes
                         */
                         // THEN - TIMER START - GAME_NODES ================================================================================
-                        If(IsBlank(LookUp(colPF_Timers, timerName="btnProcessGame.GAME_NODES")),
-                            Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_NODES",startTime:Now(),stopTime:Blank()}),
-                            UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_NODES", { startTime: Now() })
+                        If(gblPF_DEBUG_TIMERS,
+                            If(IsBlank(LookUp(colPF_Timers, timerName="btnProcessGame.GAME_NODES")),
+                                Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_NODES",startTime:Now(),stopTime:Blank()}),
+                                UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_NODES", { startTime: Now() })
+                            )
                         );
                     
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " btnProcessGame.OnSelect(): GAME_NODES getting started    vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
-                        });
+                        If(gblPF_DEBUG_GAME_NODES,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                " btnProcessGame.OnSelect(): GAME_NODES getting started    vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
+                            })
+                        );
                     
                         With(
                             LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
@@ -2362,21 +2366,23 @@ Chess_Board As screen:
                         With(
                             LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
                     
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " PREMOVE FEN: " & LF & theD0ParentNode.preMoveFEN
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " PREMOVE BOARD: " & LF & UDF_FEN_TO_BOARD(theD0ParentNode.preMoveFEN)
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " theD0ParentNode.postMoveActiveKingDangerBoard: " & LF & theD0ParentNode.postMoveActiveKingDangerBoard
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " POSTMOVE FEN: " & LF & theD0ParentNode.postMoveFEN
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " POSTMOVE BOARD: " & LF & UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN)
-                            });
+                            If(gblPF_DEBUG_GAME_NODES,
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                    " PREMOVE FEN: " & LF & theD0ParentNode.preMoveFEN
+                                });
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                    " PREMOVE BOARD: " & LF & UDF_FEN_TO_BOARD(theD0ParentNode.preMoveFEN)
+                                });
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                    " theD0ParentNode.postMoveActiveKingDangerBoard: " & LF & theD0ParentNode.postMoveActiveKingDangerBoard
+                                });
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                    " POSTMOVE FEN: " & LF & theD0ParentNode.postMoveFEN
+                                });
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                    " POSTMOVE BOARD: " & LF & UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN)
+                                })
+                            );
                     
                             // get all of the possible moves for each active piece 
                             ForAll (
@@ -2625,21 +2631,23 @@ Chess_Board As screen:
                                                     )
                                                 ), 
                                                     // FILTERED - CHECKERS = 1 - has to be a king move || captures the checker || pushes in the way of the checker
-                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                        " FILTERED - CHECKERS = 1 - has to be a king move || captures the checker || pushes in the way of the checker" &
-                                                        " checkers: " & theD0ParentNode.postMoveCheckers &
-                                                        " sourceSqN: " & theEligibleMove.sqName & "(" & theEligibleMove.eligibleSqNum & ")" &
-                                                        " targetSqN: " & theEligibleMove.eligibleSqName & "(" & theEligibleMove.eligibleSqNum & ")"
-                                                    });
-                    
-                                                    If(UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-",
+                                                    If(gblPF_DEBUG_GAME_NODES,
                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                            " ep: " & UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN) & 
-                                                                "(" & UDF_sqNameToSqNum(UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)) & ")" &
-                                                            " ep capture: " &
-                                                                UDF_sqNumToSqName(UDF_getEPCaptureSqNum(theD0ParentNode.postMoveFEN)) & 
-                                                                "(" & UDF_getEPCaptureSqNum(theD0ParentNode.postMoveFEN) & ")"
-                                                        })
+                                                            " FILTERED - CHECKERS = 1 - has to be a king move || captures the checker || pushes in the way of the checker" &
+                                                            " checkers: " & theD0ParentNode.postMoveCheckers &
+                                                            " sourceSqN: " & theEligibleMove.sqName & "(" & theEligibleMove.eligibleSqNum & ")" &
+                                                            " targetSqN: " & theEligibleMove.eligibleSqName & "(" & theEligibleMove.eligibleSqNum & ")"
+                                                        });
+                    
+                                                        If(UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)<>"-",
+                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                " ep: " & UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN) & 
+                                                                    "(" & UDF_sqNameToSqNum(UDF_FEN_TO_ENPASSANT_SQNAME(theD0ParentNode.postMoveFEN)) & ")" &
+                                                                " ep capture: " &
+                                                                    UDF_sqNumToSqName(UDF_getEPCaptureSqNum(theD0ParentNode.postMoveFEN)) & 
+                                                                    "(" & UDF_getEPCaptureSqNum(theD0ParentNode.postMoveFEN) & ")"
+                                                            })
+                                                        )
                                                     );
                                                     Blank(),
                     
@@ -2655,19 +2663,23 @@ Chess_Board As screen:
                                                 theEligibleMove.castle exactin "KQ" &&
                                                 Not(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "K"),
                                                     // FILTERED - an INVALID WHITE CASTLE
-                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                        " btnProcessGame.OnSelect(): FILTERED - an INVALID WHITE CASTLE " &
-                                                        " pacn: " & theEligibleMove.sqName & theEligibleMove.eligibleSqName
-                                                    });
+                                                    If(gblPF_DEBUG_GAME_NODES,
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " btnProcessGame.OnSelect(): FILTERED - an INVALID WHITE CASTLE " &
+                                                            " pacn: " & theEligibleMove.sqName & theEligibleMove.eligibleSqName
+                                                        })
+                                                    );
                                                     Blank(),
                     
                                                 theEligibleMove.castle exactin "kq" &&
                                                 Not(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(theD0ParentNode.postMoveFEN),theSqNum.Value) exactin "k"),
                                                     // FILTERED - an INVALID BLACK CASTLE
-                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                        " btnProcessGame.OnSelect(): FILTERED - an INVALID BLACK CASTLE " &
-                                                        " pacn: " & theEligibleMove.sqName & theEligibleMove.eligibleSqName
-                                                    });
+                                                    If(gblPF_DEBUG_GAME_NODES,
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " btnProcessGame.OnSelect(): FILTERED - an INVALID BLACK CASTLE " &
+                                                            " pacn: " & theEligibleMove.sqName & theEligibleMove.eligibleSqName
+                                                        })
+                                                    );
                                                     Blank(),
                     
                                                 // default 
@@ -2682,8 +2694,7 @@ Chess_Board As screen:
                                                     parentNodeID:           	theD0ParentNode.nodeID,
                                                     nodeDepth:					1,
                                                     preMoveFEN:             	theD0ParentNode.postMoveFEN,
-                                                    inactiveColorMoveRecord:    
-                                                        // Patch(theD0ParentNode.inactiveColorMoveRecord,  {  
+                                                    inactiveColorMoveRecord:
                                                         Patch(MOVE_RECORD_PF,  {
                                                             san:
                                                                 Switch(true,
@@ -2881,23 +2892,25 @@ Chess_Board As screen:
                                                     postMoveNumActiveChecks:	0
                                                 });
                     
-                                                With ( 
-                                                    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,      
+                                                If(gblPF_DEBUG_GAME_NODES,
+                                                    With ( 
+                                                        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,      
                     
-                                                    With (  // if a castle do the 2nd half of the move - the ROOK part
-                                                        LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.newNodeID) As theCurrentNode,
+                                                        With (  // if a castle do the 2nd half of the move - the ROOK part
+                                                            LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.newNodeID) As theCurrentNode,
                     
-                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                            " GAME_NODES IN PROCESS of CREATING MT nodeID: " & theCurrentNode.nodeID & 
-                                                            " parentNodeID: " & theCurrentNode.parentNodeID &
-                                                            " nodeDepth: " & theCurrentNode.nodeDepth &
-                                                            " preMoveFEN: " & theCurrentNode.preMoveFEN
-                                                        });
+                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                " GAME_NODES IN PROCESS of CREATING MT nodeID: " & theCurrentNode.nodeID & 
+                                                                " parentNodeID: " & theCurrentNode.parentNodeID &
+                                                                " nodeDepth: " & theCurrentNode.nodeDepth &
+                                                                " preMoveFEN: " & theCurrentNode.preMoveFEN
+                                                            });
                     
-                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                            " san: " & theCurrentNode.inactiveColorMoveRecord.san &
-                                                            " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn & " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
-                                                        })
+                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                " san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                                                                " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn & " vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
+                                                            })
+                                                        )
                                                     )
                                                 );
                     
@@ -3145,22 +3158,24 @@ Chess_Board As screen:
                     
                                                 comChessEngineFunctionsLibrary.fME_EvaluateMove(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID);
                     
-                                                With(
-                                                    LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID) As theCurrentNode,
+                                                If(gblPF_DEBUG_GAME_NODES,
+                                                    With(
+                                                        LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID) As theCurrentNode,
                     
-                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                        " GAME_NODES JUST FINISHED CREATING MT nodeID: " & theCurrentNode.nodeID & 
-                                                        " parentNodeID: " & theCurrentNode.parentNodeID &
-                                                        " nodeDepth: " & theCurrentNode.nodeDepth &
-                                                        " preMoveFEN: " & theCurrentNode.preMoveFEN
-                                                    });
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " GAME_NODES JUST FINISHED CREATING MT nodeID: " & theCurrentNode.nodeID & 
+                                                            " parentNodeID: " & theCurrentNode.parentNodeID &
+                                                            " nodeDepth: " & theCurrentNode.nodeDepth &
+                                                            " preMoveFEN: " & theCurrentNode.preMoveFEN
+                                                        });
                     
-                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                        " san: " & theCurrentNode.inactiveColorMoveRecord.san &
-                                                        " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
-                                                        " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn &
-                                                        " postMoveFEN: " & theCurrentNode.postMoveFEN & " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                                                    })
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                                                            " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
+                                                            " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn &
+                                                            " postMoveFEN: " & theCurrentNode.postMoveFEN & " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+                                                        })
+                                                    )
                                                 )
                                             ),
                     
@@ -3176,32 +3191,36 @@ Chess_Board As screen:
                         With(
                             LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
                     
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " btnProcessGame.OnSelect(): Move Tree Dump preMoveFEN: " & theD0ParentNode.preMoveFEN
-                            }); 
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " btnProcessGame.OnSelect():  postMoveFEN: " & theD0ParentNode.postMoveFEN
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                "  MT D0(" & theD0ParentNode.nodeID  & "/" & theD0ParentNode.inactiveColorMoveRecord.pacn & 
-                                " " & theD0ParentNode.inactiveColorMoveRecord.promoteTo & "/" & UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN) & "-" & 
-                                theD0ParentNode.postMoveNumActiveChecks & ") Num of children: " & CountRows(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID))
-                            });
+                            If(gblPF_DEBUG_GAME_NODES,
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                    " btnProcessGame.OnSelect(): Move Tree Dump preMoveFEN: " & theD0ParentNode.preMoveFEN
+                                }); 
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                    " btnProcessGame.OnSelect():  postMoveFEN: " & theD0ParentNode.postMoveFEN
+                                });
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                    "  MT D0(" & theD0ParentNode.nodeID  & "/" & theD0ParentNode.inactiveColorMoveRecord.pacn &
+                                    " " & theD0ParentNode.inactiveColorMoveRecord.promoteTo & "/" & UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN) & "-" &
+                                    theD0ParentNode.postMoveNumActiveChecks & ") Num of children: " & CountRows(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID))
+                                })
+                            );
                     
                             If(CountRows(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID))>0,
                                 // THEN
                                 Set(gblPF_NumberofLegalMoves, CountRows(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID)));
                     
-                                ForAll(
-                                    Sort(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID),inactiveColorMoveRecord.san) As aD1Node,
+                                If(gblPF_DEBUG_GAME_NODES,
+                                    ForAll(
+                                        Sort(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID),inactiveColorMoveRecord.san) As aD1Node,
                     
-                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                        "  MT D0(" & theD0ParentNode.nodeID  & "/" & theD0ParentNode.inactiveColorMoveRecord.pacn & ")" &
-                                        "->D1(" & aD1Node.nodeID &  "/" & aD1Node.inactiveColorMoveRecord.pacn & " " & aD1Node.inactiveColorMoveRecord.promoteTo & 
-                                        "/" & aD1Node.inactiveColorMoveRecord.san & ")" &
-                                        " nodeDepth: " & aD1Node.nodeDepth & " # of checks: " & aD1Node.postMoveNumActiveChecks &
-                                        " centipawn: " & aD1Node.postMoveEvalRecord.centipawn
-                                    })
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                            "  MT D0(" & theD0ParentNode.nodeID  & "/" & theD0ParentNode.inactiveColorMoveRecord.pacn & ")" &
+                                            "->D1(" & aD1Node.nodeID &  "/" & aD1Node.inactiveColorMoveRecord.pacn & " " & aD1Node.inactiveColorMoveRecord.promoteTo &
+                                            "/" & aD1Node.inactiveColorMoveRecord.san & ")" &
+                                            " nodeDepth: " & aD1Node.nodeDepth & " # of checks: " & aD1Node.postMoveNumActiveChecks &
+                                            " centipawn: " & aD1Node.postMoveEvalRecord.centipawn
+                                        })
+                                    )
                                 ),
                     
                                 // ELSE
@@ -3211,18 +3230,23 @@ Chess_Board As screen:
                         // END DUMP ===============================================================================================
                     
                         // TIMER END - GAME_NODES ================================================================================
-                        UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_NODES", { stopTime: Now() });
-                        With(
-                            LookUp(colPF_Timers, timerName="btnProcessGame.GAME_NODES") As theTimer,
+                        If(gblPF_DEBUG_TIMERS,
+                            UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_NODES", { stopTime: Now() });
+                            With(
+                                LookUp(colPF_Timers, timerName="btnProcessGame.GAME_NODES") As theTimer,
                     
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                    " btnProcessGame.OnSelect(): GAME_NODES " &
+                                    Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
+                                })
+                            )
+                        );
+                    
+                        If(gblPF_DEBUG_GAME_NODES,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " btnProcessGame.OnSelect(): GAME_NODES " &
-                                Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
+                                " btnProcessGame.OnSelect(): finished  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
                             })
                         );
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " btnProcessGame.OnSelect(): finished  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                        });
                     
                     
                         /* -----------------------------------------------------------------------------------------------------------------------------------------------------------
