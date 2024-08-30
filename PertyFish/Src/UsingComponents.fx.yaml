@@ -293,15 +293,39 @@ UsingComponents As screen:
                     })
                 );
             
-                Patch(localVars, {
-                    evalRecord:
-                        Patch(localVars.evalRecord, {
-                            heuristic19:    If(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentNode.preMoveFEN)=WHITE,
-                                                If(localVars.theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
-                                                If(localVars.theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(-25,0), RandBetween(0,25))
-                                            )
+                With(
+                    Patch(localVars, {
+                        evalRecord:
+                            Patch(localVars.evalRecord, {
+                                heuristic19:    If(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentNode.preMoveFEN)=WHITE,
+                                                    If(localVars.theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
+                                                    If(localVars.theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(-25,0), RandBetween(0,25))
+                                                )
+                            })
+                    }) As updatedLocalVars,
+            
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " heuristic11 Basic Material BONUS/PENALTY sub-total: " & updatedLocalVars.evalRecord.heuristic11
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " heuristic15 END_GAME BONUS/PENALTY sub-total: " & updatedLocalVars.evalRecord.heuristic15
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & updatedLocalVars.evalRecord.heuristic19
                         })
-                });
+                    );
+                    UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
+                        postMoveEvalRecord: 
+                            Patch(updatedLocalVars.evalRecord, {
+                                centipawn:  Sum(
+                                                updatedLocalVars.evalRecord.heuristic11,
+                                                updatedLocalVars.evalRecord.heuristic15,
+                                                updatedLocalVars.evalRecord.heuristic19
+                                            )
+                            })
+                    })
+                )
             
             
             /*
@@ -341,27 +365,6 @@ UsingComponents As screen:
                             })
                     });
              */
-                If(gblPF_DEBUG_EVAL,
-                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                        " heuristic11 Basic Material BONUS/PENALTY sub-total: " & localVars.evalRecord.heuristic11
-                    });
-                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                        " heuristic15 END_GAME BONUS/PENALTY sub-total: " & localVars.evalRecord.heuristic15
-                    });
-                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                        " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & localVars.evalRecord.heuristic19
-                    })
-                );
-                UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
-                    postMoveEvalRecord: 
-                        Patch(localVars.evalRecord, {
-                            centipawn:  Sum(
-                                            localVars.evalRecord.heuristic11,
-                                            localVars.evalRecord.heuristic15,
-                                            localVars.evalRecord.heuristic19
-                                        )
-                        })
-                })
             );
             
             If(gblPF_DEBUG_EVAL,
