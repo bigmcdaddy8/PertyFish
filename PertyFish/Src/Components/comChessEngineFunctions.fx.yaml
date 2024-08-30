@@ -735,27 +735,44 @@ comChessEngineFunctions As CanvasComponent:
                                 blackStrongSqBoard: EMPTY_BOARD
                             } As localVars,
                 
-                            ForAll(
-                                Sequence(64,0) As theSqNum,
+                            With(
+                                {
+                                    strongSqList:
+                                        Concat(
+                                            ForAll(
+                                                Sequence(64,0) As theSqNum,
                 
-                                With(
-                                    {
-                                        preMoveBit:     UDF_getBitAtSqNum(localVars.preMoveBoard,theSqNum.Value),
-                                        postMoveBit:    UDF_getBitAtSqNum(localVars.postMoveBoard,theSqNum.Value)
-                                    } As localVars2, 
+                                                With(
+                                                    {
+                                                        moveBit: UDF_getBitAtSqNum(localVars.preMoveBoard,theSqNum.Value) 
+                                                    } As theMoveBit,
                 
-                                    If(localVars2.preMoveBit=EMPTY_FILLER_ABBR,EMPTY_FILLER_ABBR,
-                                        // THEN - we got a piece - get its' moves and filter them
-                                        ForAll(
-                                            Filter(colPF_LEGAL_MOVES,
-                                                sqNum=theSqNum.Value &&
-                                                // the PAWN is case sensitive since it is uni-directional
-                                                pieceUpper= If(localVars2.preMoveBit in "P",localVars2.preMoveBit,Upper(localVars2.preMoveBit))
-                                            ) As theEligibleMove,
+                                                    If(theMoveBit.moveBit=EMPTY_FILLER_ABBR,
+                                                        // THEN - there is no piece
+                                                        "",
                 
-                                            UDF_setBitAtSqNum(localVars.whiteStrongSqBoard, ATTACKED_ABBR, theSqNum.Value)
+                                                        // THEN - we got a piece - get its' moves and filter them
+                                                        Concat(
+                                                            ForAll(
+                                                                Filter(colPF_LEGAL_MOVES,
+                                                                    sqNum=theSqNum.Value &&
+                                                                    // the PAWN is case sensitive since it is uni-directional
+                                                                    pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
+                                                                ) As theEligibleMove,
+                
+                                                                theEligibleMove.eligibleSqName
+                                                            ), Value, " "
+                                                        )
+                                                    )
+                                                )
+                                            ), Value, " "
                                         )
-                                    )
+                                } As theLists,
+                
+                                If(gblPF_DEBUG_EVAL,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                        " comChessEngineFunctions.fME_prepNode(): DEBUG strongSqList: " & theLists.strongSqList
+                                    })
                                 )
                             );
                 
