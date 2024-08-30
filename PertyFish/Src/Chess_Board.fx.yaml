@@ -1577,7 +1577,7 @@ Chess_Board As screen:
                         */
                             // TIMER START - GAME_POST_PLAY ================================================================================
                         If(IsBlank(LookUp(colPF_Timers, timerName="btnProcessGame.GAME_POST_PLAY")),
-                            Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_POST_PLAY ",startTime:Now(),stopTime:Blank()}),
+                            Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_POST_PLAY",startTime:Now(),stopTime:Blank()}),
                             UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_POST_PLAY", { startTime: Now() })
                         );
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 

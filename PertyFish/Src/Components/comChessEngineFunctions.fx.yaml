@@ -458,6 +458,11 @@ comChessEngineFunctions As CanvasComponent:
                     })
                 );
                 
+                
+                
+                	
+                
+                
                 With(
                     LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                 
@@ -479,6 +484,13 @@ comChessEngineFunctions As CanvasComponent:
                                 selectedEngine: If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE, drpWhitePiecesCE.Selected.Value, drpBlackPiecesCE.Selected.Value)
                             } As theEngine,
                 
+                            If(gblPF_DEBUG_TIMERS,
+                                If(IsBlank(LookUp(colPF_Timers, timerName="comChessEngineFunctions.fME_EvaluateMove")),
+                                    Collect(colPF_Timers, {timerName:"comChessEngineFunctions.fME_EvaluateMove", startTime: Now(), stopTime: Blank() }),
+                                    UpdateIf(colPF_Timers, timerName="comChessEngineFunctions.fME_EvaluateMove", { startTime: Now(), stopTime: Blank() })
+                                )
+                            );
+                            
                             Switch(true,
                                 theEngine.selectedEngine=CE_PF_200,
                                     comChessEngineFunctions.fCE_200(pNodeID),
@@ -489,10 +501,26 @@ comChessEngineFunctions As CanvasComponent:
                                 
                                 // default
                                 comChessEngineFunctions.fCE_100(pNodeID)
+                            );
+                
+                            If(gblPF_DEBUG_TIMERS,
+                                UpdateIf(colPF_Timers, timerName="comChessEngineFunctions.fME_EvaluateMove", { stopTime: Now() });
+                                With(
+                                    LookUp(colPF_Timers, timerName="comChessEngineFunctions.fME_EvaluateMove") As theTimer,
+                
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " comChessEngineFunctions.fME_EvaluateMove(): elapsed time " &
+                                        Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds" &
+                                        " selectedEngine: " & theEngine.selectedEngine
+                                        
+                                    })
+                                )
                             )
                         )
                     )
                 );
+                
+                
                 
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fME_EvaluateMove(): exiting"});
     fME_getGamePhase(pFEN As String):

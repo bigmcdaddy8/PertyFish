@@ -595,6 +595,7 @@ App As appinfo:
             Set(gblPF_DEBUG, true),
             Set(gblPF_DEBUG_EVAL, true),
             Set(gblPF_DEBUG_EVAL_ENDGAME, true),
+            Set(gblPF_DEBUG_TIMERS, true),
             Set(gblPF_CLEAR_LOG_MOD, 3),
         
             Set(gblPF_BestMoveMaterial, "+0"),
