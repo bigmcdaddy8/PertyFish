@@ -1576,31 +1576,37 @@ Chess_Board As screen:
                         - if KING or ROOK moved - take away castle rights as appropriate
                         */
                             // TIMER START - GAME_POST_PLAY ================================================================================
-                        If(IsBlank(LookUp(colPF_Timers, timerName="btnProcessGame.GAME_POST_PLAY")),
-                            Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_POST_PLAY",startTime:Now(),stopTime:Blank()}),
-                            UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_POST_PLAY", { startTime: Now() })
+                        If(gblPF_DEBUG_TIMERS,
+                            If(IsBlank(LookUp(colPF_Timers, timerName="btnProcessGame.GAME_POST_PLAY")),
+                                Collect(colPF_Timers, {timerName:"btnProcessGame.GAME_POST_PLAY",startTime:Now(),stopTime:Blank()}),
+                                UpdateIf(colPF_Timers, timerName="btnProcessGame.GAME_POST_PLAY", { startTime: Now() })
+                            )
                         );
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " btnProcessGame.OnSelect(): GAME_POST_PLAY getting started   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
-                        });
+                        If(gblPF_DEBUG,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                " btnProcessGame.OnSelect(): GAME_POST_PLAY getting started   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
+                            })
+                        );
                     
                         With(
                             LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                     
-                            If(theData.chessEngineData.isGame=false,
-                                // THEN
-                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                    " btnProcessGame.OnSelect(): GAME_POST_PLAY test #: " & theData.chessEngineData.testNumber & 
-                                    " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount
-                                }),
+                            If(gblPF_DEBUG,
+                                If(theData.chessEngineData.isGame=false,
+                                    // THEN
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " btnProcessGame.OnSelect(): GAME_POST_PLAY test #: " & theData.chessEngineData.testNumber & 
+                                        " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount
+                                    }),
                     
-                                // ELSE
-                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                    " btnProcessGame.OnSelect(): GAME_POST_PLAY game move #: " & theData.chessEngineData.moveNumber & 
-                                    " whitePiecesPlayerType: " & theData.chessEngineData.whitePiecesPlayerType &
-                                    " blackPiecesPlayerType: " & theData.chessEngineData.blackPiecesPlayerType &
-                                    " current move pacn:" & theData.chessEngineData.pacn
-                                })
+                                    // ELSE
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " btnProcessGame.OnSelect(): GAME_POST_PLAY game move #: " & theData.chessEngineData.moveNumber & 
+                                        " whitePiecesPlayerType: " & theData.chessEngineData.whitePiecesPlayerType &
+                                        " blackPiecesPlayerType: " & theData.chessEngineData.blackPiecesPlayerType &
+                                        " current move pacn:" & theData.chessEngineData.pacn
+                                    })
+                                )
                             );
                     
                             If(theData.chessEngineData.moveNumber>=1,
