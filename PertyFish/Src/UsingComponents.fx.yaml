@@ -763,6 +763,57 @@ UsingComponents As screen:
             
                         With(
                             {
+                                whiteStrongSqList:
+                                    Concat(
+                                        ForAll(
+                                            Sequence(64,0) As theSqNum,
+            
+                                            With(
+                                                {
+                                                    moveBit: UDF_getBitAtSqNum(localVars.preMoveBoard,theSqNum.Value) 
+                                                } As theMoveBit,
+            
+                                                If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit in "kqrbnp",
+                                                    // THEN - there is no piece
+                                                    "",
+            
+                                                    // THEN - we got a piece - get its' moves and filter them
+                                                    Concat(
+                                                        Distinct(
+                                                            Sort(
+                                                                Split(
+                                                                    Trim(
+                                                                        Concat(
+                                                                            ForAll(
+                                                                                Filter(colPF_LEGAL_MOVES,
+                                                                                    sqNum=theSqNum.Value &&
+                                                                                    // the PAWN is case sensitive since it is uni-directional
+                                                                                    pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
+                                                                                ) As theEligibleMove,
+            
+                                                                                theEligibleMove.eligibleSqName
+                                                                            ), Value, " "
+                                                                        )
+                                                                    ), " "
+                                                                ), Value
+                                                            ), Value
+                                                        ), Value, " "
+                                                    )
+                                                )
+                                            )
+                                        ), Value, " "
+                                    )
+                            } As theLists,
+            
+                            If(gblPF_DEBUG_EVAL,
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                    " comChessEngineFunctions.fME_prepNode(): DEBUG whiteStrongSqList: " & theLists.whiteStrongSqList
+                                })
+                            )
+                        );
+            
+                        With(
+                            {
                                 blackStrongSqList:
                                     Concat(
                                         ForAll(
@@ -797,7 +848,7 @@ UsingComponents As screen:
                                                                     ), " "
                                                                 ), Value
                                                             ), Value
-                                                        ), " "
+                                                        ), Value, " "
                                                     )
                                                 )
                                             )
@@ -807,58 +858,7 @@ UsingComponents As screen:
             
                             If(gblPF_DEBUG_EVAL,
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                    " comChessEngineFunctions.fME_prepNode(): DEBUG strongSqList: " & theLists.blackStrongSqList
-                                })
-                            )
-                        );
-            
-                        With(
-                            {
-                                whiteStrongSqList:
-                                    Concat(
-                                        ForAll(
-                                            Sequence(64,0) As theSqNum,
-            
-                                            With(
-                                                {
-                                                    moveBit: UDF_getBitAtSqNum(localVars.preMoveBoard,theSqNum.Value) 
-                                                } As theMoveBit,
-            
-                                                If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit in "KQRBNP",
-                                                    // THEN - there is no piece
-                                                    "",
-            
-                                                    // THEN - we got a piece - get its' moves and filter them
-                                                    Concat(
-                                                        Distinct(
-                                                            Sort(
-                                                                Split(
-                                                                    Trim(
-                                                                        Concat(
-                                                                            ForAll(
-                                                                                Filter(colPF_LEGAL_MOVES,
-                                                                                    sqNum=theSqNum.Value &&
-                                                                                    // the PAWN is case sensitive since it is uni-directional
-                                                                                    pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
-                                                                                ) As theEligibleMove,
-            
-                                                                                theEligibleMove.eligibleSqName
-                                                                            ), Value, " "
-                                                                        )
-                                                                    ), " "
-                                                                ), Value
-                                                            ), Value
-                                                        ), " "
-                                                    )
-                                                )
-                                            )
-                                        ), Value, " "
-                                    )
-                            } As theLists,
-            
-                            If(gblPF_DEBUG_EVAL,
-                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                    " comChessEngineFunctions.fME_prepNode(): DEBUG strongSqList: " & theLists.whiteStrongSqList
+                                    " comChessEngineFunctions.fME_prepNode(): DEBUG blackStrongSqList: " & theLists.blackStrongSqList
                                 })
                             )
                         );
