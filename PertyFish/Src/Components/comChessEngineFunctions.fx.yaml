@@ -746,72 +746,105 @@ comChessEngineFunctions As CanvasComponent:
                 
                             With(
                                 {
-                                    whiteStrongSqList:
-                                        Trim(
-                                            Concat(
-                                                ForAll(
-                                                    Sequence(64,0) As theSqNum,
-                
-                                                    With(
-                                                        {
-                                                            moveBit: UDF_getBitAtSqNum(localVars.preMoveBoard,theSqNum.Value) 
-                                                        } As theMoveBit,
-                
-                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin "kqrbnp",
-                                                            // THEN - there is no piece
-                                                            "",
-                
-                                                            // THEN - we got a piece - get its' moves and filter them
-                                                            If(gblPF_DEBUG_EVAL,
-                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                    " whiteStrongSqList working on  " & theMoveBit.moveBit
-                                                                })
-                                                            );
-                
+                                    whiteStrongSqNameList:
+                                        Concat(
+                                            Distinct(
+                                                Sort(
+                                                    Split(
+                                                        Trim(
                                                             Concat(
+                                                                ForAll(
+                                                                    Sequence(64,0) As theSqNum,
                 
-                                                                    Sort(
-                                                                        Split(
-                                                                            Trim(
-                                                                                Concat(
-                                                                                    ForAll(
-                                                                                        Filter(colPF_LEGAL_MOVES,
-                                                                                            sqNum=theSqNum.Value &&
-                                                                                            // the PAWN is case sensitive since it is uni-directional
-                                                                                            pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
-                                                                                        ) As theEligibleMove,
+                                                                    With(
+                                                                        {
+                                                                            moveBit: UDF_getBitAtSqNum(localVars.preMoveBoard,theSqNum.Value) 
+                                                                        } As theMoveBit,
                 
-                                                                                        If(gblPF_DEBUG_EVAL,
-                                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                                " whiteStrongSqList move detected  " & theEligibleMove.pieceUpper &
-                                                                                                " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                            })
-                                                                                        );
+                                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin "kqrbnp",
+                                                                            // THEN - there is no piece
+                                                                            "",
+                
+                                                                            // THEN - we got a piece - get its' moves and filter them
+                                                                            If(gblPF_DEBUG_EVAL,
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                                    " whiteStrongSqList working on  " & theMoveBit.moveBit
+                                                                                })
+                                                                            );
+                
+                                                                            Concat(
+                                                                                ForAll(
+                                                                                    Filter(colPF_LEGAL_MOVES,
+                                                                                        sqNum=theSqNum.Value &&
+                                                                                        // the PAWN is case sensitive since it is uni-directional
+                                                                                        pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
+                                                                                    ) As theEligibleMove,
+                
+                                                                                    If(gblPF_DEBUG_EVAL,
+                                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                                            " whiteStrongSqList move detected  " & theEligibleMove.pieceUpper &
+                                                                                            " targetSqName: " & theEligibleMove.eligibleSqName
+                                                                                        })
+                                                                                    );
+                                                                                    
+                                                                                    Switch(true,
+                                                                                        // pawn capture (non-en passant) needs to have the targetSq occupied by opponent
+                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "2468" && 
+                                                                                        UDF_FEN_TO_ENPASSANT_SQNAME(theCurrentNode.preMoveFEN)="-" &&
+                                                                                        !(UDF_getBitAtSqNum(localVars.preMoveBoard,theEligibleMove.eligibleSqNum) exactin "kqrbnp"),
+                                                                                            "",
+                
+                                                                                        // pawn capture (en passant) needs to have the targetSq unoccupied by opponent
+                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "2468" && 
+                                                                                        UDF_FEN_TO_ENPASSANT_SQNAME(theCurrentNode.preMoveFEN)<>"-" &&
+                                                                                        UDF_getBitAtSqNum(localVars.preMoveBoard,theEligibleMove.eligibleSqNum exactin "kqrbnp"),
+                                                                                            "",
+                
+                                                                                        // pawn forward move needs to have the targetSq occupied by opponent
+                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15" && 
+                                                                                        !(UDF_getBitAtSqNum(localVars.preMoveBoard,theEligibleMove.eligibleSqNum) exactin "kqrbnp"),
+                                                                                            "",
+                /*
+                                                                                        // make sure slider squares are unoccupied
+                                                                                        Len(theEligibleMove.slideOvers)>0 &&
+                                                                                            Len(
+                                                                                                ForAll (
+                                                                                                    theEligibleMove.slideOvers,
+                                                                                
+                                                                                                    If(UDF_getBitAtSqNum(localVars.preMoveBoard, theEligibleMove.eligibleSqNum) in "KQRBNP",
+                                                                                                        Blank(),
+                                                                                                        true
+                                                                                                    )
+                                                                                                )
+                                                                                            )
+                                                                                        UDF_isPathClearOnBoard(localVars.preMoveBoard, theSqNum.Value, theEligibleMove.theDistance, theEligibleMove.slideOvers),
+                 */
+                                                                                        // default
                                                                                         theEligibleMove.eligibleSqName
-                                                                                    ), Value, " "
-                                                                                )
-                                                                            ), " "
-                                                                        ), Value
-                                                                    ), Value, " "
-                
+                                                                                    )
+                                                                                ), Value, " "
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                ), Value, " "
                                                             )
-                                                        )
-                                                    )
-                                                ), Value, " "
-                                            )
+                                                        ), " "
+                                                    ), Value
+                                                ), Value
+                                            ), Value
                                         )
                                 } As theLists,
                 
                                 If(gblPF_DEBUG_EVAL,
                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                        " comChessEngineFunctions.fME_prepNode(): DEBUG whiteStrongSqList: " & theLists.whiteStrongSqList
+                                        " comChessEngineFunctions.fME_prepNode(): DEBUG whiteStrongSqNameList: " & theLists.whiteStrongSqNameList
                                     })
                                 )
                             );
                 
                             With(
                                 {
-                                    blackStrongSqList:
+                                    blackStrongSqNameList:
                                         Concat(
                                             ForAll(
                                                 Sequence(64,0) As theSqNum,
@@ -827,30 +860,14 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                         // THEN - we got a piece - get its' moves and filter them
                                                         Concat(
-                                                            Distinct(
+                                                            ForAll(
+                                                                Filter(colPF_LEGAL_MOVES,
+                                                                    sqNum=theSqNum.Value &&
+                                                                    // the PAWN is case sensitive since it is uni-directional
+                                                                    pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
+                                                                ) As theEligibleMove,
                 
-                                                                    Split(
-                                                                        Trim(
-                                                                            Concat(
-                                                                                ForAll(
-                                                                                    Filter(colPF_LEGAL_MOVES,
-                                                                                        sqNum=theSqNum.Value &&
-                                                                                        // the PAWN is case sensitive since it is uni-directional
-                                                                                        pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
-                                                                                    ) As theEligibleMove,
-                
-                                                                                    If(gblPF_DEBUG_EVAL,
-                                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                            " blackStrongSqList move detected  " & theEligibleMove.pieceUpper &
-                                                                                            " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                        })
-                                                                                    );
-                                                                                    theEligibleMove.eligibleSqName
-                                                                                ), Value, " "
-                                                                            )
-                                                                        ), " "
-                                                                    ), Value
-                
+                                                                theEligibleMove.eligibleSqName
                                                             ), Value, " "
                                                         )
                                                     )
@@ -861,7 +878,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                                 If(gblPF_DEBUG_EVAL,
                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                        " comChessEngineFunctions.fME_prepNode(): DEBUG blackStrongSqList: " & theLists.blackStrongSqList
+                                        " comChessEngineFunctions.fME_prepNode(): DEBUG blackStrongSqNameList: " & theLists.blackStrongSqNameList
                                     })
                                 )
                             );
