@@ -759,6 +759,11 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                         If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit in "kqrbnp",
                                                             // THEN - there is no piece
+                                                            If(gblPF_DEBUG_EVAL,
+                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                    " whiteStrongSqList NO PIECE  " & theMoveBit.moveBit
+                                                                })
+                                                            );
                                                             "",
                 
                                                             // THEN - we got a piece - get its' moves and filter them
@@ -823,6 +828,11 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                     If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit in "KQRBNP",
                                                         // THEN - there is no piece
+                                                        If(gblPF_DEBUG_EVAL,
+                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                " blackStrongSqList NO PIECE  " & theMoveBit.moveBit
+                                                            })
+                                                        );
                                                         "",
                 
                                                         // THEN - we got a piece - get its' moves and filter them
