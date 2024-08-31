@@ -762,8 +762,14 @@ comChessEngineFunctions As CanvasComponent:
                                                             "",
                 
                                                             // THEN - we got a piece - get its' moves and filter them
+                                                            If(gblPF_DEBUG_EVAL,
+                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                    " whiteStrongSqList working on  " & theMoveBit.moveBit
+                                                                })
+                                                            );
+                
                                                             Concat(
-                                                                Distinct(
+                
                                                                     Sort(
                                                                         Split(
                                                                             Trim(
@@ -775,13 +781,19 @@ comChessEngineFunctions As CanvasComponent:
                                                                                             pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
                                                                                         ) As theEligibleMove,
                 
+                                                                                        If(gblPF_DEBUG_EVAL,
+                                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                                                " whiteStrongSqList move detected  " & theEligibleMove.pieceUpper &
+                                                                                                " targetSqName: " & theEligibleMove.eligibleSqName
+                                                                                            })
+                                                                                        );
                                                                                         theEligibleMove.eligibleSqName
                                                                                     ), Value, " "
                                                                                 )
                                                                             ), " "
                                                                         ), Value
-                                                                    ), Value
-                                                                ), Value, " "
+                                                                    ), Value, " "
+                
                                                             )
                                                         )
                                                     )
@@ -816,7 +828,7 @@ comChessEngineFunctions As CanvasComponent:
                                                         // THEN - we got a piece - get its' moves and filter them
                                                         Concat(
                                                             Distinct(
-                                                                Sort(
+                
                                                                     Split(
                                                                         Trim(
                                                                             Concat(
@@ -827,12 +839,18 @@ comChessEngineFunctions As CanvasComponent:
                                                                                         pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
                                                                                     ) As theEligibleMove,
                 
+                                                                                    If(gblPF_DEBUG_EVAL,
+                                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                                                            " blackStrongSqList move detected  " & theEligibleMove.pieceUpper &
+                                                                                            " targetSqName: " & theEligibleMove.eligibleSqName
+                                                                                        })
+                                                                                    );
                                                                                     theEligibleMove.eligibleSqName
                                                                                 ), Value, " "
                                                                             )
                                                                         ), " "
                                                                     ), Value
-                                                                ), Value
+                
                                                             ), Value, " "
                                                         )
                                                     )
