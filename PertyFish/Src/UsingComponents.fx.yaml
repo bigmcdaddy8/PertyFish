@@ -783,13 +783,8 @@ UsingComponents As screen:
                                                         moveBit: UDF_getBitAtSqNum(localVars.preMoveBoard,theSqNum.Value) 
                                                     } As theMoveBit,
             
-                                                    If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit in "kqrbnp",
+                                                    If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin "kqrbnp",
                                                         // THEN - there is no piece
-                                                        If(gblPF_DEBUG_EVAL,
-                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                " whiteStrongSqList NO PIECE  " & theMoveBit.moveBit
-                                                            })
-                                                        );
                                                         "",
             
                                                         // THEN - we got a piece - get its' moves and filter them
@@ -852,13 +847,8 @@ UsingComponents As screen:
                                                     moveBit: UDF_getBitAtSqNum(localVars.preMoveBoard,theSqNum.Value) 
                                                 } As theMoveBit,
             
-                                                If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit in "KQRBNP",
+                                                If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin "KQRBNP",
                                                     // THEN - there is no piece
-                                                    If(gblPF_DEBUG_EVAL,
-                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                            " blackStrongSqList NO PIECE  " & theMoveBit.moveBit
-                                                        })
-                                                    );
                                                     "",
             
                                                     // THEN - we got a piece - get its' moves and filter them
