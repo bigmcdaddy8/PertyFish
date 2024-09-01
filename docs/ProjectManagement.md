@@ -60,7 +60,11 @@ Create smarter chess engines that are written using PowerFx
 
 #### Feature 0004 - Application Improvements
 
-##### Story 0004-01 Allow backup buttons for a user to undo a move
+##### Story 0004-01 Miscellaneous minor bug fix
+Fix a minor bug or issue.
+- Ready for user input needs to be set to false when start button is clicked
+
+##### Story 0004-02 Allow backup buttons for a user to undo a move
 Add a undo button for a human player to undo a move.
 
 ##### Story 0004-02 Wrap log statements in a DEBUG check
