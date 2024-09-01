@@ -932,6 +932,7 @@ Chess_Board As screen:
                         });
                         
                         Set(gblPF_UI_StartFromBeginning, true);
+                        Set(gblPF_UI_Ready4Input, false);
                         
                         UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                             uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
@@ -982,6 +983,7 @@ Chess_Board As screen:
                         });
                         
                         Set(gblPF_UI_StartFromBeginning, false);
+                        Set(gblPF_UI_Ready4Input, false);
                         
                         UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                             uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {

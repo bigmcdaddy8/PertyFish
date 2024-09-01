@@ -877,7 +877,7 @@ comChessEngineFunctions As CanvasComponent:
                                                         ), " "
                                                     ), Value
                                                 ), Value
-                                            ), Value
+                                            ), Value, " "
                                         )
                                 } As theLists,
                 
