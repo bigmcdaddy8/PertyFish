@@ -824,7 +824,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                             "",
                 
                                                                                         // castle moves do not capture therefore do not make strong squares
-                                                                                        !IsBlank(theEligibleMove.castle),
+                                                                                        theEligibleMove.castle<>"-",
                                                                                             If(gblPF_DEBUG_EVAL,
                                                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                                                                     " whiteStrongSqList FILTER castle moves " & theEligibleMove.pieceUpper &
