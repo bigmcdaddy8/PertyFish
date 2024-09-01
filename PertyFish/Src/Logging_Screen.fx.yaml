@@ -13,7 +13,7 @@ Logging_Screen As screen:
             LoadingSpinner: =LoadingSpinner.Data
             TemplatePadding: =1
             TemplateSize: =30
-            Width: =1200
+            Width: =1167
             X: =10
             Y: =5
             ZIndex: =1
