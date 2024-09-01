@@ -730,7 +730,7 @@ comChessEngineFunctions As CanvasComponent:
                                 theData:            LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME),
                                 preMoveBoard:       UDF_FEN_TO_BOARD(theCurrentNode.preMoveFEN),
                                 postMoveBoard:      UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN),
-                                colorMakingMove:    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN),
+                                colorMakingMove:    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
                             } As localVars,
                 
                             If(gblPF_DEBUG_EVAL,
@@ -938,26 +938,6 @@ comChessEngineFunctions As CanvasComponent:
                                         " comChessEngineFunctions.fME_prepNode(): DEBUG blackStrongSqNumList: " & theLists.blackStrongSqNumList
                                     })
                                 )
-                            );
-                
-                /*
-                                            // do not include this move if it is a slider and the overSlider squares are not un-occupied
-                                            Switch(true,
-                                                UDF_isPathClearOnBoard(localVars.preMoveBoard, theSqNum.Value, theEligibleMove.theDistance, theEligibleMove.slideOvers),
-                                                    
-                 */
-                
-                            If(
-                                localVars.whiteStrongSqBoard<>theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard || 
-                                localVars.blackStrongSqBoard<>theCurrentNode.postMoveEvalRecord.blackStrongSqBoard,
-                                // THEN - update the boards
-                                UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
-                                    postMoveEvalRecord: 
-                                        Patch(theCurrentNode.postMoveEvalRecord, {
-                                            whiteStrongSqBoard: localVars.whiteStrongSqBoard,
-                                            blackStrongSqBoard: localVars.blackStrongSqBoard
-                                        })
-                                })
                             )
                         )
                     )
