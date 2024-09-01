@@ -204,8 +204,8 @@ comChessEngineFunctions As CanvasComponent:
                 
                 With(
                     {
-                        currentNode:    LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
-                        parentNode:     LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID)
+                        theCurrentNode:    LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
+                        theParentNode:     LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID)
                     } As theNodes,
                 
                     If(gblPF_DEBUG_TIMERS,
@@ -220,21 +220,21 @@ comChessEngineFunctions As CanvasComponent:
                             " fCE_300(): DEBUG board pre-update dump"
                         });
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " ParentNode whiteStrongSqBoard: " & theNodes.parentNode.postMoveEvalRecord.whiteStrongSqBoard
+                            " ParentNode whiteStrongSqBoard: " & theNodes.theParentNode.postMoveEvalRecord.whiteStrongSqBoard
                         });
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " ParentNode blackStrongSqBoard: " & theNodes.parentNode.postMoveEvalRecord.blackStrongSqBoard 
+                            " ParentNode blackStrongSqBoard: " & theNodes.theParentNode.postMoveEvalRecord.blackStrongSqBoard 
                         });
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " CurrentNode whiteStrongSqBoard: " & theNodes.currentNode.postMoveEvalRecord.whiteStrongSqBoard
+                            " CurrentNode whiteStrongSqBoard: " & theNodes.theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
                         });
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " CurrentNode blackStrongSqBoard: " & theNodes.currentNode.postMoveEvalRecord.blackStrongSqBoard 
+                            " CurrentNode blackStrongSqBoard: " & theNodes.theCurrentNode.postMoveEvalRecord.blackStrongSqBoard 
                         })
                     );
                 
-                    comChessEngineFunctions.fME_prepNode(100, theNodes.parentNode.nodeID);
-                    comChessEngineFunctions.fME_prepNode(100, theNodes.currentNode.nodeID);
+                    comChessEngineFunctions.fME_prepNode(100, theNodes.theParentNode.nodeID);
+                    comChessEngineFunctions.fME_prepNode(100, theNodes.theCurrentNode.nodeID);
                     
                     If(gblPF_DEBUG_TIMERS,
                         UpdateIf(colPF_Timers, timerName="comChessEngineFunctions.fCE_300.PREP", { stopTime: Now() });
@@ -253,6 +253,7 @@ comChessEngineFunctions As CanvasComponent:
                     {
                         theData:        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME),
                         theCurrentNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
+                        theParentNode:  LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID),
                         evalRecord:     EVAL_RECORD_PF
                     } As localVars,
                 
@@ -268,12 +269,22 @@ comChessEngineFunctions As CanvasComponent:
                 
                     If(gblPF_DEBUG_EVAL,
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " whiteStrongSqBoard: " & localVars.theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
+                            " post-update parent whiteStrongSqBoard: " & localVars.theParentNode.postMoveEvalRecord.whiteStrongSqBoard
                         })
                     );
                     If(gblPF_DEBUG_EVAL,
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " blackStrongSqBoard: " & localVars.theCurrentNode.postMoveEvalRecord.blackStrongSqBoard
+                            " post-update parent blackStrongSqBoard: " & localVars.theParentNode.postMoveEvalRecord.blackStrongSqBoard
+                        })
+                    );
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " post-update current whiteStrongSqBoard: " & localVars.theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
+                        })
+                    );
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " post-update current blackStrongSqBoard: " & localVars.theCurrentNode.postMoveEvalRecord.blackStrongSqBoard
                         })
                     );
                 
@@ -932,13 +943,6 @@ comChessEngineFunctions As CanvasComponent:
                                                                                         // the PAWN is case sensitive since it is uni-directional
                                                                                         pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
                                                                                     ) As theEligibleMove,
-                
-                                                                                    If(gblPF_DEBUG_EVAL,
-                                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                            " blackStrongSqList move detected  " & theEligibleMove.pieceUpper &
-                                                                                            " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                        })
-                                                                                    );
                                                                                     
                                                                                     Switch(true,
                                                                                         // pawn forward moves do not capture therefore do not make strong squares
