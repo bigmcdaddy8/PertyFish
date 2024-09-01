@@ -755,7 +755,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                             With(
                                 {
-                                    whiteStrongSqNumList:
+                                    whiteStrongSqNameList:
                                         Concat(
                                             Distinct(
                                                 Sort(
@@ -850,7 +850,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                                 " targetSqName: " & theEligibleMove.eligibleSqName
                                                                                             })
                                                                                         );
-                                                                                        theEligibleMove.eligibleSqNum
+                                                                                        theEligibleMove.eligibleSqName
                                                                                     )
                                                                                 ), Value, " "
                                                                             )
@@ -867,7 +867,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                                 If(gblPF_DEBUG_EVAL,
                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                        " comChessEngineFunctions.fME_prepNode(): DEBUG whiteStrongSqNumList: " & theLists.whiteStrongSqNumList
+                                        " comChessEngineFunctions.fME_prepNode(): DEBUG whiteStrongSqNameList: " & theLists.whiteStrongSqNameList
                                     })
                                 );
                 
@@ -878,7 +878,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     ForAll(
                                                                         Sequence(64,0) As theSqNum,
                 
-                                                                        If(Text(theSqNum.Value) in theLists.whiteStrongSqNumList, ATTACKED_ABBR, EMPTY_FILLER_ABBR)
+                                                                        If(UDF_sqNumToSqName(theSqNum.Value) in theLists.whiteStrongSqNameList, ATTACKED_ABBR, EMPTY_FILLER_ABBR)
                                                                     ), Value, ""
                                                                 )
                                         })
@@ -887,7 +887,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                             With(
                                 {
-                                    blackStrongSqNumList:
+                                    blackStrongSqNameList:
                                         Concat(
                                             ForAll(
                                                 Sequence(64,0) As theSqNum,
@@ -921,7 +921,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                                 If(gblPF_DEBUG_EVAL,
                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                        " comChessEngineFunctions.fME_prepNode(): DEBUG blackStrongSqNumList: " & theLists.blackStrongSqNumList
+                                        " comChessEngineFunctions.fME_prepNode(): DEBUG blackStrongSqNameList: " & theLists.blackStrongSqNameList
                                     })
                                 )
                             )
