@@ -796,6 +796,10 @@ UsingComponents As screen:
                         If(gblPF_DEBUG_EVAL,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                 " postMoveBoard: " & localVars.postMoveBoard
+                            });
+            
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " postMovePINs: " & theCurrentNode.postMovePINs
                             })
                         );
             
@@ -821,12 +825,6 @@ UsingComponents As screen:
                                                                         "",
             
                                                                         // THEN - we got a piece - get its' moves and filter them
-                                                                        If(gblPF_DEBUG_EVAL,
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " whiteStrongSqList working on  " & theMoveBit.moveBit
-                                                                            })
-                                                                        );
-            
                                                                         Concat(
                                                                             ForAll(
                                                                                 Filter(colPF_LEGAL_MOVES,
@@ -835,32 +833,13 @@ UsingComponents As screen:
                                                                                     pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
                                                                                 ) As theEligibleMove,
             
-                                                                                If(gblPF_DEBUG_EVAL,
-                                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                        " whiteStrongSqList move detected  " & theEligibleMove.pieceUpper &
-                                                                                        " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                    })
-                                                                                );
-                                                                                
                                                                                 Switch(true,
                                                                                     // pawn forward moves do not capture therefore do not make strong squares
                                                                                     theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15",
-                                                                                        If(gblPF_DEBUG_EVAL,
-                                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                                " whiteStrongSqList FILTER pawn forward moves " & theEligibleMove.pieceUpper &
-                                                                                                " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                            })
-                                                                                        );
                                                                                         "",
             
                                                                                     // castle moves do not capture therefore do not make strong squares
                                                                                     theEligibleMove.castle<>"-",
-                                                                                        If(gblPF_DEBUG_EVAL,
-                                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                                " whiteStrongSqList FILTER castle moves " & theEligibleMove.pieceUpper &
-                                                                                                " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                            })
-                                                                                        );
                                                                                         "",
             
                                                                                     // make sure slider squares are unoccupied
@@ -881,21 +860,9 @@ UsingComponents As screen:
                                                                                                 ), Value=true
                                                                                             )
                                                                                         )),
-                                                                                        If(gblPF_DEBUG_EVAL,
-                                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                                " whiteStrongSqList FILTER slider blocked moves " & theEligibleMove.pieceUpper &
-                                                                                                " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                            })
-                                                                                        );
                                                                                         "",
             
                                                                                     // default
-                                                                                    If(gblPF_DEBUG_EVAL,
-                                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                            " whiteStrongSqList DEBUG strong move detected " & theEligibleMove.pieceUpper &
-                                                                                            " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                        })
-                                                                                    );
                                                                                     theEligibleMove.eligibleSqName
                                                                                 )
                                                                             ), Value, " "
@@ -969,12 +936,6 @@ UsingComponents As screen:
                                                                         "",
             
                                                                         // THEN - we got a piece - get its' moves and filter them
-                                                                        If(gblPF_DEBUG_EVAL,
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                " blackStrongSqList working on  " & theMoveBit.moveBit
-                                                                            })
-                                                                        );
-            
                                                                         Concat(
                                                                             ForAll(
                                                                                 Filter(colPF_LEGAL_MOVES,
@@ -993,22 +954,10 @@ UsingComponents As screen:
                                                                                 Switch(true,
                                                                                     // pawn forward moves do not capture therefore do not make strong squares
                                                                                     theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15",
-                                                                                        If(gblPF_DEBUG_EVAL,
-                                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                                " blackStrongSqList FILTER pawn forward moves " & theEligibleMove.pieceUpper &
-                                                                                                " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                            })
-                                                                                        );
                                                                                         "",
             
                                                                                     // castle moves do not capture therefore do not make strong squares
                                                                                     theEligibleMove.castle<>"-",
-                                                                                        If(gblPF_DEBUG_EVAL,
-                                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                                " blackStrongSqList FILTER castle moves " & theEligibleMove.pieceUpper &
-                                                                                                " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                            })
-                                                                                        );
                                                                                         "",
             
                                                                                     // make sure slider squares are unoccupied
@@ -1029,21 +978,9 @@ UsingComponents As screen:
                                                                                                 ), Value=true
                                                                                             )
                                                                                         )),
-                                                                                        If(gblPF_DEBUG_EVAL,
-                                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                                " blackStrongSqList FILTER slider blocked moves " & theEligibleMove.pieceUpper &
-                                                                                                " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                            })
-                                                                                        );
                                                                                         "",
             
                                                                                     // default
-                                                                                    If(gblPF_DEBUG_EVAL,
-                                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                            " blackStrongSqList DEBUG strong move detected " & theEligibleMove.pieceUpper &
-                                                                                            " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                        })
-                                                                                    );
                                                                                     theEligibleMove.eligibleSqName
                                                                                 )
                                                                             ), Value, " "
