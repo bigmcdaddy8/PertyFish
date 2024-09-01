@@ -757,8 +757,6 @@ UsingComponents As screen:
                             preMoveBoard:       UDF_FEN_TO_BOARD(theCurrentNode.preMoveFEN),
                             postMoveBoard:      UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN),
                             colorMakingMove:    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN),
-                            whiteStrongSqBoard: EMPTY_BOARD,
-                            blackStrongSqBoard: EMPTY_BOARD
                         } As localVars,
             
                         If(gblPF_DEBUG_EVAL,
@@ -772,7 +770,7 @@ UsingComponents As screen:
             
                         With(
                             {
-                                whiteStrongSqNameList:
+                                whiteStrongSqNumList:
                                     Concat(
                                         Distinct(
                                             Sort(
@@ -892,7 +890,7 @@ UsingComponents As screen:
                                                                                             " targetSqName: " & theEligibleMove.eligibleSqName
                                                                                         })
                                                                                     );
-                                                                                    theEligibleMove.eligibleSqName
+                                                                                    theEligibleMove.eligibleSqNum
                                                                                 )
                                                                             ), Value, " "
                                                                         )
@@ -909,14 +907,27 @@ UsingComponents As screen:
             
                             If(gblPF_DEBUG_EVAL,
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                    " comChessEngineFunctions.fME_prepNode(): DEBUG whiteStrongSqNameList: " & theLists.whiteStrongSqNameList
+                                    " comChessEngineFunctions.fME_prepNode(): DEBUG whiteStrongSqNumList: " & theLists.whiteStrongSqNumList
                                 })
-                            )
+                            );
+            
+                            UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
+                                postMoveEvalRecord: 
+                                    Patch(theCurrentNode.postMoveEvalRecord, {
+                                        whiteStrongSqBoard: Concat(
+                                                                ForAll(
+                                                                    Sequence(64,0) As theSqNum,
+            
+                                                                    If(Text(theSqNum.Value) in theLists.whiteStrongSqNumList, ATTACKED_ABBR, EMPTY_FILLER_ABBR)
+                                                                ), Value, ""
+                                                            )
+                                    })
+                            })
                         );
             
                         With(
                             {
-                                blackStrongSqNameList:
+                                blackStrongSqNumList:
                                     Concat(
                                         ForAll(
                                             Sequence(64,0) As theSqNum,
@@ -950,7 +961,7 @@ UsingComponents As screen:
             
                             If(gblPF_DEBUG_EVAL,
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                    " comChessEngineFunctions.fME_prepNode(): DEBUG blackStrongSqNameList: " & theLists.blackStrongSqNameList
+                                    " comChessEngineFunctions.fME_prepNode(): DEBUG blackStrongSqNumList: " & theLists.blackStrongSqNumList
                                 })
                             )
                         );
