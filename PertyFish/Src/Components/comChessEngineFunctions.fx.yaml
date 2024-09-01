@@ -243,6 +243,17 @@ comChessEngineFunctions As CanvasComponent:
                         })
                     );
                 
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " whiteStrongSqBoard: " & localVars.theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
+                        })
+                    );
+                    If(gblPF_DEBUG_EVAL,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " blackStrongSqBoard: " & localVars.theCurrentNode.postMoveEvalRecord.blackStrongSqBoard
+                        })
+                    );
+                
                     With(
                         Patch(localVars, {
                             evalRecord:
@@ -786,31 +797,6 @@ comChessEngineFunctions As CanvasComponent:
                                                                                     );
                                                                                     
                                                                                     Switch(true,
-                /*
-                                                                                        // pawn capture (non-en passant) needs to have the targetSq occupied by opponent
-                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "2468" && 
-                                                                                        UDF_FEN_TO_ENPASSANT_SQNAME(theCurrentNode.preMoveFEN)="-" &&
-                                                                                        !(UDF_getBitAtSqNum(localVars.preMoveBoard,theEligibleMove.eligibleSqNum) exactin "kqrbnp"),
-                                                                                            If(gblPF_DEBUG_EVAL,
-                                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                                    " whiteStrongSqList FILTER pawn capture  " & theEligibleMove.pieceUpper &
-                                                                                                    " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                                })
-                                                                                            );
-                                                                                            "",
-                
-                                                                                        // pawn capture (en passant) needs to have the targetSq unoccupied by opponent
-                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "2468" && 
-                                                                                        UDF_FEN_TO_ENPASSANT_SQNAME(theCurrentNode.preMoveFEN)<>"-" &&
-                                                                                        UDF_getBitAtSqNum(localVars.preMoveBoard,theEligibleMove.eligibleSqNum exactin "kqrbnp"),
-                                                                                            If(gblPF_DEBUG_EVAL,
-                                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                                                                    " whiteStrongSqList FILTER pawn capture (en passant) " & theEligibleMove.pieceUpper &
-                                                                                                    " targetSqName: " & theEligibleMove.eligibleSqName
-                                                                                                })
-                                                                                            );
-                                                                                            "",
-                 */
                                                                                         // pawn forward moves do not capture therefore do not make strong squares
                                                                                         theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15",
                                                                                             If(gblPF_DEBUG_EVAL,
