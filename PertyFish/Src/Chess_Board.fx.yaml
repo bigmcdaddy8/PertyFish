@@ -1965,17 +1965,19 @@ Chess_Board As screen:
                             If(gblPF_DEBUG,
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                     " btnProcessGame.OnSelect(): GAME_STATUS_PRE_D1 getting started   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
-                                })
+                                });
+                    
+                                With(
+                                    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                    
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " btnProcessGame.OnSelect(): GAME_STATUS_PRE_D1 test #: " & theData.chessEngineData.testNumber & 
+                                        " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount
+                                    })
+                                )
                             );
                     
-                            With(
-                                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                     
-                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                    " btnProcessGame.OnSelect(): GAME_STATUS_PRE_D1 test #: " & theData.chessEngineData.testNumber & 
-                                    " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount
-                                })
-                            );
                     
                             UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
                                 postMoveNumActiveChecks:        0,
@@ -2340,9 +2342,11 @@ Chess_Board As screen:
                                 })
                             )
                         );
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " btnProcessGame.OnSelect():  GAME_STATUS_PRE_D1  finished   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                        });
+                        If(glPF_DEBUG,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                " btnProcessGame.OnSelect():  GAME_STATUS_PRE_D1  finished   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+                            })
+                        );
                     
                     
                         /* -----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2363,16 +2367,16 @@ Chess_Board As screen:
                         If(gblPF_DEBUG_GAME_NODES,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                 " btnProcessGame.OnSelect(): GAME_NODES getting started    vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
-                            })
-                        );
+                            });
                     
-                        With(
-                            LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                            With(
+                                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                     
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " btnProcessGame.OnSelect(): GAME_NODES test #: " & theData.chessEngineData.testNumber & 
-                                " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount
-                            })
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                    " btnProcessGame.OnSelect(): GAME_NODES test #: " & theData.chessEngineData.testNumber & 
+                                    " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount
+                                })
+                            )
                         );
                     
                         With(
@@ -2530,10 +2534,12 @@ Chess_Board As screen:
                                                     )
                                                 ), 
                                                     // FILTERED - non-qualified WHITE KS castle
-                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                        " btnProcessGame.OnSelect(): FILTERED - non-qualified WHITE KS castle " &
-                                                        " pacn: " & theEligibleMove.sqName & theEligibleMove.eligibleSqName
-                                                    });
+                                                    If(gblPF_DEBUG,
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " btnProcessGame.OnSelect(): FILTERED - non-qualified WHITE KS castle " &
+                                                            " pacn: " & theEligibleMove.sqName & theEligibleMove.eligibleSqName
+                                                        })
+                                                    );
                                                     Blank(),
                     
                                                 // is this a WHITE QS castle move ? if so let's check the conditions
@@ -3870,17 +3876,19 @@ Chess_Board As screen:
                     
                                                         If (bishopSqColors.whiteBSqColor=bishopSqColors.blackBSqColor,
                                                             // THEN
-                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                " btnProcessGame.OnSelect(): ISM DRAW detected setting isISMDraw & isDraw to true " &
-                                                                " whitePiecesCount_QRP: " & localVars.whitePiecesCount_QRP &
-                                                                " whitePiecesCount_B: " & localVars.whitePiecesCount_B &
-                                                                " whitePiecesCount_N: " & localVars.whitePiecesCount_N &
-                                                                " blackPiecesCount_qrp: " & localVars.blackPiecesCount_qrp &
-                                                                " blackPiecesCount_b: " & localVars.blackPiecesCount_b &
-                                                                " blackPiecesCount_n: " & localVars.blackPiecesCount_n &
-                                                                " whiteBSqColor: " & bishopSqColors.whiteBSqColor &
-                                                                " blackBSqColor: " & bishopSqColors.blackBSqColor
-                                                            });
+                                                            If(gblPF_DEBUG,
+                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                    " btnProcessGame.OnSelect(): ISM DRAW detected setting isISMDraw & isDraw to true " &
+                                                                    " whitePiecesCount_QRP: " & localVars.whitePiecesCount_QRP &
+                                                                    " whitePiecesCount_B: " & localVars.whitePiecesCount_B &
+                                                                    " whitePiecesCount_N: " & localVars.whitePiecesCount_N &
+                                                                    " blackPiecesCount_qrp: " & localVars.blackPiecesCount_qrp &
+                                                                    " blackPiecesCount_b: " & localVars.blackPiecesCount_b &
+                                                                    " blackPiecesCount_n: " & localVars.blackPiecesCount_n &
+                                                                    " whiteBSqColor: " & bishopSqColors.whiteBSqColor &
+                                                                    " blackBSqColor: " & bishopSqColors.blackBSqColor
+                                                                })
+                                                            );
                     
                                                             UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
                                                                 inactiveColorMoveRecord:Patch(
@@ -4041,15 +4049,19 @@ Chess_Board As screen:
                     
                             If(theData.chessEngineData.isGame,
                                 // THEN - either game or game test
-                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                    " btnProcessGame.OnSelect(): selecting 'btnCheckGameResults'"
-                                });
+                                If(gblPF_DEBUG,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                        " btnProcessGame.OnSelect(): selecting 'btnCheckGameResults'"
+                                    })
+                                );
                                 Select(btnCheckGameResults),
                     
                                 // ELSE - this is a test
-                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                    " btnProcessGame.OnSelect(): selecting 'btnCheckTestResults'"
-                                });
+                                If(gblPF_DEBUG,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                        " btnProcessGame.OnSelect(): selecting 'btnCheckTestResults'"
+                                    })
+                                );
                                 Select(btnCheckTestResults)
                             )
                         ),
