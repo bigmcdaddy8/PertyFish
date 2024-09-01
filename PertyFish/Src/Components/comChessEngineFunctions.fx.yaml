@@ -203,7 +203,10 @@ comChessEngineFunctions As CanvasComponent:
                 );
                 
                 With(
-                    LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+                    {
+                        currentNode:    LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
+                        parentNode:     LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID)
+                    } As theNodes,
                 
                     If(gblPF_DEBUG_TIMERS,
                         If(IsBlank(LookUp(colPF_Timers, timerName="comChessEngineFunctions.fCE_300.PREP")),
@@ -217,15 +220,21 @@ comChessEngineFunctions As CanvasComponent:
                             " fCE_300(): DEBUG board pre-update dump"
                         });
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
+                            " ParentNode whiteStrongSqBoard: " & theNodes.parentNode.postMoveEvalRecord.whiteStrongSqBoard
                         });
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " blackStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.blackStrongSqBoard 
+                            " ParentNode blackStrongSqBoard: " & theNodes.parentNode.postMoveEvalRecord.blackStrongSqBoard 
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " CurrentNode whiteStrongSqBoard: " & theNodes.currentNode.postMoveEvalRecord.whiteStrongSqBoard
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " CurrentNode blackStrongSqBoard: " & theNodes.currentNode.postMoveEvalRecord.blackStrongSqBoard 
                         })
                     );
                 
-                    comChessEngineFunctions.fME_prepNode(100, theCurrentNode.parentNodeID);
-                    comChessEngineFunctions.fME_prepNode(100, pNodeID);
+                    comChessEngineFunctions.fME_prepNode(100, theNodes.parentNode.nodeID);
+                    comChessEngineFunctions.fME_prepNode(100, theNodes.currentNode.nodeID);
                     
                     If(gblPF_DEBUG_TIMERS,
                         UpdateIf(colPF_Timers, timerName="comChessEngineFunctions.fCE_300.PREP", { stopTime: Now() });
@@ -768,10 +777,16 @@ comChessEngineFunctions As CanvasComponent:
                             } As localVars,
                 
                             If(gblPF_DEBUG_EVAL,
+                                // THEN
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                    " pre-update whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
+                                });
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                    " pre-update blackStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.blackStrongSqBoard
+                                });
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                     " postMoveBoard: " & localVars.postMoveBoard
                                 });
-                
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                     " postMovePINs: " & theCurrentNode.postMovePINs
                                 })
