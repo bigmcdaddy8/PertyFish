@@ -226,18 +226,6 @@ comChessEngineFunctions As CanvasComponent:
                 
                     comChessEngineFunctions.fME_prepNode(100, theCurrentNode.parentNodeID);
                     comChessEngineFunctions.fME_prepNode(100, pNodeID);
-                
-                    If(gblPF_DEBUG_EVAL,
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                            " fCE_300(): DEBUG board post-update dump"
-                        });
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
-                        });
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " blackStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.blackStrongSqBoard 
-                        })
-                    );
                     
                     If(gblPF_DEBUG_TIMERS,
                         UpdateIf(colPF_Timers, timerName="comChessEngineFunctions.fCE_300.PREP", { stopTime: Now() });
@@ -914,6 +902,22 @@ comChessEngineFunctions As CanvasComponent:
                                                                     ), Value, ""
                                                                 )
                                         })
+                                })
+                            )
+                        )
+                    );
+                
+                    With(
+                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+                
+                        With(
+                            {
+                                postMoveBoard:      UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN)
+                            } As localVars,
+                
+                            If(gblPF_DEBUG_EVAL,
+                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                    " postMoveBoard: " & localVars.postMoveBoard
                                 })
                             );
                 
