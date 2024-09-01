@@ -2342,7 +2342,7 @@ Chess_Board As screen:
                                 })
                             )
                         );
-                        If(glPF_DEBUG,
+                        If(gblPF_DEBUG,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                 " btnProcessGame.OnSelect():  GAME_STATUS_PRE_D1  finished   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
                             })
