@@ -800,14 +800,17 @@ comChessEngineFunctions As CanvasComponent:
                                                                                         UDF_getBitAtSqNum(localVars.preMoveBoard,theEligibleMove.eligibleSqNum exactin "kqrbnp"),
                                                                                             "",
                 
-                                                                                        // pawn forward move needs to have the targetSq occupied by opponent
-                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15" && 
-                                                                                        !(UDF_getBitAtSqNum(localVars.preMoveBoard,theEligibleMove.eligibleSqNum) exactin "kqrbnp"),
+                                                                                        // pawn forward moves do not capture therefore do not make strong squares
+                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15",
+                                                                                            "",
+                
+                                                                                        // castle moves do not capture therefore do not make strong squares
+                                                                                        !IsBlank(theEligibleMove.castle),
                                                                                             "",
                 
                                                                                         // make sure slider squares are unoccupied
-                                                                                        Len(theEligibleMove.slideOvers)>0 &&
-                                                                                            CountRows(
+                                                                                        (!IsBlank(theEligibleMove.slideOvers)) &&
+                                                                                            (!IsEmpty(
                                                                                                 Filter(
                                                                                                     ForAll (
                                                                                                         Split(theEligibleMove.slideOvers, " ") As theSlideOverSqName,
@@ -816,13 +819,13 @@ comChessEngineFunctions As CanvasComponent:
                                                                                                             UDF_getBitAtSqNum(
                                                                                                                 localVars.preMoveBoard, 
                                                                                                                 UDF_sqNameToSqNum(theSlideOverSqName.Value)
-                                                                                                            ) in "KQRBNP",
+                                                                                                            ) in "KQRBNP", // any piece of any color in slide zone ?
                                                                                                             true,
                                                                                                             false
                                                                                                         )
                                                                                                     ), Value=true
                                                                                                 )
-                                                                                            )>0,
+                                                                                            )),
                                                                                             "",
                 
                                                                                         // default
