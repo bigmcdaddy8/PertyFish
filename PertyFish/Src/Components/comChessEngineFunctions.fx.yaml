@@ -195,8 +195,22 @@ comChessEngineFunctions As CanvasComponent:
                     })
                 );
                 
+                If(gblPF_DEBUG_TIMERS,
+                    If(IsBlank(LookUp(colPF_Timers, timerName="comChessEngineFunctions.fCE_300")),
+                        Collect(colPF_Timers, {timerName:"comChessEngineFunctions.fCE_300",startTime:Now(),stopTime:Blank()}),
+                        UpdateIf(colPF_Timers, timerName="comChessEngineFunctions.fCE_300", { startTime: Now() })
+                    )
+                );
+                
                 With(
                     LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+                
+                    If(gblPF_DEBUG_TIMERS,
+                        If(IsBlank(LookUp(colPF_Timers, timerName="comChessEngineFunctions.fCE_300.PREP")),
+                            Collect(colPF_Timers, {timerName:"comChessEngineFunctions.fCE_300.PREP",startTime:Now(),stopTime:Blank()}),
+                            UpdateIf(colPF_Timers, timerName="comChessEngineFunctions.fCE_300.PREP", { startTime: Now() })
+                        )
+                    );
                 
                     If(gblPF_DEBUG_EVAL,
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
@@ -223,6 +237,18 @@ comChessEngineFunctions As CanvasComponent:
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                             " blackStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.blackStrongSqBoard 
                         })
+                    );
+                    
+                    If(gblPF_DEBUG_TIMERS,
+                        UpdateIf(colPF_Timers, timerName="comChessEngineFunctions.fCE_300.PREP", { stopTime: Now() });
+                        With(
+                            LookUp(colPF_Timers, timerName="comChessEngineFunctions.fCE_300.PREP") As theTimer,
+                
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                " comChessEngineFunctions.fCE_300(): PREP total elapsed time: " &
+                                Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
+                            })
+                        )
                     )
                 );
                 
@@ -330,7 +356,19 @@ comChessEngineFunctions As CanvasComponent:
                 
                 If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_300(): exiting"})
-                )
+                );
+                
+                If(gblPF_DEBUG_TIMERS,
+                    UpdateIf(colPF_Timers, timerName="comChessEngineFunctions.fCE_300", { stopTime: Now() });
+                    With(
+                        LookUp(colPF_Timers, timerName="comChessEngineFunctions.fCE_300") As theTimer,
+                
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                            " comChessEngineFunctions.fCE_300(): total elapsed time: " &
+                            Text(DateDiff(theTimer.startTime, theTimer.stopTime, TimeUnit.Milliseconds)/1000) & " seconds"
+                        })
+                    )
+                );
                 
     fCE_400(pNodeID As Number):
         pNodeID:
