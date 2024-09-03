@@ -813,9 +813,9 @@ UsingComponents As screen:
                             theCurrentMoveTreeNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
                             theParentMoveTreeNode:  LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID),
                             theMoveHistoryTail:
-                                If(CountRows(colPF_MOVE_HISTORY)>=2,LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID).nodeID,Blank()),
+                                If(CountRows(colPF_MOVE_HISTORY)>=1,LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID).nodeID,Blank()),
                             theMoveHistoryTailM1:
-                                If(CountRows(colPF_MOVE_HISTORY)>=3,
+                                If(CountRows(colPF_MOVE_HISTORY)>=2,
                                     LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID).parentNodeID,
                                     Blank()
                                 )
