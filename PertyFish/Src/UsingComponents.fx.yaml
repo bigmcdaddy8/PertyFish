@@ -910,7 +910,10 @@ UsingComponents As screen:
                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                         " comChessEngineFunctions.fME_prepNode(): DEBUG whiteStrongSqNameList: " & theLists.whiteStrongSqNameList
                                     });
-            
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                        " comChessEngineFunctions.fME_prepNode(): DEBUG postMovePINs: " & theCurrentNode.postMovePINs &
+                                        " postMovePINDirections: " & theCurrentNode.postMovePINDirections
+                                    });
                                 );
             
                                 UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
