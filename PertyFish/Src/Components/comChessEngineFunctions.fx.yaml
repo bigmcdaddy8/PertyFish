@@ -787,16 +787,17 @@ comChessEngineFunctions As CanvasComponent:
                                 theCurrentMoveTreeNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
                                 theParentMoveTreeNode:  LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID),
                                 theMoveHistoryTail:
-                                    If(CountRows(colPF_MOVE_HISTORY)>=1,theData.chessEngineData.moveHistoryTAILNodeID,Blank()),
-                                theMoveHistoryTailM1:
-                                    If(CountRows(colPF_MOVE_HISTORY)>=2,
-                                        LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID).parentNodeID,
-                                        Blank()
-                                    )
+                                    If(CountRows(colPF_MOVE_HISTORY)>=1,theData.chessEngineData.moveHistoryTAILNodeID,Blank())
                             } As localVars,
                 
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                 " CountRows(colPF_MOVE_HISTORY): " & CountRows(colPF_MOVE_HISTORY)
+                            });
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " current nodeID: " & pNodeID &
+                                " current pacn: " & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.pacn &
+                                " current Active color: " & 
+                                " current postMovePINs: " & localVars.theCurrentMoveTreeNode.postMovePINs
                             });
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                 " History tail nodeID: " & If(IsBlank(localVars.theMoveHistoryTail),"Blank",localVars.theMoveHistoryTail) &
@@ -804,13 +805,6 @@ comChessEngineFunctions As CanvasComponent:
                                     If(IsBlank(localVars.theMoveHistoryTail),"Blank",LookUp(colPF_MOVE_HISTORY, nodeID=localVars.theMoveHistoryTail).inactiveColorMoveRecord.pacn) &
                                 " History tail postMovePINs: " & 
                                     If(IsBlank(localVars.theMoveHistoryTail),"Blank",LookUp(colPF_MOVE_HISTORY, nodeID=localVars.theMoveHistoryTail).postMovePINs)
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " History tail-1 nodeID: " & If(IsBlank(localVars.theMoveHistoryTailM1),"Blank",localVars.theMoveHistoryTailM1) &
-                                " History tail-1 pacn: " &
-                                    If(IsBlank(localVars.theMoveHistoryTailM1),"Blank",LookUp(colPF_MOVE_HISTORY, nodeID=localVars.theMoveHistoryTailM1).inactiveColorMoveRecord.pacn) &
-                                " History tail-1 postMovePINs: " & 
-                                    If(IsBlank(localVars.theMoveHistoryTailM1),"Blank",LookUp(colPF_MOVE_HISTORY, nodeID=localVars.theMoveHistoryTailM1).postMovePINs)
                             })
                         )
                     )
