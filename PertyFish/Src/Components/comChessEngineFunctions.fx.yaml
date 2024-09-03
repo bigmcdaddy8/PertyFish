@@ -796,6 +796,9 @@ comChessEngineFunctions As CanvasComponent:
                             } As localVars,
                 
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " CountRows(colPF_MOVE_HISTORY): " & CountRows(colPF_MOVE_HISTORY)
+                            });
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                 " History tail nodeID: " & If(IsBlank(localVars.theMoveHistoryTail),"Blank",localVars.theMoveHistoryTailM1) &
                                 " History tail pacn: " &
                                     If(IsBlank(localVars.theMoveHistoryTail),"Blank",LookUp(colPF_MOVE_HISTORY, nodeID=localVars.theMoveHistoryTail).inactiveColorMoveRecord.pacn) &
