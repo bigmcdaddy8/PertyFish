@@ -3665,14 +3665,15 @@ Chess_Board As screen:
                                     )
                                 );
                     
-                                If(gblPF_DEBUG,
+                                If(gblPF_DEBUG || gblPF_DEBUG_GAME_MOVE_HISTORY_D0,
                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                         " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 getting started   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
                                     });
                     
                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                        " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 test #: " & theData.chessEngineData.testNumber & 
-                                        " move #: " & theData.chessEngineData.moveNumber & " testCount: " & theData.chessEngineData.testCount
+                                        " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 pre-update CountRows(colPF_MOVE_HISTORY): " & CountRows(colPF_MOVE_HISTORY) &
+                                        " head nodeID: " & theData.chessEngineData.moveHistoryHEADNodeID &
+                                        " tail nodeID: " & theData.chessEngineData.moveHistoryTAILNodeID
                                     })
                                 );
                     
@@ -3729,6 +3730,19 @@ Chess_Board As screen:
                                 If(gblPF_DEBUG,
                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                         " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 finished  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+                                    })
+                                )
+                            );
+                    
+                            If(gblPF_DEBUG || gblPF_DEBUG_GAME_MOVE_HISTORY_D0,
+                                // THEN
+                                With(
+                                    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                    
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " btnProcessGame.OnSelect(): GAME_MOVE_HISTORY_D0 post-update CountRows(colPF_MOVE_HISTORY): " & CountRows(colPF_MOVE_HISTORY) &
+                                        " head nodeID: " & theData.chessEngineData.moveHistoryHEADNodeID &
+                                        " tail nodeID: " & theData.chessEngineData.moveHistoryTAILNodeID
                                     })
                                 )
                             );
