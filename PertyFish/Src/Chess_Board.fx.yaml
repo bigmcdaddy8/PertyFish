@@ -2349,6 +2349,7 @@ Chess_Board As screen:
                         );
                     
                     
+                    
                         /* -----------------------------------------------------------------------------------------------------------------------------------------------------------
                         GAME_NODES
                     
@@ -3516,8 +3517,6 @@ Chess_Board As screen:
                         - these are the fields that can only be determined after the D1 moves are known
                         - CHECKMATE
                         - STALEMATE
-                    
-                        TODO...
                         - DRAWs
                         */
                     
