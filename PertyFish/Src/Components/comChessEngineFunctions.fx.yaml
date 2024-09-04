@@ -441,7 +441,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P",
                                                         // THEN - bump up the promotion to a Q
                                                         If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
-                                                            (8 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)) * RandBetween(3,8),
+                                                            UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) * RandBetween(5,8),
                                                             0
                                                         ),
                                                         // ELSE
@@ -464,7 +464,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(localVars.theBoard, "q")<4,
                                                         // THEN - bump up the promotion to a Q
                                                         If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
-                                                            UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) * RandBetween(-8,-3),
+                                                            (8- UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)) * RandBetween(-8,-5),
                                                             0
                                                         ),
                                                         // ELSE
