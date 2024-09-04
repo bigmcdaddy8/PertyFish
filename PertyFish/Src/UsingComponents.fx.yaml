@@ -454,6 +454,12 @@ UsingComponents As screen:
                     Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
                         postMoveEvalRecord: 
                             Patch(EVAL_RECORD_PF, {
+                                heuristic16:
+                                    // the Bully part
+                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
+                                        If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
+                                        If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(-25,0), RandBetween(0,25))
+                                    ),
                                 heuristic17:
                                     If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
                                         // THEN
@@ -473,10 +479,10 @@ UsingComponents As screen:
                                                 // THEN
                                                 0,
             
-                                                // ELSE - is this a pawn forward move ?
+                                                // ELSE - is this a pawn move ?
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P",
                                                     // THEN
-                                                    RandBetween(5,20),
+                                                    RandBetween(15,45),
                                                     // ELSE
                                                     0
                                                 )
@@ -500,10 +506,10 @@ UsingComponents As screen:
                                                 // THEN
                                                 0,
             
-                                                // ELSE - is this a pawn forward move ?
+                                                // ELSE - is this a pawn move ?
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P",
                                                     // THEN
-                                                    RandBetween(-20,-5),
+                                                    RandBetween(-45,-15),
                                                     // ELSE
                                                     0
                                                 )
@@ -520,7 +526,7 @@ UsingComponents As screen:
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(0,25), RandBetween(-25,0)),
                                             GAME_PHASE_MIDDLE,
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(0,25), RandBetween(-25,0)),
-                                            RandBetween(-25,25)
+                                            0
                                         ),
             
                                         // ELSE
@@ -529,14 +535,11 @@ UsingComponents As screen:
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(-25,0), RandBetween(0,25)),
                                             GAME_PHASE_MIDDLE,
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(-25,0), RandBetween(0,25)),
-                                            RandBetween(-25,25)
+                                            0
                                         )
                                     ),
                                 heuristic19:
-                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
-                                        If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
-                                        If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(-25,0), RandBetween(0,25))
-                                    )
+                                    RandBetween(-5,5)
             
                             })
                     });
@@ -550,6 +553,9 @@ UsingComponents As screen:
                                         
                                         If(gblPF_DEBUG_EVAL,
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic16: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                 " heuristic17: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic17
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -559,6 +565,7 @@ UsingComponents As screen:
                                                 " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
                                             })
                                         );
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic17 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
