@@ -800,10 +800,10 @@ comChessEngineFunctions As CanvasComponent:
                                 " postMovePINs: " & localVars.theCurrentMoveTreeNode.postMovePINs
                             });
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " parent nodeID: " & localVars.theParentMoveTreeNode.nodeID &
-                                " pacn: " & localVars.theParentMoveTreeNode.inactiveColorMoveRecord.pacn &
-                                " Active color: " & UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theParentMoveTreeNode.postMoveFEN)) &
-                                " postMovePINs: " & localVars.theParentMoveTreeNode.postMovePINs
+                                " parent nodeID: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.nodeID) &
+                                " pacn: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.inactiveColorMoveRecord.pacn) &
+                                " Active color: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theParentMoveTreeNode.postMoveFEN))) &
+                                " postMovePINs: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.postMovePINs)
                             });
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                 " History tail nodeID: " & If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.nodeID) &
