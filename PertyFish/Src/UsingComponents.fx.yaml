@@ -543,7 +543,7 @@ UsingComponents As screen:
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(0,25), RandBetween(-25,0)),
                                             GAME_PHASE_MIDDLE,
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(0,25), RandBetween(-25,0)),
-                                            0
+                                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(10,25), 0)
                                         ),
             
                                         // ELSE
@@ -552,7 +552,7 @@ UsingComponents As screen:
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(-25,0), RandBetween(0,25)),
                                             GAME_PHASE_MIDDLE,
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(-25,0), RandBetween(0,25)),
-                                            0
+                                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(-25,-10), 0)
                                         )
                                     ),
                                 heuristic19:
