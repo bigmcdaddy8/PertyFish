@@ -796,21 +796,22 @@ comChessEngineFunctions As CanvasComponent:
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                 " current nodeID: " & pNodeID &
                                 " pacn: " & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.pacn &
-                                " Active color: " & UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentMoveTreeNode.postMoveFEN)) &
+                                " preMove-active color: " & UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentMoveTreeNode.preMoveFEN)) &
                                 " postMovePINs: " & localVars.theCurrentMoveTreeNode.postMovePINs
                             });
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                 " parent nodeID: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.nodeID) &
                                 " pacn: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.inactiveColorMoveRecord.pacn) &
-                                " Active color: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theParentMoveTreeNode.postMoveFEN))) &
+                                " preMove-active color: " &
+                                    If(IsBlank(localVars.theParentMoveTreeNode),"Blank", UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theParentMoveTreeNode.preMoveFEN))) &
                                 " postMovePINs: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.postMovePINs)
                             });
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                 " History tail nodeID: " & If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.nodeID) &
                                 " pacn: " &
                                     If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.inactiveColorMoveRecord.pacn) &
-                                " Active color: " &
-                                    If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theMoveHistoryTailNode.postMoveFEN))) &
+                                " preMove-active color: " &
+                                    If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theMoveHistoryTailNode.preMoveFEN))) &
                                 " postMovePINs: " & 
                                     If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.postMovePINs)
                             })
