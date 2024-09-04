@@ -479,23 +479,16 @@ UsingComponents As screen:
                                                 theBoard: UDF_FEN_TO_BOARD(theCurrentNode.preMoveFEN)
                                             } As localVars,
             
-                                            If(
-                                                Sum(
-                                                    ForAll(
-                                                        Sequence(64,0) As theSqNum,
-            
-                                                        If(UDF_getBitAtSqNum(localVars.theBoard, theSqNum.Value) exactin "kqrbnp",1,0)
-                                                    ), Value
-                                                )>1,
+                                            If(UDF_countPiecesOnBoard(localVars.theBoard, "kqrbnp")>1,
                                                 // THEN
                                                 0,
             
                                                 // ELSE - the opponent is a lone king - push the pawns forward - is this a pawn move ?
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P",
                                                     // THEN - bump up the promotion to a Q
-                                                    If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "rbn",
-                                                        RandBetween(5,35),
-                                                        RandBetween(25,50)
+                                                    If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
+                                                        RandBetween(25,50),
+                                                        0
                                                     ),
                                                     // ELSE
                                                     0
@@ -516,16 +509,15 @@ UsingComponents As screen:
                                                 // ELSE - the opponent is a lone king - push the pawns forward - is this a pawn move ?
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P",
                                                     // THEN - bump up the promotion to a Q
-                                                    If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "rbn",
-                                                        RandBetween(-35,-5),
-                                                        RandBetween(-50,-25)
+                                                    If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
+                                                        RandBetween(-50,-25),
+                                                        0
                                                     ),
                                                     // ELSE
                                                     0
                                                 )
                                             )   
                                         )
-            
                                     ),
                                 heuristic18:
                                     // add some order
