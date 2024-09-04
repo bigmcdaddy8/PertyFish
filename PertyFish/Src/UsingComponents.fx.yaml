@@ -941,7 +941,15 @@ UsingComponents As screen:
                                                                                             )
                                                                                         )),
                                                                                         "",
-            
+            /*
+             * PIN rules
+            Rules:
+            to find PINs for preMove-active color look at the PINs in MOVE_TREE D0
+            to find PINs for preMove-inactive color look at the PINs in MOVE_HISTORY tail
+            - adjust if MOVE TREE D0 source square is in MOVE_HISTORY tail PIN list
+            -- if a MOVE_TREE D0 was a capture move - remove the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list
+            -- else replace the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list with the MOVE_TREE D0 target square
+             */
                                                                                     // default
                                                                                     theEligibleMove.eligibleSqName
                                                                                 )
