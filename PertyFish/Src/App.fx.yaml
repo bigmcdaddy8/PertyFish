@@ -567,6 +567,15 @@ App As appinfo:
                 If(IsBlank(theEligibleMove),false,true)
             );
         
+        UDF_countPiecesOnBoard(board:Text, piecesToCount:Text):Number=
+            Sum(
+                ForAll(
+                    Sequence(64,0) As theSqNum,
+        
+                    If(UDF_getBitAtSqNum(board, theSqNum.Value) exactin piecesToCount,1,0)
+                ), Value
+            );
+        
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
@@ -575,7 +584,7 @@ App As appinfo:
         ClearCollect(colPF_LEGAL_MOVES, Table(PIECE_REACHABLE_SQUARES));
         
         Concurrent(
-            // gloabl variables
+            // global variables
             Set(gblPF_PAUSE, false),
             Set(gblPF_TMP_Boolean01, false),
             Set(gblPF_TMP_Boolean02, false),
