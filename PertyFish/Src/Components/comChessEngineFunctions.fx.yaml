@@ -408,22 +408,6 @@ comChessEngineFunctions As CanvasComponent:
                         Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
                             postMoveEvalRecord: 
                                 Patch(EVAL_RECORD_PF, {
-                                    heuristic01:
-                                        0,
-                                    heuristic02:
-                                        0,
-                                    heuristic05:
-                                        0,
-                                    heuristic11:
-                                        0,
-                                    heuristic12:
-                                        0,
-                                    heuristic13:
-                                        0,
-                                    heuristic14:    
-                                        0,
-                                    heuristic16:
-                                        0,
                                     heuristic17:
                                         If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
                                             // THEN
