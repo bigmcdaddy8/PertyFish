@@ -425,7 +425,62 @@ comChessEngineFunctions As CanvasComponent:
                                     heuristic16:
                                         0,
                                     heuristic17:
-                                        0,
+                                        If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
+                                            // THEN
+                                            With(
+                                                {
+                                                    theBoard: UDF_FEN_TO_BOARD(theCurrentNode.preMoveFEN)
+                                                } As localVars,
+                
+                                                If(
+                                                    Sum(
+                                                        ForAll(
+                                                            Sequence(64,0) As theSqNum,
+                
+                                                            If(UDF_getBitAtSqNum(localVars.theBoard, theSqNum.Value) exactin "kqrbnp",1,0)
+                                                        ), Value
+                                                    )>1,
+                                                    // THEN
+                                                    0,
+                
+                                                    // ELSE - is this a pawn forward move ?
+                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P",
+                                                        // THEN
+                                                        RandBetween(5,20),
+                                                        // ELSE
+                                                        0
+                                                    )
+                                                )   
+                                            ),
+                
+                                            // ELSE
+                                            With(
+                                                {
+                                                    theBoard: UDF_FEN_TO_BOARD(theCurrentNode.preMoveFEN)
+                                                } As localVars,
+                
+                                                If(
+                                                    Sum(
+                                                        ForAll(
+                                                            Sequence(64,0) As theSqNum,
+                
+                                                            If(UDF_getBitAtSqNum(localVars.theBoard, theSqNum.Value) exactin "KQRBNP",1,0)
+                                                        ), Value
+                                                    )>1,
+                                                    // THEN
+                                                    0,
+                
+                                                    // ELSE - is this a pawn forward move ?
+                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P",
+                                                        // THEN
+                                                        RandBetween(-20,-5),
+                                                        // ELSE
+                                                        0
+                                                    )
+                                                )   
+                                            )
+                
+                                        ),
                                     heuristic18:
                                         // add some order
                                         If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
@@ -465,12 +520,16 @@ comChessEngineFunctions As CanvasComponent:
                                             
                                             If(gblPF_DEBUG_EVAL,
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                    " heuristic17: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic17
+                                                });
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                     " heuristic18: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic18
                                                 });
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                     " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
                                                 })
                                             );
+                                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic17 +
                                             theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +
                                             theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
                                         )
