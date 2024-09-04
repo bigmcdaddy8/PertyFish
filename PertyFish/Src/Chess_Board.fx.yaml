@@ -1397,7 +1397,6 @@ Chess_Board As screen:
                     Height: =25
                     Items: =CE_PF_NAMES
                     Size: =10
-                    Visible: =If(radWhitePiecesPlayerType.Selected.Value="Computer",true,false)
                     Width: =150
                     X: =radWhitePiecesPlayerType.X + radWhitePiecesPlayerType.Width
                     Y: =radWhitePiecesPlayerType.Y
@@ -1408,7 +1407,6 @@ Chess_Board As screen:
                     Height: =25
                     Items: =CE_PF_NAMES
                     Size: =10
-                    Visible: =If(radBlackPiecesPlayerType.Selected.Value="Computer",true,false)
                     Width: =150
                     X: =radBlackPiecesPlayerType.X + radBlackPiecesPlayerType.Width
                     Y: =radBlackPiecesPlayerType.Y
