@@ -812,8 +812,8 @@ UsingComponents As screen:
                         {
                             theCurrentMoveTreeNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
                             theParentMoveTreeNode:  LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID),
-                            theMoveHistoryTail:
-                                If(CountRows(colPF_MOVE_HISTORY)>=1,theData.chessEngineData.moveHistoryTAILNodeID,Blank())
+                            theMoveHistoryTailNode:
+                                If(CountRows(colPF_MOVE_HISTORY)>=1,LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID),Blank())
                         } As localVars,
             
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -821,16 +821,24 @@ UsingComponents As screen:
                         });
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                             " current nodeID: " & pNodeID &
-                            " current pacn: " & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.pacn &
-                            " current Active color: " & 
-                            " current postMovePINs: " & localVars.theCurrentMoveTreeNode.postMovePINs
+                            " pacn: " & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.pacn &
+                            " Active color: " & UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentMoveTreeNode.postMoveFEN)) &
+                            " postMovePINs: " & localVars.theCurrentMoveTreeNode.postMovePINs
                         });
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " History tail nodeID: " & If(IsBlank(localVars.theMoveHistoryTail),"Blank",localVars.theMoveHistoryTail) &
-                            " History tail pacn: " &
-                                If(IsBlank(localVars.theMoveHistoryTail),"Blank",LookUp(colPF_MOVE_HISTORY, nodeID=localVars.theMoveHistoryTail).inactiveColorMoveRecord.pacn) &
-                            " History tail postMovePINs: " & 
-                                If(IsBlank(localVars.theMoveHistoryTail),"Blank",LookUp(colPF_MOVE_HISTORY, nodeID=localVars.theMoveHistoryTail).postMovePINs)
+                            " parent nodeID: " & localVars.theParentMoveTreeNode.nodeID &
+                            " pacn: " & localVars.theParentMoveTreeNode.inactiveColorMoveRecord.pacn &
+                            " Active color: " & UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theParentMoveTreeNode.postMoveFEN)) &
+                            " postMovePINs: " & localVars.theParentMoveTreeNode.postMovePINs
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " History tail nodeID: " & If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.nodeID) &
+                            " pacn: " &
+                                If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.inactiveColorMoveRecord.pacn) &
+                            " Active color: " &
+                                If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theMoveHistoryTailNode.postMoveFEN))) &
+                            " postMovePINs: " & 
+                                If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.postMovePINs)
                         })
                     )
                 )
