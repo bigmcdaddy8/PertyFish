@@ -829,6 +829,79 @@ UsingComponents As screen:
                         } As localVars,
             
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " current nodeID: " & pNodeID &
+                            " san: " & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.san &
+                            " pacn: " & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.pacn &
+                            " postMove-active color: " & UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentMoveTreeNode.postMoveFEN)) &
+                            " postMoveActiveKingDangerBoard: " & localVars.theCurrentMoveTreeNode.postMoveActiveKingDangerBoard
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " parent nodeID: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.nodeID) &
+                            " san: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.inactiveColorMoveRecord.san) &
+                            " pacn: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.inactiveColorMoveRecord.pacn) &
+                            " postMove-active color: " &
+                                If(IsBlank(localVars.theParentMoveTreeNode),"Blank", UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theParentMoveTreeNode.postMoveFEN))) &
+                            " postMoveActiveKingDangerBoard: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.postMoveActiveKingDangerBoard)
+                        });
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " grand-parent nodeID: " & If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.nodeID) &
+                            " san: " &
+                                If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.inactiveColorMoveRecord.san) &
+                            " pacn: " &
+                                If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.inactiveColorMoveRecord.pacn) &
+                            " postMove-active color: " &
+                                If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theMoveHistoryTailNode.postMoveFEN))) &
+                            " postMoveActiveKingDangerBoard: " & 
+                                If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.postMoveActiveKingDangerBoard)
+                        })
+                    )
+                )
+            );
+            
+            If(gblPF_DEBUG_EVAL,
+                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                    " comChessEngineFunctions.fME_prepNode(): exiting"
+                })
+            );
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            /*
+            If(gblPF_DEBUG_EVAL,
+                // THEN
+                With(
+                    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+            
+                    With(
+                        {
+                            theCurrentMoveTreeNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
+                            theParentMoveTreeNode:  LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID),
+                            theMoveHistoryTailNode:
+                                If(CountRows(colPF_MOVE_HISTORY)>=1,LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID),Blank())
+                        } As localVars,
+            
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                             " CountRows(colPF_MOVE_HISTORY): " & CountRows(colPF_MOVE_HISTORY)
                         });
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -856,6 +929,9 @@ UsingComponents As screen:
                     )
                 )
             );
+            
+            
+            
             
             With(
                 LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
@@ -941,15 +1017,15 @@ UsingComponents As screen:
                                                                                             )
                                                                                         )),
                                                                                         "",
-            /*
-             * PIN rules
-            Rules:
-            to find PINs for preMove-active color look at the PINs in MOVE_TREE D0
-            to find PINs for preMove-inactive color look at the PINs in MOVE_HISTORY tail
-            - adjust if MOVE TREE D0 source square is in MOVE_HISTORY tail PIN list
-            -- if a MOVE_TREE D0 was a capture move - remove the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list
-            -- else replace the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list with the MOVE_TREE D0 target square
-             */
+            // /*
+            //  * PIN rules
+            // Rules:
+            // to find PINs for preMove-active color look at the PINs in MOVE_TREE D0
+            // to find PINs for preMove-inactive color look at the PINs in MOVE_HISTORY tail
+            // - adjust if MOVE TREE D0 source square is in MOVE_HISTORY tail PIN list
+            // -- if a MOVE_TREE D0 was a capture move - remove the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list
+            // -- else replace the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list with the MOVE_TREE D0 target square
+            //  * /
                                                                                     // default
                                                                                     theEligibleMove.eligibleSqName
                                                                                 )
@@ -1096,6 +1172,9 @@ UsingComponents As screen:
                     " comChessEngineFunctions.fME_prepNode(): exiting"
                 })
             );
+            
+             */
+            
             
         ZIndex: =2
 
