@@ -172,6 +172,7 @@ UsingComponents As screen:
                         postMoveEvalRecord: 
                             Patch(EVAL_RECORD_PF, {
                                 heuristic11:
+                                    // the dumb bully part
                                     Sum(
                                         ForAll(
                                             Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.postMoveFEN), "") As thePiece,
@@ -189,10 +190,8 @@ UsingComponents As screen:
                                         Value
                                     ),
                                 heuristic19:
-                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
-                                        If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
-                                        If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(-25,0), RandBetween(0,25))
-                                    )
+                                    // add a touch of randomness
+                                    RandBetween(-5,5)
                             })
                     });
             
@@ -454,11 +453,23 @@ UsingComponents As screen:
                     Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
                         postMoveEvalRecord: 
                             Patch(EVAL_RECORD_PF, {
-                                heuristic16:
-                                    // the Bully part
-                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
-                                        If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(0,25), RandBetween(-25,0)),
-                                        If(theCurrentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM, RandBetween(-25,0), RandBetween(0,25))
+                                heuristic11:
+                                    // the dumb bully part
+                                    Sum(
+                                        ForAll(
+                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.postMoveFEN), "") As thePiece,
+            
+                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                        ),
+                                        Value
+                                    ) -
+                                    Sum(
+                                        ForAll(
+                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.preMoveFEN), "") As thePiece,
+            
+                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                        ),
+                                        Value
                                     ),
                                 heuristic17:
                                     If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
@@ -479,10 +490,13 @@ UsingComponents As screen:
                                                 // THEN
                                                 0,
             
-                                                // ELSE - is this a pawn move ?
+                                                // ELSE - the opponent is a lone king - push the pawns forward - is this a pawn move ?
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P",
-                                                    // THEN
-                                                    RandBetween(15,45),
+                                                    // THEN - bump up the promotion to a Q
+                                                    If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "rbn",
+                                                        RandBetween(5,35),
+                                                        RandBetween(25,50)
+                                                    ),
                                                     // ELSE
                                                     0
                                                 )
@@ -506,10 +520,13 @@ UsingComponents As screen:
                                                 // THEN
                                                 0,
             
-                                                // ELSE - is this a pawn move ?
+                                                // ELSE - the opponent is a lone king - push the pawns forward - is this a pawn move ?
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P",
-                                                    // THEN
-                                                    RandBetween(-45,-15),
+                                                    // THEN - bump up the promotion to a Q
+                                                    If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "rbn",
+                                                        RandBetween(-35,-5),
+                                                        RandBetween(-50,-25)
+                                                    ),
                                                     // ELSE
                                                     0
                                                 )
@@ -553,7 +570,7 @@ UsingComponents As screen:
                                         
                                         If(gblPF_DEBUG_EVAL,
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic16: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16
+                                                " heuristic11: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                 " heuristic17: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic17
@@ -565,7 +582,7 @@ UsingComponents As screen:
                                                 " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
                                             })
                                         );
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic17 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
