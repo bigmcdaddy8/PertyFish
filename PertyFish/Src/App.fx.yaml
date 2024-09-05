@@ -69,13 +69,14 @@ App As appinfo:
             // the capture square data is the square data of the square containing the piece that is captured during the move, it is the square data prior to the move
             //  the capture square data will be "empty" if there is no capture, in non-en Passant captures the capture data is the same as the target square data,
             //  in an en passant move the data will be of square where the pawn is captured
-            captureSquareNum:           EMPTY_SQUARE_NUM, 
+            captureSquareNum:           EMPTY_SQUARE_NUM,
             captureSquareName:          EMPTY_SQUARE_NAME,
-            captureSquareOccupier:      EMPTY_ABBR, 
-            captureSquarePieceColor:    NO_COLOR, 
-            captureSquareIcon:          EMPTY_ICON,                              
-            promoteTo:                  EMPTY_ABBR,      
-            isISMDraw:                  false,          
+            captureSquareOccupier:      EMPTY_ABBR,
+            captureSquarePieceColor:    NO_COLOR,
+            captureSquareIcon:          EMPTY_ICON,
+            promoteTo:                  EMPTY_ABBR,
+            moveDirection:              NO_DIRECTION,
+            isISMDraw:                  false,
             is75MoveDraw:               false
         };
         
