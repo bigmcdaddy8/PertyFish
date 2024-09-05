@@ -536,18 +536,20 @@ App As appinfo:
         
         UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
             With(
-                UDF_FEN_TO_BOARD(fen) As theBoard,
+                {
+                    board: UDF_FEN_TO_BOARD(fen)
+                } As theBoard,
             
                 Switch(true,
-                    IsBlank(UDF_getBitAtSqNum(theBoard.Value,sqNum)),  false,
-                    UDF_getBitAtSqNum(theBoard.Value,sqNum) exactin UDF_getACPieceABBR(fen,"KN"), true,
+                    IsBlank(UDF_getBitAtSqNum(theBoard.board,sqNum)),  false,
+                    UDF_getBitAtSqNum(theBoard.board,sqNum) exactin UDF_getACPieceABBR(fen,"KN"), true,
                     distance=1, true,
                     !IsMatch(
                         Concat(
                             ForAll (
                                 Split(slideOvers, " ") As aSliderOver,
             
-                                If(UDF_getBitAtSqNum(theBoard.Value, UDF_sqNameToSqNum(aSliderOver.Value))<>EMPTY_FILLER_ABBR,
+                                If(UDF_getBitAtSqNum(theBoard.board, UDF_sqNameToSqNum(aSliderOver.Value))<>EMPTY_FILLER_ABBR,
                                     "BLOCKED",
                                     ""
                                 )
@@ -1077,4 +1079,4 @@ App As appinfo:
         OnNew: =false
         OnSave: =false
         OnView: =false
-    
+
