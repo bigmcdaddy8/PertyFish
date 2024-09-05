@@ -576,6 +576,208 @@ App As appinfo:
                 ), Value
             );
         
+        // User defined formulas
+        UDF_getOppositeDirection(dir:Number):Number=
+            Switch(true,
+                dir=N,  S,
+                dir=NE, SW,
+                dir=E,  W,
+                dir=SE, NW,
+                dir=S,  N,
+                dir=SW, NE,
+                dir=W,  E,
+                dir=NW, SE,
+                NO_DIRECTION
+            );
+        UDF_getDirX(dir:Number):Number=
+            Switch(true,
+                dir=N,  0,
+                dir=NE, 1,
+                dir=E,  1,
+                dir=SE, 1,
+                dir=S,  0,
+                dir=SW, -1,
+                dir=W,  -1,
+                dir=NW, -1,
+                0
+            );
+        UDF_getDirY(dir:Number):Number=
+            Switch(true,
+                dir=N,  1,
+                dir=NE, 1,
+                dir=E,  0,
+                dir=SE, -1,
+                dir=S,  -1,
+                dir=SW, -1,
+                dir=W,  0,
+                dir=NW, 1,
+                0
+            );
+        UDF_getDirX_KNIGHT(dir:Number):Number=
+            Switch(true,
+                dir=N,  1,
+                dir=NE, 2,
+                dir=E,  2,
+                dir=SE, 1,
+                dir=S,  -1,
+                dir=SW, -2,
+                dir=W,  -2,
+                dir=NW, -1,
+                0
+            );
+        UDF_getDirY_KNIGHT(dir:Number):Number=
+            Switch(true,
+                dir=N,  2,
+                dir=NE, 1,
+                dir=E,  -1,
+                dir=SE, -2,
+                dir=S,  -2,
+                dir=SW, -1,
+                dir=W,  1,
+                dir=NW, 2,
+                0
+            );
+
+        UDF_sqNumToAdjacentSqNames(refSqNum:Number):Text=
+            Trim(
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))
+            );
+
+        // UDF Set --------
+        UDF_getSetSize(setA:Text):Number=
+            If(Trim(setA)="",
+                0,
+                CountRows(Distinct(Sort(Split(Trim(setA), " "), Value), Value))
+            );
+        
+        UDF_createSetOfSqNames(sqNameList:Text):Text=
+            Trim(Concat(Distinct(Sort(Split(Trim(sqNameList), " "), Value), Value), Value, " "));
+        
+        UDF_getSetOfAdjacentSqNames(refSqName:Text):Text=
+            UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(UDF_sqNameToSqNum(refSqName)));
+        
+        UDF_getSetDifference(setA:Text, setB:Text):Text=
+            Trim(
+                Concat(
+                    Distinct(
+                        Sort(
+                            ForAll(
+                                Split(setA, " ") As setA,
+        
+                                If(setA.Value in setB, "", setA.Value)
+                            ), Value
+                        ), Value
+                    ), Value, " "
+                )
+            );
+        
+        UDF_getSetIntersection(setA:Text, setB:Text):Text=
+            Trim(
+                Concat(
+                    Distinct(
+                        Sort(
+                            ForAll(
+                                Split(setA, " ") As setA,
+        
+                                If(setA.Value in setB, setA.Value, "")
+                            ), Value
+                        ), Value
+                    ), Value, " "
+                )
+            );
+        
+        UDF_getSetUnion(setA:Text, setB:Text):Text=
+            Trim(
+                Concat(
+                    Distinct(
+                        Sort(
+                            Split(Trim(setA & " " & setB), " "), Value
+                        ), Value
+                    ), Value, " "
+                )
+            );
+        
+        UDF_getSetComplement(setA:Text):Text=
+            UDF_getSetDifference(UNIVERSAL_SQNAMES_SET, setA);
+        
+        UDF_getSetofSqNamesInBox(refSqName1:Text, refSqName2:Text):Text=
+            Trim(
+                Concat(
+                    Distinct(
+                        Sort(
+                            ForAll(
+                                Sequence(64, 0) As theSqNum,
+        
+                                With(
+                                    {
+                                        fileNumMin:     Min(UDF_getFileNumFromSqName(refSqName1), UDF_getFileNumFromSqName(refSqName2)),
+                                        fileNumMax:     Max(UDF_getFileNumFromSqName(refSqName1), UDF_getFileNumFromSqName(refSqName2)),
+                                        rankMin:        Min(UDF_getRankFromSqName(refSqName1), UDF_getRankFromSqName(refSqName2)),
+                                        rankMax:        Max(UDF_getRankFromSqName(refSqName1), UDF_getRankFromSqName(refSqName2)),
+                                        currentFileNum: UDF_getFileNumFromSqNum(theSqNum.Value),
+                                        currentRank:    UDF_getRankFromSqNum(theSqNum.Value)
+                                    } As localVars,
+        
+                                    If(
+                                        (localVars.currentFileNum>=localVars.fileNumMin && localVars.currentFileNum<=localVars.fileNumMax) &&
+                                        (localVars.currentRank>=localVars.rankMin && localVars.currentRank<=localVars.rankMax),
+                                        UDF_sqNumToSqName(theSqNum.Value),
+                                        ""
+                                    )
+                                )
+                            ), Value
+                        ), Value
+                    ), Value, " "
+                )
+            );
+        
+        UDF_sqNumToFileSet(refSqNum:Number):Text=
+        	With(
+        		{
+        			fileName:	UDF_getFileNameFromSqNum(refSqNum)
+        		} As theData,
+        	
+                UDF_createSetOfSqNames(
+                    Concat(
+                        ForAll(
+                            Sequence(8,1) As theRank,
+        
+                            theData.fileName & theRank.Value
+                        ), Value, " "
+                    )
+                )
+            );
+        
+        UDF_sqNumToRankSet(refSqNum:Number):Text=
+        	With(
+        		{
+        			rank:	UDF_getRankFromSqNum(refSqNum)
+        		} As theData,
+        	
+                UDF_createSetOfSqNames(
+                    Concat(
+                        ForAll(
+                            Sequence(8,1) As theFileNum,
+        
+                            UDF_getFileNameFromFileNum(theFileNum.Value) & theData.rank
+                        ), Value, " "
+                    )
+                )
+            );
+        
+        UDF_sqNumToRookSet(refSqNum:Number):Text=
+            UDF_getSetUnion(UDF_sqNumToFileSet(refSqNum), UDF_sqNumToRankSet(refSqNum));
+        
+        UDF_sqNumToKingSet(refSqNum:Number):Text=
+            UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
+
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
