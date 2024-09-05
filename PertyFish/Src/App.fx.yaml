@@ -110,8 +110,10 @@ App As appinfo:
             parentNodeID:                       EMPTY_NODE_ID,
             nodeDepth:                          0,
             preMoveFEN:                         "",
+            preMoveBoard:                       EMPTY_BOARD,
             inactiveColorMoveRecord:            MOVE_RECORD_PF, // the actual move just made (D0), or a potential move that could be made (D1+)
             postMoveFEN:                        "",
+            postMoveBoard:                      EMPTY_BOARD,
             postMoveNumActiveChecks:            0,
             postMoveCheckers:                   "",
             postMovePUSHs:                      "",
