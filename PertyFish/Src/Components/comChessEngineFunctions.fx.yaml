@@ -438,7 +438,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     0,
                 
                                                     // ELSE - the opponent is a lone king - push the pawns forward (until we have enough Qs) - is this a pawn move ?
-                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(localVars.theBoard, "Q")<=4,
+                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(localVars.theBoard, "Q")<3,
                                                         // THEN - bump up the promotion to a Q
                                                         If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
                                                             UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) * RandBetween(8,18),
@@ -461,7 +461,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     0,
                 
                                                     // ELSE - the opponent is a lone king - push the pawns forward (until we have enough Qs) - is this a pawn move ?
-                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(localVars.theBoard, "q")<=4,
+                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(localVars.theBoard, "q")<3,
                                                         // THEN - bump up the promotion to a Q
                                                         If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
                                                             (8 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)) * RandBetween(-18,-8),
