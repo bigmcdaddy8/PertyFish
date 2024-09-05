@@ -2906,7 +2906,8 @@ Chess_Board As screen:
                                                                     // default
                                                                     EMPTY_ICON
                                                                 ),
-                                                            promoteTo:  Upper(UDF_getPromo(theEligibleMove.eligibleSqName))
+                                                            promoteTo:      Upper(UDF_getPromo(theEligibleMove.eligibleSqName)),
+                                                            moveDirection:  theEligibleMove.theDirection
                                                         }),
                                                     postMoveNumActiveChecks:	0
                                                 });
