@@ -429,7 +429,7 @@ App As appinfo:
                 0,
                 If(UDF_FEN_TO_ACTIVE_COLOR(fen)=WHITE,-1,1)
             );
-            
+        
         UDF_PieceToColor(piece:Text):Number=
             If(piece=EMPTY_ABBR || piece=EMPTY_FILLER_ABBR,
                 // THEN there is no piece return NO_COLOR
@@ -777,7 +777,7 @@ App As appinfo:
         
         UDF_sqNumToKingSet(refSqNum:Number):Text=
             UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
-
+        
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
