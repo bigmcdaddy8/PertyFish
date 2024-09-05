@@ -483,8 +483,8 @@ UsingComponents As screen:
                                                 // THEN
                                                 0,
             
-                                                // ELSE - the opponent is a lone king - push the pawns forward - is this a pawn move ?
-                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P",
+                                                // ELSE - the opponent is a lone king - push the pawns forward (until we have enough Qs) - is this a pawn move ?
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(localVars.theBoard, "Q")<=4,
                                                     // THEN - bump up the promotion to a Q
                                                     If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
                                                         UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) * RandBetween(8,18),
@@ -506,11 +506,11 @@ UsingComponents As screen:
                                                 // THEN
                                                 0,
             
-                                                // ELSE - the opponent is a lone king - push the pawns forward - is this a pawn move ?
-                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(localVars.theBoard, "q")<4,
+                                                // ELSE - the opponent is a lone king - push the pawns forward (until we have enough Qs) - is this a pawn move ?
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(localVars.theBoard, "q")<=4,
                                                     // THEN - bump up the promotion to a Q
                                                     If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
-                                                        (8- UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)) * RandBetween(-18,-8),
+                                                        (8 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)) * RandBetween(-18,-8),
                                                         0
                                                     ),
                                                     // ELSE
@@ -525,23 +525,23 @@ UsingComponents As screen:
                                         // THEN
                                         Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
                                             GAME_PHASE_OPENING,
-                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(0,25), RandBetween(-25,0)),
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(-5,15), 0),
                                             GAME_PHASE_MIDDLE,
-                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(0,25), RandBetween(-25,0)),
-                                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(10,25), 0)
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(-5,15), 0),
+                                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(-5,15), 0)
                                         ),
             
                                         // ELSE
                                         Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
                                             GAME_PHASE_OPENING,
-                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(-25,0), RandBetween(0,25)),
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(-15,5), 0),
                                             GAME_PHASE_MIDDLE,
-                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(-25,0), RandBetween(0,25)),
-                                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(-25,-10), 0)
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(-15,5), 0),
+                                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(-15,5), 0)
                                         )
                                     ),
                                 heuristic19:
-                                    RandBetween(-5,5)
+                                    RandBetween(-8,8)
             
                             })
                     });
