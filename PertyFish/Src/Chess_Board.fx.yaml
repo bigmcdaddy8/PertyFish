@@ -2713,6 +2713,7 @@ Chess_Board As screen:
                                                     parentNodeID:           	theD0ParentNode.nodeID,
                                                     nodeDepth:					1,
                                                     preMoveFEN:             	theD0ParentNode.postMoveFEN,
+                                                    preMoveBoard:               theD0ParentNode.postMoveBoard,
                                                     inactiveColorMoveRecord:
                                                         Patch(MOVE_RECORD_PF,  {
                                                             san:
@@ -3171,7 +3172,8 @@ Chess_Board As screen:
                                                                             UDF_FEN_TO_FULLMOVE_COUNT(theCurrentNode.preMoveFEN)
                                                                         )
                                                                     )
-                                                                )
+                                                                ),
+                                                            postMoveBoard:  theData.chessEngineData.tmpBoard
                                                         })
                                                     )
                                                 );
