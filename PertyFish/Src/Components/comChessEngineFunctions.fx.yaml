@@ -789,19 +789,23 @@ comChessEngineFunctions As CanvasComponent:
                     })
                 );
                 
-                If(gblPF_DEBUG_EVAL,
-                    // THEN
+                
+                
+                With(
+                    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                
                     With(
-                        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                        {
+                            theCurrentMoveTreeNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
+                            theParentMoveTreeNode:  LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID),
+                            theMoveHistoryTailNode:
+                                If(CountRows(colPF_MOVE_HISTORY)>=1,LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID),Blank())
+                        } As localVars,
                 
-                        With(
-                            {
-                                theCurrentMoveTreeNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
-                                theParentMoveTreeNode:  LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID),
-                                theMoveHistoryTailNode:
-                                    If(CountRows(colPF_MOVE_HISTORY)>=1,LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID),Blank())
-                            } As localVars,
-                
+                        // White's turn to move (preMOve active color). Current node is D1 of potential white moves. 
+                        // The Black strong squares are in parent node. The White strong squares are in grand-parent node.
+                        If(gblPF_DEBUG_EVAL,
+                            // THEN
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                 " current nodeID: " & pNodeID &
                                 " san: " & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.san &
