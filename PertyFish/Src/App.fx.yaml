@@ -69,13 +69,14 @@ App As appinfo:
             // the capture square data is the square data of the square containing the piece that is captured during the move, it is the square data prior to the move
             //  the capture square data will be "empty" if there is no capture, in non-en Passant captures the capture data is the same as the target square data,
             //  in an en passant move the data will be of square where the pawn is captured
-            captureSquareNum:           EMPTY_SQUARE_NUM, 
+            captureSquareNum:           EMPTY_SQUARE_NUM,
             captureSquareName:          EMPTY_SQUARE_NAME,
-            captureSquareOccupier:      EMPTY_ABBR, 
-            captureSquarePieceColor:    NO_COLOR, 
-            captureSquareIcon:          EMPTY_ICON,                              
-            promoteTo:                  EMPTY_ABBR,      
-            isISMDraw:                  false,          
+            captureSquareOccupier:      EMPTY_ABBR,
+            captureSquarePieceColor:    NO_COLOR,
+            captureSquareIcon:          EMPTY_ICON,                           
+            promoteTo:                  EMPTY_ABBR,
+            moveDirection:              NO_DIRECTION,
+            isISMDraw:                  false,  
             is75MoveDraw:               false
         };
         
@@ -109,8 +110,10 @@ App As appinfo:
             parentNodeID:                       EMPTY_NODE_ID,
             nodeDepth:                          0,
             preMoveFEN:                         "",
+            preMoveBoard:                       "",
             inactiveColorMoveRecord:            MOVE_RECORD_PF, // the actual move just made (D0), or a potential move that could be made (D1+)
             postMoveFEN:                        "",
+            postMoveBoard:                      "",
             postMoveNumActiveChecks:            0,
             postMoveCheckers:                   "",
             postMovePUSHs:                      "",
@@ -537,7 +540,7 @@ App As appinfo:
         UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
             With(
                 UDF_FEN_TO_BOARD(fen) As theBoard,
-                
+
                 Switch(true,
                     IsBlank(UDF_getBitAtSqNum(theBoard.Value,sqNum)),  false,
                     UDF_getBitAtSqNum(theBoard.Value,sqNum) exactin UDF_getACPieceABBR(fen,"KN"), true,
@@ -782,6 +785,172 @@ App As appinfo:
         UDF_sqNumToKingSet(refSqNum:Number):Text=
             UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
         
+        // UDF isAttacked code
+        // is a square occupied by KQRBNP attacked by an opposite colored PAWN
+        UDF_isSqNumPAWNAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            Switch(true,
+                attackingColor=BLACK &&
+                (
+                    UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP" && (
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1))="p" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1))="p"
+                    )
+                ),
+                    true,
+                    
+                attackingColor=WHITE &&
+                (
+                    UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp" && (
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1))="P" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1))="P"
+                    )
+                ),
+                    true,
+        
+                // default
+                false
+            );
+        // is a square occupied by KQRBNP attacked by an opposite colored KNIGHT
+        UDF_isSqNumKNIGHTAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            Switch(true,
+                attackingColor=BLACK &&
+                UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP",
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,2))="n" ||
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,1))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,-1))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-2))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-2))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,-1))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,1))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,2))="n",
+                    
+                attackingColor=WHITE &&
+                UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp",
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,2))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,1))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,-1))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-2))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-2))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,-1))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,1))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,2))="N",
+        
+                // default
+                false
+            );
+        // is a square occupied by KQRBNP attacked by an opposite colored ROOK
+        UDF_isSqNumROOKAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            Switch(true,
+                attackingColor=BLACK &&
+                UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP",
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0), 7, 7), "#{0,6}r", MatchOptions.BeginsWith),
+        
+                attackingColor=WHITE &&
+                UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp",
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0), 7, 7), "#{0,6}R", MatchOptions.BeginsWith),
+        
+                // default
+                false
+            );
+        // is a square occupied by KQRBNP attacked by an opposite colored BISHOP  
+        UDF_isSqNumBISHOPAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            Switch(true,
+                attackingColor=BLACK &&
+                UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP",
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1), 2, 7), "#{0,6}b", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}b", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}b", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}b", MatchOptions.BeginsWith),
+        
+                attackingColor=WHITE &&
+                UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp",
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1), 2, 7), "#{0,6}B", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}B", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}B", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}B", MatchOptions.BeginsWith),
+        
+                // default
+                false
+            );
+        // is a square occupied by KQRBNP attacked by an opposite colored QUEEN
+        UDF_isSqNumQUEENAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            Switch(true,
+                attackingColor=BLACK &&
+                UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP",
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1), 2, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0), 7, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}q", MatchOptions.BeginsWith),
+        
+                attackingColor=WHITE &&
+                UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp",
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1), 2, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0), 7, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}Q", MatchOptions.BeginsWith),
+        
+                // default
+                false
+            );
+        // is a square occupied by KQRBNP attacked by an opposite colored KING
+        UDF_isSqNumKINGAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            If(UDF_isSqNumProtected(fen, refSqNum, UDF_getOppositeColor(attackingColor)),
+                // THEN - king cannot attack a protected square
+                false,
+        
+                Switch(true,
+                    attackingColor=BLACK &&
+                    UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP",
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1))="k" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1))="k" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0))="k" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1))="k" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1))="k" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1))="k" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0))="k" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1))="k",
+                        
+                    attackingColor=WHITE &&
+                    UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp",
+                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1))="K" || 
+                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1))="K" || 
+                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0))="K" || 
+                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1))="K" || 
+                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1))="K" || 
+                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1))="K" || 
+                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0))="K" || 
+                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1))="K",
+        
+                    // default
+                    false
+                )
+            );
+        UDF_isSqNumAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            Switch(true,
+                UDF_isSqNumPAWNAttacked(board, refSqNum, attackingColor), true,
+                UDF_isSqNumKNIGHTAttacked(board, refSqNum, attackingColor), true,
+                UDF_isSqNumKINGAttacked(board, refSqNum, attackingColor), true,
+                UDF_isSqNumROOKAttacked(board, refSqNum, attackingColor), true,
+                UDF_isSqNumBISHOPAttacked(board, refSqNum, attackingColor), true,
+                UDF_isSqNumQUEENAttacked(board, refSqNum, attackingColor), true,
+        
+                // default
+                false
+            );
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
