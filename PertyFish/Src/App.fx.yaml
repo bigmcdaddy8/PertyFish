@@ -69,14 +69,13 @@ App As appinfo:
             // the capture square data is the square data of the square containing the piece that is captured during the move, it is the square data prior to the move
             //  the capture square data will be "empty" if there is no capture, in non-en Passant captures the capture data is the same as the target square data,
             //  in an en passant move the data will be of square where the pawn is captured
-            captureSquareNum:           EMPTY_SQUARE_NUM,
+            captureSquareNum:           EMPTY_SQUARE_NUM, 
             captureSquareName:          EMPTY_SQUARE_NAME,
-            captureSquareOccupier:      EMPTY_ABBR,
-            captureSquarePieceColor:    NO_COLOR,
-            captureSquareIcon:          EMPTY_ICON,                    
-            promoteTo:                  EMPTY_ABBR,
-            moveDirection:              NO_DIRECTION,
-            isISMDraw:                  false,
+            captureSquareOccupier:      EMPTY_ABBR, 
+            captureSquarePieceColor:    NO_COLOR, 
+            captureSquareIcon:          EMPTY_ICON,                              
+            promoteTo:                  EMPTY_ABBR,      
+            isISMDraw:                  false,          
             is75MoveDraw:               false
         };
         
@@ -110,10 +109,8 @@ App As appinfo:
             parentNodeID:                       EMPTY_NODE_ID,
             nodeDepth:                          0,
             preMoveFEN:                         "",
-            preMoveBoard:                       "",
             inactiveColorMoveRecord:            MOVE_RECORD_PF, // the actual move just made (D0), or a potential move that could be made (D1+)
             postMoveFEN:                        "",
-            postMoveBoard:                      "",
             postMoveNumActiveChecks:            0,
             postMoveCheckers:                   "",
             postMovePUSHs:                      "",
@@ -233,7 +230,7 @@ App As appinfo:
             theDistance:    0
         };
         
-        // UDF definitions --------------------------------------------------------------------------------------------------
+        
         UDF_getFileNumFromFileName(file:Text):Number=Find(file,"abcdefgh");
         UDF_getFileNameFromFileNum(fileNum:Number):Text=Index(["a","b","c","d","e","f","g","h"], fileNum).Value;
         UDF_getFileNameFromSqName(sqName:Text):Text=Left(sqName,1);
@@ -258,6 +255,7 @@ App As appinfo:
                 // ELSE
                 UDF_getFileNameFromSqNum(sqNum) & UDF_getRankFromSqNum(sqNum)
             );
+        
         UDF_getSqNumRelativeToSqNum(refSqNum:Number,x:Number,y:Number):Number=
             If(refSqNum<0 || refSqNum>=EMPTY_SQUARE_NUM,
                 // THEN
@@ -272,12 +270,14 @@ App As appinfo:
                     refSqNum + x - (y * 8)
                 )
             );
+        
         UDF_sqNameNoPromo(sqName:Text):Text=Left(sqName,2);
         UDF_getPromo(sqName:Text):Text=If(Right(sqName,1) exactin "qrbn",Right(sqName,1),"");
         UDF_getSourceSqNamePACN(pacn:Text):Text=Left(pacn,2);
         UDF_getTargetSqNamePACN(pacn:Text):Text=Right(Left(pacn,4),2);
         UDF_getPromoPACN(pacn:Text):Text=If(Right(pacn,1) exactin "qrbn",Right(pacn,1),"");
         UDF_createPACN(sourceSqName:Text,targetSqName:Text):Text=sourceSqName & targetSqName; // NOTE: the promo code is part of the targetSqName in this case
+        
         UDF_makeMovePACN(board:Text,pacn:Text):Text=
             UDF_setBitAtSqNum(
                 UDF_setBitAtSqNum(
@@ -293,12 +293,15 @@ App As appinfo:
                 EMPTY_FILLER_ABBR, 
                 UDF_sqNameToSqNum(UDF_getSourceSqNamePACN(pacn))
             );
+        
         UDF_getBoardDistance(refSqName1:Text, refSqName2:Text):Number=
         	Max(
                 Abs(UDF_getFileNumFromSqName(refSqName1)-UDF_getFileNumFromSqName(refSqName2)), 
                 Abs(UDF_getRankFromSqName(refSqName1)-UDF_getRankFromSqName(refSqName2))
             );
+        
         UDF_FEN_TO_PIECE_PLACEMENT(fen:Text):Text=Index(Split(fen, " "),1).Value;
+        
         UDF_FEN_TO_BOARD(fen:Text):Text=
             Substitute(
                 Substitute(
@@ -317,6 +320,7 @@ App As appinfo:
                         "2", "11"),
                     "/", ""),
                 "1", "#");
+        
         UDF_BOARD_TO_FEN_PIECE_PLACEMENT(board:Text):Text=
             Substitute(
                 Substitute(
@@ -339,6 +343,7 @@ App As appinfo:
                     ), "##", "2"
                 ), "#", "1"
             );
+        
         UDF_FEN_TO_ACTIVE_COLOR(fen:Text):Number=
             If(Index(Split(fen, " "),2).Value="w",
                 // THEN
@@ -347,6 +352,7 @@ App As appinfo:
                 // ELSE
                 BLACK
             );
+        
         UDF_FEN_TO_INACTIVE_COLOR(fen:Text):Number=
             If(UDF_FEN_TO_ACTIVE_COLOR(fen)=WHITE,
                 // THEN
@@ -355,6 +361,7 @@ App As appinfo:
                 // ELSE
                 WHITE
             );
+        
         UDF_FEN_TO_CASTLE_RIGHTS_ALL_TEXT(fen:Text):Text=Index(Split(fen, " "),3).Value;
         UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_BOOL(fen:Text,color:Number,side:Text):Boolean=
             Switch(true,
@@ -364,6 +371,7 @@ App As appinfo:
                 color=BLACK && side in "Q", "q" exactin UDF_FEN_TO_CASTLE_RIGHTS_ALL_TEXT(fen),
                 false
             );
+        
         UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_TEXT(fen:Text,color:Number,side:Text):Text=
             If(UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_BOOL(fen,color,side),
                 Switch(true,
@@ -374,19 +382,23 @@ App As appinfo:
                 ),
                 "-"
             );
+        
         UDF_FEN_TO_ENPASSANT_SQNAME(fen:Text):Text=Index(Split(fen, " "),4).Value;  
         UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),5).Value;  
         UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),6).Value;  
+        
         UDF_CREATE_CASTLE_RIGHTS(wks:Text,wqs:Text,bks:Text,bqs:Text):Text=
         	If(IsBlank(Substitute(wks,"-","") & Substitute(wqs,"-","") & Substitute(bks,"-","") & Substitute(bqs,"-","")),
         		"-",
         		Substitute(wks,"-","") & Substitute(wqs,"-","") & Substitute(bks,"-","") & Substitute(bqs,"-","")
         	);
+            
         UDF_CREATE_FEN(board:Text,activeColor:Number,castleAvail:Text,enpassantSqName:Text,halfmoveClock:Number,fullmoveClock:Number):Text=
             UDF_BOARD_TO_FEN_PIECE_PLACEMENT(board) & " " & If(activeColor=WHITE,"w","b") & " " & 
             Substitute(Substitute(Substitute(castleAvail, "----", "-"),"---", "-"), "--", "-") &
             " " & If(enpassantSqName=EMPTY_ABBR || enpassantSqName=EMPTY_SQUARE_NAME,"-",enpassantSqName) &
             " " & halfmoveClock & " " & fullmoveClock;
+        
         UDF_SearchBoardForPiece(board:Text,piece:Text):Number=
             If(Find(piece,board)>= 1,
                 // THEN
@@ -395,6 +407,7 @@ App As appinfo:
                 // ELSE
                 EMPTY_SQUARE_NUM
             );
+        
         UDF_getBitAtSqNum(board:Text,sqNum:Number):Text=
             If(sqNum<0 || sqNum>=EMPTY_SQUARE_NUM,
                 // THEN - handle the empty square number 
@@ -403,6 +416,7 @@ App As appinfo:
                 // ELSE - get the value from the board
                 Right(Left(board,sqNum+1),1)
             );
+        
         UDF_setBitAtSqNum(board:Text,piece:Text,sqNum:Number):Text=
             If(piece=EMPTY_ABBR,
                 Left(board,Max(0,sqNum)) & EMPTY_FILLER_ABBR & Right(board,Min(63,63-sqNum)),
@@ -415,6 +429,7 @@ App As appinfo:
                 0,
                 If(UDF_FEN_TO_ACTIVE_COLOR(fen)=WHITE,-1,1)
             );
+        
         UDF_PieceToColor(piece:Text):Number=
             If(piece=EMPTY_ABBR || piece=EMPTY_FILLER_ABBR,
                 // THEN there is no piece return NO_COLOR
@@ -437,6 +452,7 @@ App As appinfo:
             );
         UDF_ColorToStr(color:Number):Text=If(color=WHITE,"White","Black");
         UDF_getOppositeColor(color:Number):Number=If(color=WHITE,BLACK,WHITE);
+        
         UDF_getACPieceABBR(fen:Text,piece:Text):Text=
             If(UDF_FEN_TO_ACTIVE_COLOR(fen)=WHITE,
                 // THEN
@@ -453,8 +469,10 @@ App As appinfo:
                 // ELSE
                 Upper(piece)
             );
+        
         UDF_isPieceAC(fen:Text,piece:Text):Boolean=
             If(UDF_PieceToColor(piece)=UDF_FEN_TO_ACTIVE_COLOR(fen),true,false);
+        
         UDF_PieceToIcon(piece:Text):Text=
             Switch(true,
                 piece="K",  WHITE_KING_ICON,
@@ -471,6 +489,7 @@ App As appinfo:
                 piece="p",  BLACK_PAWN_ICON,
                 EMPTY_ICON
             );
+        
         UDF_getPieceMaterialValue(piece:Text):Number=
             Switch(true,
                 piece="K",  100,
@@ -487,6 +506,7 @@ App As appinfo:
                 piece="p",  -1,
                 0
             );
+        
         UDF_getPieceCentipawnMaterialValue(piece:Text, filter:Text):Number=
             Switch(true,
                 piece="K" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
@@ -503,6 +523,7 @@ App As appinfo:
                 piece="p" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
                 0
             );
+        
         UDF_calcCentipawnMaterialValue(fen:Text,filter:Text):Number=
             Sum(
                 ForAll(
@@ -512,6 +533,7 @@ App As appinfo:
                 ),
                 Value
             );
+        
         UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
             With(
                 UDF_FEN_TO_BOARD(fen) As theBoard,
@@ -537,6 +559,7 @@ App As appinfo:
                     false
                 )
             );
+        
         UDF_isSqNumAttackedBySqNum(attackingPiece:Text, attackingSqNum:Number, attackedSqNum:Number):Boolean=
             With(
                 LookUp(colPF_LEGAL_MOVES,
@@ -547,6 +570,7 @@ App As appinfo:
         
                 If(IsBlank(theEligibleMove),false,true)
             );
+        
         UDF_countPiecesOnBoard(board:Text, piecesToCount:Text):Number=
             Sum(
                 ForAll(
@@ -555,6 +579,7 @@ App As appinfo:
                     If(UDF_getBitAtSqNum(board, theSqNum.Value) exactin piecesToCount,1,0)
                 ), Value
             );
+        
         // User defined formulas
         UDF_getOppositeDirection(dir:Number):Number=
             Switch(true,
@@ -616,6 +641,7 @@ App As appinfo:
                 dir=NW, 2,
                 0
             );
+        
         UDF_sqNumToAdjacentSqNames(refSqNum:Number):Text=
             Trim(
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N))) & " " &
@@ -627,16 +653,20 @@ App As appinfo:
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W))) & " " &
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))
             );
+        
         // UDF Set --------
         UDF_getSetSize(setA:Text):Number=
             If(Trim(setA)="",
                 0,
                 CountRows(Distinct(Sort(Split(Trim(setA), " "), Value), Value))
             );
+        
         UDF_createSetOfSqNames(sqNameList:Text):Text=
             Trim(Concat(Distinct(Sort(Split(Trim(sqNameList), " "), Value), Value), Value, " "));
+        
         UDF_getSetOfAdjacentSqNames(refSqName:Text):Text=
             UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(UDF_sqNameToSqNum(refSqName)));
+        
         UDF_getSetDifference(setA:Text, setB:Text):Text=
             Trim(
                 Concat(
@@ -651,6 +681,7 @@ App As appinfo:
                     ), Value, " "
                 )
             );
+        
         UDF_getSetIntersection(setA:Text, setB:Text):Text=
             Trim(
                 Concat(
@@ -665,6 +696,7 @@ App As appinfo:
                     ), Value, " "
                 )
             );
+        
         UDF_getSetUnion(setA:Text, setB:Text):Text=
             Trim(
                 Concat(
@@ -675,8 +707,10 @@ App As appinfo:
                     ), Value, " "
                 )
             );
+        
         UDF_getSetComplement(setA:Text):Text=
             UDF_getSetDifference(UNIVERSAL_SQNAMES_SET, setA);
+        
         UDF_getSetofSqNamesInBox(refSqName1:Text, refSqName2:Text):Text=
             Trim(
                 Concat(
@@ -707,6 +741,7 @@ App As appinfo:
                     ), Value, " "
                 )
             );
+        
         UDF_sqNumToFileSet(refSqNum:Number):Text=
         	With(
         		{
@@ -723,6 +758,7 @@ App As appinfo:
                     )
                 )
             );
+        
         UDF_sqNumToRankSet(refSqNum:Number):Text=
         	With(
         		{
@@ -739,176 +775,13 @@ App As appinfo:
                     )
                 )
             );
+        
         UDF_sqNumToRookSet(refSqNum:Number):Text=
             UDF_getSetUnion(UDF_sqNumToFileSet(refSqNum), UDF_sqNumToRankSet(refSqNum));
+        
         UDF_sqNumToKingSet(refSqNum:Number):Text=
             UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
-        // UDF isAttacked code
-        // is a square occupied by KQRBNP attacked by an opposite colored PAWN
-        UDF_isSqNumPAWNAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-            Switch(true,
-                attackingColor=BLACK &&
-                (
-                    UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP" && (
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1))="p" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1))="p"
-                    )
-                ),
-                    true,
-                    
-                attackingColor=WHITE &&
-                (
-                    UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp" && (
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1))="P" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1))="P"
-                    )
-                ),
-                    true,
         
-                // default
-                false
-            );
-        // is a square occupied by KQRBNP attacked by an opposite colored KNIGHT
-        UDF_isSqNumKNIGHTAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-            Switch(true,
-                attackingColor=BLACK &&
-                UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP",
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,2))="n" ||
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,1))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,-1))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-2))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-2))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,-1))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,1))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,2))="n",
-                    
-                attackingColor=WHITE &&
-                UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp",
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,2))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,1))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,-1))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-2))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-2))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,-1))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,1))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,2))="N",
-        
-                // default
-                false
-            );
-        // is a square occupied by KQRBNP attacked by an opposite colored ROOK
-        UDF_isSqNumROOKAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-            Switch(true,
-                attackingColor=BLACK &&
-                UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP",
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0), 7, 7), "#{0,6}r", MatchOptions.BeginsWith),
-        
-                attackingColor=WHITE &&
-                UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp",
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0), 7, 7), "#{0,6}R", MatchOptions.BeginsWith),
-        
-                // default
-                false
-            );
-        // is a square occupied by KQRBNP attacked by an opposite colored BISHOP  
-        UDF_isSqNumBISHOPAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-            Switch(true,
-                attackingColor=BLACK &&
-                UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP",
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1), 2, 7), "#{0,6}b", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}b", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}b", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}b", MatchOptions.BeginsWith),
-        
-                attackingColor=WHITE &&
-                UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp",
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1), 2, 7), "#{0,6}B", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}B", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}B", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}B", MatchOptions.BeginsWith),
-        
-                // default
-                false
-            );
-        // is a square occupied by KQRBNP attacked by an opposite colored QUEEN
-        UDF_isSqNumQUEENAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-            Switch(true,
-                attackingColor=BLACK &&
-                UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP",
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1), 2, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0), 7, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}q", MatchOptions.BeginsWith),
-        
-                attackingColor=WHITE &&
-                UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp",
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1), 2, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0), 7, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
-                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}Q", MatchOptions.BeginsWith),
-        
-                // default
-                false
-            );
-        // is a square occupied by KQRBNP attacked by an opposite colored KING
-        UDF_isSqNumKINGAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-            If(UDF_isSqNumProtected(fen, refSqNum, UDF_getOppositeColor(attackingColor)),
-                // THEN - king cannot attack a protected square
-                false,
-        
-                Switch(true,
-                    attackingColor=BLACK &&
-                    UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP",
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1))="k" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1))="k" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0))="k" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1))="k" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1))="k" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1))="k" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0))="k" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1))="k",
-                        
-                    attackingColor=WHITE &&
-                    UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp",
-                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1))="K" || 
-                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1))="K" || 
-                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0))="K" || 
-                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1))="K" || 
-                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1))="K" || 
-                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1))="K" || 
-                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0))="K" || 
-                            UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1))="K",
-        
-                    // default
-                    false
-                )
-            );
-        UDF_isSqNumAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-            Switch(true,
-                UDF_isSqNumPAWNAttacked(board, refSqNum, attackingColor), true,
-                UDF_isSqNumKNIGHTAttacked(board, refSqNum, attackingColor), true,
-                UDF_isSqNumKINGAttacked(board, refSqNum, attackingColor), true,
-                UDF_isSqNumROOKAttacked(board, refSqNum, attackingColor), true,
-                UDF_isSqNumBISHOPAttacked(board, refSqNum, attackingColor), true,
-                UDF_isSqNumQUEENAttacked(board, refSqNum, attackingColor), true,
-        
-                // default
-                false
-            );
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
@@ -1204,4 +1077,3 @@ App As appinfo:
         OnNew: =false
         OnSave: =false
         OnView: =false
-
