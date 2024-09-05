@@ -417,6 +417,85 @@ App As appinfo:
                 Right(Left(board,sqNum+1),1)
             );
         
+        UDF_getBitsAtSqNum(board:Text,startingSqNum:Number,direction:Number,numberOfSquares:Number):Text=
+            If(startingSqNum<0 || startingSqNum>=EMPTY_SQUARE_NUM,
+                "",
+                Concat(
+                    ForAll(
+                        Sequence(numberOfSquares,0) As theStep,
+        
+                        Switch(true,
+                            direction=N,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,0,theStep.Value)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,0,theStep.Value))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,0,theStep.Value))
+                                    )
+                                ),
+                            direction=NE,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,theStep.Value)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,theStep.Value))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,theStep.Value))
+                                    )
+                                ),
+                            direction=E,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,0)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,0))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,0))
+                                    )
+                                ),
+                            direction=SE,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,-theStep.Value)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,-theStep.Value))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,-theStep.Value))
+                                    )
+                                ),
+                            direction=S,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,0,-theStep.Value)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,0,-theStep.Value))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,0,-theStep.Value))
+                                    )
+                                ),
+                            direction=SW,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,-theStep.Value)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,-theStep.Value))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,-theStep.Value))
+                                    )
+                                ),
+                            direction=W,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,0)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,0))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,0))
+                                    )
+                                ),
+        
+                            // default - direction=NW
+                            If(UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,theStep.Value)=EMPTY_SQUARE_NUM,
+                                "",
+                                If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,theStep.Value))=EMPTY_ABBR,
+                                    EMPTY_FILLER_ABBR,
+                                    UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,theStep.Value))
+                                )
+                            )
+                        )
+                    ),
+                    Value,
+                    ""
+                )
+            );
         UDF_setBitAtSqNum(board:Text,piece:Text,sqNum:Number):Text=
             If(piece=EMPTY_ABBR,
                 Left(board,Max(0,sqNum)) & EMPTY_FILLER_ABBR & Right(board,Min(63,63-sqNum)),
@@ -784,6 +863,9 @@ App As appinfo:
         UDF_sqNumToKingSet(refSqNum:Number):Text=
             UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
         
+        // UDF isProtected code
+        UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=false;
+        
         // UDF isAttacked code
         // is a square occupied by KQRBNP attacked by an opposite colored PAWN
         UDF_isSqNumPAWNAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
@@ -907,7 +989,7 @@ App As appinfo:
             );
         // is a square occupied by KQRBNP attacked by an opposite colored KING
         UDF_isSqNumKINGAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-            If(UDF_isSqNumProtected(fen, refSqNum, UDF_getOppositeColor(attackingColor)),
+            If(UDF_isSqNumProtected(board, refSqNum, UDF_getOppositeColor(attackingColor)),
                 // THEN - king cannot attack a protected square
                 false,
         
