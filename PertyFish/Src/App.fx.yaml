@@ -535,25 +535,29 @@ App As appinfo:
             );
         
         UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
-            Switch(true,
-                IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(fen),sqNum)),  false,
-                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(fen),sqNum) exactin UDF_getACPieceABBR(fen,"KN"), true,
-                distance=1, true,
-                !IsMatch(
-                    Concat(
-                        ForAll (
-                            Split(slideOvers, " ") As aSliderOver,
-        
-                            If(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(fen), UDF_sqNameToSqNum(aSliderOver.Value))<>EMPTY_FILLER_ABBR,
-                                "BLOCKED",
-                                ""
-                            )
-                        ),Value,""
-                    ), "BLOCKED", MatchOptions.Contains
-                ), true,
-        
-                // default
-                false
+            With(
+                UDF_FEN_TO_BOARD(fen) As theBoard,
+
+                Switch(true,
+                    IsBlank(UDF_getBitAtSqNum(theBoard.Value,sqNum)),  false,
+                    UDF_getBitAtSqNum(theBoard.Value,sqNum) exactin UDF_getACPieceABBR(fen,"KN"), true,
+                    distance=1, true,
+                    !IsMatch(
+                        Concat(
+                            ForAll (
+                                Split(slideOvers, " ") As aSliderOver,
+            
+                                If(UDF_getBitAtSqNum(theBoard.Value, UDF_sqNameToSqNum(aSliderOver.Value))<>EMPTY_FILLER_ABBR,
+                                    "BLOCKED",
+                                    ""
+                                )
+                            ),Value,""
+                        ), "BLOCKED", MatchOptions.Contains
+                    ), true,
+            
+                    // default
+                    false
+                )
             );
         
         UDF_isSqNumAttackedBySqNum(attackingPiece:Text, attackingSqNum:Number, attackedSqNum:Number):Boolean=
