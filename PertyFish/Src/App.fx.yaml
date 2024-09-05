@@ -637,7 +637,7 @@ App As appinfo:
                 dir=NW, 2,
                 0
             );
-
+        
         UDF_sqNumToAdjacentSqNames(refSqNum:Number):Text=
             Trim(
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N))) & " " &
