@@ -537,7 +537,7 @@ App As appinfo:
         UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
             With(
                 UDF_FEN_TO_BOARD(fen) As theBoard,
-
+            
                 Switch(true,
                     IsBlank(UDF_getBitAtSqNum(theBoard.Value,sqNum)),  false,
                     UDF_getBitAtSqNum(theBoard.Value,sqNum) exactin UDF_getACPieceABBR(fen,"KN"), true,
