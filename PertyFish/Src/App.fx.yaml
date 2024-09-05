@@ -777,7 +777,7 @@ App As appinfo:
         
         UDF_sqNumToKingSet(refSqNum:Number):Text=
             UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
-
+        
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
