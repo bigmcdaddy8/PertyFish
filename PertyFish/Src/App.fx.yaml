@@ -649,7 +649,7 @@ App As appinfo:
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W))) & " " &
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))
             );
-
+        
         // UDF Set --------
         UDF_getSetSize(setA:Text):Number=
             If(Trim(setA)="",
@@ -777,7 +777,7 @@ App As appinfo:
         
         UDF_sqNumToKingSet(refSqNum:Number):Text=
             UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
-        
+
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
