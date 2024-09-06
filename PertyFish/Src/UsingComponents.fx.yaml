@@ -474,6 +474,12 @@ UsingComponents As screen:
                                 heuristic17:
                                     If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
                                         // THEN
+                                        If(gblPF_DEBUG_EVAL,
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                " fCE_400(): DEBUG heuristic17 preMOve active color WHITE " & 
+                                                " # of BLACK pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "kqrbnp")
+                                            })
+                                        );
                                         If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "kqrbnp")>1,
                                             // THEN
                                             0,
@@ -496,7 +502,6 @@ UsingComponents As screen:
                                                         })
                                                     )
                                                 )
-            
                                             );
                                             If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "Q")<3,
                                                 // THEN - bump up the promotion to a Q
@@ -510,6 +515,12 @@ UsingComponents As screen:
                                         ),
             
                                         // ELSE
+                                        If(gblPF_DEBUG_EVAL,
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                " fCE_400(): DEBUG heuristic17 preMOve active color BLACK " & 
+                                                " # of WHITE pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "KQRBNP")
+                                            })
+                                        );
                                         If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "KQRBNP")>1,
                                             // THEN
                                             0,
@@ -532,7 +543,6 @@ UsingComponents As screen:
                                                         })
                                                     )
                                                 )
-            
                                             );
                                             If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "q")<3,
                                                 // THEN - bump up the promotion to a Q
