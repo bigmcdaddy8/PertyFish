@@ -480,6 +480,9 @@ UsingComponents As screen:
                                                 " # of BLACK pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "kqrbnp")
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                " preMoveFEN: " & theCurrentNode.preMoveFEN
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                 " preMoveBoard: " & theCurrentNode.preMoveBoard
                                             })
                                         );
