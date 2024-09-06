@@ -459,24 +459,37 @@ comChessEngineFunctions As CanvasComponent:
                                                             If(gblPF_DEBUG_EVAL,
                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                     " fCE_400(): opponent kingSq: " & UDF_sqNumToSqName(theirKing.sqNum) & "(" & theirKing.sqNum & ")" &
-                                                                    " adj set: " & byTheirKing.adjSquaresSet
+                                                                    " Black King adj set: " & byTheirKing.adjSquaresSet
                                                                 })
                                                             );
-                                                            ForAll(
-                                                                Split(byTheirKing.adjSquaresSet, " ") As adjSquareName,
+                                                            Sum(
+                                                                ForAll(
+                                                                    Split(byTheirKing.adjSquaresSet, " ") As adjSquareName,
                 
-                                                                If(gblPF_DEBUG_EVAL,
-                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                        " adjSquareName: " & adjSquareName.Value & "(" & UDF_sqNameToSqNum(adjSquareName.Value) & ")" &
-                                                                            " preMove isAttacked?: " & 
-                                                                                UDF_isSqNumAttacked(theCurrentNode.preMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE) &
-                                                                            " postMove isAttacked?: " & 
-                                                                                UDF_isSqNumAttacked(theCurrentNode.postMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE)
-                                                                    })
-                                                                )
+                                                                    With(
+                                                                        {
+                                                                            preMoveIsAttacked:  UDF_isSqNumAttacked(theCurrentNode.preMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE),
+                                                                            postMoveIsAttacked: UDF_isSqNumAttacked(theCurrentNode.postMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE)
+                                                                        } As attackBooleans,
+                
+                                                                        If(gblPF_DEBUG_EVAL,
+                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                " Black King adjSquareName: " & adjSquareName.Value & "(" & UDF_sqNameToSqNum(adjSquareName.Value) & ")" &
+                                                                                    " preMove isAttacked?: " & attackBooleans.preMoveIsAttacked &
+                                                                                    " postMove isAttacked?: " & attackBooleans.postMoveIsAttacked
+                                                                            })
+                                                                        );
+                                                                        Switch(true,
+                                                                            attackBooleans.postMoveIsAttacked=true && attackBooleans.preMoveIsAttacked=false, 1,
+                                                                            attackBooleans.postMoveIsAttacked=false && attackBooleans.preMoveIsAttacked=true, -1,
+                                                                            
+                                                                            // default
+                                                                            0
+                                                                        )
+                                                                    )
+                                                                ), Value
                                                             )
-                                                        );
-                                                        0
+                                                        )
                                                     ),
                                                     // - push the pawns forward (until we have enough Qs) - is this a pawn move ?
                                                     If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "Q")<3,
@@ -488,7 +501,7 @@ comChessEngineFunctions As CanvasComponent:
                                                         // ELSE
                                                         0
                                                     )
-                                                )
+                                                ) * RandBetween(13,28)
                                             ),
                 
                                             // ELSE
@@ -502,33 +515,63 @@ comChessEngineFunctions As CanvasComponent:
                                                 // THEN
                                                 0,
                 
-                                                // ELSE - the opponent is a lone king - push the pawns forward (until we have enough Qs) - is this a pawn move ?
-                                                With(
-                                                    {
-                                                        sqNum:      UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "K"))
-                                                    } As theirKing,
-                
+                                                // ELSE - the opponent is a lone king 
+                                                Sum(
                                                     With(
                                                         {
-                                                            adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum))
-                                                        } As byTheirKing,
+                                                            sqNum:      UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "K"))
+                                                        } As theirKing,
                 
-                                                        If(gblPF_DEBUG_EVAL,
-                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                " fCE_400(): opponent kingSq: " & UDF_sqNumToSqName(theirKing.sqNum) & "(" & theirKing.sqNum & ")" &
-                                                                " adj set: " & byTheirKing.adjSquaresSet
-                                                            })
-                                                        )
-                                                    )
-                                                );
-                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "q")<3,
-                                                    // THEN - bump up the promotion to a Q
-                                                    If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
-                                                        (8 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)) * RandBetween(-18,-8),
-                                                        0
+                                                        With(
+                                                            {
+                                                                adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum))
+                                                            } As byTheirKing,
+                
+                                                            If(gblPF_DEBUG_EVAL,
+                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                    " fCE_400(): opponent kingSq: " & UDF_sqNumToSqName(theirKing.sqNum) & "(" & theirKing.sqNum & ")" &
+                                                                    " White King adj set: " & byTheirKing.adjSquaresSet
+                                                                })
+                                                            );
+                                                            Sum(
+                                                                ForAll(
+                                                                    Split(byTheirKing.adjSquaresSet, " ") As adjSquareName,
+                
+                                                                    With(
+                                                                        {
+                                                                            preMoveIsAttacked:  UDF_isSqNumAttacked(theCurrentNode.preMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK),
+                                                                            postMoveIsAttacked: UDF_isSqNumAttacked(theCurrentNode.postMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK)
+                                                                        } As attackBooleans,
+                
+                                                                        If(gblPF_DEBUG_EVAL,
+                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                " White King adjSquareName: " & adjSquareName.Value & "(" & UDF_sqNameToSqNum(adjSquareName.Value) & ")" &
+                                                                                    " preMove isAttacked?: " & attackBooleans.preMoveIsAttacked &
+                                                                                    " postMove isAttacked?: " & attackBooleans.postMoveIsAttacked
+                                                                            })
+                                                                        );
+                                                                        Switch(true,
+                                                                            attackBooleans.postMoveIsAttacked=true && attackBooleans.preMoveIsAttacked=false, 1,
+                                                                            attackBooleans.postMoveIsAttacked=false && attackBooleans.preMoveIsAttacked=true, -1,
+                                                                            
+                                                                            // default
+                                                                            0
+                                                                        )
+                                                                    )
+                                                                ), Value
+                                                            )
+                                                        ) * RandBetween(-23,-13)
                                                     ),
-                                                    // ELSE
-                                                    0
+                                                    // push the pawns forward (until we have enough Qs) - is this a pawn move ?
+                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "q")<3,
+                                                        // THEN - bump up the promotion to a Q
+                                                        If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
+                                                            (8 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)) * RandBetween(-18,-8),
+                                                            0
+                                                        ),
+                                                        // ELSE
+                                                        0
+                                                    )
                                                 )
                                             )
                                         ),
