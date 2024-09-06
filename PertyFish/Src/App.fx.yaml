@@ -925,15 +925,13 @@ App As appinfo:
         // is a square occupied by KQRBNP attacked by an opposite colored ROOK
         UDF_isSqNumROOKAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
             Switch(true,
-                attackingColor=BLACK &&
-                UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP",
+                attackingColor=BLACK,
                     IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
                     IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
                     IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
                     IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0), 7, 7), "#{0,6}r", MatchOptions.BeginsWith),
         
-                attackingColor=WHITE &&
-                UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp",
+                attackingColor=WHITE,
                     IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
                     IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
                     IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
