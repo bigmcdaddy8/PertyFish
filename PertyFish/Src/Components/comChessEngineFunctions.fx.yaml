@@ -430,7 +430,7 @@ comChessEngineFunctions As CanvasComponent:
                                             // THEN
                                             If(gblPF_DEBUG_EVAL,
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                    " fCE_400(): DEBUG heuristic17 preMOve active color WHITE " & 
+                                                    " fCE_400(): DEBUG heuristic17 preMove active color WHITE " & 
                                                     " # of BLACK pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "kqrbnp")
                                                 });
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
@@ -477,7 +477,7 @@ comChessEngineFunctions As CanvasComponent:
                                             // ELSE
                                             If(gblPF_DEBUG_EVAL,
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                    " fCE_400(): DEBUG heuristic17 preMOve active color BLACK " & 
+                                                    " fCE_400(): DEBUG heuristic17 preMove active color BLACK " & 
                                                     " # of WHITE pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "KQRBNP")
                                                 })
                                             );

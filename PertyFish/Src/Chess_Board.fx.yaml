@@ -4164,7 +4164,9 @@ Chess_Board As screen:
                             parentNodeID:           	    EMPTY_NODE_ID,
                             nodeDepth:					    0,
                             preMoveFEN:                     theData.chessEngineData.startingFEN,
-                            postMoveFEN:                    theData.chessEngineData.startingFEN
+                            preMoveBoard:                   UDF_FEN_TO_BOARD(theData.chessEngineData.startingFEN),
+                            postMoveFEN:                    theData.chessEngineData.startingFEN,
+                            postMoveBoard:                  UDF_FEN_TO_BOARD(theData.chessEngineData.startingFEN)
                         });
                     
                         Set(gblPF_UI_DisplayedBoard, UDF_FEN_TO_BOARD(theData.chessEngineData.startingFEN));
