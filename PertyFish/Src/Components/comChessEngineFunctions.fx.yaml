@@ -428,49 +428,75 @@ comChessEngineFunctions As CanvasComponent:
                                     heuristic17:
                                         If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
                                             // THEN
-                                            With(
-                                                {
-                                                    theBoard: UDF_FEN_TO_BOARD(theCurrentNode.preMoveFEN)
-                                                } As localVars,
+                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "kqrbnp")>1,
+                                                // THEN
+                                                0,
                 
-                                                If(UDF_countPiecesOnBoard(localVars.theBoard, "kqrbnp")>1,
-                                                    // THEN
-                                                    0,
+                                                // ELSE - the opponent is a lone king - push the pawns forward (until we have enough Qs) - is this a pawn move ?
+                                                With(
+                                                    {
+                                                        sqNum:      UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
+                                                    } As theirKing,
                 
-                                                    // ELSE - the opponent is a lone king - push the pawns forward (until we have enough Qs) - is this a pawn move ?
-                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(localVars.theBoard, "Q")<3,
-                                                        // THEN - bump up the promotion to a Q
-                                                        If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
-                                                            UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) * RandBetween(8,18),
-                                                            0
-                                                        ),
-                                                        // ELSE
-                                                        0
+                                                    With(
+                                                        {
+                                                            adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum))
+                                                        } As byTheirKing,
+                
+                                                        If(gblPF_DEBUG_EVAL,
+                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                " fCE_400(): opponent kingSq: " & UDF_sqNumToSqName(theirKing.sqNum) & "(" & theirKing.sqNum & ")" &
+                                                                " adj set: " & byTheirKing.adjSquaresSet
+                                                            })
+                                                        )
                                                     )
-                                                )   
+                
+                                                );
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "Q")<3,
+                                                    // THEN - bump up the promotion to a Q
+                                                    If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
+                                                        UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) * RandBetween(8,18),
+                                                        0
+                                                    ),
+                                                    // ELSE
+                                                    0
+                                                )
                                             ),
                 
                                             // ELSE
-                                            With(
-                                                {
-                                                    theBoard: UDF_FEN_TO_BOARD(theCurrentNode.preMoveFEN)
-                                                } As localVars,
+                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "KQRBNP")>1,
+                                                // THEN
+                                                0,
                 
-                                                If(UDF_countPiecesOnBoard(localVars.theBoard, "KQRBNP")>1,
-                                                    // THEN
-                                                    0,
+                                                // ELSE - the opponent is a lone king - push the pawns forward (until we have enough Qs) - is this a pawn move ?
+                                                With(
+                                                    {
+                                                        sqNum:      UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "K"))
+                                                    } As theirKing,
                 
-                                                    // ELSE - the opponent is a lone king - push the pawns forward (until we have enough Qs) - is this a pawn move ?
-                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(localVars.theBoard, "q")<3,
-                                                        // THEN - bump up the promotion to a Q
-                                                        If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
-                                                            (8 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)) * RandBetween(-18,-8),
-                                                            0
-                                                        ),
-                                                        // ELSE
-                                                        0
+                                                    With(
+                                                        {
+                                                            adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum))
+                                                        } As byTheirKing,
+                
+                                                        If(gblPF_DEBUG_EVAL,
+                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                " fCE_400(): opponent kingSq: " & UDF_sqNumToSqName(theirKing.sqNum) & "(" & theirKing.sqNum & ")" &
+                                                                " adj set: " & byTheirKing.adjSquaresSet
+                                                            })
+                                                        )
                                                     )
-                                                )   
+                
+                                                );
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "q")<3,
+                                                    // THEN - bump up the promotion to a Q
+                                                    If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
+                                                        (8 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)) * RandBetween(-18,-8),
+                                                        0
+                                                    ),
+                                                    // ELSE
+                                                    0
+                                                )
                                             )
                                         ),
                                     heuristic18:
