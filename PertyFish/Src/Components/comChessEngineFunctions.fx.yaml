@@ -453,7 +453,13 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                         With(
                                                             {
-                                                                adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum))
+                                                                adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
+                                                                noKingPreMoveBoard: UDF_setBitAtSqNum(theCurrentNode.preMoveBoard,EMPTY_FILLER_ABBR,
+                                                                                        UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, "k")
+                                                                                    ),
+                                                                noKingPostMoveBoard: UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,EMPTY_FILLER_ABBR,
+                                                                                        UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard, "k")
+                                                                                    )
                                                             } As byTheirKing,
                 
                                                             If(gblPF_DEBUG_EVAL,
@@ -468,8 +474,8 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                                     With(
                                                                         {
-                                                                            preMoveIsAttacked:  UDF_isSqNumAttacked(theCurrentNode.preMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE),
-                                                                            postMoveIsAttacked: UDF_isSqNumAttacked(theCurrentNode.postMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE)
+                                                                            preMoveIsAttacked:  UDF_isSqNumAttacked(byTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE),
+                                                                            postMoveIsAttacked: UDF_isSqNumAttacked(byTheirKing.noKingPostMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE)
                                                                         } As attackBooleans,
                 
                                                                         If(gblPF_DEBUG_EVAL,
@@ -524,7 +530,13 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                         With(
                                                             {
-                                                                adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum))
+                                                                adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
+                                                                noKingPreMoveBoard: UDF_setBitAtSqNum(theCurrentNode.preMoveBoard,EMPTY_FILLER_ABBR,
+                                                                                        UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, "K")
+                                                                                    ),
+                                                                noKingPostMoveBoard: UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,EMPTY_FILLER_ABBR,
+                                                                                        UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard, "K")
+                                                                                    )
                                                             } As byTheirKing,
                 
                                                             If(gblPF_DEBUG_EVAL,
@@ -539,8 +551,8 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                                     With(
                                                                         {
-                                                                            preMoveIsAttacked:  UDF_isSqNumAttacked(theCurrentNode.preMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK),
-                                                                            postMoveIsAttacked: UDF_isSqNumAttacked(theCurrentNode.postMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK)
+                                                                            preMoveIsAttacked:  UDF_isSqNumAttacked(byTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK),
+                                                                            postMoveIsAttacked: UDF_isSqNumAttacked(byTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK)
                                                                         } As attackBooleans,
                 
                                                                         If(gblPF_DEBUG_EVAL,
