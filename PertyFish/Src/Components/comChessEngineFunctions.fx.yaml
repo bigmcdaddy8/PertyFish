@@ -469,9 +469,9 @@ comChessEngineFunctions As CanvasComponent:
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                         " adjSquareName: " & adjSquareName.Value & "(" & UDF_sqNameToSqNum(adjSquareName.Value) & ")" &
                                                                             " preMove isAttacked?: " & 
-                                                                                UDF_isSqNumAttacked(theCurrentNode.preMoveBoard, adjSquareName.Value, WHITE) &
+                                                                                UDF_isSqNumAttacked(theCurrentNode.preMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE) &
                                                                             " postMove isAttacked?: " & 
-                                                                                UDF_isSqNumAttacked(theCurrentNode.postMoveBoard, adjSquareName.Value, WHITE)
+                                                                                UDF_isSqNumAttacked(theCurrentNode.postMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE)
                                                                     })
                                                                 )
                                                             )
