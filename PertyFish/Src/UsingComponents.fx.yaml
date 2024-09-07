@@ -540,7 +540,7 @@ UsingComponents As screen:
                                                                     )
                                                                 )
                                                             ), Value
-                                                        )
+                                                        ) * RandBetween(24,28)
                                                     )
                                                 ),
                                                 // - push the pawns forward (until we have enough Qs) - is this a pawn move ?
@@ -553,7 +553,7 @@ UsingComponents As screen:
                                                     // ELSE
                                                     0
                                                 )
-                                            ) * RandBetween(24,28)
+                                            )
                                         ),
             
                                         // ELSE
@@ -617,8 +617,8 @@ UsingComponents As screen:
                                                                     )
                                                                 )
                                                             ), Value
-                                                        )
-                                                    ) * RandBetween(-34,-21)
+                                                        ) * RandBetween(-28,-24)
+                                                    )
                                                 ),
                                                 // push the pawns forward (until we have enough Qs) - is this a pawn move ?
                                                 If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "q")<3,
@@ -630,7 +630,7 @@ UsingComponents As screen:
                                                     // ELSE
                                                     0
                                                 )
-                                            ) * RandBetween(-28,-24)
+                                            )
                                         )
                                     ),
                                 heuristic18:
