@@ -507,7 +507,7 @@ comChessEngineFunctions As CanvasComponent:
                                                         // ELSE
                                                         0
                                                     )
-                                                ) * RandBetween(13,28)
+                                                ) * RandBetween(24,28)
                                             ),
                 
                                             // ELSE
@@ -572,7 +572,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     )
                                                                 ), Value
                                                             )
-                                                        ) * RandBetween(-23,-13)
+                                                        ) * RandBetween(-34,-21)
                                                     ),
                                                     // push the pawns forward (until we have enough Qs) - is this a pawn move ?
                                                     If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "q")<3,
@@ -584,7 +584,7 @@ comChessEngineFunctions As CanvasComponent:
                                                         // ELSE
                                                         0
                                                     )
-                                                )
+                                                ) * RandBetween(-28,-24)
                                             )
                                         ),
                                     heuristic18:
