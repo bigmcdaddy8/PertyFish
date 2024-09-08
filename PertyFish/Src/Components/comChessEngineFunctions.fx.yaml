@@ -477,7 +477,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                 noKingNoPiecePostMoveBoard: UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,EMPTY_FILLER_ABBR,
                                                                                                 UDF_SearchBoardForPiece(
                                                                                                     UDF_setBitAtSqNum(
-                                                                                                        theCurrentNode.preMoveBoard,
+                                                                                                        theCurrentNode.postMoveBoard,
                                                                                                         EMPTY_FILLER_ABBR,
                                                                                                         theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                                                     ),
@@ -498,6 +498,11 @@ comChessEngineFunctions As CanvasComponent:
                                                                     theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
                                                                     WHITE
                                                                 ),
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_400(): looking to encourage move if it qualifies targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                    })
+                                                                );
                                                                 Sum(
                                                                     ForAll(
                                                                         Split(adjToTheirKing.adjSquaresSet, " ") As adjSquareName,
@@ -525,8 +530,8 @@ comChessEngineFunctions As CanvasComponent:
                                                                                 })
                                                                             );
                                                                             Switch(true,
-                                                                                attackBooleans.postMoveIsAttacked=true && attackBooleans.preMoveIsAttacked=false, 1,
-                                                                                attackBooleans.postMoveIsAttacked=false && attackBooleans.preMoveIsAttacked=true, -1,
+                                                                                attackBooleans.preMoveIsAttacked=false && attackBooleans.postMoveIsAttacked=true, 1,
+                                                                                attackBooleans.preMoveIsAttacked=true && attackBooleans.postMoveIsAttacked=false, -1,
                                                                                 
                                                                                 // default
                                                                                 0
@@ -534,6 +539,11 @@ comChessEngineFunctions As CanvasComponent:
                                                                         )
                                                                     ), Value
                                                                 ) * RandBetween(13,21), 
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_400(): discouraging move to naked adj square targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                    })
+                                                                );
                                                                 RandBetween(-21,-13) // do not want o move there - will be captured
                                                             )
                 
@@ -596,7 +606,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                 noKingNoPiecePostMoveBoard: UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,EMPTY_FILLER_ABBR,
                                                                                                 UDF_SearchBoardForPiece(
                                                                                                     UDF_setBitAtSqNum(
-                                                                                                        theCurrentNode.preMoveBoard,
+                                                                                                        theCurrentNode.postMoveBoard,
                                                                                                         EMPTY_FILLER_ABBR,
                                                                                                         theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                                                     ),
@@ -615,8 +625,13 @@ comChessEngineFunctions As CanvasComponent:
                                                                 UDF_isSqNumAttacked(
                                                                     adjToTheirKing.noKingNoPiecePostMoveBoard,
                                                                     theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                                    WHITE
+                                                                    BLACK
                                                                 ),
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_400(): looking to encourage move if it qualifies targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                    })
+                                                                );
                                                                 Sum(
                                                                     ForAll(
                                                                         Split(adjToTheirKing.adjSquaresSet, " ") As adjSquareName,
@@ -635,8 +650,8 @@ comChessEngineFunctions As CanvasComponent:
                                                                                 })
                                                                             );
                                                                             Switch(true,
-                                                                                attackBooleans.postMoveIsAttacked=true && attackBooleans.preMoveIsAttacked=false, 1,
-                                                                                attackBooleans.postMoveIsAttacked=false && attackBooleans.preMoveIsAttacked=true, -1,
+                                                                                attackBooleans.preMoveIsAttacked=false && attackBooleans.postMoveIsAttacked=true, 1,
+                                                                                attackBooleans.preMoveIsAttacked=true && attackBooleans.postMoveIsAttacked=false, -1,
                                                                                 
                                                                                 // default
                                                                                 0
@@ -644,6 +659,11 @@ comChessEngineFunctions As CanvasComponent:
                                                                         )
                                                                     ), Value
                                                                 ) * RandBetween(-21,-13),
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_400(): discouraging move to naked adj square targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                    })
+                                                                );
                                                                 RandBetween(13,21) // do not want o move there - will be captured
                                                             )
                                                         )
