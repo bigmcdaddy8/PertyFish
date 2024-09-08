@@ -590,7 +590,7 @@ UsingComponents As screen:
                                                                     " fCE_400(): discouraging move to naked adj square targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                 })
                                                             );
-                                                            RandBetween(-21,-13) // do not want o move there - will be captured
+                                                            RandBetween(-21,-13) // do not want to move there - will be captured
                                                         )
             
                                                     )
@@ -710,7 +710,7 @@ UsingComponents As screen:
                                                                     " fCE_400(): discouraging move to naked adj square targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                 })
                                                             );
-                                                            RandBetween(13,21) // do not want o move there - will be captured
+                                                            RandBetween(13,21) // do not want to move there - will be captured
                                                         )
                                                     )
                                                 ),
