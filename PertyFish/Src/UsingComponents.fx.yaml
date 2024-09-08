@@ -524,10 +524,10 @@ UsingComponents As screen:
                                                                                             UDF_setBitAtSqNum(
                                                                                                 theCurrentNode.postMoveBoard,
                                                                                                 EMPTY_FILLER_ABBR,
-                                                                                                theCurrentNode.inactiveColorMoveRecord.sourceSquareNum
+                                                                                                theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                                             ),
                                                                                             EMPTY_FILLER_ABBR,
-                                                                                            UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard,"k")
+                                                                                            UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard,"k")
                                                                                         )
                                                         } As adjToTheirKing,
             
@@ -646,16 +646,16 @@ UsingComponents As screen:
                                                                                                 theCurrentNode.inactiveColorMoveRecord.sourceSquareNum
                                                                                             ),
                                                                                             EMPTY_FILLER_ABBR,
-                                                                                            UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard,"k")
+                                                                                            UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard,"K")
                                                                                         ),
                                                             noKingNoPiecePostMoveBoard: UDF_setBitAtSqNum(
                                                                                             UDF_setBitAtSqNum(
                                                                                                 theCurrentNode.postMoveBoard,
                                                                                                 EMPTY_FILLER_ABBR,
-                                                                                                theCurrentNode.inactiveColorMoveRecord.sourceSquareNum
+                                                                                                theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                                             ),
                                                                                             EMPTY_FILLER_ABBR,
-                                                                                            UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard,"k")
+                                                                                            UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard,"K")
                                                                                         )
                                                         } As adjToTheirKing,
             
