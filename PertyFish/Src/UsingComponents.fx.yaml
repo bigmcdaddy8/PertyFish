@@ -584,7 +584,7 @@ UsingComponents As screen:
                                                                         )
                                                                     )
                                                                 ), Value
-                                                            ) * RandBetween(13,21),
+                                                            ) * 21,
             
                                                             // ELSE
                                                             If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet,
@@ -595,7 +595,7 @@ UsingComponents As screen:
                                                                             theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                     })
                                                                 );
-                                                                RandBetween(-21,-13), // do not want to move there - will be captured,
+                                                                -21, // do not want to move there - will be captured,
             
                                                                 // ELSE
                                                                 If(gblPF_DEBUG_EVAL,
@@ -718,7 +718,7 @@ UsingComponents As screen:
                                                                         )
                                                                     )
                                                                 ), Value
-                                                            ) * RandBetween(-21,-13),
+                                                            ) * -21,
             
                                                             // ELSE
                                                             If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet,
@@ -729,7 +729,7 @@ UsingComponents As screen:
                                                                             theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                     })
                                                                 );
-                                                                RandBetween(13,21), // do not want to move there - will be captured,
+                                                                21, // do not want to move there - will be captured,
             
                                                                 // ELSE
                                                                 If(gblPF_DEBUG_EVAL,
