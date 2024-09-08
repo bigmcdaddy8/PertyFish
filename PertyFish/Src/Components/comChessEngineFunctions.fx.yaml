@@ -492,7 +492,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     " Black King adj set: " & adjToTheirKing.adjSquaresSet
                                                                 })
                                                             );
-                                                            If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet &&
+                                                            If(!theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet ||
                                                                 UDF_isSqNumAttacked(
                                                                     adjToTheirKing.noKingNoPiecePostMoveBoard,
                                                                     theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
@@ -621,7 +621,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     " White King adj set: " & adjToTheirKing.adjSquaresSet
                                                                 })
                                                             );
-                                                            If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet &&
+                                                            If(!theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet ||
                                                                 UDF_isSqNumAttacked(
                                                                     adjToTheirKing.noKingNoPiecePostMoveBoard,
                                                                     theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
