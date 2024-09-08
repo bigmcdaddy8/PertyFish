@@ -533,11 +533,11 @@ UsingComponents As screen:
             
                                                         If(gblPF_DEBUG_EVAL,
                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                " fCE_400(): opponent kingSq: " & UDF_sqNumToSqName(theirKing.sqNum) & "(" & theirKing.sqNum & ")" &
+                                                                " fCE_400(): heuristic17 opponent kingSq: " & UDF_sqNumToSqName(theirKing.sqNum) & "(" & theirKing.sqNum & ")" &
                                                                 " Black King adj set: " & adjToTheirKing.adjSquaresSet
                                                             })
                                                         );
-                                                        If(!theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet ||
+                                                        If((!theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet) ||
                                                             UDF_isSqNumAttacked(
                                                                 adjToTheirKing.noKingNoPiecePostMoveBoard,
                                                                 theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
@@ -546,7 +546,7 @@ UsingComponents As screen:
                                                             // THEN
                                                             If(gblPF_DEBUG_EVAL,
                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                    " fCE_400(): looking to encourage move if it qualifies targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                    " fCE_400(): heuristic17 looking to encourage move if it qualifies targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                 })
                                                             );
                                                             Sum(
@@ -591,13 +591,18 @@ UsingComponents As screen:
                                                                 // THEN
                                                                 If(gblPF_DEBUG_EVAL,
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                        " fCE_400(): discouraging move to naked adj square targetSqName: " &
+                                                                        " fCE_400(): heuristic17 discouraging move to naked adj square targetSqName: " &
                                                                             theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                     })
                                                                 );
                                                                 RandBetween(-21,-13), // do not want to move there - will be captured,
             
                                                                 // ELSE
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_400(): heuristic17 neutral targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                    })
+                                                                );
                                                                 0
                                                             )
                                                         )
@@ -671,11 +676,11 @@ UsingComponents As screen:
             
                                                         If(gblPF_DEBUG_EVAL,
                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                " fCE_400(): opponent kingSq: " & UDF_sqNumToSqName(theirKing.sqNum) & "(" & theirKing.sqNum & ")" &
+                                                                " fCE_400(): heuristic17 opponent kingSq: " & UDF_sqNumToSqName(theirKing.sqNum) & "(" & theirKing.sqNum & ")" &
                                                                 " White King adj set: " & adjToTheirKing.adjSquaresSet
                                                             })
                                                         );
-                                                        If(!theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet ||
+                                                        If((!theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet) ||
                                                             UDF_isSqNumAttacked(
                                                                 adjToTheirKing.noKingNoPiecePostMoveBoard,
                                                                 theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
@@ -684,7 +689,7 @@ UsingComponents As screen:
                                                             // THEN
                                                             If(gblPF_DEBUG_EVAL,
                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                    " fCE_400(): looking to encourage move if it qualifies targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                    " fCE_400(): heuristic17 looking to encourage move if it qualifies targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                 })
                                                             );
                                                             Sum(
@@ -720,13 +725,19 @@ UsingComponents As screen:
                                                                 // THEN
                                                                 If(gblPF_DEBUG_EVAL,
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                        " fCE_400(): discouraging move to naked adj square targetSqName: " &
+                                                                        " fCE_400(): heuristic17 discouraging move to naked adj square targetSqName: " &
                                                                             theCurrentNode.inactiveColorMoveRecord.targetSquareNum
                                                                     })
                                                                 );
                                                                 RandBetween(13,21), // do not want to move there - will be captured,
             
                                                                 // ELSE
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_400(): heuristic17 neutral targetSqName: " &
+                                                                            theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                    })
+                                                                );
                                                                 0
                                                             )
                                                         )
