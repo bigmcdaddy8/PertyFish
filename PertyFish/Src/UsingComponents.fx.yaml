@@ -538,33 +538,51 @@ UsingComponents As screen:
                                                                 " Black King adj set: " & adjToTheirKing.adjSquaresSet
                                                             })
                                                         );
-                                                        Sum(
-                                                            ForAll(
-                                                                Split(adjToTheirKing.adjSquaresSet, " ") As adjSquareName,
+                                                        If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet &&
+                                                            UDF_isSqNumAttacked(
+                                                                adjToTheirKing.noKingNoPiecePostMoveBoard,
+                                                                theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                WHITE
+                                                            ),
+                                                            Sum(
+                                                                ForAll(
+                                                                    Split(adjToTheirKing.adjSquaresSet, " ") As adjSquareName,
             
-                                                                With(
-                                                                    {
-                                                                        preMoveIsAttacked:  UDF_isSqNumAttacked(adjToTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE),
-                                                                        postMoveIsAttacked: UDF_isSqNumAttacked(adjToTheirKing.noKingPostMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE)
-                                                                    } As attackBooleans,
+                                                                    With(
+                                                                        {
+                                                                            preMoveIsAttacked:  UDF_isSqNumAttacked(adjToTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE),
+                                                                            postMoveIsAttacked: UDF_isSqNumAttacked(adjToTheirKing.noKingPostMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE),
+                                                                            unprotectedAdjTargetSq:
+                                                                                If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet &&
+                                                                                    UDF_isSqNumAttacked(
+                                                                                        adjToTheirKing.noKingNoPiecePostMoveBoard,
+                                                                                        theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                                        WHITE
+                                                                                    ),
+                                                                                    false, true
+                                                                                )
+                                                                        } As attackBooleans,
             
-                                                                    If(gblPF_DEBUG_EVAL,
-                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                            " Black King adjSquareName: " & adjSquareName.Value & "(" & UDF_sqNameToSqNum(adjSquareName.Value) & ")" &
-                                                                                " preMove isAttacked?: " & attackBooleans.preMoveIsAttacked &
-                                                                                " postMove isAttacked?: " & attackBooleans.postMoveIsAttacked
-                                                                        })
-                                                                    );
-                                                                    Switch(true,
-                                                                        attackBooleans.postMoveIsAttacked=true && attackBooleans.preMoveIsAttacked=false, 1,
-                                                                        attackBooleans.postMoveIsAttacked=false && attackBooleans.preMoveIsAttacked=true, -1,
-                                                                        
-                                                                        // default
-                                                                        0
+                                                                        If(gblPF_DEBUG_EVAL,
+                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                " Black King adjSquareName: " & adjSquareName.Value & "(" & UDF_sqNameToSqNum(adjSquareName.Value) & ")" &
+                                                                                    " preMove isAttacked?: " & attackBooleans.preMoveIsAttacked &
+                                                                                    " postMove isAttacked?: " & attackBooleans.postMoveIsAttacked
+                                                                            })
+                                                                        );
+                                                                        Switch(true,
+                                                                            attackBooleans.postMoveIsAttacked=true && attackBooleans.preMoveIsAttacked=false, 1,
+                                                                            attackBooleans.postMoveIsAttacked=false && attackBooleans.preMoveIsAttacked=true, -1,
+                                                                            
+                                                                            // default
+                                                                            0
+                                                                        )
                                                                     )
-                                                                )
-                                                            ), Value
-                                                        ) * RandBetween(13,21)
+                                                                ), Value
+                                                            ) * RandBetween(13,21), 
+                                                            RandBetween(-21,-13) // do not want o move there - will be captured
+                                                        )
+            
                                                     )
                                                 ),
                                                 // - push the pawns forward (until we have enough Qs) - is this a pawn move ?
@@ -639,33 +657,41 @@ UsingComponents As screen:
                                                                 " White King adj set: " & adjToTheirKing.adjSquaresSet
                                                             })
                                                         );
-                                                        Sum(
-                                                            ForAll(
-                                                                Split(adjToTheirKing.adjSquaresSet, " ") As adjSquareName,
+                                                        If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet &&
+                                                            UDF_isSqNumAttacked(
+                                                                adjToTheirKing.noKingNoPiecePostMoveBoard,
+                                                                theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                WHITE
+                                                            ),
+                                                            Sum(
+                                                                ForAll(
+                                                                    Split(adjToTheirKing.adjSquaresSet, " ") As adjSquareName,
             
-                                                                With(
-                                                                    {
-                                                                        preMoveIsAttacked:  UDF_isSqNumAttacked(adjToTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK),
-                                                                        postMoveIsAttacked: UDF_isSqNumAttacked(adjToTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK)
-                                                                    } As attackBooleans,
+                                                                    With(
+                                                                        {
+                                                                            preMoveIsAttacked:  UDF_isSqNumAttacked(adjToTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK),
+                                                                            postMoveIsAttacked: UDF_isSqNumAttacked(adjToTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK)
+                                                                        } As attackBooleans,
             
-                                                                    If(gblPF_DEBUG_EVAL,
-                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                            " White King adjSquareName: " & adjSquareName.Value & "(" & UDF_sqNameToSqNum(adjSquareName.Value) & ")" &
-                                                                                " preMove isAttacked?: " & attackBooleans.preMoveIsAttacked &
-                                                                                " postMove isAttacked?: " & attackBooleans.postMoveIsAttacked
-                                                                        })
-                                                                    );
-                                                                    Switch(true,
-                                                                        attackBooleans.postMoveIsAttacked=true && attackBooleans.preMoveIsAttacked=false, 1,
-                                                                        attackBooleans.postMoveIsAttacked=false && attackBooleans.preMoveIsAttacked=true, -1,
-                                                                        
-                                                                        // default
-                                                                        0
+                                                                        If(gblPF_DEBUG_EVAL,
+                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                " White King adjSquareName: " & adjSquareName.Value & "(" & UDF_sqNameToSqNum(adjSquareName.Value) & ")" &
+                                                                                    " preMove isAttacked?: " & attackBooleans.preMoveIsAttacked &
+                                                                                    " postMove isAttacked?: " & attackBooleans.postMoveIsAttacked
+                                                                            })
+                                                                        );
+                                                                        Switch(true,
+                                                                            attackBooleans.postMoveIsAttacked=true && attackBooleans.preMoveIsAttacked=false, 1,
+                                                                            attackBooleans.postMoveIsAttacked=false && attackBooleans.preMoveIsAttacked=true, -1,
+                                                                            
+                                                                            // default
+                                                                            0
+                                                                        )
                                                                     )
-                                                                )
-                                                            ), Value
-                                                        ) * RandBetween(-21,-13)
+                                                                ), Value
+                                                            ) * RandBetween(-21,-13),
+                                                            RandBetween(13,21) // do not want o move there - will be captured
+                                                        )
                                                     )
                                                 ),
                                                 // push the pawns forward (until we have enough Qs) - is this a pawn move ?
