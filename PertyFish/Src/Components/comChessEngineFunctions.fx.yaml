@@ -510,16 +510,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                         With(
                                                                             {
                                                                                 preMoveIsAttacked:  UDF_isSqNumAttacked(adjToTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE),
-                                                                                postMoveIsAttacked: UDF_isSqNumAttacked(adjToTheirKing.noKingPostMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE),
-                                                                                unprotectedAdjTargetSq:
-                                                                                    If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet &&
-                                                                                        UDF_isSqNumAttacked(
-                                                                                            adjToTheirKing.noKingNoPiecePostMoveBoard,
-                                                                                            theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                                                            WHITE
-                                                                                        ),
-                                                                                        false, true
-                                                                                    )
+                                                                                postMoveIsAttacked: UDF_isSqNumAttacked(adjToTheirKing.noKingPostMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE)
                                                                             } As attackBooleans,
                 
                                                                             If(gblPF_DEBUG_EVAL,
