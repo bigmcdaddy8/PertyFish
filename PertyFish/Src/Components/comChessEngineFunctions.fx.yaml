@@ -497,6 +497,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
                                                                     WHITE
                                                                 ),
+                                                                // THEN
                                                                 If(gblPF_DEBUG_EVAL,
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                         " fCE_400(): looking to encourage move if it qualifies targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
@@ -537,13 +538,22 @@ comChessEngineFunctions As CanvasComponent:
                                                                             )
                                                                         )
                                                                     ), Value
-                                                                ) * RandBetween(13,21), 
-                                                                If(gblPF_DEBUG_EVAL,
-                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                        " fCE_400(): discouraging move to naked adj square targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
-                                                                    })
-                                                                );
-                                                                RandBetween(-21,-13) // do not want to move there - will be captured
+                                                                ) * RandBetween(13,21),
+                
+                                                                // ELSE
+                                                                If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet,
+                                                                    // THEN
+                                                                    If(gblPF_DEBUG_EVAL,
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " fCE_400(): discouraging move to naked adj square targetSqName: " &
+                                                                                theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                        })
+                                                                    );
+                                                                    RandBetween(-21,-13), // do not want to move there - will be captured,
+                
+                                                                    // ELSE
+                                                                    0
+                                                                )
                                                             )
                 
                                                         )
@@ -625,6 +635,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
                                                                     BLACK
                                                                 ),
+                                                                // THEN
                                                                 If(gblPF_DEBUG_EVAL,
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                         " fCE_400(): looking to encourage move if it qualifies targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
@@ -657,12 +668,21 @@ comChessEngineFunctions As CanvasComponent:
                                                                         )
                                                                     ), Value
                                                                 ) * RandBetween(-21,-13),
-                                                                If(gblPF_DEBUG_EVAL,
-                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                        " fCE_400(): discouraging move to naked adj square targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
-                                                                    })
-                                                                );
-                                                                RandBetween(13,21) // do not want to move there - will be captured
+                
+                                                                // ELSE
+                                                                If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet,
+                                                                    // THEN
+                                                                    If(gblPF_DEBUG_EVAL,
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " fCE_400(): discouraging move to naked adj square targetSqName: " &
+                                                                                theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                        })
+                                                                    );
+                                                                    RandBetween(13,21), // do not want to move there - will be captured,
+                
+                                                                    // ELSE
+                                                                    0
+                                                                )
                                                             )
                                                         )
                                                     ),
