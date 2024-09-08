@@ -491,7 +491,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     " Black King adj set: " & adjToTheirKing.adjSquaresSet
                                                                 })
                                                             );
-                                                            If((!theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet) ||
+                                                            If((!(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet)) ||
                                                                 UDF_isSqNumAttacked(
                                                                     adjToTheirKing.noKingNoPiecePostMoveBoard,
                                                                     theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
@@ -634,7 +634,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     " White King adj set: " & adjToTheirKing.adjSquaresSet
                                                                 })
                                                             );
-                                                            If((!theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet) ||
+                                                            If((!(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet)) ||
                                                                 UDF_isSqNumAttacked(
                                                                     adjToTheirKing.noKingNoPiecePostMoveBoard,
                                                                     theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
@@ -653,7 +653,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                         With(
                                                                             {
                                                                                 preMoveIsAttacked:  UDF_isSqNumAttacked(adjToTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK),
-                                                                                postMoveIsAttacked: UDF_isSqNumAttacked(adjToTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK)
+                                                                                postMoveIsAttacked: UDF_isSqNumAttacked(adjToTheirKing.noKingPostMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK)
                                                                             } As attackBooleans,
                 
                                                                             If(gblPF_DEBUG_EVAL,
