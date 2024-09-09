@@ -657,23 +657,52 @@ UsingComponents As screen:
                         postMoveEvalRecord: 
                             Patch(EVAL_RECORD_PF, {
                                 heuristic11:
-                                    // the dumb bully part
-                                    Sum(
-                                        ForAll(
-                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.postMoveFEN), "") As thePiece,
+                                    With(
+                                        {
+                                            materialDelta:
+                                                Sum(
+                                                    ForAll(
+                                                        Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.postMoveFEN), "") As thePiece,
             
-                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
-                                        ),
-                                        Value
-                                    ) -
-                                    Sum(
-                                        ForAll(
-                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.preMoveFEN), "") As thePiece,
+                                                        UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                                    ),
+                                                    Value
+                                                ) -
+                                                Sum(
+                                                    ForAll(
+                                                        Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.preMoveFEN), "") As thePiece,
             
-                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
-                                        ),
-                                        Value
+                                                        UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                                    ),
+                                                    Value
+                                                ),
+                                            materialSource:
+                                                UDF_getPieceCentipawnMaterialValue(
+                                                    theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier,
+                                                    "KQRBNPkqrbnp"
+                                                ),
+                                            materialCapture: 
+                                                UDF_getPieceCentipawnMaterialValue(
+                                                    theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier,
+                                                    "KQRBNPkqrbnp"
+                                                ),
+                                            targetSqAttacked:
+                                                UDF_isSqNumAttacked(
+                                                    theCurrentNode.postMoveBoard,
+                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                )
+                                        } As localVars,
+            
+                                        If(!localVars.targetSqAttacked || (Abs(localVars.materialSource)<Abs(localVars.materialCapture)),
+                                            // THEN
+                                            localVars.materialDelta,
+            
+                                            // ELSE - discourage the move
+                                            If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,-25,25)
+                                        )
                                     ),
+            
                                 heuristic17:
                                     If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
                                         // THEN
