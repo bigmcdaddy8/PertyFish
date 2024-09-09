@@ -38,24 +38,17 @@ In a private version I have built in regression testing, I may pull that forward
 #### Feature 0003 - Create smarter embedded chess engines
 Create smarter chess engines that are written using PowerFx
 
-
-##### Story 0003-05 Developing CE_PF_300 (Preschool)
-- Handle basic move evaluations.
-- - be aware if source square is attacked
-- - be aware if target square is attacked
-- - be aware if source square is protected 
-- - be aware if target square is protected
-- Simple awareness of game phase to aid in move selection
-- Simple board strength analysis
-- - number of attacked squares
-- - number of protected squares
-
-##### Story 0003-06 400 Developing CE_PF_300 (Kindergarten)
-- Do simple exchange calculation
+##### Story 0003-07 Developing CE_PF_500 (1st Grade)
+- End game - can it avoid stalemate ?
+- Add a heuristic that is logically opposite of heuristic11
+- - is the target square attacked and unprotected
+- - is the target square attacked and protected, but the exchange is unfavorable
 - Look for simple tactics
 - - look for hung pieces
 - - look for forks
-- Very simple end game plan.
+- Simple board strength analysis
+- - number of attacked squares
+- - number of protected squares
 
 
 #### Feature 0004 - Application Improvements
@@ -93,6 +86,16 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Completed Work
+
+##### Story 0003-06 400 Developing CE_PF_400 (Kindergarten)
+- Do simple exchange calculation before capturing
+
+##### Story 0003-05 Developing CE_PF_300 (Preschool)
+- Simple END GAME strategies
+- - push pawns forward
+- - look to increase number of squares attacked adjacent and on opponent king in order to increase change of checkmate
+- Simple awareness of game phase to aid in move selection
+
 ##### Story 0003-04 Chess Engine Development 200 (Bully)
 - Elevate evaluation of capturing moves.
 - Change in basic material value  preMove vs. postMove
