@@ -1241,8 +1241,44 @@ UsingComponents As screen:
                                                                         UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
                                                                     )
                                                             } As nextToKing,
-                                                        
-                                                            0
+            
+                                                            With(
+                                                                {
+                                                                    numAdjSquaresAttackedPreMove:
+                                                                        Sum(
+                                                                            ForAll(
+                                                                                Split(nextToKing.adjSquaresSet, " ") As adjSqName,
+            
+                                                                                UDF_countSqNumAttacks(
+                                                                                    nextToKing.noKingPreMoveBoard,
+                                                                                    UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                )
+                                                                            ), Value
+                                                                        ),
+                                                                    numAdjSquaresAttackedPostMove:
+                                                                        Sum(
+                                                                            ForAll(
+                                                                                Split(nextToKing.adjSquaresSet, " ") As adjSqName,
+            
+                                                                                UDF_countSqNumAttacks(
+                                                                                    nextToKing.noKingPostMoveBoard,
+                                                                                    UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                )
+                                                                            ), Value
+                                                                        )
+                                                                } As attackData,
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_500(): DEBUG heuristic16 preMove" & 
+                                                                        " numAdjSquaresAttackedPreMove: " & attackData.numAdjSquaresAttackedPreMove &
+                                                                        " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove
+                                                                    })
+                                                                );
+                                                                (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) *
+                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,21,-21)
+                                                            )
                                                         ),
             
                                                         // Sum: TBD...
@@ -1588,6 +1624,9 @@ UsingComponents As screen:
                                                 " heuristic12: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic12
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic16: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                 " heuristic17: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic17
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -1599,7 +1638,7 @@ UsingComponents As screen:
                                         );
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic12 +
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic17 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
                                     )
