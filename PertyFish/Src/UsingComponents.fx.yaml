@@ -1629,7 +1629,9 @@ UsingComponents As screen:
                                 comChessEngineFunctions.fCE_300(pNodeID),
                             theEngine.selectedEngine=CE_PF_400,
                                 comChessEngineFunctions.fCE_400(pNodeID),
-                            
+                            theEngine.selectedEngine=CE_PF_500,
+                                comChessEngineFunctions.fCE_500(pNodeID),
+            
                             // default
                             comChessEngineFunctions.fCE_100(pNodeID)
                         );
