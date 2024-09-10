@@ -1142,7 +1142,7 @@ App As appinfo:
                 UDF_countSqNumKINGAttacks(board, refSqNum, attackingColor),
                 UDF_countSqNumROOKAttacks(board, refSqNum, attackingColor),
                 UDF_countSqNumBISHOPAttacks(board, refSqNum, attackingColor),
-                UDF_countSqNumQUEENAttacks(board, refSqNum, attackingColor),
+                UDF_countSqNumQUEENAttacks(board, refSqNum, attackingColor)
             );
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
