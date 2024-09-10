@@ -1414,19 +1414,35 @@ comChessEngineFunctions As CanvasComponent:
                                             // THEN
                                             Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
                                                 GAME_PHASE_OPENING,
-                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(-5,15), 0),
+                                                    If(
+                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP" ||
+                                                        IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
+                                                            // THEN
+                                                            RandBetween(-5,15),
+                                                            
+                                                            // ELSE
+                                                            0
+                                                    ),
                                                 GAME_PHASE_MIDDLE,
                                                     If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(-5,15), 0),
-                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(-5,15), 0)
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(-5,10), 0)
                                             ),
                 
                                             // ELSE
                                             Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
                                                 GAME_PHASE_OPENING,
-                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP", RandBetween(-15,5), 0),
+                                                    If(
+                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP" ||
+                                                        IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
+                                                            // THEN
+                                                            RandBetween(-15,-5),
+                                                            
+                                                            // ELSE
+                                                            0
+                                                    ),
                                                 GAME_PHASE_MIDDLE,
                                                     If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(-15,5), 0),
-                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(-15,5), 0)
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(-10,5), 0)
                                             )
                                         ),
                                     heuristic19:
