@@ -1166,76 +1166,90 @@ comChessEngineFunctions As CanvasComponent:
                                                             With(
                                                                 {
                                                                     sqNum:
-                                                                        UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k")),
-                                                                    adjSquaresSet:
-                                                                        UDF_createSetOfSqNames(
-                                                                            UDF_sqNumToAdjacentSqNames(
-                                                                                UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
-                                                                            ) & " " & 
-                                                                            UDF_sqNumToSqName(
-                                                                                UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
-                                                                            )),
-                                                                    noKingPreMoveBoard:
-                                                                        UDF_setBitAtSqNum(
-                                                                            theCurrentNode.preMoveBoard,
-                                                                            EMPTY_FILLER_ABBR,
-                                                                            UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
-                                                                        ),
-                                                                    noKingPostMoveBoard:
-                                                                        UDF_setBitAtSqNum(
-                                                                            theCurrentNode.postMoveBoard,
-                                                                            EMPTY_FILLER_ABBR,
-                                                                            UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
-                                                                        ),
-                                                                // remove the moving piece so that we can determine if we can move to an adjacent protected square
-                                                                    noKingNoPiecePostMoveBoard: 
-                                                                        UDF_setBitAtSqNum(
-                                                                            UDF_setBitAtSqNum(
-                                                                                theCurrentNode.postMoveBoard,
-                                                                                EMPTY_FILLER_ABBR,
-                                                                                theCurrentNode.inactiveColorMoveRecord.targetSquareNum
-                                                                            ),
-                                                                            EMPTY_FILLER_ABBR,
-                                                                            UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
-                                                                        )
-                                                                } As nextToKing,
+                                                                        UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
+                                                                } As theKing,
                 
                                                                 With(
                                                                     {
-                                                                        numAdjSquaresAttackedPreMove:
-                                                                            Sum(
-                                                                                ForAll(
-                                                                                    Split(nextToKing.adjSquaresSet, " ") As adjSqName,
-                
-                                                                                    UDF_countSqNumAttacks(
-                                                                                        nextToKing.noKingPreMoveBoard,
-                                                                                        UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
-                                                                                    )
-                                                                                ), Value
-                                                                            ),
-                                                                        numAdjSquaresAttackedPostMove:
-                                                                            Sum(
-                                                                                ForAll(
-                                                                                    Split(nextToKing.adjSquaresSet, " ") As adjSqName,
-                
-                                                                                    UDF_countSqNumAttacks(
-                                                                                        nextToKing.noKingPostMoveBoard,
-                                                                                        UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
-                                                                                    )
-                                                                                ), Value
+                                                                        adjSquaresSet:  UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theKing.sqNum) & " " &  UDF_sqNumToSqName(theKing.sqNum)),
+                                                                        noKingPreMoveBoard: UDF_setBitAtSqNum(theCurrentNode.preMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
+                                                                        noKingPostMoveBoard:    UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
+                                                                        // remove the moving piece so that we can determine if we can move to an adjacent protected square
+                                                                        noKingNoPiecePostMoveBoard:
+                                                                            UDF_setBitAtSqNum(
+                                                                                UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,
+                                                                                    EMPTY_FILLER_ABBR,
+                                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                                ),
+                                                                                EMPTY_FILLER_ABBR,
+                                                                                theKing.sqNum
                                                                             )
-                                                                    } As attackData,
-                                                                    If(gblPF_DEBUG_EVAL,
-                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                            " fCE_500(): DEBUG heuristic16 preMove" & 
-                                                                            " numAdjSquaresAttackedPreMove: " & attackData.numAdjSquaresAttackedPreMove &
-                                                                            " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove
-                                                                        })
-                                                                    );
-                                                                    (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) *
-                                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,21,-21)
+                                                                    } As nextToKing,
+                
+                                                                    With(
+                                                                        {
+                                                                            numAdjSquaresAttackedPreMove:
+                                                                                Sum(
+                                                                                    ForAll(
+                                                                                        Split(nextToKing.adjSquaresSet, " ") As adjSqName,
+                
+                                                                                        UDF_countSqNumAttacks(
+                                                                                            nextToKing.noKingPreMoveBoard,
+                                                                                            UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                        )
+                                                                                    ), Value
+                                                                                ),
+                                                                            numAdjSquaresAttackedPostMove:
+                                                                                Sum(
+                                                                                    ForAll(
+                                                                                        Split(nextToKing.adjSquaresSet, " ") As adjSqName,
+                
+                                                                                        UDF_countSqNumAttacks(
+                                                                                            nextToKing.noKingPostMoveBoard,
+                                                                                            UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                        )
+                                                                                    ), Value
+                                                                                )
+                                                                        } As attackData,
+                
+                                                                        With(
+                                                                            {
+                                                                                preMove:
+                                                                                    If(
+                                                                                        UDF_countSqNumAttacks(
+                                                                                            nextToKing.noKingPreMoveBoard,
+                                                                                            theKing.sqNum,
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                        )>0,
+                                                                                        true,false
+                                                                                    ),
+                                                                                postMove:
+                                                                                    If(
+                                                                                        UDF_countSqNumAttacks(
+                                                                                            nextToKing.noKingPreMoveBoard,
+                                                                                            theKing.sqNum,
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                        )>0,
+                                                                                        true,false
+                                                                                    )
+                                                                            } As theKingChecked,
+                
+                                                                            If(gblPF_DEBUG_EVAL,
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " fCE_500(): DEBUG heuristic16 preMove" & 
+                                                                                    " theKingChecked.preMove: " & theKingChecked.preMove &
+                                                                                    " theKingChecked.postMove: " & theKingChecked.postMove &
+                                                                                    " numAdjSquaresAttackedPreMove: " & attackData.numAdjSquaresAttackedPreMove &
+                                                                                    " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove
+                                                                                })
+                                                                            );
+                
+                                                                            (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) *
+                                                                                If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,21,-21)
+                                                                        )
+                                                                    )
                                                                 )
                                                             ),
                 
