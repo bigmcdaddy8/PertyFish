@@ -1174,6 +1174,86 @@ UsingComponents As screen:
                                         )
                                     ),
             
+                                heuristic16:
+                                    If(!(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN)=GAME_PHASE_END),
+                                        // THEN - not in the END GAME
+                                        0,
+            
+                                        // ELSE - do END GAME analysis
+                                        With(
+                                            {
+                                                totalWhiteBonus:
+                                                    Sum(
+                                                        // Sum: Push Pawns forward - push the pawns forward (until we have enough Qs) - is this a pawn move ?
+                                                        If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "Q")<3,
+                                                            // THEN - push the pawn and bump up the promotion to a Q
+                                                            If(
+                                                                (IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q") &&
+                                                                !UDF_isSqNumAttacked(
+                                                                    theCurrentNode.postMoveBoard,
+                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                                ),
+                                                                // THEN
+                                                                UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) * RandBetween(8,13),
+            
+                                                                // ELSE
+                                                                0
+                                                            ),
+                                                            // ELSE
+                                                            0
+                                                        ),
+            
+                                                        // Sum: trapping the king
+                                                        With(
+                                                            {
+                                                                sqNum:
+                                                                    UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k")),
+                                                                adjSquaresSet:
+                                                                    UDF_createSetOfSqNames(
+                                                                        UDF_sqNumToAdjacentSqNames(
+                                                                            UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
+                                                                        ) & " " & 
+                                                                        UDF_sqNumToSqName(
+                                                                            UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
+                                                                        )),
+                                                                noKingPreMoveBoard:
+                                                                    UDF_setBitAtSqNum(
+                                                                        theCurrentNode.preMoveBoard,
+                                                                        EMPTY_FILLER_ABBR,
+                                                                        UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
+                                                                    ),
+                                                                noKingPostMoveBoard:
+                                                                    UDF_setBitAtSqNum(
+                                                                        theCurrentNode.postMoveBoard,
+                                                                        EMPTY_FILLER_ABBR,
+                                                                        UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
+                                                                    ),
+                                                            // remove the moving piece so that we can determine if we can move to an adjacent protected square
+                                                                noKingNoPiecePostMoveBoard: 
+                                                                    UDF_setBitAtSqNum(
+                                                                        UDF_setBitAtSqNum(
+                                                                            theCurrentNode.postMoveBoard,
+                                                                            EMPTY_FILLER_ABBR,
+                                                                            theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                        ),
+                                                                        EMPTY_FILLER_ABBR,
+                                                                        UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
+                                                                    )
+                                                            } As nextToKing,
+                                                        
+                                                            0
+                                                        ),
+            
+                                                        // Sum: TBD...
+                                                        0
+                                                    )
+                                            } As totalBonus,
+            
+                                            If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,totalBonus.totalWhiteBonus,-totalBonus.totalWhiteBonus)
+                                        )
+                                    ),
+            
                                 heuristic17:
                                     If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
                                         // THEN
