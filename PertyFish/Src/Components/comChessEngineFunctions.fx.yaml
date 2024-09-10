@@ -1189,28 +1189,36 @@ comChessEngineFunctions As CanvasComponent:
                                                                     With(
                                                                         {
                                                                             numAdjSquaresAttackedPreMove:
-                                                                                Sum(
-                                                                                    ForAll(
-                                                                                        Split(nextToKing.adjSquaresSet, " ") As adjSqName,
+                                                                                UDF_getSetSize(
+                                                                                    UDF_createSetOfSqNames(
+                                                                                        Concat(
+                                                                                            ForAll(
+                                                                                                Split(nextToKing.adjSquaresSet, " ") As adjSqName,
                 
-                                                                                        UDF_countSqNumAttacks(
-                                                                                            nextToKing.noKingPreMoveBoard,
-                                                                                            UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                UDF_getAttackerSqNamesSet(
+                                                                                                    nextToKing.noKingPreMoveBoard,
+                                                                                                    UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                )
+                                                                                            ), Value, " "
                                                                                         )
-                                                                                    ), Value
+                                                                                    )
                                                                                 ),
                                                                             numAdjSquaresAttackedPostMove:
-                                                                                Sum(
-                                                                                    ForAll(
-                                                                                        Split(nextToKing.adjSquaresSet, " ") As adjSqName,
+                                                                                UDF_getSetSize(
+                                                                                    UDF_createSetOfSqNames(
+                                                                                        Concat(
+                                                                                            ForAll(
+                                                                                                Split(nextToKing.adjSquaresSet, " ") As adjSqName,
                 
-                                                                                        UDF_countSqNumAttacks(
-                                                                                            nextToKing.noKingPostMoveBoard,
-                                                                                            UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                UDF_getAttackerSqNamesSet(
+                                                                                                    nextToKing.noKingPostMoveBoard,
+                                                                                                    UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                )
+                                                                                            ), Value, " "
                                                                                         )
-                                                                                    ), Value
+                                                                                    )
                                                                                 )
                                                                         } As attackData,
                 
