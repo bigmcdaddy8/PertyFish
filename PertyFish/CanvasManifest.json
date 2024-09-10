@@ -37,7 +37,6 @@
       "dynamicschema": false,
       "enableappembeddingux": false,
       "enablecanvasappruntimecopilot": true,
-      "enablechatbotfeature": false,
       "enablecomponentnamemaps": false,
       "enablecomponentscopeoldbehavior": false,
       "enablecopilotanswercontrol": true,
