@@ -1167,7 +1167,7 @@ UsingComponents As screen:
             
                                         If(localVars.sourceSqAttacked && !localVars.targetSqAttacked && localVars.materialDelta=0,
                                             // THEN
-                                            localVars.materialSource/2,
+                                            If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,RandBetween(25,35),RandBetween(-35,-25)),
             
                                             // ELSE
                                             0
