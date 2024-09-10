@@ -1281,15 +1281,24 @@ UsingComponents As screen:
                                                                         If(gblPF_DEBUG_EVAL,
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                 " fCE_500(): DEBUG heuristic16 preMove" & 
+                                                                                " # of adj Squares: " & UDF_getSetSize(nextToKing.adjSquaresSet) &
                                                                                 " theKingChecked.preMove: " & theKingChecked.preMove &
                                                                                 " theKingChecked.postMove: " & theKingChecked.postMove &
                                                                                 " numAdjSquaresAttackedPreMove: " & attackData.numAdjSquaresAttackedPreMove &
                                                                                 " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove
                                                                             })
                                                                         );
+                                                                        If((attackData.numAdjSquaresAttackedPostMove-UDF_getSetSize(nextToKing.adjSquaresSet))=1 && !theKingChecked.postMove,
+                                                                            // THEN - this move would cause a stalemate
+                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                " fCE_500(): DEBUG heuristic16 postmove stalemate detected "
+                                                                            });
+                                                                            If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,-1000,1000),
             
-                                                                        (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) *
-                                                                            If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,21,-21)
+                                                                            // ELSE
+                                                                            (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) *
+                                                                                If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,21,-21)
+                                                                        )
                                                                     )
                                                                 )
                                                             )
