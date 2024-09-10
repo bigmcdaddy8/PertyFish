@@ -1137,18 +1137,19 @@ App As appinfo:
                 0,
                 // ELSE
                 With(
-                {
-                    re: If(attackingColor=WHITE,"K","k")
-                } As v,
-                Sum(
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1))=v.re,1,0)
+                    {
+                        re: If(attackingColor=WHITE,"K","k")
+                    } As v,
+                    Sum(
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1))=v.re,1,0), 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1))=v.re,1,0), 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0))=v.re,1,0), 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1))=v.re,1,0), 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1))=v.re,1,0), 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1))=v.re,1,0), 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0))=v.re,1,0), 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1))=v.re,1,0)
+                    )
                 )
             );
         UDF_countSqNumAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
