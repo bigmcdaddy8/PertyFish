@@ -1347,7 +1347,7 @@ App As appinfo:
                 )
             );
         // is a square occupied by KQRBNP attacked by an opposite colored KING
-        UDF_getKINGAttackersqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
+        UDF_getKINGAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             If(UDF_isSqNumProtected(board, refSqNum, UDF_getOppositeColor(attackingColor)),
                 // THEN - king cannot attack a protected square
                 0,
