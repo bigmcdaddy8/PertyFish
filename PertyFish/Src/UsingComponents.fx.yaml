@@ -1241,7 +1241,13 @@ UsingComponents As screen:
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                         " fCE_500(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
                                                                         " adjSquaresSet: " & nextToKing.adjSquaresSet
-                                                                    })
+                                                                    });
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " premove no king board: " & nextToKing.noKingPreMoveBoard
+                                                                    });
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " postmove no king board: " & nextToKing.noKingPostMoveBoard
+                                                                    });
                                                                 );
             
                                                                 With(
