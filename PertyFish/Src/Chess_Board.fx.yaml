@@ -1393,7 +1393,7 @@ Chess_Board As screen:
                     ZIndex: =14
 
                 drpWhitePiecesCE As dropdown:
-                    Default: =CE_PF_400
+                    Default: =CE_PF_600
                     Height: =25
                     Items: =CE_PF_NAMES
                     Size: =10
@@ -1403,7 +1403,7 @@ Chess_Board As screen:
                     ZIndex: =15
 
                 drpBlackPiecesCE As dropdown:
-                    Default: =CE_PF_400
+                    Default: =CE_PF_600
                     Height: =25
                     Items: =CE_PF_NAMES
                     Size: =10
