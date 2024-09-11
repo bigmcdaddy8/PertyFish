@@ -1275,6 +1275,20 @@ comChessEngineFunctions As CanvasComponent:
                                                                                             ), Value, " "
                                                                                         )
                                                                                     )
+                                                                                ),
+                                                                            numTargetSquareAttackedPostMove:
+                                                                                If(theCurrentNode.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet,
+                                                                                    // THEN
+                                                                                    UDF_getSetSize(
+                                                                                        UDF_getAttackerSqNamesSet(
+                                                                                            nextToKing.noKingNoPiecePostMoveBoard,
+                                                                                            theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                        )
+                                                                                    ),
+                
+                                                                                    // ELSE
+                                                                                    0
                                                                                 )
                                                                         } As attackData,
                 
@@ -1282,7 +1296,8 @@ comChessEngineFunctions As CanvasComponent:
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                 " fCE_500(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
                                                                                 " numAdjSquaresAttackedPreMove: " & attackData.numAdjSquaresAttackedPreMove &
-                                                                                " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove
+                                                                                " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove &
+                                                                                " numTargetSquareAttackedPostMove: " & attackData.numTargetSquareAttackedPostMove
                                                                             })
                                                                         );
                 
@@ -1326,14 +1341,22 @@ comChessEngineFunctions As CanvasComponent:
                                                                                 -1000,  // discourage the move
                 
                                                                                 // ELSE
-                                                                                If(attackData.numAdjSquaresAttackedPostMove=UDF_getSetSize(nextToKing.adjSquaresSet),
-                                                                                    // THEN - checkmate !
-                                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                        " checkmate FEN: " & theCurrentNode.preMoveFEN
-                                                                                    });
-                                                                                    10000, // encourage the move
+                                                                                If(
+                                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet &&
+                                                                                    attackData.numTargetSquareAttackedPostMove=0,
+                                                                                    // THEN - king can reach us and we are not protected - discourage move
+                                                                                    -50,
+                
                                                                                     // ELSE
-                                                                                    (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) * 21
+                                                                                    If(attackData.numAdjSquaresAttackedPostMove=UDF_getSetSize(nextToKing.adjSquaresSet),
+                                                                                        // THEN - checkmate !
+                                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                            " checkmate FEN: " & theCurrentNode.preMoveFEN
+                                                                                        });
+                                                                                        10000, // encourage the move
+                                                                                        // ELSE
+                                                                                        (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) * 21
+                                                                                    )
                                                                                 )
                                                                             )
                                                                         )
