@@ -1744,6 +1744,743 @@ comChessEngineFunctions As CanvasComponent:
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_500(): exiting"})
                 )
                 
+    fCE_600(pNodeID As Number):
+        pNodeID:
+            Default: =100
+        ThisProperty:
+            Default: |+
+                =
+                If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                        " comChessEngineFunctions.fCE_600(): entered pNodeID: " & pNodeID
+                    })
+                );
+                
+                With(
+                    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                
+                    With(
+                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+                
+                        If(gblPF_DEBUG_EVAL,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                " fCE_600(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                                " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
+                                " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
+                                " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
+                            })
+                        );
+                
+                        Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
+                            postMoveEvalRecord: 
+                                Patch(EVAL_RECORD_PF, {
+                                    heuristic11:
+                                        With(
+                                            {
+                                                materialDelta:
+                                                    Sum(
+                                                        ForAll(
+                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.postMoveFEN), "") As thePiece,
+                
+                                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                                        ),
+                                                        Value
+                                                    ) -
+                                                    Sum(
+                                                        ForAll(
+                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.preMoveFEN), "") As thePiece,
+                
+                                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                                        ),
+                                                        Value
+                                                    ),
+                                                materialSource:
+                                                    UDF_getPieceCentipawnMaterialValue(
+                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier,
+                                                        "KQRBNPkqrbnp"
+                                                    ),
+                                                materialCapture: 
+                                                    UDF_getPieceCentipawnMaterialValue(
+                                                        theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier,
+                                                        "KQRBNPkqrbnp"
+                                                    ),
+                                                targetSqAttacked:
+                                                    UDF_isSqNumAttacked(
+                                                        theCurrentNode.postMoveBoard,
+                                                        theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                    )
+                                            } As localVars,
+                
+                                            If(!localVars.targetSqAttacked || (Abs(localVars.materialSource)<Abs(localVars.materialCapture)),
+                                                // THEN
+                                                localVars.materialDelta,
+                
+                                                // ELSE - discourage the move
+                                                If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,-25,25)
+                                            )
+                                        ),
+                                    heuristic12:
+                                        // no capture - but moving an attacked piece to a unattacked square needs a small bonus
+                                        With(
+                                            {
+                                                materialDelta:
+                                                    Sum(
+                                                        ForAll(
+                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.postMoveFEN), "") As thePiece,
+                
+                                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                                        ),
+                                                        Value
+                                                    ) -
+                                                    Sum(
+                                                        ForAll(
+                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.preMoveFEN), "") As thePiece,
+                
+                                                            UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                                        ),
+                                                        Value
+                                                    ),
+                                                materialSource:
+                                                    UDF_getPieceCentipawnMaterialValue(
+                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier,
+                                                        "KQRBNPkqrbnp"
+                                                    ),
+                                                sourceSqAttacked:
+                                                    UDF_isSqNumAttacked(
+                                                        theCurrentNode.preMoveBoard,
+                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareNum,
+                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                    ),
+                                                targetSqAttacked:
+                                                    UDF_isSqNumAttacked(
+                                                        theCurrentNode.postMoveBoard,
+                                                        theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                    )
+                                            } As localVars,
+                
+                                            If(localVars.sourceSqAttacked && !localVars.targetSqAttacked && localVars.materialDelta=0,
+                                                // THEN
+                                                If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,RandBetween(25,35),RandBetween(-35,-25)),
+                
+                                                // ELSE
+                                                0
+                                            )
+                                        ),
+                
+                                    heuristic16:
+                                        If(!(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN)=GAME_PHASE_END),
+                                            // THEN - not in the END GAME
+                                            0,
+                
+                                            // ELSE - do END GAME analysis
+                                            With(
+                                                {
+                                                    totalWhiteBonus:
+                                                        Sum(
+                                                            // Sum: Push Pawns forward - push the pawns forward (until we have enough Qs) - is this a pawn move ?
+                                                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "Q")<3,
+                                                                // THEN - push the pawn and bump up the promotion to a Q
+                                                                If(
+                                                                    (IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q") &&
+                                                                    !UDF_isSqNumAttacked(
+                                                                        theCurrentNode.postMoveBoard,
+                                                                        theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                                    ),
+                                                                    // THEN
+                                                                    UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) * RandBetween(8,13),
+                
+                                                                    // ELSE
+                                                                    0
+                                                                ),
+                                                                // ELSE
+                                                                0
+                                                            ),
+                
+                                                            // Sum: trapping the king
+                                                            With(
+                                                                {
+                                                                    sqNum:
+                                                                        UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
+                                                                } As theKing,
+                
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_600(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" 
+                                                                    });
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " current kingDangerBoard: " & theCurrentNode.postMoveActiveKingDangerBoard 
+                                                                    });
+                                                                );
+                
+                                                                With(
+                                                                    {
+                                                                        adjSquaresSet:  UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theKing.sqNum) & " " &  UDF_sqNumToSqName(theKing.sqNum)),
+                                                                        noKingPreMoveBoard: UDF_setBitAtSqNum(theCurrentNode.preMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
+                                                                        noKingPostMoveBoard:    UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
+                                                                        // remove the moving piece so that we can determine if we can move to an adjacent protected square
+                                                                        noKingNoPiecePostMoveBoard:
+                                                                            UDF_setBitAtSqNum(
+                                                                                UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,
+                                                                                    EMPTY_FILLER_ABBR,
+                                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                                ),
+                                                                                EMPTY_FILLER_ABBR,
+                                                                                theKing.sqNum
+                                                                            )
+                                                                    } As nextToKing,
+                
+                                                                    If(gblPF_DEBUG_EVAL,
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " fCE_600(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
+                                                                            " adjSquaresSet: " & nextToKing.adjSquaresSet
+                                                                        });
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " premove no king board: " & nextToKing.noKingPreMoveBoard
+                                                                        });
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " postmove no king board: " & nextToKing.noKingPostMoveBoard
+                                                                        });
+                                                                    );
+                
+                                                                    With(
+                                                                        {
+                                                                            numAdjSquaresAttackedPreMove:
+                                                                                UDF_getSetSize(
+                                                                                    UDF_createSetOfSqNames(
+                                                                                        Concat(
+                                                                                            ForAll(
+                                                                                                Split(nextToKing.adjSquaresSet, " ") As adjSqName,
+                
+                                                                                                If(gblPF_DEBUG_EVAL,
+                                                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                                        " fCE_600(): DEBUG heuristic16 adjSqName.Value: " & adjSqName.Value &
+                                                                                                        " premove AttackerSet: " &
+                                                                                                            UDF_getAttackerSqNamesSet(
+                                                                                                                nextToKing.noKingPreMoveBoard,
+                                                                                                                UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                                UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                            )
+                                                                                                    })
+                                                                                                );
+                
+                                                                                                If(
+                                                                                                    UDF_getSetSize(
+                                                                                                        UDF_getAttackerSqNamesSet(
+                                                                                                            nextToKing.noKingPreMoveBoard,
+                                                                                                            UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                        )
+                                                                                                    )>0,
+                                                                                                    adjSqName.Value, ""
+                                                                                                )
+                                                                                            ), Value, " "
+                                                                                        )
+                                                                                    )
+                                                                                ),
+                                                                            numAdjSquaresAttackedPostMove:
+                                                                                UDF_getSetSize(
+                                                                                    UDF_createSetOfSqNames(
+                                                                                        Concat(
+                                                                                            ForAll(
+                                                                                                Split(nextToKing.adjSquaresSet, " ") As adjSqName,
+                
+                                                                                                If(gblPF_DEBUG_EVAL,
+                                                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                                        " fCE_600(): DEBUG heuristic16 adjSqName.Value: " & adjSqName.Value &
+                                                                                                        " postmove AttackerSet: " &
+                                                                                                            UDF_getAttackerSqNamesSet(
+                                                                                                                nextToKing.noKingPostMoveBoard,
+                                                                                                                UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                                UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                            )
+                                                                                                    })
+                                                                                                );
+                
+                                                                                                If(
+                                                                                                    UDF_getSetSize(
+                                                                                                        UDF_getAttackerSqNamesSet(
+                                                                                                            nextToKing.noKingPostMoveBoard,
+                                                                                                            UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                        )
+                                                                                                    )>0,
+                                                                                                    adjSqName.Value, ""
+                                                                                                )
+                                                                                            ), Value, " "
+                                                                                        )
+                                                                                    )
+                                                                                ),
+                                                                            numTargetSquareAttackedPostMove:
+                                                                                If(theCurrentNode.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet,
+                                                                                    // THEN
+                                                                                    UDF_getSetSize(
+                                                                                        UDF_getAttackerSqNamesSet(
+                                                                                            nextToKing.noKingNoPiecePostMoveBoard,
+                                                                                            theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                        )
+                                                                                    ),
+                
+                                                                                    // ELSE
+                                                                                    0
+                                                                                )
+                                                                        } As attackData,
+                
+                                                                        If(gblPF_DEBUG_EVAL,
+                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                " fCE_600(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
+                                                                                " numAdjSquaresAttackedPreMove: " & attackData.numAdjSquaresAttackedPreMove &
+                                                                                " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove &
+                                                                                " numTargetSquareAttackedPostMove: " & attackData.numTargetSquareAttackedPostMove
+                                                                            })
+                                                                        );
+                
+                                                                        With(
+                                                                            {
+                                                                                preMove:
+                                                                                    If(
+                                                                                        UDF_countSqNumAttacks(
+                                                                                            nextToKing.noKingPreMoveBoard,
+                                                                                            theKing.sqNum,
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                        )>0,
+                                                                                        true,false
+                                                                                    ),
+                                                                                postMove:
+                                                                                    If(
+                                                                                        UDF_countSqNumAttacks(
+                                                                                            nextToKing.noKingPostMoveBoard,
+                                                                                            theKing.sqNum,
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                        )>0,
+                                                                                        true,false
+                                                                                    )
+                                                                            } As theKingChecked,
+                
+                                                                            If(gblPF_DEBUG_EVAL,
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " fCE_600(): DEBUG heuristic16 preMove" & 
+                                                                                    " # of adj Squares: " & UDF_getSetSize(nextToKing.adjSquaresSet) &
+                                                                                    " theKingChecked.preMove: " & theKingChecked.preMove &
+                                                                                    " theKingChecked.postMove: " & theKingChecked.postMove &
+                                                                                    " numAdjSquaresAttackedPreMove: " & attackData.numAdjSquaresAttackedPreMove &
+                                                                                    " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove
+                                                                                })
+                                                                            );
+                                                                            If((UDF_getSetSize(nextToKing.adjSquaresSet) - attackData.numAdjSquaresAttackedPostMove)=1 && !theKingChecked.postMove,
+                                                                                // THEN - this move would cause a stalemate
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " fCE_600(): DEBUG heuristic16 postmove stalemate detected "
+                                                                                });
+                                                                                -1000,  // discourage the move
+                
+                                                                                // ELSE
+                                                                                If(
+                                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet &&
+                                                                                    attackData.numTargetSquareAttackedPostMove=0,
+                                                                                    // THEN - king can reach us and we are not protected - discourage move
+                                                                                    -50,
+                
+                                                                                    // ELSE
+                                                                                    If(attackData.numAdjSquaresAttackedPostMove=UDF_getSetSize(nextToKing.adjSquaresSet),
+                                                                                        // THEN - checkmate !
+                                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                            " checkmate FEN: " & theCurrentNode.preMoveFEN
+                                                                                        });
+                                                                                        10000, // encourage the move
+                                                                                        // ELSE
+                                                                                        (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) * 21
+                                                                                    )
+                                                                                )
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                )
+                                                            ),
+                
+                                                            // Sum: TBD...
+                                                            0
+                                                        )
+                                                } As totalBonus,
+                
+                                                If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,totalBonus.totalWhiteBonus,-totalBonus.totalWhiteBonus)
+                                            )
+                                        ),
+                /*
+                                    heuristic17:
+                                        If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
+                                            // THEN
+                                            If(gblPF_DEBUG_EVAL,
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                    " fCE_600(): DEBUG heuristic17 preMove active color WHITE " & 
+                                                    " # of BLACK pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "kqrbnp")
+                                                });
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                    " preMoveFEN: " & theCurrentNode.preMoveFEN
+                                                });
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                    " preMoveBoard: " & theCurrentNode.preMoveBoard
+                                                })
+                                            );
+                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "kqrbnp")>1,
+                                                // THEN
+                                                0,
+                
+                                                // ELSE - the opponent is a lone king
+                                                Sum(
+                                                    With(
+                                                        {
+                                                            sqNum:      UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
+                                                        } As theirKing,
+                
+                                                        With(
+                                                            {
+                                                                adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
+                                                                noKingPreMoveBoard: UDF_setBitAtSqNum(
+                                                                                        theCurrentNode.preMoveBoard,
+                                                                                        EMPTY_FILLER_ABBR,
+                                                                                        UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, "k")
+                                                                                    ),
+                                                                noKingPostMoveBoard:    UDF_setBitAtSqNum(
+                                                                                            theCurrentNode.postMoveBoard,
+                                                                                            EMPTY_FILLER_ABBR,
+                                                                                            UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard, "k")
+                                                                                        ),
+                                                                // remove the moving piece so that we can determine if we can move to an adjacent protected square
+                                                                noKingNoPiecePreMoveBoard:  UDF_setBitAtSqNum(
+                                                                                                UDF_setBitAtSqNum(
+                                                                                                    theCurrentNode.preMoveBoard,
+                                                                                                    EMPTY_FILLER_ABBR,
+                                                                                                    theCurrentNode.inactiveColorMoveRecord.sourceSquareNum
+                                                                                                ),
+                                                                                                EMPTY_FILLER_ABBR,
+                                                                                                UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard,"k")
+                                                                                            ),
+                                                                noKingNoPiecePostMoveBoard: UDF_setBitAtSqNum(
+                                                                                                UDF_setBitAtSqNum(
+                                                                                                    theCurrentNode.postMoveBoard,
+                                                                                                    EMPTY_FILLER_ABBR,
+                                                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                                                ),
+                                                                                                EMPTY_FILLER_ABBR,
+                                                                                                UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard,"k")
+                                                                                            )
+                                                            } As adjToTheirKing,
+                
+                                                            If(gblPF_DEBUG_EVAL,
+                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                    " fCE_600(): heuristic17 opponent kingSq: " & UDF_sqNumToSqName(theirKing.sqNum) & "(" & theirKing.sqNum & ")" &
+                                                                    " Black King adj set: " & adjToTheirKing.adjSquaresSet
+                                                                })
+                                                            );
+                                                            If((!(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet)) ||
+                                                                UDF_isSqNumAttacked(
+                                                                    adjToTheirKing.noKingNoPiecePostMoveBoard,
+                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                    WHITE
+                                                                ),
+                                                                // THEN
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_600(): heuristic17 looking to encourage move if it qualifies targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                    })
+                                                                );
+                                                                Sum(
+                                                                    ForAll(
+                                                                        Split(adjToTheirKing.adjSquaresSet, " ") As adjSquareName,
+                
+                                                                        With(
+                                                                            {
+                                                                                preMoveIsAttacked:  UDF_isSqNumAttacked(adjToTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE),
+                                                                                postMoveIsAttacked: UDF_isSqNumAttacked(adjToTheirKing.noKingPostMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), WHITE)
+                                                                            } As attackBooleans,
+                
+                                                                            If(gblPF_DEBUG_EVAL,
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " Black King adjSquareName: " & adjSquareName.Value & "(" & UDF_sqNameToSqNum(adjSquareName.Value) & ")" &
+                                                                                        " preMove isAttacked?: " & attackBooleans.preMoveIsAttacked &
+                                                                                        " postMove isAttacked?: " & attackBooleans.postMoveIsAttacked
+                                                                                })
+                                                                            );
+                                                                            Switch(true,
+                                                                                attackBooleans.preMoveIsAttacked=false && attackBooleans.postMoveIsAttacked=true, 1,
+                                                                                attackBooleans.preMoveIsAttacked=true && attackBooleans.postMoveIsAttacked=false, -1,
+                                                                                
+                                                                                // default
+                                                                                0
+                                                                            )
+                                                                        )
+                                                                    ), Value
+                                                                ) * 21,
+                
+                                                                // ELSE
+                                                                If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet,
+                                                                    // THEN
+                                                                    If(gblPF_DEBUG_EVAL,
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " fCE_600(): heuristic17 discouraging move to naked adj square targetSqName: " &
+                                                                                theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                        })
+                                                                    );
+                                                                    -21, // do not want to move there - will be captured,
+                
+                                                                    // ELSE
+                                                                    If(gblPF_DEBUG_EVAL,
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " fCE_600(): heuristic17 neutral targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                        })
+                                                                    );
+                                                                    0
+                                                                )
+                                                            )
+                
+                                                        )
+                                                    ),
+                                                    // push the pawns forward (until we have enough Qs) - is this a pawn move ?
+                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "Q")<3,
+                                                        // THEN - bump up the promotion to a Q
+                                                        If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
+                                                            UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName) * RandBetween(8,18),
+                                                            0
+                                                        ),
+                                                        // ELSE
+                                                        0
+                                                    )
+                                                )
+                                            ),
+                
+                                            // ELSE
+                                            If(gblPF_DEBUG_EVAL,
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                    " fCE_600(): DEBUG heuristic17 preMove active color BLACK " & 
+                                                    " # of WHITE pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "KQRBNP")
+                                                })
+                                            );
+                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "KQRBNP")>1,
+                                                // THEN
+                                                0,
+                
+                                                // ELSE - the opponent is a lone king 
+                                                Sum(
+                                                    With(
+                                                        {
+                                                            sqNum:      UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "K"))
+                                                        } As theirKing,
+                
+                                                        With(
+                                                            {
+                                                                adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
+                                                                noKingPreMoveBoard: UDF_setBitAtSqNum(
+                                                                                        theCurrentNode.preMoveBoard,
+                                                                                        EMPTY_FILLER_ABBR,
+                                                                                        UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, "K")
+                                                                                    ),
+                                                                noKingPostMoveBoard:    UDF_setBitAtSqNum(
+                                                                                            theCurrentNode.postMoveBoard,
+                                                                                            EMPTY_FILLER_ABBR,
+                                                                                            UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard, "K")
+                                                                                        ),
+                                                                // remove the moving piece so that we can determine if we can move to an adjacent protected square
+                                                                noKingNoPiecePreMoveBoard:  UDF_setBitAtSqNum(
+                                                                                                UDF_setBitAtSqNum(
+                                                                                                    theCurrentNode.preMoveBoard,
+                                                                                                    EMPTY_FILLER_ABBR,
+                                                                                                    theCurrentNode.inactiveColorMoveRecord.sourceSquareNum
+                                                                                                ),
+                                                                                                EMPTY_FILLER_ABBR,
+                                                                                                UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard,"K")
+                                                                                            ),
+                                                                noKingNoPiecePostMoveBoard: UDF_setBitAtSqNum(
+                                                                                                UDF_setBitAtSqNum(
+                                                                                                    theCurrentNode.postMoveBoard,
+                                                                                                    EMPTY_FILLER_ABBR,
+                                                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                                                ),
+                                                                                                EMPTY_FILLER_ABBR,
+                                                                                                UDF_SearchBoardForPiece(theCurrentNode.postMoveBoard,"K")
+                                                                                            )
+                                                            } As adjToTheirKing,
+                
+                                                            If(gblPF_DEBUG_EVAL,
+                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                    " fCE_600(): heuristic17 opponent kingSq: " & UDF_sqNumToSqName(theirKing.sqNum) & "(" & theirKing.sqNum & ")" &
+                                                                    " White King adj set: " & adjToTheirKing.adjSquaresSet
+                                                                })
+                                                            );
+                                                            If((!(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet)) ||
+                                                                UDF_isSqNumAttacked(
+                                                                    adjToTheirKing.noKingNoPiecePostMoveBoard,
+                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                    BLACK
+                                                                ),
+                                                                // THEN
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_600(): heuristic17 looking to encourage move if it qualifies targetSqName: " & theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                    })
+                                                                );
+                                                                Sum(
+                                                                    ForAll(
+                                                                        Split(adjToTheirKing.adjSquaresSet, " ") As adjSquareName,
+                
+                                                                        With(
+                                                                            {
+                                                                                preMoveIsAttacked:  UDF_isSqNumAttacked(adjToTheirKing.noKingPreMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK),
+                                                                                postMoveIsAttacked: UDF_isSqNumAttacked(adjToTheirKing.noKingPostMoveBoard, UDF_sqNameToSqNum(adjSquareName.Value), BLACK)
+                                                                            } As attackBooleans,
+                
+                                                                            If(gblPF_DEBUG_EVAL,
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " White King adjSquareName: " & adjSquareName.Value & "(" & UDF_sqNameToSqNum(adjSquareName.Value) & ")" &
+                                                                                        " preMove isAttacked?: " & attackBooleans.preMoveIsAttacked &
+                                                                                        " postMove isAttacked?: " & attackBooleans.postMoveIsAttacked
+                                                                                })
+                                                                            );
+                                                                            Switch(true,
+                                                                                attackBooleans.preMoveIsAttacked=false && attackBooleans.postMoveIsAttacked=true, 1,
+                                                                                attackBooleans.preMoveIsAttacked=true && attackBooleans.postMoveIsAttacked=false, -1,
+                                                                                
+                                                                                // default
+                                                                                0
+                                                                            )
+                                                                        )
+                                                                    ), Value
+                                                                ) * -21,
+                
+                                                                // ELSE
+                                                                If(theCurrentNode.inactiveColorMoveRecord.targetSquareName exactin adjToTheirKing.adjSquaresSet,
+                                                                    // THEN
+                                                                    If(gblPF_DEBUG_EVAL,
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " fCE_600(): heuristic17 discouraging move to naked adj square targetSqName: " &
+                                                                                theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                        })
+                                                                    );
+                                                                    21, // do not want to move there - will be captured,
+                
+                                                                    // ELSE
+                                                                    If(gblPF_DEBUG_EVAL,
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " fCE_600(): heuristic17 neutral targetSqName: " &
+                                                                                theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                        })
+                                                                    );
+                                                                    0
+                                                                )
+                                                            )
+                                                        )
+                                                    ),
+                                                    // push the pawns forward (until we have enough Qs) - is this a pawn move ?
+                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "q")<3,
+                                                        // THEN - bump up the promotion to a Q
+                                                        If(IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q",
+                                                            (8 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)) * RandBetween(-18,-8),
+                                                            0
+                                                        ),
+                                                        // ELSE
+                                                        0
+                                                    )
+                                                )
+                                            )
+                                        ),
+                 */
+                                    heuristic18:
+                                        // add some order
+                                        If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
+                                            // THEN
+                                            Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
+                                                GAME_PHASE_OPENING,
+                                                    If(
+                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP" ||
+                                                        IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
+                                                            // THEN
+                                                            RandBetween(-5,15),
+                                                            
+                                                            // ELSE
+                                                            0
+                                                    ),
+                                                GAME_PHASE_MIDDLE,
+                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(-5,15), 0),
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(-5,10), 0)
+                                            ),
+                
+                                            // ELSE
+                                            Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
+                                                GAME_PHASE_OPENING,
+                                                    If(
+                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP" ||
+                                                        IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
+                                                            // THEN
+                                                            RandBetween(-15,-5),
+                                                            
+                                                            // ELSE
+                                                            0
+                                                    ),
+                                                GAME_PHASE_MIDDLE,
+                                                    If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", RandBetween(-15,5), 0),
+                                                If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QR", RandBetween(-10,5), 0)
+                                            )
+                                        ),
+                                    heuristic19:
+                                        RandBetween(-8,8)
+                
+                                })
+                        });
+                
+                        UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
+                            postMoveEvalRecord: 
+                                Patch(LookUp(colPF_MOVE_TREE, nodeID=pNodeID).postMoveEvalRecord, {
+                                    centipawn:
+                                        With(
+                                            LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNodeUpdated,
+                                            
+                                            If(gblPF_DEBUG_EVAL,
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                    " heuristic11: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
+                                                });
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                    " heuristic12: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic12
+                                                });
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                    " heuristic16: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16
+                                                });
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                    " heuristic18: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic18
+                                                });
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                    " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
+                                                })
+                                            );
+                                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +
+                                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic12 +
+                                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
+                                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +
+                                            theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
+                                        )
+                                })
+                        })
+                    );
+                
+                    If(gblPF_DEBUG_EVAL,
+                        With(
+                            LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+                
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                " fCE_600(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
+                                " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
+                                " centipawn: " & theCurrentNode.postMoveEvalRecord.centipawn
+                            })
+                        )
+                    )
+                );
+                
+                If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_600(): exiting"})
+                )
+                
     fME_END_GAME(pVersion As Number, pNodeID As Number):
         pVersion:
             Default: =100
