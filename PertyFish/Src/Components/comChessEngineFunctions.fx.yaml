@@ -1333,7 +1333,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                     " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove
                                                                                 })
                                                                             );
-                                                                            If((attackData.numAdjSquaresAttackedPostMove-UDF_getSetSize(nextToKing.adjSquaresSet))=1 && !theKingChecked.postMove,
+                                                                            If((UDF_getSetSize(nextToKing.adjSquaresSet) - attackData.numAdjSquaresAttackedPostMove)=1 && !theKingChecked.postMove,
                                                                                 // THEN - this move would cause a stalemate
                                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                     " fCE_500(): DEBUG heuristic16 postmove stalemate detected "
