@@ -1229,40 +1229,25 @@ App As appinfo:
             If(attackingColor=WHITE,
                 Trim(
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}R", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,Find("R",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7)))) & " ",
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,Find("R",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,0,1),1,7)))) & " ",
                         ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}R", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,1,0)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,Find("R",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7)),0)) & " ",
+                        ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7), "#{0,6}R", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,-1)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,-Find("R",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,-1), 5, 7)))) & " ",
+                        ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0), 7, 7), "#{0,6}R", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-1,0)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-Find("R",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,0), 7, 7)),0)) & " ",
+                        ""
                     )
                 ),
                 Trim(
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,0,1), 1, 7), "#{0,6}r", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(
-                            UDF_getSqNumRelativeToSqNum(
-                                refSqNum,
-                                0,
-                                Find(
-                                    "r",
-                                    UDF_getBitsAtSqNum(
-                                        board, 
-                                        UDF_getSqNumRelativeToSqNum(
-                                            refSqNum,
-                                            0,
-                                            1
-                                        ), 
-                                        1,
-                                        7
-                                    )
-                                )
-                            )
-                        ) & " ",
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,Find("r",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,0,1),1,7)))) & " ",
                         ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,0), 3, 7), "#{0,6}r", MatchOptions.BeginsWith),
@@ -1285,30 +1270,62 @@ App As appinfo:
             If(attackingColor=WHITE,
                 Trim(
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1), 2, 7), "#{0,6}B", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,1,1)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                            Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),2,7))),
+                            Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),2,7)))
+                        ) & " ",
+                        ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}B", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,1,-1)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                            Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),4,7))),
+                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),4,7)))
+                        ) & " ",
+                        ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}B", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),6,7))),
+                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),6,7)))
+                        ) & " ",
+                        ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}B", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-1,1)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),8,7))),
+                            Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),8,7)))
+                        ) & " ",
+                        ""
                     )
                 ),
                 Trim(
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1), 2, 7), "#{0,6}b", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,1,1)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                            Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),2,7))),
+                            Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),2,7)))
+                        ) & " ",
+                        ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}b", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,1,-1)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                            Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),4,7))),
+                            -Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),4,7)))
+                        ) & " ",
+                        ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}b", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                            -Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),6,7))),
+                            -Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),6,7)))
+                        ) & " ",
+                        ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}b", MatchOptions.BeginsWith),
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-1,1)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                            -Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),8,7))),
+                            Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),8,7)))
+                        ) & " ",
+                        ""
                     )
                 )
             );
