@@ -1211,6 +1211,12 @@ UsingComponents As screen:
                                                                     UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
                                                             } As theKing,
             
+                                                            If(gblPF_DEBUG_EVAL,
+                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                    " fCE_500(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")"
+                                                                })
+                                                            );
+            
                                                             With(
                                                                 {
                                                                     adjSquaresSet:  UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theKing.sqNum) & " " &  UDF_sqNumToSqName(theKing.sqNum)),
@@ -1228,6 +1234,13 @@ UsingComponents As screen:
                                                                         )
                                                                 } As nextToKing,
             
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_500(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
+                                                                        " adjSquaresSet: " & nextToKing.adjSquaresSet
+                                                                    })
+                                                                );
+            
                                                                 With(
                                                                     {
                                                                         numAdjSquaresAttackedPreMove:
@@ -1236,6 +1249,18 @@ UsingComponents As screen:
                                                                                     Concat(
                                                                                         ForAll(
                                                                                             Split(nextToKing.adjSquaresSet, " ") As adjSqName,
+            
+                                                                                            If(gblPF_DEBUG_EVAL,
+                                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                                    " fCE_500(): DEBUG heuristic16 adjSqName.Value: " & adjSqName.Value &
+                                                                                                    " premove AttackerSet: " &
+                                                                                                        UDF_getAttackerSqNamesSet(
+                                                                                                            nextToKing.noKingPreMoveBoard,
+                                                                                                            UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                        )
+                                                                                                })
+                                                                                            );
             
                                                                                             UDF_getAttackerSqNamesSet(
                                                                                                 nextToKing.noKingPreMoveBoard,
@@ -1253,6 +1278,18 @@ UsingComponents As screen:
                                                                                         ForAll(
                                                                                             Split(nextToKing.adjSquaresSet, " ") As adjSqName,
             
+                                                                                            If(gblPF_DEBUG_EVAL,
+                                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                                    " fCE_500(): DEBUG heuristic16 adjSqName.Value: " & adjSqName.Value &
+                                                                                                    " postmove AttackerSet: " &
+                                                                                                        UDF_getAttackerSqNamesSet(
+                                                                                                            nextToKing.noKingPostMoveBoard,
+                                                                                                            UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                        )
+                                                                                                })
+                                                                                            );
+            
                                                                                             UDF_getAttackerSqNamesSet(
                                                                                                 nextToKing.noKingPostMoveBoard,
                                                                                                 UDF_sqNameToSqNum(adjSqName.Value),
@@ -1263,6 +1300,14 @@ UsingComponents As screen:
                                                                                 )
                                                                             )
                                                                     } As attackData,
+            
+                                                                    If(gblPF_DEBUG_EVAL,
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " fCE_500(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
+                                                                            " numAdjSquaresAttackedPreMove: " & attackData.numAdjSquaresAttackedPreMove &
+                                                                            " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove
+                                                                        })
+                                                                    );
             
                                                                     With(
                                                                         {
