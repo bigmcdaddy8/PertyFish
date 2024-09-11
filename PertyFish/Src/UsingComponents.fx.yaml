@@ -1262,10 +1262,15 @@ UsingComponents As screen:
                                                                                                 })
                                                                                             );
             
-                                                                                            UDF_getAttackerSqNamesSet(
-                                                                                                nextToKing.noKingPreMoveBoard,
-                                                                                                UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                                UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                            If(
+                                                                                                UDF_getSetSize(
+                                                                                                    UDF_getAttackerSqNamesSet(
+                                                                                                        nextToKing.noKingPreMoveBoard,
+                                                                                                        UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                    )
+                                                                                                )>0,
+                                                                                                adjSqName.Value, ""
                                                                                             )
                                                                                         ), Value, " "
                                                                                     )
@@ -1290,10 +1295,15 @@ UsingComponents As screen:
                                                                                                 })
                                                                                             );
             
-                                                                                            UDF_getAttackerSqNamesSet(
-                                                                                                nextToKing.noKingPostMoveBoard,
-                                                                                                UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                                UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                            If(
+                                                                                                UDF_getSetSize(
+                                                                                                    UDF_getAttackerSqNamesSet(
+                                                                                                        nextToKing.noKingPostMoveBoard,
+                                                                                                        UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                    )
+                                                                                                )>0,
+                                                                                                adjSqName.Value, ""
                                                                                             )
                                                                                         ), Value, " "
                                                                                     )
