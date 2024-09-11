@@ -1356,7 +1356,7 @@ UsingComponents As screen:
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                 " fCE_500(): DEBUG heuristic16 postmove stalemate detected "
                                                                             });
-                                                                            If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,-1000,1000),
+                                                                            -1000,  // discourage the move
             
                                                                             // ELSE
                                                                             If(attackData.numAdjSquaresAttackedPostMove=UDF_getSetSize(nextToKing.adjSquaresSet),
@@ -1364,10 +1364,9 @@ UsingComponents As screen:
                                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                     " checkmate FEN: " & theCurrentNode.preMoveFEN
                                                                                 });
-                                                                                If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,10000,-10000),
+                                                                                10000, // encourage the move
                                                                                 // ELSE
-                                                                                (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) *
-                                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,21,-21)
+                                                                                (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) * 21
                                                                             )
                                                                         )
                                                                     )
