@@ -1320,7 +1320,7 @@ UsingComponents As screen:
                                             If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,totalBonus.totalWhiteBonus,-totalBonus.totalWhiteBonus)
                                         )
                                     ),
-            
+            /*
                                 heuristic17:
                                     If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
                                         // THEN
@@ -1597,6 +1597,7 @@ UsingComponents As screen:
                                             )
                                         )
                                     ),
+             */
                                 heuristic18:
                                     // add some order
                                     If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
@@ -1656,9 +1657,6 @@ UsingComponents As screen:
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                 " heuristic16: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic17: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic17
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                 " heuristic18: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic18
