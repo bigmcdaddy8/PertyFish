@@ -1317,8 +1317,13 @@ comChessEngineFunctions As CanvasComponent:
                                                                                 If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,-1000,1000),
                 
                                                                                 // ELSE
-                                                                                (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) *
-                                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,21,-21)
+                                                                                If(attackData.numAdjSquaresAttackedPostMove=UDF_getSetSize(nextToKing.adjSquaresSet),
+                                                                                    // THEN - checkmate !
+                                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,10000,-10000),
+                                                                                    // ELSE
+                                                                                    (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) *
+                                                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,21,-21)
+                                                                                )
                                                                             )
                                                                         )
                                                                     )
