@@ -40,8 +40,8 @@ Create smarter chess engines that are written using PowerFx
 
 ##### Story 0003-07 Developing CE_PF_500 (1st Grade)
 - End game 
-- - can it avoid stalemate ?
-- - does it use kingDangerboard to know when safe to enter adj king squares ?
+- - avoid stalemate
+- - know when safe to enter adj king squares
 - Add a heuristic that is logically opposite of heuristic11
 - - is the target square attacked and unprotected
 - - is the target square attacked and protected, but the exchange is unfavorable
