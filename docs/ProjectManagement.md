@@ -81,7 +81,11 @@ Create Outline of what and where technical documentation should be housed and wh
 Document how a user plays chess within the PertyFish canvas app
 
 
+## Open Bugs
 
+1n2kn1r/8/1p4p1/6Kp/1p1b2pr/2p2b2/8/8 b k - 1 47
+The value e7 cannot be converted to a number
+btnCheckGameResults.OnSelect()
 
 
 
