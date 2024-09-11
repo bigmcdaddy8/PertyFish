@@ -1300,7 +1300,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                 postMove:
                                                                                     If(
                                                                                         UDF_countSqNumAttacks(
-                                                                                            nextToKing.noKingPreMoveBoard,
+                                                                                            nextToKing.noKingPostMoveBoard,
                                                                                             theKing.sqNum,
                                                                                             UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
                                                                                         )>0,
