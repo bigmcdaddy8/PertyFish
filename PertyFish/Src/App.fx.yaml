@@ -1219,7 +1219,7 @@ App As appinfo:
                         UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-2,1)) & " ", ""
                     ) & 
                     If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,2))=v.re,
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-1,-2)) & " ", ""
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-1,2)) & " ", ""
                     )
                 )
             );
