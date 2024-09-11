@@ -1213,8 +1213,11 @@ UsingComponents As screen:
             
                                                             If(gblPF_DEBUG_EVAL,
                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                    " fCE_500(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")"
-                                                                })
+                                                                    " fCE_500(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" 
+                                                                });
+                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                    " current kingDangerBoard: " & theCurrentNode.postMoveActiveKingDangerBoard 
+                                                                });
                                                             );
             
                                                             With(
