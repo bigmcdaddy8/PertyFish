@@ -39,7 +39,9 @@ In a private version I have built in regression testing, I may pull that forward
 Create smarter chess engines that are written using PowerFx
 
 ##### Story 0003-07 Developing CE_PF_500 (1st Grade)
-- End game - can it avoid stalemate ?
+- End game 
+- - can it avoid stalemate ?
+- - does it use kingDangerboard to know when safe to enter adj king squares ?
 - Add a heuristic that is logically opposite of heuristic11
 - - is the target square attacked and unprotected
 - - is the target square attacked and protected, but the exchange is unfavorable
@@ -87,6 +89,8 @@ Document how a user plays chess within the PertyFish canvas app
 The value e7 cannot be converted to a number
 btnCheckGameResults.OnSelect()
 
+7k/8/8/8/1n2q3/8/8/2K5 b - - 0 1
+Qc2 postMove count and King checked is incorrect
 
 
 ## Completed Work
