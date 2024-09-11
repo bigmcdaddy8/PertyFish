@@ -2594,7 +2594,9 @@ comChessEngineFunctions As CanvasComponent:
                                     comChessEngineFunctions.fCE_400(pNodeID),
                                 theEngine.selectedEngine=CE_PF_500,
                                     comChessEngineFunctions.fCE_500(pNodeID),
-                
+                                theEngine.selectedEngine=CE_PF_600,
+                                    comChessEngineFunctions.fCE_600(pNodeID),
+                                    
                                 // default
                                 comChessEngineFunctions.fCE_100(pNodeID)
                             );
