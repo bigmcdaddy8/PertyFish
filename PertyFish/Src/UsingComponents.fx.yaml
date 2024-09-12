@@ -1635,54 +1635,61 @@ UsingComponents As screen:
                                         // THEN
                                         With(
                                             {
-                                                gettingForkedSet:   If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,"kqrbnp","KQRBNP"),
-                                                forkingSet:         If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,"KQRBNP","kqrbnp")
-                                            } As forkSets,
-                                                
+                                                gettingForkedPieces:   If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,"kqrbnp","KQRBNP"),
+                                                forkingPieces:         If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,"KQRBNP","kqrbnp")
+                                            } As forkPieces,
+            
                                             With(
                                                 {
-                                                    bonus:
-                                                        If(
-                                                            CountRows(
-                                                                Filter(colPF_LEGAL_MOVES,
-                                                                    sqNum=theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                                    eligibleSqName in forkSets.gettingForkedSet,
-                                                                    UDF_getSetSize(  
-                                                                        UDF_getSetIntersection(
-                                                                            slideOvers,
-                                                                            UDF_getSetUnion(forkSets.forkingSet,forkSets.gettingForkedSet)
-                                                                        )
-                                                                    )=0
-                                                                )
-                                                            )>0,
-                                                            75,
-                                                            0
-                                                        )
-                                                } As totalBonus,
-            
-                                                If(gblPF_DEBUG_EVAL,
-                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                        " fCE_600(): DEBUG heuristic15" & 
-                                                        " gettingForkedSet: " & forkSets.gettingForkedSet &
-                                                        " forkingSet: " & forkSets.forkingSet &
-                                                        " totalBonus: " & totalBonus.bonus &
-                                                        " CountRows(): " &
-                                                            CountRows(
-                                                                Filter(colPF_LEGAL_MOVES,
-                                                                    sqNum=theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                                    eligibleSqName in forkSets.gettingForkedSet,
-                                                                    UDF_getSetSize(  
-                                                                        UDF_getSetIntersection(
-                                                                            slideOvers,
-                                                                            UDF_getSetUnion(forkSets.forkingSet,forkSets.gettingForkedSet)
-                                                                        )
-                                                                    )=0
-                                                                )
+                                                    gettingForkedSet:   UDF_getSetOfOccupiedSqNames(theCurrentNode.postMoveBoard, forkPieces.gettingForkedPieces),
+                                                    forkingSet:         UDF_getSetOfOccupiedSqNames(theCurrentNode.postMoveBoard, forkPieces.forkingPieces)
+                                                } As forkSets,
+                                                
+                                                With(
+                                                    {
+                                                        bonus:
+                                                            If(
+                                                                CountRows(
+                                                                    Filter(colPF_LEGAL_MOVES,
+                                                                        sqNum=theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                        eligibleSqName in forkSets.gettingForkedSet,
+                                                                        UDF_getSetSize(  
+                                                                            UDF_getSetIntersection(
+                                                                                slideOvers,
+                                                                                UDF_getSetUnion(forkSets.forkingSet,forkSets.gettingForkedSet)
+                                                                            )
+                                                                        )=0
+                                                                    )
+                                                                )>0,
+                                                                75,
+                                                                0
                                                             )
-                                                    })
-                                                );
+                                                    } As totalBonus,
             
-                                                If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,totalBonus.bonus,-totalBonus.bonus)
+                                                    If(gblPF_DEBUG_EVAL,
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " fCE_600(): DEBUG heuristic15" & 
+                                                            " gettingForkedSet: " & forkSets.gettingForkedSet &
+                                                            " forkingSet: " & forkSets.forkingSet &
+                                                            " totalBonus: " & totalBonus.bonus &
+                                                            " CountRows(): " &
+                                                                CountRows(
+                                                                    Filter(colPF_LEGAL_MOVES,
+                                                                        sqNum=theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                        eligibleSqName in forkSets.gettingForkedSet,
+                                                                        UDF_getSetSize(  
+                                                                            UDF_getSetIntersection(
+                                                                                slideOvers,
+                                                                                UDF_getSetUnion(forkSets.forkingSet,forkSets.gettingForkedSet)
+                                                                            )
+                                                                        )=0
+                                                                    )
+                                                                )
+                                                        })
+                                                    );
+            
+                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,totalBonus.bonus,-totalBonus.bonus)
+                                                )
                                             )
                                         ),
             
