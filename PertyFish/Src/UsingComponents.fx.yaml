@@ -1630,6 +1630,27 @@ UsingComponents As screen:
                                         )
                                     ),
             
+                                heuristic15:
+                                    If(!(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN)=GAME_PHASE_OPENING),
+                                        // THEN
+                                        With(
+                                            {
+                                                totalWhiteBonus:
+                                                    CountRows(
+                                                        Filter(colPF_LEGAL_MOVES,
+                                                            sqNum=theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                            eligibleSqName in "a1"
+                                                        )
+                                                    )
+                                            } As totalBonus,
+            
+                                            If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,totalBonus.totalWhiteBonus,-totalBonus.totalWhiteBonus)
+                                        ),
+            
+                                        // ELSE
+                                        0
+                                    ),
+            
                                 heuristic16:
                                     If(!(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN)=GAME_PHASE_END),
                                         // THEN - not in the END GAME
@@ -1929,6 +1950,9 @@ UsingComponents As screen:
                                                 " heuristic12: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic12
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic15: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic15
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                 " heuristic16: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic16
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -1940,6 +1964,7 @@ UsingComponents As screen:
                                         );
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic12 +
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic15 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic18 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
