@@ -1614,6 +1614,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     CountRows(
                                                                         Filter(colPF_LEGAL_MOVES,
                                                                             sqNum=theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                            pieceUpper=Upper(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier),
                                                                             eligibleSqName in forkSets.gettingForkedSet,
                                                                             UDF_getSetSize(  
                                                                                 UDF_getSetIntersection(
@@ -1638,6 +1639,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     CountRows(
                                                                         Filter(colPF_LEGAL_MOVES,
                                                                             sqNum=theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                            pieceUpper=Upper(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier),
                                                                             eligibleSqName in forkSets.gettingForkedSet,
                                                                             UDF_getSetSize(  
                                                                                 UDF_getSetIntersection(
