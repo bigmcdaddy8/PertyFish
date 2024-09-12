@@ -1623,7 +1623,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                 )
                                                                             )=0
                                                                         )
-                                                                    )>0,
+                                                                    )>1,
                                                                     75,
                                                                     0
                                                                 )
