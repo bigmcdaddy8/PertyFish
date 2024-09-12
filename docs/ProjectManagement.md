@@ -38,16 +38,11 @@ In a private version I have built in regression testing, I may pull that forward
 #### Feature 0003 - Create smarter embedded chess engines
 Create smarter chess engines that are written using PowerFx
 
-##### Story 0003-07 Developing CE_PF_500 (1st Grade)
-- End game 
-- - avoid stalemate
-- - know when safe to enter adj king squares
-- Add a heuristic that is logically opposite of heuristic11
-- - is the target square attacked and unprotected
-- - is the target square attacked and protected, but the exchange is unfavorable
+##### Story 0003-08 Developing CE_PF_600 (2nd Grade)
+
 - Look for simple tactics
-- - look for hung pieces
 - - look for forks
+- - look for hung pieces
 - Simple board strength analysis
 - - number of attacked squares
 - - number of protected squares
@@ -94,6 +89,13 @@ Qc2 postMove count and King checked is incorrect
 
 
 ## Completed Work
+##### Story 0003-07 Developing CE_PF_500 (1st Grade)
+- End game 
+- - avoid stalemate
+- - know when safe to enter adj king squares
+- Add a heuristic that is logically opposite of heuristic11
+- - is the target square attacked and unprotected
+- - is the target square attacked and protected, but the exchange is unfavorable
 
 ##### Story 0003-06 400 Developing CE_PF_400 (Kindergarten)
 - Do simple exchange calculation before capturing
