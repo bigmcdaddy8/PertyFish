@@ -869,6 +869,28 @@ App As appinfo:
         // UDF isProtected code TODO this needs to be completed...
         UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=false;
         
+        // UDF getSetOfOccupiedSqNames
+        UDF_getSetOfOccupiedSqNames(board:Text, filter:Text):Text=
+            Trim(
+                Concat(
+                    Distinct(
+                        Sort(
+                            ForAll(
+                                Sequence(64, 0) As theSqNum,
+        
+                                With(
+                                    {
+                                        thePiece: UDF_getBitAtSqNum(board, theSqNum.Value)
+                                    } As localVars,
+        
+                                    If(localVars.thePiece exactin filter, UDF_sqNumToSqName(theSqNum.Value), "")
+                                )
+                            ), Value
+                        ), Value
+                    ), Value, " "
+                )
+            );
+        
         // UDF isAttacked code
         // is a square occupied by KQRBNP attacked by an opposite colored PAWN
         UDF_isSqNumPAWNAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
