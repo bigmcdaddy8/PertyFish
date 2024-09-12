@@ -1626,6 +1626,12 @@ comChessEngineFunctions As CanvasComponent:
                                                                     )>1,
                                                                     75,
                                                                     0
+                                                                ),
+                                                            targetIsAttacked:
+                                                                UDF_isSqNumAttacked(
+                                                                    theCurrentNode.postMoveBoard, 
+                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
                                                                 )
                                                         } As totalBonus,
                 
@@ -1648,11 +1654,14 @@ comChessEngineFunctions As CanvasComponent:
                                                                                 )
                                                                             )=0
                                                                         )
-                                                                    )
+                                                                    ) &
+                                                                " target IsAttacked?: " & totalBonus.targetIsAttacked
                                                             })
                                                         );
-                
-                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,totalBonus.bonus,-totalBonus.bonus)
+                                                        If(totalBonus.targetIsAttacked,
+                                                            0,
+                                                            If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,totalBonus.bonus,-totalBonus.bonus)
+                                                        )
                                                     )
                                                 )
                                             ),
