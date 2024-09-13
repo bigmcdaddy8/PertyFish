@@ -2002,7 +2002,7 @@ UsingComponents As screen:
                                         Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
                                             GAME_PHASE_OPENING,
                                                 If(
-                                                    theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP" ||
+                                                    theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "BNP" ||
                                                     IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
                                                         // THEN
                                                         RandBetween(-5,15),
@@ -2019,7 +2019,7 @@ UsingComponents As screen:
                                         Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
                                             GAME_PHASE_OPENING,
                                                 If(
-                                                    theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "NP" ||
+                                                    theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "BNP" ||
                                                     IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
                                                         // THEN
                                                         RandBetween(-15,-5),
