@@ -1964,7 +1964,7 @@ comChessEngineFunctions As CanvasComponent:
                                             Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
                                                 GAME_PHASE_OPENING,
                                                     If(
-                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "BNP" ||
+                                                        (theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "BNP" && Text(theCurrentNode.inactiveColorMoveRecord.moveDirection) in "1287") ||
                                                         IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
                                                             // THEN
                                                             RandBetween(-5,15),
@@ -1981,10 +1981,10 @@ comChessEngineFunctions As CanvasComponent:
                                             Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
                                                 GAME_PHASE_OPENING,
                                                     If(
-                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "BNP" ||
+                                                        (theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "BNP"  && Text(theCurrentNode.inactiveColorMoveRecord.moveDirection) in "3456") ||
                                                         IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
                                                             // THEN
-                                                            RandBetween(-15,-5),
+                                                            RandBetween(-15,5),
                                                             
                                                             // ELSE
                                                             0
