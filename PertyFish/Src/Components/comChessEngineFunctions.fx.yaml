@@ -1535,7 +1535,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     )
                                             } As localVars,
                 
-                                            If(!localVars.targetSqAttacked || (Abs(localVars.materialSource)<Abs(localVars.materialCapture)),
+                                            If(!localVars.targetSqAttacked || (Abs(localVars.materialSource)<=Abs(localVars.materialCapture)),
                                                 // THEN
                                                 localVars.materialDelta,
                 
@@ -1583,7 +1583,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     )
                                             } As localVars,
                 
-                                            If(localVars.sourceSqAttacked && !localVars.targetSqAttacked && localVars.materialDelta=0,
+                                            If(localVars.sourceSqAttacked && (!localVars.targetSqAttacked) && localVars.materialDelta=0,
                                                 // THEN
                                                 If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,RandBetween(25,35),RandBetween(-35,-25)),
                 
@@ -1609,24 +1609,6 @@ comChessEngineFunctions As CanvasComponent:
                                                     
                                                     With(
                                                         {
-                                                            bonus:
-                                                                If(
-                                                                    CountRows(
-                                                                        Filter(colPF_LEGAL_MOVES,
-                                                                            sqNum=theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                                            pieceUpper=Upper(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier),
-                                                                            eligibleSqName in forkSets.gettingForkedSet,
-                                                                            UDF_getSetSize(  
-                                                                                UDF_getSetIntersection(
-                                                                                    slideOvers,
-                                                                                    UDF_getSetUnion(forkSets.forkingSet,forkSets.gettingForkedSet)
-                                                                                )
-                                                                            )=0
-                                                                        )
-                                                                    )>1,
-                                                                    75,
-                                                                    0
-                                                                ),
                                                             targetTargetsSet:
                                                                 // get only the eligibleSqName column
                                                                 UDF_createSetOfSqNames(
@@ -1659,7 +1641,6 @@ comChessEngineFunctions As CanvasComponent:
                                                                 " fCE_600(): DEBUG heuristic15" & 
                                                                 " gettingForkedSet: " & forkSets.gettingForkedSet &
                                                                 " forkingSet: " & forkSets.forkingSet &
-                                                                " totalBonus: " & targetData.bonus &
                                                                 " targetTargetsSet: " & targetData.targetTargetsSet &
                                                                 " target IsAttacked?: " & targetData.targetIsAttacked
                                                             })
@@ -1704,7 +1685,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     0,
                 
                                                                     // ELSE
-                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,55,-55)
+                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,35,-35)
                                                                 )
                                                             )
                                                         )
