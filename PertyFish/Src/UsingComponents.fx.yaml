@@ -1613,6 +1613,12 @@ UsingComponents As screen:
                                                     theCurrentNode.inactiveColorMoveRecord.sourceSquareNum,
                                                     UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
                                                 ),
+                                            sourceSqProtected:
+                                                UDF_isSqNumAttacked(
+                                                    theCurrentNode.preMoveBoard,
+                                                    theCurrentNode.inactiveColorMoveRecord.sourceSquareNum,
+                                                    UDF_FEN_TO_INACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                ),
                                             targetSqAttacked:
                                                 UDF_isSqNumAttacked(
                                                     theCurrentNode.postMoveBoard,
