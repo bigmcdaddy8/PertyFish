@@ -1577,10 +1577,15 @@ comChessEngineFunctions As CanvasComponent:
                                                     ),
                                                 sourceSqProtected:
                                                     UDF_isSqNumAttacked(
-                                                        theCurrentNode.preMoveBoard,
+                                                        UDF_setBitAtSqNum(
+                                                            theCurrentNode.preMoveBoard,
+                                                            EMPTY_FILLER_ABBR,
+                                                            theCurrentNode.inactiveColorMoveRecord.sourceSquareNum
+                                                        ),
                                                         theCurrentNode.inactiveColorMoveRecord.sourceSquareNum,
                                                         UDF_FEN_TO_INACTIVE_COLOR(theCurrentNode.postMoveFEN)
                                                     ),
+                                                // materialSourceAttacker:
                                                 targetSqAttacked:
                                                     UDF_isSqNumAttacked(
                                                         theCurrentNode.postMoveBoard,
