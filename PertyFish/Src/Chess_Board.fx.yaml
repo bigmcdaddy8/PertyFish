@@ -1283,51 +1283,59 @@ Chess_Board As screen:
                                                 }),
                                                     
                                                 // ELSE - it is the computer's turn
-                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                    " btnCheckGameResults.OnSelect(): computer's turn UDF_FEN_TO_ACTIVE_COLOR(): " & UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN) &
-                                                    " whitePiecesPlayerType: " & theData.chessEngineData.whitePiecesPlayerType &
-                                                    " blackPiecesPlayerType: " & theData.chessEngineData.blackPiecesPlayerType
-                                                });
-                                                With(
-                                                    First(
-                                                        Sort(
-                                                            Filter(colPF_MOVE_TREE, nodeDepth=1), 
-                                                            postMoveEvalRecord.centipawn, 
-                                                            If(UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN)=WHITE,
-                                                                SortOrder.Descending,
-                                                                SortOrder.Ascending
+                                                IfError(
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                        " btnCheckGameResults.OnSelect(): computer's turn UDF_FEN_TO_ACTIVE_COLOR(): " & UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN) &
+                                                        " whitePiecesPlayerType: " & theData.chessEngineData.whitePiecesPlayerType &
+                                                        " blackPiecesPlayerType: " & theData.chessEngineData.blackPiecesPlayerType
+                                                    });
+                                                    With(
+                                                        First(
+                                                            Sort(
+                                                                Filter(colPF_MOVE_TREE, nodeDepth=1), 
+                                                                postMoveEvalRecord.centipawn, 
+                                                                If(UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN)=WHITE,
+                                                                    SortOrder.Descending,
+                                                                    SortOrder.Ascending
+                                                                )
                                                             )
-                                                        )
-                                                    ) As theMove,
+                                                        ) As theMove,
                         
-                                                    Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);
-                                                    Set(gblPF_UI_Ready4Input, false);
+                                                        Set(gblPF_UI_selectedSqNum, EMPTY_SQUARE_NUM);
+                                                        Set(gblPF_UI_Ready4Input, false);
                         
-                                                    UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
-                                                        uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
-                                                                    statusText:         "Game in progress." ,
-                                                                    statusFill:         COLOR_GREENish,
-                                                                    diagnosticText:     "Computer's turn - please wait while it thinks...",
-                                                                    diagnosticFill:     COLOR_WHITEish
-                                                                }),
-                                                        chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
-                                                                                moveNumber: theData.chessEngineData.moveNumber + 1,
-                                                                                pacn:       theMove.inactiveColorMoveRecord.pacn
-                                                                            })
-                                                    });
+                                                        UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                            uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                                        statusText:         "Game in progress." ,
+                                                                        statusFill:         COLOR_GREENish,
+                                                                        diagnosticText:     "Computer's turn - please wait while it thinks...",
+                                                                        diagnosticFill:     COLOR_WHITEish
+                                                                    }),
+                                                            chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
+                                                                                    moveNumber: theData.chessEngineData.moveNumber + 1,
+                                                                                    pacn:       theMove.inactiveColorMoveRecord.pacn
+                                                                                })
+                                                        });
                         
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " btnCheckGameResults.OnSelect(): computer's turn - selected san: " & theMove.inactiveColorMoveRecord.san &
+                                                            " pacn: " & theMove.inactiveColorMoveRecord.pacn
+                                                        });
+                        
+                                                        // ready to make the next move in this game
+                                                        Set(gblPF_TMR_MakeNextGameMove, false);
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " btnCheckCompleteTestResults.OnSelect(): TEST_COMPLETE calling Reset(tmrMakeNextGameMove)"
+                                                        });
+                                                        Reset(tmrMakeNextGameMove);
+                                                        Set(gblPF_TMR_MakeNextGameMove, true)
+                                                    ),
+                                                    // code to execute if error is caught
                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                        " btnCheckGameResults.OnSelect(): computer's turn - selected san: " & theMove.inactiveColorMoveRecord.san &
-                                                        " pacn: " & theMove.inactiveColorMoveRecord.pacn
+                                                        " btnCheckGameResults.OnSelect(): ERROR CAUGHT SECTION #0001 !!!"
                                                     });
-                        
-                                                    // ready to make the next move in this game
-                                                    Set(gblPF_TMR_MakeNextGameMove, false);
-                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                        " btnCheckCompleteTestResults.OnSelect(): TEST_COMPLETE calling Reset(tmrMakeNextGameMove)"
-                                                    });
-                                                    Reset(tmrMakeNextGameMove);
-                                                    Set(gblPF_TMR_MakeNextGameMove, true)
+                                                    Notify(" btnCheckGameResults.OnSelect(): ERROR CAUGHT SECTION #0001 !!!");
+                                                    Blank()
                                                 )
                                             )
                                         )
