@@ -87,8 +87,8 @@ Document how a user plays chess within the PertyFish canvas app
 
 ## Short-Term ToDo List
 
-need to have heuristic16 not have sunch a big impact early or let fork have a bigger impact ?
-- maybe let fork have a bigger impact if a king is involved ???
+7k/8/8/1q6/8/8/4K3/5Q2 w - - 0 1   # Black queen should not back off when King moves and does not protect Queen
+7k/8/8/2p5/pn6/8/3Q2K1/8 b - - 0 1 # Black Knight should not be afaid of queen
 
 ## Open Bugs
 
