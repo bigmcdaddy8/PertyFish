@@ -3987,6 +3987,51 @@ Chess_Board As screen:
                                 )
                             );
                     
+                            /*
+                             * 50 move draw conditions ->  if the half move count >= 50
+                             */
+                            With(
+                                LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                    
+                                With(
+                                    LookUp(colPF_MOVE_TREE, nodeID=theData.chessEngineData.moveTreeD0NodeID) As theD0ParentNode,
+                    
+                                    If(
+                                        Not(
+                                            theD0ParentNode.postMoveGameStatus.whiteIsCheckmated ||
+                                            theD0ParentNode.postMoveGameStatus.blackIsCheckmated ||
+                                            theD0ParentNode.postMoveGameStatus.isStalemate ||
+                                            theD0ParentNode.postMoveGameStatus.isDraw
+                                        ),
+                                        // THEN -  check for a 50 move DRAW
+                    
+                                        If(UDF_FEN_TO_HALFMOVE_COUNT(theD0ParentNode.postMoveFEN)>=50,
+                                            // THEN
+                                            If(gblPF_DEBUG,
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                    " btnProcessGame.OnSelect(): 50 move DRAW detected setting isISMDraw & isDraw to true " &
+                                                    " HALFMOVE_COUNT: " & UDF_FEN_TO_HALFMOVE_COUNT(theD0ParentNode.postMoveFEN)
+                                                })
+                                            );
+                                            UpdateIf(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID, {
+                                                inactiveColorMoveRecord:Patch(
+                                                                            LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID).inactiveColorMoveRecord,
+                                                                            {
+                                                                                is50MoveDraw:  true
+                                                                            }
+                                                                        ),
+                                                postMoveGameStatus:     Patch(
+                                                                            LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID).postMoveGameStatus,
+                                                                            {
+                                                                                isDraw: true
+                                                                            }
+                                                                        )
+                                            })
+                                        )
+                                    )
+                                )
+                            );
+                    
                             // if the number of moves is >= 6 AND
                             //      latest board, board-2, and board-4 is all the same   AND  
                             //      board-1, board-3, and board-5 is all the same -> DRAW due to repeat postitions
