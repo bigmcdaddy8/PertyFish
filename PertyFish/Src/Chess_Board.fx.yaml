@@ -837,7 +837,9 @@ Chess_Board As screen:
                                                 uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
                                                             diagnosticText:     "Computer's turn " &
                                                                                 If(UDF_FEN_TO_ACTIVE_COLOR(theMove.postMoveFEN)=WHITE,"(White)","(Black)") &
-                                                                                " - san: " & theMove.inactiveColorMoveRecord.san &
+                                                                                " - Previous move by " &
+                                                                                If(UDF_FEN_TO_ACTIVE_COLOR(theMove.postMoveFEN)=WHITE,"(Black)","(White)") &
+                                                                                " -> san: " & theMove.inactiveColorMoveRecord.san &
                                                                                 " pacn: " & theMove.inactiveColorMoveRecord.pacn,
                                                             diagnosticFill:     COLOR_GREENish
                                                         })
