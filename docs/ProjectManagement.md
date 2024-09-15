@@ -85,6 +85,10 @@ Create Outline of what and where technical documentation should be housed and wh
 #### Feature 0006 - User Documentation
 Document how a user plays chess within the PertyFish canvas app
 
+## Short-Term ToDo List
+
+need to have heuristic16 not have sunch a big impact early or let fork have a bigger impact ?
+- maybe let fork have a bigger impact if a king is involved ???
 
 ## Open Bugs
 
