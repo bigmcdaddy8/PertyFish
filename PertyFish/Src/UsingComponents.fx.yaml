@@ -2173,6 +2173,18 @@ UsingComponents As screen:
             );
             
             If(gblPF_DEBUG_EVAL,
+                With(
+                    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+            
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                        " comChessEngineFunctions.fCE_600_preEvaluate(): DEBUG" &
+                        " myHangingPieces: " & theData.evalData.myHangingPieces &
+                        " theirHangingPieces: " & theData.evalData.theirHangingPieces
+                    })
+                )
+            );
+            
+            If(gblPF_DEBUG_EVAL,
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                     " comChessEngineFunctions.fCE_600_preEvaluate(): exiting"
                 })
