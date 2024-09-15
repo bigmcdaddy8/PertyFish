@@ -2103,7 +2103,8 @@ comChessEngineFunctions As CanvasComponent:
                                 UDF_setBitAtSqNum(theData.d0Node.postMoveBoard, EMPTY_FILLER_ABBR, UDF_sqNameToSqNum("c3")),
                                 UDF_sqNameToSqNum("c3"), 
                                 BLACK
-                            )
+                            ) &
+                        " c3 isPAWNAttacked?: " & UDF_isSqNumPAWNAttacked(theData.d0Node.postMoveBoard, UDF_sqNameToSqNum("c3"), BLACK)
                     })
                 );
                 
