@@ -2080,7 +2080,7 @@ comChessEngineFunctions As CanvasComponent:
                 
     fCE_600_preEvaluate():
         ThisProperty:
-            Default: |-
+            Default: |+
                 =If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                         " comChessEngineFunctions.fCE_600_preEvaluate(): entering"
@@ -2097,6 +2097,300 @@ comChessEngineFunctions As CanvasComponent:
                         " comChessEngineFunctions.fCE_600_preEvaluate(): exiting"
                     })
                 );
+                
+                
+                
+                
+                
+                /*
+                If(gblPF_DEBUG_EVAL,
+                    // THEN
+                    With(
+                        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
+                
+                        With(
+                            {
+                                theCurrentMoveTreeNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
+                                theParentMoveTreeNode:  LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID),
+                                theMoveHistoryTailNode:
+                                    If(CountRows(colPF_MOVE_HISTORY)>=1,LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID),Blank())
+                            } As localVars,
+                
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " CountRows(colPF_MOVE_HISTORY): " & CountRows(colPF_MOVE_HISTORY)
+                            });
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " current nodeID: " & pNodeID &
+                                " pacn: " & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.pacn &
+                                " preMove-active color: " & UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentMoveTreeNode.preMoveFEN)) &
+                                " postMovePINs: " & localVars.theCurrentMoveTreeNode.postMovePINs
+                            });
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " parent nodeID: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.nodeID) &
+                                " pacn: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.inactiveColorMoveRecord.pacn) &
+                                " preMove-active color: " &
+                                    If(IsBlank(localVars.theParentMoveTreeNode),"Blank", UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theParentMoveTreeNode.preMoveFEN))) &
+                                " postMovePINs: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.postMovePINs)
+                            });
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " History tail nodeID: " & If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.nodeID) &
+                                " pacn: " &
+                                    If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.inactiveColorMoveRecord.pacn) &
+                                " preMove-active color: " &
+                                    If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theMoveHistoryTailNode.preMoveFEN))) &
+                                " postMovePINs: " & 
+                                    If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.postMovePINs)
+                            })
+                        )
+                    )
+                );
+                
+                
+                
+                
+                With(
+                    LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+                
+                    With(
+                        {
+                            postMoveBoard:      UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN)
+                        } As localVars,
+                
+                        If(gblPF_DEBUG_EVAL,
+                            // THEN
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " pre-update whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
+                            });
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " pre-update blackStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.blackStrongSqBoard
+                            });
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " postMoveBoard: " & localVars.postMoveBoard
+                            });
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " postMovePINs: " & theCurrentNode.postMovePINs
+                            })
+                        );
+                
+                        If(IsBlank(theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard),
+                            // THEN - need to populate the whiteStrongSqBoard board
+                            With(
+                                {
+                                    whiteStrongSqNameList:
+                                        Concat(
+                                            Distinct(
+                                                Sort(
+                                                    Split(
+                                                        Trim(
+                                                            Concat(
+                                                                ForAll(
+                                                                    Sequence(64,0) As theSqNum,
+                
+                                                                    With(
+                                                                        {
+                                                                            moveBit: UDF_getBitAtSqNum(localVars.postMoveBoard,theSqNum.Value) 
+                                                                        } As theMoveBit,
+                
+                                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin "kqrbnp",
+                                                                            // THEN - there is no piece
+                                                                            "",
+                
+                                                                            // THEN - we got a piece - get its' moves and filter them
+                                                                            Concat(
+                                                                                ForAll(
+                                                                                    Filter(colPF_LEGAL_MOVES,
+                                                                                        sqNum=theSqNum.Value &&
+                                                                                        // the PAWN is case sensitive since it is uni-directional
+                                                                                        pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
+                                                                                    ) As theEligibleMove,
+                
+                                                                                    Switch(true,
+                                                                                        // pawn forward moves do not capture therefore do not make strong squares
+                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15",
+                                                                                            "",
+                
+                                                                                        // castle moves do not capture therefore do not make strong squares
+                                                                                        theEligibleMove.castle<>"-",
+                                                                                            "",
+                
+                                                                                        // make sure slider squares are unoccupied
+                                                                                        (!IsBlank(theEligibleMove.slideOvers)) &&
+                                                                                            (!IsEmpty(
+                                                                                                Filter(
+                                                                                                    ForAll (
+                                                                                                        Split(theEligibleMove.slideOvers, " ") As theSlideOverSqName,
+                                                                                    
+                                                                                                        If(
+                                                                                                            UDF_getBitAtSqNum(
+                                                                                                                localVars.postMoveBoard, 
+                                                                                                                UDF_sqNameToSqNum(theSlideOverSqName.Value)
+                                                                                                            ) in "KQRBNP", // any piece of any color in slide zone ?
+                                                                                                            true,
+                                                                                                            false
+                                                                                                        )
+                                                                                                    ), Value=true
+                                                                                                )
+                                                                                            )),
+                                                                                            "",
+                // /*
+                //  * PIN rules
+                // Rules:
+                // to find PINs for preMove-active color look at the PINs in MOVE_TREE D0
+                // to find PINs for preMove-inactive color look at the PINs in MOVE_HISTORY tail
+                // - adjust if MOVE TREE D0 source square is in MOVE_HISTORY tail PIN list
+                // -- if a MOVE_TREE D0 was a capture move - remove the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list
+                // -- else replace the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list with the MOVE_TREE D0 target square
+                //  * /
+                                                                                        // default
+                                                                                        theEligibleMove.eligibleSqName
+                                                                                    )
+                                                                                ), Value, " "
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                ), Value, " "
+                                                            )
+                                                        ), " "
+                                                    ), Value
+                                                ), Value
+                                            ), Value, " "
+                                        )
+                                } As theLists,
+                
+                                If(gblPF_DEBUG_EVAL,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                        " comChessEngineFunctions.fME_prepNode(): DEBUG whiteStrongSqNameList: " & theLists.whiteStrongSqNameList
+                                    });
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                        " comChessEngineFunctions.fME_prepNode(): DEBUG postMovePINs: " & theCurrentNode.postMovePINs &
+                                        " postMovePINDirections: " & theCurrentNode.postMovePINDirections
+                                    });
+                                );
+                
+                                UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
+                                    postMoveEvalRecord: 
+                                        Patch(theCurrentNode.postMoveEvalRecord, {
+                                            whiteStrongSqBoard: Concat(
+                                                                    ForAll(
+                                                                        Sequence(64,0) As theSqNum,
+                
+                                                                        If(UDF_sqNumToSqName(theSqNum.Value) in theLists.whiteStrongSqNameList, ATTACKED_ABBR, EMPTY_FILLER_ABBR)
+                                                                    ), Value, ""
+                                                                )
+                                        })
+                                })
+                            )
+                        );
+                
+                        If(IsBlank(theCurrentNode.postMoveEvalRecord.blackStrongSqBoard),
+                            // THEN - need to populate the blackStrongSqBoard board
+                            With(
+                                {
+                                    blackStrongSqNameList:
+                                        Concat(
+                                            Distinct(
+                                                Sort(
+                                                    Split(
+                                                        Trim(
+                                                            Concat(
+                                                                ForAll(
+                                                                    Sequence(64,0) As theSqNum,
+                
+                                                                    With(
+                                                                        {
+                                                                            moveBit: UDF_getBitAtSqNum(localVars.postMoveBoard,theSqNum.Value) 
+                                                                        } As theMoveBit,
+                
+                                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin "KQRBNP",
+                                                                            // THEN - there is no piece
+                                                                            "",
+                
+                                                                            // THEN - we got a piece - get its' moves and filter them
+                                                                            Concat(
+                                                                                ForAll(
+                                                                                    Filter(colPF_LEGAL_MOVES,
+                                                                                        sqNum=theSqNum.Value &&
+                                                                                        // the PAWN is case sensitive since it is uni-directional
+                                                                                        pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
+                                                                                    ) As theEligibleMove,
+                                                                                    
+                                                                                    Switch(true,
+                                                                                        // pawn forward moves do not capture therefore do not make strong squares
+                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15",
+                                                                                            "",
+                
+                                                                                        // castle moves do not capture therefore do not make strong squares
+                                                                                        theEligibleMove.castle<>"-",
+                                                                                            "",
+                
+                                                                                        // make sure slider squares are unoccupied
+                                                                                        (!IsBlank(theEligibleMove.slideOvers)) &&
+                                                                                            (!IsEmpty(
+                                                                                                Filter(
+                                                                                                    ForAll (
+                                                                                                        Split(theEligibleMove.slideOvers, " ") As theSlideOverSqName,
+                                                                                    
+                                                                                                        If(
+                                                                                                            UDF_getBitAtSqNum(
+                                                                                                                localVars.postMoveBoard, 
+                                                                                                                UDF_sqNameToSqNum(theSlideOverSqName.Value)
+                                                                                                            ) in "KQRBNP", // any piece of any color in slide zone ?
+                                                                                                            true,
+                                                                                                            false
+                                                                                                        )
+                                                                                                    ), Value=true
+                                                                                                )
+                                                                                            )),
+                                                                                            "",
+                
+                                                                                        // default
+                                                                                        theEligibleMove.eligibleSqName
+                                                                                    )
+                                                                                ), Value, " "
+                                                                            )
+                                                                        )
+                                                                    )
+                                                                ), Value, " "
+                                                            )
+                                                        ), " "
+                                                    ), Value
+                                                ), Value
+                                            ), Value, " "
+                                        )
+                                } As theLists,
+                
+                                If(gblPF_DEBUG_EVAL,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                        " comChessEngineFunctions.fME_prepNode(): DEBUG blackStrongSqList: " & theLists.blackStrongSqNameList
+                                    })
+                                );
+                
+                                UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
+                                    postMoveEvalRecord: 
+                                        Patch(theCurrentNode.postMoveEvalRecord, {
+                                            blackStrongSqBoard: Concat(
+                                                                    ForAll(
+                                                                        Sequence(64,0) As theSqNum,
+                
+                                                                        If(UDF_sqNumToSqName(theSqNum.Value) in theLists.blackStrongSqNameList, ATTACKED_ABBR, EMPTY_FILLER_ABBR)
+                                                                    ), Value, ""
+                                                                )
+                                        })
+                                })
+                            )
+                        )
+                    )
+                );
+                
+                If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                        " comChessEngineFunctions.fME_prepNode(): exiting"
+                    })
+                );
+                
+                 */
+                
+                
     fME_END_GAME(pVersion As Number, pNodeID As Number):
         pVersion:
             Default: =100
@@ -2417,297 +2711,6 @@ comChessEngineFunctions As CanvasComponent:
                 
                 
                 
-                
-                
-                
-                
-                /*
-                If(gblPF_DEBUG_EVAL,
-                    // THEN
-                    With(
-                        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
-                
-                        With(
-                            {
-                                theCurrentMoveTreeNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
-                                theParentMoveTreeNode:  LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID),
-                                theMoveHistoryTailNode:
-                                    If(CountRows(colPF_MOVE_HISTORY)>=1,LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID),Blank())
-                            } As localVars,
-                
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " CountRows(colPF_MOVE_HISTORY): " & CountRows(colPF_MOVE_HISTORY)
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " current nodeID: " & pNodeID &
-                                " pacn: " & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.pacn &
-                                " preMove-active color: " & UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentMoveTreeNode.preMoveFEN)) &
-                                " postMovePINs: " & localVars.theCurrentMoveTreeNode.postMovePINs
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " parent nodeID: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.nodeID) &
-                                " pacn: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.inactiveColorMoveRecord.pacn) &
-                                " preMove-active color: " &
-                                    If(IsBlank(localVars.theParentMoveTreeNode),"Blank", UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theParentMoveTreeNode.preMoveFEN))) &
-                                " postMovePINs: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.postMovePINs)
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " History tail nodeID: " & If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.nodeID) &
-                                " pacn: " &
-                                    If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.inactiveColorMoveRecord.pacn) &
-                                " preMove-active color: " &
-                                    If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theMoveHistoryTailNode.preMoveFEN))) &
-                                " postMovePINs: " & 
-                                    If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.postMovePINs)
-                            })
-                        )
-                    )
-                );
-                
-                
-                
-                
-                With(
-                    LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
-                
-                    With(
-                        {
-                            postMoveBoard:      UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN)
-                        } As localVars,
-                
-                        If(gblPF_DEBUG_EVAL,
-                            // THEN
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " pre-update whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " pre-update blackStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.blackStrongSqBoard
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " postMoveBoard: " & localVars.postMoveBoard
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " postMovePINs: " & theCurrentNode.postMovePINs
-                            })
-                        );
-                
-                        If(IsBlank(theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard),
-                            // THEN - need to populate the whiteStrongSqBoard board
-                            With(
-                                {
-                                    whiteStrongSqNameList:
-                                        Concat(
-                                            Distinct(
-                                                Sort(
-                                                    Split(
-                                                        Trim(
-                                                            Concat(
-                                                                ForAll(
-                                                                    Sequence(64,0) As theSqNum,
-                
-                                                                    With(
-                                                                        {
-                                                                            moveBit: UDF_getBitAtSqNum(localVars.postMoveBoard,theSqNum.Value) 
-                                                                        } As theMoveBit,
-                
-                                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin "kqrbnp",
-                                                                            // THEN - there is no piece
-                                                                            "",
-                
-                                                                            // THEN - we got a piece - get its' moves and filter them
-                                                                            Concat(
-                                                                                ForAll(
-                                                                                    Filter(colPF_LEGAL_MOVES,
-                                                                                        sqNum=theSqNum.Value &&
-                                                                                        // the PAWN is case sensitive since it is uni-directional
-                                                                                        pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
-                                                                                    ) As theEligibleMove,
-                
-                                                                                    Switch(true,
-                                                                                        // pawn forward moves do not capture therefore do not make strong squares
-                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15",
-                                                                                            "",
-                
-                                                                                        // castle moves do not capture therefore do not make strong squares
-                                                                                        theEligibleMove.castle<>"-",
-                                                                                            "",
-                
-                                                                                        // make sure slider squares are unoccupied
-                                                                                        (!IsBlank(theEligibleMove.slideOvers)) &&
-                                                                                            (!IsEmpty(
-                                                                                                Filter(
-                                                                                                    ForAll (
-                                                                                                        Split(theEligibleMove.slideOvers, " ") As theSlideOverSqName,
-                                                                                    
-                                                                                                        If(
-                                                                                                            UDF_getBitAtSqNum(
-                                                                                                                localVars.postMoveBoard, 
-                                                                                                                UDF_sqNameToSqNum(theSlideOverSqName.Value)
-                                                                                                            ) in "KQRBNP", // any piece of any color in slide zone ?
-                                                                                                            true,
-                                                                                                            false
-                                                                                                        )
-                                                                                                    ), Value=true
-                                                                                                )
-                                                                                            )),
-                                                                                            "",
-                // /*
-                //  * PIN rules
-                // Rules:
-                // to find PINs for preMove-active color look at the PINs in MOVE_TREE D0
-                // to find PINs for preMove-inactive color look at the PINs in MOVE_HISTORY tail
-                // - adjust if MOVE TREE D0 source square is in MOVE_HISTORY tail PIN list
-                // -- if a MOVE_TREE D0 was a capture move - remove the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list
-                // -- else replace the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list with the MOVE_TREE D0 target square
-                //  * /
-                                                                                        // default
-                                                                                        theEligibleMove.eligibleSqName
-                                                                                    )
-                                                                                ), Value, " "
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                ), Value, " "
-                                                            )
-                                                        ), " "
-                                                    ), Value
-                                                ), Value
-                                            ), Value, " "
-                                        )
-                                } As theLists,
-                
-                                If(gblPF_DEBUG_EVAL,
-                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                        " comChessEngineFunctions.fME_prepNode(): DEBUG whiteStrongSqNameList: " & theLists.whiteStrongSqNameList
-                                    });
-                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                        " comChessEngineFunctions.fME_prepNode(): DEBUG postMovePINs: " & theCurrentNode.postMovePINs &
-                                        " postMovePINDirections: " & theCurrentNode.postMovePINDirections
-                                    });
-                                );
-                
-                                UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
-                                    postMoveEvalRecord: 
-                                        Patch(theCurrentNode.postMoveEvalRecord, {
-                                            whiteStrongSqBoard: Concat(
-                                                                    ForAll(
-                                                                        Sequence(64,0) As theSqNum,
-                
-                                                                        If(UDF_sqNumToSqName(theSqNum.Value) in theLists.whiteStrongSqNameList, ATTACKED_ABBR, EMPTY_FILLER_ABBR)
-                                                                    ), Value, ""
-                                                                )
-                                        })
-                                })
-                            )
-                        );
-                
-                        If(IsBlank(theCurrentNode.postMoveEvalRecord.blackStrongSqBoard),
-                            // THEN - need to populate the blackStrongSqBoard board
-                            With(
-                                {
-                                    blackStrongSqNameList:
-                                        Concat(
-                                            Distinct(
-                                                Sort(
-                                                    Split(
-                                                        Trim(
-                                                            Concat(
-                                                                ForAll(
-                                                                    Sequence(64,0) As theSqNum,
-                
-                                                                    With(
-                                                                        {
-                                                                            moveBit: UDF_getBitAtSqNum(localVars.postMoveBoard,theSqNum.Value) 
-                                                                        } As theMoveBit,
-                
-                                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin "KQRBNP",
-                                                                            // THEN - there is no piece
-                                                                            "",
-                
-                                                                            // THEN - we got a piece - get its' moves and filter them
-                                                                            Concat(
-                                                                                ForAll(
-                                                                                    Filter(colPF_LEGAL_MOVES,
-                                                                                        sqNum=theSqNum.Value &&
-                                                                                        // the PAWN is case sensitive since it is uni-directional
-                                                                                        pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
-                                                                                    ) As theEligibleMove,
-                                                                                    
-                                                                                    Switch(true,
-                                                                                        // pawn forward moves do not capture therefore do not make strong squares
-                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15",
-                                                                                            "",
-                
-                                                                                        // castle moves do not capture therefore do not make strong squares
-                                                                                        theEligibleMove.castle<>"-",
-                                                                                            "",
-                
-                                                                                        // make sure slider squares are unoccupied
-                                                                                        (!IsBlank(theEligibleMove.slideOvers)) &&
-                                                                                            (!IsEmpty(
-                                                                                                Filter(
-                                                                                                    ForAll (
-                                                                                                        Split(theEligibleMove.slideOvers, " ") As theSlideOverSqName,
-                                                                                    
-                                                                                                        If(
-                                                                                                            UDF_getBitAtSqNum(
-                                                                                                                localVars.postMoveBoard, 
-                                                                                                                UDF_sqNameToSqNum(theSlideOverSqName.Value)
-                                                                                                            ) in "KQRBNP", // any piece of any color in slide zone ?
-                                                                                                            true,
-                                                                                                            false
-                                                                                                        )
-                                                                                                    ), Value=true
-                                                                                                )
-                                                                                            )),
-                                                                                            "",
-                
-                                                                                        // default
-                                                                                        theEligibleMove.eligibleSqName
-                                                                                    )
-                                                                                ), Value, " "
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                ), Value, " "
-                                                            )
-                                                        ), " "
-                                                    ), Value
-                                                ), Value
-                                            ), Value, " "
-                                        )
-                                } As theLists,
-                
-                                If(gblPF_DEBUG_EVAL,
-                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                        " comChessEngineFunctions.fME_prepNode(): DEBUG blackStrongSqList: " & theLists.blackStrongSqNameList
-                                    })
-                                );
-                
-                                UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
-                                    postMoveEvalRecord: 
-                                        Patch(theCurrentNode.postMoveEvalRecord, {
-                                            blackStrongSqBoard: Concat(
-                                                                    ForAll(
-                                                                        Sequence(64,0) As theSqNum,
-                
-                                                                        If(UDF_sqNumToSqName(theSqNum.Value) in theLists.blackStrongSqNameList, ATTACKED_ABBR, EMPTY_FILLER_ABBR)
-                                                                    ), Value, ""
-                                                                )
-                                        })
-                                })
-                            )
-                        )
-                    )
-                );
-                
-                If(gblPF_DEBUG_EVAL,
-                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                        " comChessEngineFunctions.fME_prepNode(): exiting"
-                    })
-                );
-                
-                 */
                 
                 
     Fill: =RGBA(0, 0, 0, 0)
