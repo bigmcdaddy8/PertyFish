@@ -829,16 +829,26 @@ Chess_Board As screen:
                                 // THEN game still going
                                 If(theData.chessEngineData.testNumber<0,
                                     // THEN - not a Game Test
-                                    With(
-                                        LookUp(colPF_MOVE_TREE, nodeDepth=1 && inactiveColorMoveRecord.pacn=theData.chessEngineData.pacn) As theMove,
+                                    IfError(
+                                        With(
+                                            LookUp(colPF_MOVE_TREE, nodeDepth=1 && inactiveColorMoveRecord.pacn=theData.chessEngineData.pacn) As theMove,
                         
-                                        UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
-                                            uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
-                                                        diagnosticText:     "Computer's turn - san: " & theMove.inactiveColorMoveRecord.san &
-                                                                            " pacn: " & theMove.inactiveColorMoveRecord.pacn,
-                                                        diagnosticFill:     COLOR_GREENish
-                                                    })
-                                        })
+                                            UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                                                uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
+                                                            diagnosticText:     "Computer's turn " &
+                                                                                If(UDF_FEN_TO_ACTIVE_COLOR(theMove.postMoveFEN)=WHITE,"(White)","(Black)") &
+                                                                                " - san: " & theMove.inactiveColorMoveRecord.san &
+                                                                                " pacn: " & theMove.inactiveColorMoveRecord.pacn,
+                                                            diagnosticFill:     COLOR_GREENish
+                                                        })
+                                            })
+                                        ),
+                                        // code to execute if ERROR caught
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
+                                            "tmrMakeNextGameMove.OnTimerEnd(): ERROR DETECTED SECTION #0002 !!!"
+                                        });
+                                        Notify("tmrMakeNextGameMove.OnTimerEnd(): ERROR DETECTED SECTION #0002 !!!");
+                                        Blank()
                                     )
                                 );
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: 
@@ -1308,7 +1318,10 @@ Chess_Board As screen:
                                                             uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
                                                                         statusText:         "Game in progress." ,
                                                                         statusFill:         COLOR_GREENish,
-                                                                        diagnosticText:     "Computer's turn - please wait while it thinks...",
+                                                                        diagnosticText:     
+                                                                            "Computer's turn " &
+                                                                            If(UDF_FEN_TO_ACTIVE_COLOR(theD0Node.postMoveFEN)=WHITE,"(White)","(Black)") &
+                                                                            " - please wait while it thinks...",
                                                                         diagnosticFill:     COLOR_WHITEish
                                                                     }),
                                                             chessEngineData:    Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData, {
