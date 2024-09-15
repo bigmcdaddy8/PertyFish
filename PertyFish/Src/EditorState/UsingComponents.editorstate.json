@@ -38,9 +38,6 @@
         "fME_END_GAME_pVersion",
         "fME_END_GAME_pNodeID",
         "fME_END_GAME",
-        "fME_prepNode_pVersion",
-        "fME_prepNode_pNodeID",
-        "fME_prepNode",
         "fCE_500_pNodeID",
         "fCE_500",
         "fCE_600_pNodeID",
@@ -105,16 +102,6 @@
         {
           "Category": "Data",
           "PropertyName": "fME_END_GAME_pNodeID",
-          "RuleProviderType": "System"
-        },
-        {
-          "Category": "Data",
-          "PropertyName": "fME_prepNode_pVersion",
-          "RuleProviderType": "System"
-        },
-        {
-          "Category": "Data",
-          "PropertyName": "fME_prepNode_pNodeID",
           "RuleProviderType": "System"
         },
         {
@@ -190,11 +177,6 @@
         {
           "Category": "Behavior",
           "PropertyName": "fME_END_GAME",
-          "RuleProviderType": "System"
-        },
-        {
-          "Category": "Behavior",
-          "PropertyName": "fME_prepNode",
           "RuleProviderType": "System"
         },
         {

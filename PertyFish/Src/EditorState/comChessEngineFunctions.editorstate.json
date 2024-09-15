@@ -94,23 +94,6 @@
           "IsLockable": false,
           "NameMapSourceSchema": "?"
         },
-        "fME_prepNode_pVersion",
-        {
-          "AFDDataSourceName": "",
-          "AutoRuleBindingEnabled": false,
-          "AutoRuleBindingString": "100",
-          "InvariantPropertyName": "fME_prepNode_pNodeID",
-          "IsLockable": false,
-          "NameMapSourceSchema": "?"
-        },
-        {
-          "AFDDataSourceName": "",
-          "AutoRuleBindingEnabled": false,
-          "AutoRuleBindingString": "",
-          "InvariantPropertyName": "fME_prepNode",
-          "IsLockable": false,
-          "NameMapSourceSchema": "?"
-        },
         "fCE_500_pNodeID",
         {
           "AFDDataSourceName": "",
@@ -201,16 +184,6 @@
         },
         {
           "Category": "Data",
-          "PropertyName": "fME_prepNode_pVersion",
-          "RuleProviderType": "System"
-        },
-        {
-          "Category": "Data",
-          "PropertyName": "fME_prepNode_pNodeID",
-          "RuleProviderType": "System"
-        },
-        {
-          "Category": "Data",
           "PropertyName": "fCE_500_pNodeID",
           "RuleProviderType": "System"
         },
@@ -282,11 +255,6 @@
         {
           "Category": "Behavior",
           "PropertyName": "fME_END_GAME",
-          "RuleProviderType": "System"
-        },
-        {
-          "Category": "Behavior",
-          "PropertyName": "fME_prepNode",
           "RuleProviderType": "System"
         },
         {

@@ -96,23 +96,6 @@
         "IsLockable": false,
         "NameMapSourceSchema": "?"
       },
-      "fME_prepNode_pVersion",
-      {
-        "AFDDataSourceName": "",
-        "AutoRuleBindingEnabled": false,
-        "AutoRuleBindingString": "100",
-        "InvariantPropertyName": "fME_prepNode_pNodeID",
-        "IsLockable": false,
-        "NameMapSourceSchema": "?"
-      },
-      {
-        "AFDDataSourceName": "",
-        "AutoRuleBindingEnabled": false,
-        "AutoRuleBindingString": "",
-        "InvariantPropertyName": "fME_prepNode",
-        "IsLockable": false,
-        "NameMapSourceSchema": "?"
-      },
       "fCE_500_pNodeID",
       {
         "AFDDataSourceName": "",
@@ -148,7 +131,7 @@
         "NameMapSourceSchema": "?"
       }
     ],
-    "LastModifiedTimestamp": "638619986854874519",
+    "LastModifiedTimestamp": "638619987081420290",
     "Name": "comChessEngineFunctions",
     "Rules": [
       {
@@ -197,18 +180,6 @@
         "Category": "Data",
         "InvariantScript": "EMPTY_NODE_ID",
         "Property": "fME_END_GAME_pNodeID",
-        "RuleProviderType": "System"
-      },
-      {
-        "Category": "Data",
-        "InvariantScript": "100",
-        "Property": "fME_prepNode_pVersion",
-        "RuleProviderType": "System"
-      },
-      {
-        "Category": "Data",
-        "InvariantScript": "EMPTY_NODE_ID",
-        "Property": "fME_prepNode_pNodeID",
         "RuleProviderType": "System"
       },
       {
@@ -299,12 +270,6 @@
         "Category": "Behavior",
         "InvariantScript": "If(gblPF_DEBUG_EVAL,\n    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n        \" comChessEngineFunctions.fME_END_GAME(): entered pVersion: \" & pVersion &\n        \" pNodeID: \" & pNodeID\n    })\n);\n\nWith(\n    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,\n\n    With(\n        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,\n\n        If(gblPF_DEBUG_EVAL,\n            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") & \n                \" fME_END_GAME(): san: \" & theCurrentNode.inactiveColorMoveRecord.san &\n                \" pacn: \" & theCurrentNode.inactiveColorMoveRecord.pacn &\n                \" move color: \" & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &\n                \" captureSquareOccupier: \" & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier\n            })\n        );\n\n        Sum(0,\n            With (\n                {\n                    ppd:    UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.postMoveFEN),\n                    filterScreen: If(UDF_FEN_TO_INACTIVE_COLOR(theCurrentNode.postMoveFEN)=WHITE,\"QRBNP\",\"qrbnp\")\n                } As localVars,\n\n                With(\n                    {\n                        totalOpponentMaterial: Sum(\n                                                ForAll(\n                                                    Split(localVars.ppd, \"\") As thePiece,\n\n                                                    UDF_getPieceCentipawnMaterialValue(thePiece.Value, localVars.filterScreen)\n                                                ),\n                                                Value\n                                            )\n                    } As localVars,\n\n                    If(localVars.totalOpponentMaterial<>0,\n                        // THEN\n                        0,\n\n                        // ELSE - we are playing against king only\n                        Sum(0,\n                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in \"P\", 25, 0)\n                        )\n                    )\n                )\n            )\n        )\n    )\n);\n\n// no exit logging or will mess up return code\n",
         "Property": "fME_END_GAME",
-        "RuleProviderType": "System"
-      },
-      {
-        "Category": "Behavior",
-        "InvariantScript": "If(gblPF_DEBUG_EVAL,\n    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n        \" comChessEngineFunctions.fME_prepNode(): entered pVersion: \" & pVersion &\n        \" pNodeID: \" & pNodeID\n    })\n);\n\n\n\nWith(\n    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,\n\n    With(\n        {\n            theCurrentMoveTreeNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),\n            theParentMoveTreeNode:  LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID),\n            theMoveHistoryTailNode:\n                If(CountRows(colPF_MOVE_HISTORY)>=1,LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID),Blank())\n        } As localVars,\n\n        // White's turn to move (preMOve active color). Current node is D1 of potential white moves. \n        // The Black strong squares are in parent node. The White strong squares are in grand-parent node.\n        If(gblPF_DEBUG_EVAL,\n            // THEN\n            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                \" current nodeID: \" & pNodeID &\n                \" san: \" & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.san &\n                \" pacn: \" & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.pacn &\n                \" postMove-active color: \" & UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentMoveTreeNode.postMoveFEN)) &\n                \" postMoveActiveKingDangerBoard: \" & localVars.theCurrentMoveTreeNode.postMoveActiveKingDangerBoard\n            });\n            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                \" parent nodeID: \" & If(IsBlank(localVars.theParentMoveTreeNode),\"Blank\", localVars.theParentMoveTreeNode.nodeID) &\n                \" san: \" & If(IsBlank(localVars.theParentMoveTreeNode),\"Blank\", localVars.theParentMoveTreeNode.inactiveColorMoveRecord.san) &\n                \" pacn: \" & If(IsBlank(localVars.theParentMoveTreeNode),\"Blank\", localVars.theParentMoveTreeNode.inactiveColorMoveRecord.pacn) &\n                \" postMove-active color: \" &\n                    If(IsBlank(localVars.theParentMoveTreeNode),\"Blank\", UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theParentMoveTreeNode.postMoveFEN))) &\n                \" postMoveActiveKingDangerBoard: \" & If(IsBlank(localVars.theParentMoveTreeNode),\"Blank\", localVars.theParentMoveTreeNode.postMoveActiveKingDangerBoard)\n            });\n            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n                \" grand-parent nodeID: \" & If(IsBlank(localVars.theMoveHistoryTailNode),\"Blank\",localVars.theMoveHistoryTailNode.nodeID) &\n                \" san: \" &\n                    If(IsBlank(localVars.theMoveHistoryTailNode),\"Blank\",localVars.theMoveHistoryTailNode.inactiveColorMoveRecord.san) &\n                \" pacn: \" &\n                    If(IsBlank(localVars.theMoveHistoryTailNode),\"Blank\",localVars.theMoveHistoryTailNode.inactiveColorMoveRecord.pacn) &\n                \" postMove-active color: \" &\n                    If(IsBlank(localVars.theMoveHistoryTailNode),\"Blank\",UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theMoveHistoryTailNode.postMoveFEN))) &\n                \" postMoveActiveKingDangerBoard: \" & \n                    If(IsBlank(localVars.theMoveHistoryTailNode),\"Blank\",localVars.theMoveHistoryTailNode.postMoveActiveKingDangerBoard)\n            })\n        )\n    )\n);\n\nIf(gblPF_DEBUG_EVAL,\n    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n        \" comChessEngineFunctions.fME_prepNode(): exiting\"\n    })\n);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-        "Property": "fME_prepNode",
         "RuleProviderType": "System"
       },
       {
@@ -563,50 +528,6 @@
     },
     {
       "Category": 2,
-      "DisplayName": "fME_prepNode",
-      "Hidden": true,
-      "Name": "fME_prepNode",
-      "PropertyDataTypeKey": "Void",
-      "PropertyScopeKey": {
-        "PropertyScopeRuleNamespaceKey": "4",
-        "PropertyScopeRulesKey": [
-          {
-            "DisplayName": "fME_prepNode_pVersion",
-            "Name": "fME_prepNode_pVersion",
-            "PropertyDataTypeKey": "Number",
-            "ScopeVariableInfo": {
-              "DependencyType": "New",
-              "Description": "API version number",
-              "IsRequired": true,
-              "ResolveExpands": false,
-              "ResolveSelects": false,
-              "ScopeVariableName": "pVersion"
-            },
-            "Tooltip": "API version number",
-            "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Number\",\"EnumString\":\"\",\"Type\":[]}}"
-          },
-          {
-            "DisplayName": "fME_prepNode_pNodeID",
-            "Name": "fME_prepNode_pNodeID",
-            "PropertyDataTypeKey": "Number",
-            "ScopeVariableInfo": {
-              "DependencyType": "New",
-              "Description": "node ID",
-              "IsRequired": true,
-              "ResolveExpands": false,
-              "ResolveSelects": false,
-              "ScopeVariableName": "pNodeID"
-            },
-            "Tooltip": "node ID",
-            "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Number\",\"EnumString\":\"\",\"Type\":[]}}"
-          }
-        ]
-      },
-      "Tooltip": "prepare node for analysis",
-      "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Void\",\"EnumString\":\"\",\"Type\":[]}}"
-    },
-    {
-      "Category": 2,
       "DisplayName": "fCE_500",
       "Hidden": true,
       "Name": "fCE_500",
@@ -698,7 +619,7 @@
   "IsPcfControl": false,
   "IsPremiumPcfControl": false,
   "IsWidgetTemplate": false,
-  "LastModifiedTimestamp": "638619986854874519",
+  "LastModifiedTimestamp": "638619987081420290",
   "Name": "8c2bb0b54c6149c580a48882153f6ad1",
   "OverridableProperties": {},
   "Version": "1.0"
