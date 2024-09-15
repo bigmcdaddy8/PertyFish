@@ -1720,8 +1720,8 @@ comChessEngineFunctions As CanvasComponent:
                                                                     // THEN
                                                                     If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
                                                                         UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName),
-                                                                        0 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)
-                                                                     ) * RandBetween(21,89),
+                                                                        8 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)
+                                                                     ) * RandBetween(8,34),
                 
                                                                     // ELSE
                                                                     0
