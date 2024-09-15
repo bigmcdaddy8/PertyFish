@@ -186,10 +186,10 @@ App As appinfo:
         };
         
         PF_EVAL_DATA_RECORD={
-            myHangingPieces:            BLANK_BOARD,
-            theirHangingPieces:         BLANK_BOARD,
-            myStrongSquaresBoard:       BLANK_BOARD,
-            theirStrongSquaresBoard:    BLANK_BOARD
+            myHangingSquaresSet:            BLANK_BOARD,
+            theirHangingSquaresSet:         BLANK_BOARD,
+            myStrongSquaresSet:             BLANK_BOARD,
+            theirStrongSquaresSet:          BLANK_BOARD
         };
         
         DYNAMIC_DATA_PF_NAME="DYNAMIC_DATA_PF";

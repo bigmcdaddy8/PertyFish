@@ -2129,7 +2129,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     ), Value
                                                 )
                                             ),
-                                        myHangingPieces:
+                                        myHangingSquaresSet:
                                             UDF_createSetOfSqNames(
                                                 Concat(
                                                     ForAll(
@@ -2158,7 +2158,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                             " comChessEngineFunctions.fCE_600_preEvaluate(): DEBUG" &
-                            " myHangingPieces: " & theData.evalData.myHangingPieces &
+                            " myHangingSquaresSet: " & theData.evalData.myHangingSquaresSet &
                             " theirHangingPieces: " & theData.evalData.theirHangingPieces
                         })
                     )
@@ -2184,7 +2184,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                 
                         PF_EVAL_DATA_RECORD={
-                            myHangingPieces:            BLANK_BOARD,
+                            myHangingSquaresSet:            BLANK_BOARD,
                             theirHangingPieces:         BLANK_BOARD,
                             myStrongSquaresBoard:       BLANK_BOARD,
                             theirStrongSquaresBoard:    BLANK_BOARD
