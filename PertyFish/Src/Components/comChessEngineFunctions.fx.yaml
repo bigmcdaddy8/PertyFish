@@ -2110,7 +2110,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                     UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                         evalData:   Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).evalData, {
-                                        theirHangingPieces:
+                                        theirHangingSquaresSet:
                                             UDF_createSetOfSqNames(
                                                 Concat(
                                                     ForAll(
@@ -2159,7 +2159,7 @@ comChessEngineFunctions As CanvasComponent:
                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                             " comChessEngineFunctions.fCE_600_preEvaluate(): DEBUG" &
                             " myHangingSquaresSet: " & theData.evalData.myHangingSquaresSet &
-                            " theirHangingPieces: " & theData.evalData.theirHangingPieces
+                            " theirHangingSquaresSet: " & theData.evalData.theirHangingSquaresSet
                         })
                     )
                 );
@@ -2185,7 +2185,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                         PF_EVAL_DATA_RECORD={
                             myHangingSquaresSet:            BLANK_BOARD,
-                            theirHangingPieces:         BLANK_BOARD,
+                            theirHangingSquaresSet:         BLANK_BOARD,
                             myStrongSquaresBoard:       BLANK_BOARD,
                             theirStrongSquaresBoard:    BLANK_BOARD
                         };
