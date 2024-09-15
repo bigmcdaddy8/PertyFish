@@ -2094,6 +2094,19 @@ comChessEngineFunctions As CanvasComponent:
                         dynamicData:    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME)
                     } As theData,
                 
+                If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                        " comChessEngineFunctions.fCE_600_preEvaluate(): DEBUG is c3 attacked by BLACK ?" &
+                        " c3 isAttacked?: " & UDF_isSqNumAttacked(theData.d0Node.postMoveBoard, UDF_sqNameToSqNum("c3"), BLACK) &
+                        " c3 isAttacked?: " &
+                            UDF_isSqNumAttacked(
+                                UDF_setBitAtSqNum(theData.d0Node.postMoveBoard, UDF_sqNameToSqNum("c3"), EMPTY_FILLER_ABBR),
+                                UDF_sqNameToSqNum("c3"), 
+                                BLACK
+                            )
+                    })
+                );
+                
                     UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                         evalData:   Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).evalData, {
                                         theirHangingPieces:
