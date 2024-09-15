@@ -77,7 +77,8 @@ App As appinfo:
             promoteTo:                  EMPTY_ABBR,
             moveDirection:              NO_DIRECTION,
             isISMDraw:                  false,
-            is75MoveDraw:               false
+            is75MoveDraw:               false,
+            is50MoveDraw:               false
         };
         
         EVAL_RECORD_PF={
