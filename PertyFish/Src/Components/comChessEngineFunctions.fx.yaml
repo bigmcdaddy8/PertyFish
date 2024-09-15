@@ -1922,8 +1922,15 @@ comChessEngineFunctions As CanvasComponent:
                                                                                             " checkmate FEN: " & theCurrentNode.preMoveFEN
                                                                                         });
                                                                                         10000, // strongly encourage the move
+                                                                                        
                                                                                         // ELSE - encourage the move if warranted - early in game reduce impact
-                                                                                        (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) * 21
+                                                                                        If(attackData.numAdjSquaresAttackedPostMove>attackData.numAdjSquaresAttackedPreMove,
+                                                                                            // THEN
+                                                                                            (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) * 21,
+                
+                                                                                            // ELSE
+                                                                                            0 
+                                                                                        )
                                                                                     )
                                                                                 )
                                                                             )
