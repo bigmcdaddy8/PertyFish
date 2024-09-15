@@ -1685,7 +1685,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     0,
                 
                                                                     // ELSE
-                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,35,-35)
+                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,55,-55)
                                                                 )
                                                             )
                                                         )
