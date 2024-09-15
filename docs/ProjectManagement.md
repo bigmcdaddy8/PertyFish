@@ -67,6 +67,14 @@ Improve performance by putting log statements in an appropriate DEBUG check and 
 - Use localVars w/ Patch() 
 - Remove unused/redundant fields to reduce update footprint
 
+##### Story 0004-04 Ongoing minor enhancements
+- use localVars to reduce number of FEN/board conversions
+- change UDF_isPathClear() to UDF_isPathClearOnBoard
+- Reduce number of UpdateIf() calls
+- Use localVars w/ Patch() 
+- Remove unused/redundant fields to reduce update footprint
+
+
 #### Feature 0005 - Technical Documentation
 Document the details of this project used PowerFx to create a chess program. Items such as the collection formats, and how they are used. The board layout, use of FEN, the legal move table, etc.
 
