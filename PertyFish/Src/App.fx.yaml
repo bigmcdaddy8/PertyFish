@@ -100,9 +100,7 @@ App As appinfo:
             heuristic16:    0,
             heuristic17:    0,
             heuristic18:    0,
-            heuristic19:    0,
-            whiteStrongSqBoard: BLANK_BOARD,
-            blackStrongSqBoard: BLANK_BOARD
+            heuristic19:    0
         };
         
         NODE_RECORD_PF={
@@ -186,12 +184,20 @@ App As appinfo:
             thinkingProgressWidth:      0
         };
         
+        PF_EVAL_DATA_RECORD={
+            myHangingPieces:            BLANK_BOARD,
+            theirHangingPieces:         BLANK_BOARD,
+            myStrongSquaresBoard:       BLANK_BOARD,
+            theirStrongSquaresBoard:    BLANK_BOARD
+        };
+        
         DYNAMIC_DATA_PF_NAME="DYNAMIC_DATA_PF";
         
         PF_DYNAMIC_DATA={
             dataName:           DYNAMIC_DATA_PF_NAME,
             chessEngineData:    PF_CHESS_ENGINE_DATA_RECORD,
-            uiData:             PF_UI_DATA_RECORD
+            uiData:             PF_UI_DATA_RECORD,
+            evalData:           PF_EVAL_DATA_RECORD
         };
         
         // the multiplier for a one-square move/jump in each direction
