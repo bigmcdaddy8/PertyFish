@@ -1623,7 +1623,8 @@ UsingComponents As screen:
             
                                         If(localVars.sourceSqAttacked && (!localVars.targetSqAttacked) && localVars.materialDelta=0,
                                             // THEN
-                                            If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,localVars.materialSource,-localVars.materialSource),
+                                            //If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,localVars.materialSource,-localVars.materialSource),
+                                            localVars.materialSource,
             
                                             // ELSE
                                             0
