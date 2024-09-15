@@ -904,19 +904,15 @@ App As appinfo:
             Switch(true,
                 attackingColor=BLACK &&
                 (
-                    UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP" && (
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1))="p" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1))="p"
-                    )
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1))="p" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1))="p"
                 ),
                     true,
                     
                 attackingColor=WHITE &&
                 (
-                    UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp" && (
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1))="P" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1))="P"
-                    )
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1))="P" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1))="P"
                 ),
                     true,
         
