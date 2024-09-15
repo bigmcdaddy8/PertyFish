@@ -2059,6 +2059,44 @@ comChessEngineFunctions As CanvasComponent:
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & " fCE_600(): exiting"})
                 )
                 
+    fCE_600_postEvaluate():
+        ThisProperty:
+            Default: |+
+                =If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                        " comChessEngineFunctions.fCE_600_postEvaluate(): entered"
+                    })
+                );
+                
+                
+                
+                
+                
+                If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                        " comChessEngineFunctions.fCE_600_postEvaluate(): exiting"
+                    })
+                );
+                
+    fCE_600_preEvaluate():
+        ThisProperty:
+            Default: |-
+                =If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                        " comChessEngineFunctions.fCE_600_preEvaluate(): entering"
+                    })
+                );
+                
+                
+                
+                
+                
+                
+                If(gblPF_DEBUG_EVAL,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                        " comChessEngineFunctions.fCE_600_preEvaluate(): exiting"
+                    })
+                );
     fME_END_GAME(pVersion As Number, pNodeID As Number):
         pVersion:
             Default: =100
@@ -2173,7 +2211,9 @@ comChessEngineFunctions As CanvasComponent:
                                 theEngine.selectedEngine=CE_PF_500,
                                     comChessEngineFunctions.fCE_500(pNodeID),
                                 theEngine.selectedEngine=CE_PF_600,
-                                    comChessEngineFunctions.fCE_600(pNodeID),
+                                    comChessEngineFunctions.fCE_600_preEvaluate();
+                                    comChessEngineFunctions.fCE_600(pNodeID);
+                                    comChessEngineFunctions.fCE_600_postEvaluate(),
                                     
                                 // default
                                 comChessEngineFunctions.fCE_100(pNodeID)
