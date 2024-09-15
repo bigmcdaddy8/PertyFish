@@ -1680,7 +1680,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     })
                                                                 );
                 
-                                                                If(counts.attackedTargetTargetsCount>1,
+                                                                If(counts.attackedTargetTargetsCount>=UDF_getSetSize(targetData.targetTargetsSet),
                                                                     // THEN
                                                                     0,
                 
