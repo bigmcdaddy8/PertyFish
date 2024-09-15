@@ -2122,9 +2122,55 @@ UsingComponents As screen:
             );
             
             
+            With(
+                {
+                    d0Node:         LookUp(colPF_MOVE_TREE, nodeDepth=0),
+                    dynamicData:    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME)
+                } As theData,
             
+                UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
+                    evalData:   Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).evalData, {
+                                    theirHangingPieces:
+                                        UDF_createSetOfSqNames(
+                                            Concat(
+                                                ForAll(
+                                                    Sequence(64,0) As theSqNum,
             
+                                                    If(UDF_getBitAtSqNum(theData.d0Node.postMoveBoard, theSqNum.Value) exactin UDF_getICPieceABBR(theData.d0Node.postMoveFEN, "kqrbnp"),
+                                                        // THEN - check if it is protected (i.e., attacked by its own Color)
+                                                        If(UDF_isSqNumAttacked(theData.d0Node.postMoveBoard, theSqNum.Value, UDF_FEN_TO_INACTIVE_COLOR(theData.d0Node.postMoveFEN)),
+                                                            // THEN - not a weak square
+                                                            "",
             
+                                                            // ELSE - a weak square
+                                                            UDF_sqNumToSqName(theSqNum.Value) & " "
+                                                        )
+                                                    )
+                                                ), Value
+                                            )
+                                        ),
+                                    myHangingPieces:
+                                        UDF_createSetOfSqNames(
+                                            Concat(
+                                                ForAll(
+                                                    Sequence(64,0) As theSqNum,
+            
+                                                    If(UDF_getBitAtSqNum(theData.d0Node.postMoveBoard, theSqNum.Value) exactin UDF_getACPieceABBR(theData.d0Node.postMoveFEN, "kqrbnp"),
+                                                        // THEN - check if it is protected (i.e., attacked by its own Color)
+                                                        If(UDF_isSqNumAttacked(theData.d0Node.postMoveBoard, theSqNum.Value, UDF_FEN_TO_ACTIVE_COLOR(theData.d0Node.postMoveFEN)),
+                                                            // THEN - not a weak square
+                                                            "",
+            
+                                                            // ELSE - a weak square
+                                                            UDF_sqNumToSqName(theSqNum.Value) & " "
+                                                        )
+                                                    )
+                                                ), Value
+                                            )
+                                        )
+                                })
+                })
+            );
             
             If(gblPF_DEBUG_EVAL,
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -2133,9 +2179,34 @@ UsingComponents As screen:
             );
             
             
+            /*
+                ForAll(
+                    Sequence(64, 0) As theSqNum,
+            
+                    With(
+                        {
+                            occupier:       UDF_getBitAtSqNum(theData.d0Node.postMoveBoard, theSqNum.Value),
+                            isAttacked:     UDF_isSqNumAttacked(theData.d0Node.postMoveBoard, theSqNum.Value, UDF_FEN_TO_ACTIVE_COLOR(theData.d0Node.postMoveFEN)),
+                            isProtected:    UDF_isSqNumAttacked(theData.d0Node.postMoveBoard, theSqNum.Value, UDF_FEN_TO_INACTIVE_COLOR(theData.d0Node.postMoveFEN)),
+                    Switch(true,
             
             
-            
+                    PF_EVAL_DATA_RECORD={
+                        myHangingPieces:            BLANK_BOARD,
+                        theirHangingPieces:         BLANK_BOARD,
+                        myStrongSquaresBoard:       BLANK_BOARD,
+                        theirStrongSquaresBoard:    BLANK_BOARD
+                    };
+                    
+                    DYNAMIC_DATA_PF_NAME="DYNAMIC_DATA_PF";
+                    
+                    PF_DYNAMIC_DATA={
+                        dataName:           DYNAMIC_DATA_PF_NAME,
+                        chessEngineData:    PF_CHESS_ENGINE_DATA_RECORD,
+                        uiData:             PF_UI_DATA_RECORD,
+                        evalData:           PF_EVAL_DATA_RECORD
+                    };
+             */
             /*
             If(gblPF_DEBUG_EVAL,
                 // THEN
