@@ -1613,6 +1613,12 @@ UsingComponents As screen:
                                                     theCurrentNode.inactiveColorMoveRecord.sourceSquareNum,
                                                     UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
                                                 ),
+                                            sourceSqProtected:
+                                                UDF_isSqNumAttacked(
+                                                    theCurrentNode.preMoveBoard,
+                                                    theCurrentNode.inactiveColorMoveRecord.sourceSquareNum,
+                                                    UDF_FEN_TO_INACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                ),
                                             targetSqAttacked:
                                                 UDF_isSqNumAttacked(
                                                     theCurrentNode.postMoveBoard,
@@ -1621,9 +1627,11 @@ UsingComponents As screen:
                                                 )
                                         } As localVars,
             
+                                        // If(localVars.sourceSqAttacked && (!localVars.sourceSqProtected)
                                         If(localVars.sourceSqAttacked && (!localVars.targetSqAttacked) && localVars.materialDelta=0,
                                             // THEN
-                                            If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,RandBetween(25,35),RandBetween(-35,-25)),
+                                            //If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,localVars.materialSource,-localVars.materialSource),
+                                            localVars.materialSource,
             
                                             // ELSE
                                             0
