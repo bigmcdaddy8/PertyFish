@@ -1759,7 +1759,7 @@ UsingComponents As screen:
                                                                 If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
                                                                     UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName),
                                                                     8 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)
-                                                                 ) * RandBetween(8,34),
+                                                                 ) * RandBetween(8,21),
             
                                                                 // ELSE
                                                                 0
