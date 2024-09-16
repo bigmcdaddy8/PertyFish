@@ -751,13 +751,15 @@ App As appinfo:
                 0,
                 CountRows(Distinct(Sort(Split(Trim(setA), " "), Value), Value))
             );
-        
         UDF_createSetOfSqNames(sqNameList:Text):Text=
             Trim(Concat(Distinct(Sort(Split(Trim(sqNameList), " "), Value), Value), Value, " "));
-        
+        UDF_getElementFromSet(setA:Text, index:Number):Text=
+            If(index>=1 && index<=UDF_getSetSize(setA),
+                Index(Split(setA, " "), index).Value,
+                ""
+            );
         UDF_getSetOfAdjacentSqNames(refSqName:Text):Text=
             UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(UDF_sqNameToSqNum(refSqName)));
-        
         UDF_getSetDifference(setA:Text, setB:Text):Text=
             Trim(
                 Concat(
@@ -772,7 +774,6 @@ App As appinfo:
                     ), Value, " "
                 )
             );
-        
         UDF_getSetIntersection(setA:Text, setB:Text):Text=
             Trim(
                 Concat(
@@ -787,7 +788,6 @@ App As appinfo:
                     ), Value, " "
                 )
             );
-        
         UDF_getSetUnion(setA:Text, setB:Text):Text=
             Trim(
                 Concat(
@@ -1187,35 +1187,31 @@ App As appinfo:
                 UDF_countSqNumQUEENAttacks(board, refSqNum, attackingColor)
             );
         // UDF getAttackerSqNames code
-        // is a square occupied by KQRBNP attacked by an opposite colored PAWN
+        // is a square by a PAWN
         UDF_getPAWNAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             Trim(
                 If(
                     attackingColor=BLACK &&
-                    UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP" &&
                     UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1))="p",
                     UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-1,1)) & " ", ""
                 ) &
                 If(
                     attackingColor=BLACK &&
-                    UDF_getBitAtSqNum(board, refSqNum) exactin "KQRBNP" &&
                     UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,1))="p",
                     UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,1,1)) & " ", ""
                 ) &
                 If(
                     attackingColor=WHITE &&
-                    UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp" &&
                     UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1))="P",
                     UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1)) & " ", ""
                 ) &
                 If(
                     attackingColor=WHITE &&
-                    UDF_getBitAtSqNum(board, refSqNum) exactin "kqrbnp" &&
                     UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1))="P",
                     UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,1,-1)) & " ", ""
                 )
             );
-        // is a square attacked by an opposite colored KNIGHT
+        // is a square attacked by a KNIGHT
         UDF_getKNIGHTAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             With(
                 {
@@ -1248,7 +1244,7 @@ App As appinfo:
                     )
                 )
             );
-        // is a square occupied by KQRBNP attacked by an opposite colored ROOK
+        // is a square attacked by a ROOK
         UDF_getROOKAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             // IsMatch() requires a constant value for the pattern
             If(attackingColor=WHITE,
@@ -1289,7 +1285,7 @@ App As appinfo:
                     )
                 )
             );
-        // is a square occupied by KQRBNP attacked by an opposite colored BISHOP  
+        // is a square attacked by a BISHOP  
         UDF_getBISHOPAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             // IsMatch() requires a constant value for the pattern
             If(attackingColor=WHITE,
@@ -1354,7 +1350,7 @@ App As appinfo:
                     )
                 )
             );
-        // is a square occupied by KQRBNP attacked by an opposite colored QUEEN
+        // is a square attacked by a QUEEN
         UDF_getQUEENAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             // IsMatch() requires a constant value for the pattern
             If(attackingColor=WHITE,
@@ -1451,7 +1447,7 @@ App As appinfo:
                     )
                 )
             );
-        // is a square occupied by KQRBNP attacked by an opposite colored KING
+        // is a square attacked by a KING
         UDF_getKINGAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             If(UDF_isSqNumProtected(board, refSqNum, UDF_getOppositeColor(attackingColor)),
                 // THEN - king cannot attack a protected square
@@ -1500,6 +1496,43 @@ App As appinfo:
             );
         UDF_getAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
             UDF_createSetOfSqNames(UDF_getAttackerSqNames(board, refSqNum, attackingColor));
+        // get the material value of the weakest piece attacking a square
+        UDF_getSqNumAttackersMaterialCentipawn(board:Text, refSqNum:Number, attackingColor:Number):Number=
+            With(
+                {
+                    attackerSet: UDF_getAttackerSqNamesSet(board, refSqNum, attackingColor)
+                } As v,
+                With(
+                    {
+                        minMaterialValue:
+                            Min(
+                                ForAll(
+                                    Sequence(UDF_getSetSize(v.attackerSet), 1) As i,
+                                    Switch(
+                                        UDF_getBitAtSqName(board, UDF_sqNameToSqNum(UDF_getElementFromSet(v.attackerSet, i))),
+                                        "P", 100,
+                                        "p", 100,
+                                        "N", 300,
+                                        "n", 300,
+                                        "B", 300,
+                                        "b", 300,
+                                        "R", 500,
+                                        "r", 500,
+                                        "Q", 900,
+                                        "q", 900,
+                                        "K", 10000,
+                                        "k", 10000,
+                                        0
+                                    )
+                                ), Value
+                            )
+                    } As v2,
+                    If(attackingColor=WHITE,
+                        v2.mainMaterialValue,
+                        -v2.mainMaterialValue
+                    )
+                )
+            );
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
