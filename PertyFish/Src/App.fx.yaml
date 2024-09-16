@@ -1509,7 +1509,7 @@ App As appinfo:
                                 ForAll(
                                     Sequence(UDF_getSetSize(v.attackerSet), 1) As i,
                                     Switch(
-                                        UDF_getBitAtSqName(board, UDF_sqNameToSqNum(UDF_getElementFromSet(v.attackerSet, i))),
+                                        UDF_getBitAtSqNum(board, UDF_sqNameToSqNum(UDF_getElementFromSet(v.attackerSet, i))),
                                         "P", 100,
                                         "p", 100,
                                         "N", 300,
