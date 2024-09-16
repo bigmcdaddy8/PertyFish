@@ -1528,8 +1528,8 @@ App As appinfo:
                             )
                     } As v2,
                     If(attackingColor=WHITE,
-                        v2.mainMaterialValue,
-                        -v2.mainMaterialValue
+                        v2.minMaterialValue,
+                        -v2.minMaterialValue
                     )
                 )
             );
