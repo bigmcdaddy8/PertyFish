@@ -1574,7 +1574,7 @@ Chess_Board As screen:
             btnProcessGame As button:
                 OnSelect: |+
                     =If(Not(gblPF_PAUSE),
-                        // THEN  
+                        // THEN 
                         With(
                             LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                     
