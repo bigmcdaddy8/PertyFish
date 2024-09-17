@@ -7,9 +7,11 @@ Diagnostics As screen:
 
         lblUDFDiagnosticsResult As label:
             Font: =Font.'Courier New'
-            Size: =12
+            Height: =40 * 3
+            Size: =10
             Text: =lUDF_DIAGNOSTICS_RESULT
-            Width: =500
+            VerticalAlign: =VerticalAlign.Top
+            Width: =1000
             X: =btnRunUDFDiagnostics.X + btnRunUDFDiagnostics.Width + 10
             Y: =btnRunUDFDiagnostics.Y
             ZIndex: =1
