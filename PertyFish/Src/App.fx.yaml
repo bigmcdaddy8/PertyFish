@@ -1187,7 +1187,7 @@ App As appinfo:
                 UDF_countSqNumQUEENAttacks(board, refSqNum, attackingColor)
             );
         // UDF getAttackerSqNames code
-        // is a square by a PAWN
+        // get squares of attacking PAWNs
         UDF_getPAWNAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             Trim(
                 If(
@@ -1211,7 +1211,7 @@ App As appinfo:
                     UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,1,-1)) & " ", ""
                 )
             );
-        // is a square attacked by a KNIGHT
+        // get squares of attacking KNIGHTs
         UDF_getKNIGHTAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             With(
                 {
@@ -1244,7 +1244,7 @@ App As appinfo:
                     )
                 )
             );
-        // is a square attacked by a ROOK
+        // get squares of attacking ROOKs
         UDF_getROOKAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             // IsMatch() requires a constant value for the pattern
             If(attackingColor=WHITE,
@@ -1285,7 +1285,7 @@ App As appinfo:
                     )
                 )
             );
-        // is a square attacked by a BISHOP  
+        // get squares of attacking BISHOPs
         UDF_getBISHOPAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             // IsMatch() requires a constant value for the pattern
             If(attackingColor=WHITE,
@@ -1299,22 +1299,22 @@ App As appinfo:
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}B", MatchOptions.BeginsWith),
                         UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
-                            Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),4,7)),
-                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),4,7))
+                            Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,-1),4,7)),
+                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,-1),4,7))
                         )) & " ",
                         ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}B", MatchOptions.BeginsWith),
                         UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
-                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),6,7)),
-                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),6,7))
+                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1),6,7)),
+                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1),6,7))
                         )) & " ",
                         ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}B", MatchOptions.BeginsWith),
                         UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
-                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),8,7)),
-                            Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),8,7))
+                            -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,-1,1),8,7)),
+                            Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,-1,1),8,7))
                         )) & " ",
                         ""
                     )
@@ -1350,7 +1350,7 @@ App As appinfo:
                     )
                 )
             );
-        // is a square attacked by a QUEEN
+        // get squares of attacking QUEENs
         UDF_getQUEENAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             // IsMatch() requires a constant value for the pattern
             If(attackingColor=WHITE,
@@ -1426,28 +1426,28 @@ App As appinfo:
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-1), 4, 7), "#{0,6}q", MatchOptions.BeginsWith),
                         UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
-                            Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),4,7)),
-                            -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),4,7))
+                            Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,-1),4,7)),
+                            -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,-1),4,7))
                         )) & " ",
                         ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1), 6, 7), "#{0,6}q", MatchOptions.BeginsWith),
                         UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
-                            -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),6,7)),
-                            -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),6,7))
+                            -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1),6,7)),
+                            -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,-1,-1),6,7))
                         )) & " ",
                         ""
                     ) &
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,1), 8, 7), "#{0,6}q", MatchOptions.BeginsWith),
                         UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
-                            -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),8,7)),
-                            Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,1,1),8,7))
+                            -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,-1,1),8,7)),
+                            Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,-1,1),8,7))
                         )) & " ",
                         ""
                     )
                 )
             );
-        // is a square attacked by a KING
+        // get squares of attacking KINGs
         UDF_getKINGAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
             If(UDF_isSqNumProtected(board, refSqNum, UDF_getOppositeColor(attackingColor)),
                 // THEN - king cannot attack a protected square
