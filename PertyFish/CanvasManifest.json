@@ -136,6 +136,7 @@
   "ScreenOrder": [
     "Chess_Board",
     "Logging_Screen",
-    "UsingComponents"
+    "UsingComponents",
+    "Diagnostics"
   ]
 }

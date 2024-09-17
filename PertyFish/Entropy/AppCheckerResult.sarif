@@ -884,36 +884,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "App.gblPF_TMP_Number01"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "App.gblPF_TMP_Number01",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "gblPF_TMP_Number01",
-                "module": "App",
-                "type": "App"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "App.gblPF_TMP_Number02"
                 }
               ],
@@ -1437,6 +1407,36 @@
                 "member": "gblPF_TMR_RunNextTest",
                 "module": "App",
                 "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedVariables",
+          "ruleIndex": 2
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Diagnostics.lTEST_TEST_CATEGORY"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "Diagnostics.lTEST_TEST_CATEGORY",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "lTEST_TEST_CATEGORY",
+                "module": "Diagnostics",
+                "type": "Diagnostics"
               }
             }
           ],

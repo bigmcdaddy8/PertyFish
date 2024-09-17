@@ -1,7 +1,7 @@
 {
   "ComponentIndexes": {
-    "comChessEngineFunctions": 3,
-    "comUtilityFunctions": 4
+    "comChessEngineFunctions": 4,
+    "comUtilityFunctions": 5
   },
   "ControlUniqueGuids": {},
   "ControlUniqueIds": {
@@ -16,6 +16,7 @@
     "btnNewGame": 73,
     "btnPause": 41,
     "btnProcessGame": 74,
+    "btnRunUDFDiagnostics": 98,
     "btnStartGameFromBeginning": 61,
     "btnStartGameFromFEN": 62,
     "Chess_Board": 6,
@@ -32,9 +33,11 @@
     "conControlsSharedArea": 39,
     "conEntireLoggingScreen": 87,
     "conEntireScreen": 7,
+    "conEntireScreenDiagnostics": 97,
     "conHeader": 8,
     "conScoreSheet": 32,
     "conScoreSheetHeader": 33,
+    "Diagnostics": 96,
     "drpBlackPiecesCE": 51,
     "drpBlackPiecesPromoteTo": 52,
     "drpWhitePiecesCE": 49,
@@ -85,6 +88,7 @@
     "lblSelectedSquareNum": 69,
     "lblSquare": 25,
     "lblStartingFEN": 64,
+    "lblUDFDiagnosticsResults": 99,
     "lblWhiteCapturedPieces": 76,
     "lblWhitePiecesHeader": 53,
     "lblWLT": 56,
@@ -102,7 +106,7 @@
   },
   "FunctionParamsInvariantScripts": {},
   "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "09/16/2024 01:41:50",
+  "HeaderLastSavedDateTimeUTC": "09/17/2024 15:48:29",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,
@@ -147,6 +151,7 @@
     "btnNewGame": {},
     "btnPause": {},
     "btnProcessGame": {},
+    "btnRunUDFDiagnostics": {},
     "btnStartGameFromBeginning": {},
     "btnStartGameFromFEN": {},
     "Chess_Board": {},
@@ -163,9 +168,11 @@
     "conControlsSharedArea": {},
     "conEntireLoggingScreen": {},
     "conEntireScreen": {},
+    "conEntireScreenDiagnostics": {},
     "conHeader": {},
     "conScoreSheet": {},
     "conScoreSheetHeader": {},
+    "Diagnostics": {},
     "drpBlackPiecesCE": {},
     "drpBlackPiecesPromoteTo": {},
     "drpWhitePiecesCE": {},
@@ -216,6 +223,7 @@
     "lblSelectedSquareNum": {},
     "lblSquare": {},
     "lblStartingFEN": {},
+    "lblUDFDiagnosticsResults": {},
     "lblWhiteCapturedPieces": {},
     "lblWhitePiecesHeader": {},
     "lblWLT": {},
@@ -245,6 +253,7 @@
     "btnNewGame": 53,
     "btnPause": 50,
     "btnProcessGame": 54,
+    "btnRunUDFDiagnostics": 0,
     "btnStartGameFromBeginning": 73,
     "btnStartGameFromFEN": 74,
     "Chess_Board": 5,
@@ -261,9 +270,11 @@
     "conControlsSharedArea": 49,
     "conEntireLoggingScreen": 86,
     "conEntireScreen": 6,
+    "conEntireScreenDiagnostics": 0,
     "conHeader": 7,
     "conScoreSheet": 9,
     "conScoreSheetHeader": 44,
+    "Diagnostics": 0,
     "drpBlackPiecesCE": 63,
     "drpBlackPiecesPromoteTo": 64,
     "drpWhitePiecesCE": 61,
@@ -314,6 +325,7 @@
     "lblSelectedSquareNum": 81,
     "lblSquare": 39,
     "lblStartingFEN": 76,
+    "lblUDFDiagnosticsResults": 0,
     "lblWhiteCapturedPieces": 12,
     "lblWhitePiecesHeader": 65,
     "lblWLT": 68,
@@ -335,7 +347,7 @@
   "RuleScreenIdWithoutScreen": {},
   "TemplateVersions": {},
   "VolatileProperties": {
-    "AnalysisLoadTime": 1.5824425,
+    "AnalysisLoadTime": 2.5703586,
     "ControlCount": {
       "8c2bb0b54c6149c580a48882153f6ad1": 2,
       "b953a316546441b9933cc2e2000b7cbb": 2,
@@ -351,7 +363,7 @@
       "text": 3,
       "timer": 2
     },
-    "DeserializationLoadTime": 1.0273514
+    "DeserializationLoadTime": 2.0699593
   },
   "WasLocalDatabaseReferencesEmpty": true
 }
