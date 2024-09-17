@@ -138,3 +138,19 @@ Diagnostics As screen:
             Y: =40
             ZIndex: =2
 
+        Button2 As button:
+            OnSelect: =Navigate(Chess_Board)
+            Size: =12
+            Text: ="Goto Logs"
+            X: =1200
+            Y: =664
+            ZIndex: =3
+
+        Button2_1 As button:
+            OnSelect: =Navigate(Diagnostics)
+            Size: =12
+            Text: ="Goto Diagnostics"
+            X: =1200
+            Y: =715
+            ZIndex: =4
+

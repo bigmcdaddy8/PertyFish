@@ -4582,9 +4582,9 @@ Chess_Board As screen:
             OnSelect: =Navigate(Logging_Screen)
             Size: =11
             Text: ="Goto Logs"
-            Width: =100
-            X: =1250
-            Y: =730
+            Width: =150
+            X: =1208
+            Y: =688
             ZIndex: =11
 
         lblBlackCapturedPieces As label:
@@ -4671,4 +4671,14 @@ Chess_Board As screen:
                 X: =lblHeaderStatus.X + lblHeaderStatus.Width
                 Y: =lblHeaderStatus.Y
                 ZIndex: =6
+
+        btnGotoDiagnostics As button:
+            Height: =30
+            OnSelect: =Navigate(Diagnostics)
+            Size: =11
+            Text: ="Goto Diagnostics"
+            Width: =150
+            X: =1208
+            Y: =725
+            ZIndex: =16
 
