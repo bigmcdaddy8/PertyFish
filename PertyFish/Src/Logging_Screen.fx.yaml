@@ -42,8 +42,17 @@ Logging_Screen As screen:
 
         btnBackToChess_Board As button:
             OnSelect: =Navigate(Chess_Board)
-            Text: ="continue"
+            Size: =12
+            Text: ="Goto Chess Board"
             X: =1192
             Y: =142
             ZIndex: =3
+
+        btnBackToChess_Board_1 As button:
+            OnSelect: =Navigate(Diagnostics)
+            Size: =12
+            Text: ="Goto Diagnostics"
+            X: =1192
+            Y: =193
+            ZIndex: =4
 

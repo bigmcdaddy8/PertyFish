@@ -7,6 +7,7 @@
   "ControlUniqueIds": {
     "App": 1,
     "btnBackToChess_Board": 92,
+    "btnBackToChess_Board_1": 103,
     "btnCheckGameResults": 59,
     "btnCheckGameTestResults": 46,
     "btnCheckTestResults": 43,
@@ -109,7 +110,7 @@
   },
   "FunctionParamsInvariantScripts": {},
   "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "09/17/2024 16:18:09",
+  "HeaderLastSavedDateTimeUTC": "09/17/2024 16:19:45",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,
@@ -145,6 +146,7 @@
   "OverridablePropertiesEntry": {
     "App": {},
     "btnBackToChess_Board": {},
+    "btnBackToChess_Board_1": {},
     "btnCheckGameResults": {},
     "btnCheckGameTestResults": {},
     "btnCheckTestResults": {},
@@ -250,6 +252,7 @@
   "PublishOrderIndices": {
     "App": 0,
     "btnBackToChess_Board": 89,
+    "btnBackToChess_Board_1": 89,
     "btnCheckGameResults": 71,
     "btnCheckGameTestResults": 59,
     "btnCheckTestResults": 56,
@@ -360,7 +363,7 @@
     "ControlCount": {
       "8c2bb0b54c6149c580a48882153f6ad1": 2,
       "b953a316546441b9933cc2e2000b7cbb": 2,
-      "button": 14,
+      "button": 15,
       "checkbox": 1,
       "dropdown": 4,
       "gallery": 7,
