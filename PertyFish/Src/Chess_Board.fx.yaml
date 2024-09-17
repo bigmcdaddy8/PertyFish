@@ -721,50 +721,8 @@ Chess_Board As screen:
             Y: =conScoreSheet.Y
             ZIndex: =3
 
-            conControlsDiagnostics As groupContainer.manualLayoutContainer:
-                Height: =Parent.Height-conControlsSharedArea.Height
-                Visible: =Not(conControlsGame.Visible)
-                Width: =Parent.Width
-                Y: =conControlsSharedArea.Height
-                ZIndex: =1
-
-                btnCheckGameTestResults As button:
-                    Height: =25
-                    Text: ="Button"
-                    Visible: =false
-                    X: =40
-                    Y: =456
-                    ZIndex: =1
-
-                btnCheckTestResults As button:
-                    Text: ="Button"
-                    Visible: =false
-                    ZIndex: =2
-
-                lblBoardGamePhase As label:
-                    Font: =Font.'Courier New'
-                    Height: =25
-                    Size: =11
-                    Text: =gblPF_UI_GamePhase
-                    Width: =120
-                    X: =60
-                    Y: =60
-                    ZIndex: =3
-
-                lblBoardGamePhaseHeader As label:
-                    Font: =Font.'Courier New'
-                    Height: =25
-                    Size: =10
-                    Text: |-
-                        ="Game Phase:"
-                    Width: =100
-                    X: =80
-                    Y: =80
-                    ZIndex: =4
-
             conControlsGame As groupContainer.manualLayoutContainer:
-                Height: =Parent.Height-conControlsSharedArea.Height
-                Visible: =If(radMode.SelectedText.Value="Game",true,false)
+                Height: =Parent.Height-btnPause.Height + 10
                 Width: =Parent.Width
                 Y: =60
                 ZIndex: =2
@@ -1044,7 +1002,7 @@ Chess_Board As screen:
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                     " btnCheckGameResults.OnSelect(): Game Test detected - redirecting to btnCheckGameTestResults testNumber: " & theData.chessEngineData.testNumber 
                                 });
-                                Select(btnCheckGameTestResults),
+                                //Select(btnCheckGameTestResults),
                         
                                 // ELSE - this is a Game
                                 /* ---------------------------------------------------------------------------------
@@ -1543,33 +1501,6 @@ Chess_Board As screen:
                     X: =350
                     Y: =305
                     ZIndex: =25
-
-            conControlsSharedArea As groupContainer.manualLayoutContainer:
-                Height: =50
-                Width: =Parent.Width
-                ZIndex: =3
-
-                radMode As radio:
-                    Default: ="Game"
-                    Height: =37
-                    Items: =["Game", "Diagnostics"]
-                    Layout: =Layout.Horizontal
-                    OnSelect: |
-                        =If(radMode.SelectedText.Value="Diagnostics",
-                            // THEN
-                            Set(gblPF_UI_ModeText, "Diagnostic Mode");
-                            Set(gblPF_UI_ModeFill, COLOR_YELLOWish),
-                        
-                            // ELSE
-                            Set(gblPF_UI_ModeText, "Game Mode");
-                            Set(gblPF_UI_ModeFill, COLOR_GREENish)
-                        );
-                    RadioSize: =15
-                    Size: =10
-                    Width: =216
-                    X: =220
-                    Y: =8
-                    ZIndex: =1
 
             btnProcessGame As button:
                 OnSelect: |+
@@ -4158,7 +4089,7 @@ Chess_Board As screen:
                                         " btnProcessGame.OnSelect(): selecting 'btnCheckTestResults'"
                                     })
                                 );
-                                Select(btnCheckTestResults)
+                                //Select(btnCheckTestResults)
                             )
                         ),
                     

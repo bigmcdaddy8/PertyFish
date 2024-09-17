@@ -374,36 +374,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsSharedArea.radMode.AccessibleLabel"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsSharedArea.radMode.AccessibleLabel",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "AccessibleLabel",
-                "module": "Chess_Board",
-                "type": "Chess_Board.conEntireScreen.conControls.conControlsSharedArea.radMode"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "Chess_Board.conEntireScreen.conControls.conControlsGame.drpWhitePiecesCE.AccessibleLabel"
                 }
               ],
@@ -1405,6 +1375,36 @@
               },
               "properties": {
                 "member": "gblPF_BestMoveLine_M2",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedVariables",
+          "ruleIndex": 2
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.gblPF_UI_GamePhase"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.gblPF_UI_GamePhase",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "gblPF_UI_GamePhase",
                 "module": "App",
                 "type": "App"
               }
