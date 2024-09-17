@@ -141,15 +141,15 @@ Diagnostics As screen:
         Button2 As button:
             OnSelect: =Navigate(Chess_Board)
             Size: =12
-            Text: ="Goto Logs"
+            Text: ="Goto Chess Board"
             X: =1200
             Y: =664
             ZIndex: =3
 
         Button2_1 As button:
-            OnSelect: =Navigate(Diagnostics)
+            OnSelect: =Navigate(Logging_Screen)
             Size: =12
-            Text: ="Goto Diagnostics"
+            Text: ="Goto Logs"
             X: =1200
             Y: =715
             ZIndex: =4
