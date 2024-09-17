@@ -31,6 +31,41 @@ Diagnostics As screen:
                 UpdateContext({lTEST_FAILURE_DETECTED: false});
                 UpdateContext({lUDF_DIAGNOSTICS_RESULT: "RUNNING..."});
                 
+                If(!lTEST_FAILURE_DETECTED,
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getAttackerSqNamesSet"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
+                    UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "b7 d7"});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
+                        UDF_getAttackerSqNamesSet(lTEST_BOARD, lTEST_REFERENCE_SQNUM, UDF_FEN_TO_ACTIVE_COLOR(lTEST_FEN))
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): lTEST_TEST_CATEGORY test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_TEXT &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_TEXT
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): lTEST_TEST_CATEGORY test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
                 
                 If(!lTEST_FAILURE_DETECTED,
                     UpdateContext({lTEST_TEST_CATEGORY: "UDF_getSqNumAttackersMaterialCentipawn"});
@@ -42,19 +77,19 @@ Diagnostics As screen:
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
                     UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
                 
-                    UpdateContext({lTEST_EXPECTED_RESULT: -100});
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: -100});
                 
-                    UpdateContext({lTEST_ACTUAL_RESULT:
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
                         UDF_getSqNumAttackersMaterialCentipawn(lTEST_BOARD, lTEST_REFERENCE_SQNUM, UDF_FEN_TO_ACTIVE_COLOR(lTEST_FEN))
                     });
                 
-                    If(lTEST_EXPECTED_RESULT<>lTEST_ACTUAL_RESULT,
+                    If(lTEST_EXPECTED_RESULT_NUMBER<>lTEST_ACTUAL_RESULT_NUMBER,
                         // THEN 
                         If(gblPF_DEBUG_UDF_DIAGNOSTICS,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                 " btnRunUDFDiagnostics.OnSelect(): lTEST_TEST_CATEGORY test #: " & lTEST_TEST_NUMBER & " FAILED" &
-                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT &
-                                " ACTUAL: " & lTEST_ACTUAL_RESULT
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_NUMBER
                             })
                         );
                         UpdateContext({lTEST_FAILURE_DETECTED: true}),
