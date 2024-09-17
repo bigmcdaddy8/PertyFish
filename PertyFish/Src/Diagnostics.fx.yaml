@@ -5,7 +5,7 @@ Diagnostics As screen:
         Width: =Parent.Width
         ZIndex: =1
 
-        lblUDFDiagnosticsResults As label:
+        lblUDFDiagnosticsResult As label:
             Font: =Font.'Courier New'
             Size: =12
             Text: ="Text"
@@ -21,16 +21,17 @@ Diagnostics As screen:
                 
                 If(gblPF_DEBUG_UDF_DIAGNOSTICS,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                        " btnRunUDFDiagnostics.OnSelect(): entered" & gblPF_TMP_Number01 & " PASSED"
+                        " btnRunUDFDiagnostics.OnSelect(): entered"
                         
                     })
                 );
                 
                 UpdateContext({lTEST_FAILURE_DETECTED: false});
-                UpdateContext({lTEST_TEST_CATEGORY: "UDF_getSqNumAttackersMaterialCentipawn"});
-                UpdateContext({lTEST_TEST_NUMBER: 0});
+                
                 
                 If(!lTEST_FAILURE_DETECTED,
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getSqNumAttackersMaterialCentipawn"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
                     UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
                 
                     If(gblPF_DEBUG_UDF_DIAGNOSTICS,
@@ -38,6 +39,26 @@ Diagnostics As screen:
                             " btnRunUDFDiagnostics.OnSelect(): lTEST_TEST_CATEGORY test #: " & lTEST_TEST_NUMBER
                         })
                     )
+                );
+                
+                If(lTEST_FAILURE_DETECTED,
+                    // THEN
+                    If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                            " btnRunUDFDiagnostics.OnSelect(): FAILURE " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER
+                        })
+                    );
+                    UpdateContext({lUDF_DIAGNOSTICS_RESULT: "FAILURE " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER}),
+                
+                    // ELSE
+                    UpdateContext({lUDF_DIAGNOSTICS_RESULT: "PASSED"})
+                );
+                
+                If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                        " btnRunUDFDiagnostics.OnSelect(): exiting"
+                        
+                    })
                 );
                 
                 

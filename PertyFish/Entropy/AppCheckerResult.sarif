@@ -884,6 +884,36 @@
             {
               "logicalLocations": [
                 {
+                  "fullyQualifiedName": "App.gblPF_TMP_Number01"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.gblPF_TMP_Number01",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "gblPF_TMP_Number01",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedVariables",
+          "ruleIndex": 2
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
                   "fullyQualifiedName": "App.gblPF_TMP_Number02"
                 }
               ],
@@ -1424,17 +1454,17 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Diagnostics.lTEST_TEST_CATEGORY"
+                  "fullyQualifiedName": "Diagnostics.lUDF_DIAGNOSTICS_RESULT"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "Diagnostics.lTEST_TEST_CATEGORY",
+                  "fullyQualifiedName": "Diagnostics.lUDF_DIAGNOSTICS_RESULT",
                   "relativeAddress": 0
                 }
               },
               "properties": {
-                "member": "lTEST_TEST_CATEGORY",
+                "member": "lUDF_DIAGNOSTICS_RESULT",
                 "module": "Diagnostics",
                 "type": "Diagnostics"
               }
