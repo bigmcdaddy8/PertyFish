@@ -1448,6 +1448,36 @@
           },
           "ruleId": "app-UnusedVariables",
           "ruleIndex": 2
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Diagnostics.lTEST_REFERENCE_SQNAME"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "Diagnostics.lTEST_REFERENCE_SQNAME",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "lTEST_REFERENCE_SQNAME",
+                "module": "Diagnostics",
+                "type": "Diagnostics"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedVariables",
+          "ruleIndex": 2
         }
       ],
       "tool": {
