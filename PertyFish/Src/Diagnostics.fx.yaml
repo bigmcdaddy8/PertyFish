@@ -8,7 +8,7 @@ Diagnostics As screen:
         lblUDFDiagnosticsResult As label:
             Font: =Font.'Courier New'
             Size: =12
-            Text: ="Text"
+            Text: =lUDF_DIAGNOSTICS_RESULT
             Width: =500
             X: =btnRunUDFDiagnostics.X + btnRunUDFDiagnostics.Width + 10
             Y: =btnRunUDFDiagnostics.Y
@@ -27,6 +27,7 @@ Diagnostics As screen:
                 );
                 
                 UpdateContext({lTEST_FAILURE_DETECTED: false});
+                UpdateContext({lUDF_DIAGNOSTICS_RESULT: "RUNNING..."});
                 
                 
                 If(!lTEST_FAILURE_DETECTED,

@@ -1448,36 +1448,6 @@
           },
           "ruleId": "app-UnusedVariables",
           "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Diagnostics.lUDF_DIAGNOSTICS_RESULT"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Diagnostics.lUDF_DIAGNOSTICS_RESULT",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "lUDF_DIAGNOSTICS_RESULT",
-                "module": "Diagnostics",
-                "type": "Diagnostics"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "app-UnusedVariables",
-          "ruleIndex": 2
         }
       ],
       "tool": {
