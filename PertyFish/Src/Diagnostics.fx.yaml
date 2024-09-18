@@ -1695,58 +1695,89 @@ Diagnostics As screen:
                     )
                 );
                 
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getPieceMaterialValue(piece:Text):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getPieceMaterialValue"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    //UpdateContext({lTEST_REFERENCE_SQNAME: "h5"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 3});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_getPieceMaterialValue("B")
+                    });
+                
+                    If(lTEST_ACTUAL_RESULT_NUMBER<>lTEST_EXPECTED_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_ACTUAL_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_EXPECTED_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getPieceCentipawnMaterialValue(piece:Text, filter:Text):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getPieceCentipawnMaterialValue"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    //UpdateContext({lTEST_REFERENCE_SQNAME: "h5"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 300});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_getPieceCentipawnMaterialValue("B", "KQRBNP")
+                    });
+                
+                    If(lTEST_ACTUAL_RESULT_NUMBER<>lTEST_EXPECTED_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_ACTUAL_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_EXPECTED_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
                 /*
-                        UDF_PieceToIcon(piece:Text):Text=
-                            Switch(true,
-                                piece="K",  WHITE_KING_ICON,
-                                piece="Q",  WHITE_QUEEN_ICON,
-                                piece="R",  WHITE_ROOK_ICON,
-                                piece="B",  WHITE_BISHOP_ICON,
-                                piece="N",  WHITE_KNIGHT_ICON,
-                                piece="P",  WHITE_PAWN_ICON,
-                                piece="k",  BLACK_KING_ICON,
-                                piece="q",  BLACK_QUEEN_ICON,
-                                piece="r",  BLACK_ROOK_ICON,
-                                piece="b",  BLACK_BISHOP_ICON,
-                                piece="n",  BLACK_KNIGHT_ICON,
-                                piece="p",  BLACK_PAWN_ICON,
-                                EMPTY_ICON
-                            );
-                        
-                        UDF_getPieceMaterialValue(piece:Text):Number=
-                            Switch(true,
-                                piece="K",  100,
-                                piece="Q",  9,
-                                piece="R",  5,
-                                piece="B",  3,
-                                piece="N",  3,
-                                piece="P",  1,
-                                piece="k",  -100,
-                                piece="q",  -9,
-                                piece="r",  -5,
-                                piece="b",  -3,
-                                piece="n",  -3,
-                                piece="p",  -1,
-                                0
-                            );
-                        
-                        UDF_getPieceCentipawnMaterialValue(piece:Text, filter:Text):Number=
-                            Switch(true,
-                                piece="K" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                piece="Q" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                piece="R" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                piece="B" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                piece="N" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                piece="P" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                piece="k" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                piece="q" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                piece="r" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                piece="b" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                piece="n" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                piece="p" && piece exactin filter,  UDF_getPieceMaterialValue(piece) * 100,
-                                0
-                            );
-                        
                         UDF_calcCentipawnMaterialValue(fen:Text,filter:Text):Number=
                             Sum(
                                 ForAll(
