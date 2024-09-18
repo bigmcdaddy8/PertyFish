@@ -704,6 +704,36 @@
             {
               "logicalLocations": [
                 {
+                  "fullyQualifiedName": "Diagnostics.conEntireScreenDiagnostics.txtFenToConvert.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "Diagnostics.conEntireScreenDiagnostics.txtFenToConvert.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "Diagnostics",
+                "type": "Diagnostics.conEntireScreenDiagnostics.txtFenToConvert"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 1
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
                   "fullyQualifiedName": "App.gblPF_TMP_Boolean01"
                 }
               ],
