@@ -269,7 +269,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 6});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
-                        UDF_getRankFromSqName(lTEST_REFERENCE_SQNUM)
+                        UDF_getRankFromSqName(lTEST_REFERENCE_SQNAME)
                     });
                 
                     If(lTEST_EXPECTED_RESULT_NUMBER<>lTEST_ACTUAL_RESULT_NUMBER,
