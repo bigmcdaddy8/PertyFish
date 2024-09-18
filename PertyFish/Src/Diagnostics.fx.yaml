@@ -1203,16 +1203,89 @@ Diagnostics As screen:
                     )
                 );
                 
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_SearchBoardForPiece(board:Text,piece:Text):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_SearchBoardForPiece"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
+                    UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    //UpdateContext({lTEST_REFERENCE_SQNAME: "c6d5q"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 9});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_SearchBoardForPiece(lTEST_BOARD,"q")
+                    });
+                
+                    If(lTEST_ACTUAL_RESULT_NUMBER<>lTEST_EXPECTED_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_ACTUAL_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_EXPECTED_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getBitAtSqNum(board:Text,sqNum:Number):Text=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getBitAtSqNum"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
+                    UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "b7"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "q"});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
+                        UDF_getBitAtSqNum(lTEST_BOARD, lTEST_REFERENCE_SQNUM)
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_TEXT &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_TEXT
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
                 /*
-                        UDF_SearchBoardForPiece(board:Text,piece:Text):Number=
-                            If(Find(piece,board)>= 1,
-                                // THEN
-                                Find(piece,board) - 1,
-                        
-                                // ELSE
-                                EMPTY_SQUARE_NUM
-                            );
-                        
                         UDF_getBitAtSqNum(board:Text,sqNum:Number):Text=
                             If(sqNum<0 || sqNum>=EMPTY_SQUARE_NUM,
                                 // THEN - handle the empty square number 
