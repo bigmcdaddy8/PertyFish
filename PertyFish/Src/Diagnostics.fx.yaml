@@ -40,7 +40,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     //UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                     UpdateContext({lTEST_FILE_NAME: "c"});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 3});
@@ -78,7 +78,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     //UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                     UpdateContext({lTEST_FILE_NUM: 3});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "c"});
@@ -116,7 +116,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "c"});
                 
@@ -153,7 +153,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 3});
                 
@@ -190,7 +190,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 3});
                 
@@ -227,7 +227,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "c"});
                 
@@ -264,7 +264,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 6});
                 
@@ -301,7 +301,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 6});
                 
@@ -338,7 +338,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 6});
                 
@@ -403,17 +403,82 @@ Diagnostics As screen:
                     )
                 );
                 
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_sqNameToSqNum(sqName:Text):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_sqNameToSqNum"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 18});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_NUMBER<>lTEST_ACTUAL_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getSqNumRelativeToSqNum(refSqNum:Number,x:Number,y:Number):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getSqNumRelativeToSqNum"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 27});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_getSqNumRelativeToSqNum(lTEST_REFERENCE_SQNUM, 1, -1)
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_NUMBER<>lTEST_ACTUAL_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
                 /*
                         
-                            If( sqNum<0 || sqNum>=EMPTY_SQUARE_NUM,
-                                // THEN
-                                EMPTY_SQUARE_NAME,
-                        
-                                // ELSE
-                                UDF_getFileNameFromSqNum(sqNum) & UDF_getRankFromSqNum(sqNum)
-                            );
-                        
-                        UDF_getSqNumRelativeToSqNum(refSqNum:Number,x:Number,y:Number):Number=
                             If(refSqNum<0 || refSqNum>=EMPTY_SQUARE_NUM,
                                 // THEN
                                 EMPTY_SQUARE_NUM,
@@ -1690,7 +1755,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "b7"});
                 
@@ -1726,7 +1791,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "b7 d7"});
                 
@@ -1762,7 +1827,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
                     UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: -100});
                 
