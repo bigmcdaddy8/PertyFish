@@ -478,21 +478,6 @@ Diagnostics As screen:
                 );
                 
                 /*
-                        
-                            If(refSqNum<0 || refSqNum>=EMPTY_SQUARE_NUM,
-                                // THEN
-                                EMPTY_SQUARE_NUM,
-                        
-                                // ELSE
-                                Switch(true,
-                                    (UDF_getRankFromSqNum(refSqNum) + y) > 8, EMPTY_SQUARE_NUM,
-                                    (UDF_getRankFromSqNum(refSqNum) + y) < 1, EMPTY_SQUARE_NUM,
-                                    (UDF_getFileNumFromSqName(UDF_sqNumToSqName(refSqNum)) + x) > 8, EMPTY_SQUARE_NUM,
-                                    (UDF_getFileNumFromSqName(UDF_sqNumToSqName(refSqNum)) + x) < 1, EMPTY_SQUARE_NUM,
-                                    refSqNum + x - (y * 8)
-                                )
-                            );
-                        
                         UDF_sqNameNoPromo(sqName:Text):Text=Left(sqName,2);
                         UDF_getPromo(sqName:Text):Text=If(Right(sqName,1) exactin "qrbn",Right(sqName,1),"");
                         UDF_getSourceSqNamePACN(pacn:Text):Text=Left(pacn,2);
