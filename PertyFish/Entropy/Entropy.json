@@ -106,7 +106,7 @@
   },
   "FunctionParamsInvariantScripts": {},
   "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "09/18/2024 16:16:25",
+  "HeaderLastSavedDateTimeUTC": "09/18/2024 16:22:32",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,
@@ -351,7 +351,7 @@
     "ControlCount": {
       "8c2bb0b54c6149c580a48882153f6ad1": 2,
       "b953a316546441b9933cc2e2000b7cbb": 2,
-      "button": 16,
+      "button": 17,
       "checkbox": 1,
       "dropdown": 4,
       "gallery": 7,

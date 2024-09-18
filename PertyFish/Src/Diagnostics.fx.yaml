@@ -644,10 +644,10 @@ Diagnostics As screen:
                     UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
                     UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
                 
-                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "##"});
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "#######k#q#################p########################K###########"});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
-                        UDF_makeMovePACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_PACN)
+                        UDF_makeMovePACN(lTEST_BOARD, lTEST_PACN)
                     });
                 
                     If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
@@ -2096,7 +2096,7 @@ Diagnostics As screen:
             Default: ="Text input"
             Font: =Font.'Courier New'
             Height: =25
-            Size: =12
+            Size: =10
             Width: =1000
             X: =lblFenToBoardHeader.X + lblFenToBoardHeader.Width + 5
             Y: =lblFenToBoardHeader.Y - 5
