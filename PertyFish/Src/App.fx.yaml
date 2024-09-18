@@ -291,22 +291,16 @@ App As appinfo:
             UDF_setBitAtSqNum(
                 UDF_setBitAtSqNum(
                     board,
-                    If(IsBlank(UDF_getPromoPACN(pacn)),
+                    If(IsBlank(UDF_getPromo(pacn)),
                         // place original piece type on the target square
                         UDF_getBitAtSqNum(board,UDF_sqNameToSqNum(UDF_getSourceSqNamePACN(pacn))),
                         // place promo piece type on the target square
-                        If(UDF_getRankFromSqName(UDF_getTargetSqNamePACN(pacn))=1,UDF_getPromoPACN(pacn),Upper(UDF_getPromoPACN(pacn)))
+                        If(UDF_getRankFromSqName(UDF_getTargetSqNamePACN(pacn))=1,UDF_getPromo(pacn),Upper(UDF_getPromo(pacn)))
                     ), 
                     UDF_sqNameToSqNum(UDF_getTargetSqNamePACN(pacn))
                 ), 
                 EMPTY_FILLER_ABBR, 
                 UDF_sqNameToSqNum(UDF_getSourceSqNamePACN(pacn))
-            );
-        
-        UDF_getBoardDistance(refSqName1:Text, refSqName2:Text):Number=
-        	Max(
-                Abs(UDF_getFileNumFromSqName(refSqName1)-UDF_getFileNumFromSqName(refSqName2)), 
-                Abs(UDF_getRankFromSqName(refSqName1)-UDF_getRankFromSqName(refSqName2))
             );
         
         UDF_FEN_TO_PIECE_PLACEMENT(fen:Text):Text=Index(Split(fen, " "),1).Value;
@@ -393,8 +387,20 @@ App As appinfo:
             );
         
         UDF_FEN_TO_ENPASSANT_SQNAME(fen:Text):Text=Index(Split(fen, " "),4).Value;  
-        UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),5).Value;  
-        UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),6).Value;  
+        UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=
+            If(CountRows(Split(fen, " "))<5,
+                // THEN
+                0,
+                // ELSE
+                Index(Split(fen, " "),5).Value
+            );
+        UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=
+            If(CountRows(Split(fen, " "))<6,
+                // THEN
+                0,
+                // ELSE
+                Index(Split(fen, " "),6).Value
+            );  
         
         UDF_CREATE_CASTLE_RIGHTS(wks:Text,wqs:Text,bks:Text,bqs:Text):Text=
         	If(IsBlank(Substitute(wks,"-","") & Substitute(wqs,"-","") & Substitute(bks,"-","") & Substitute(bqs,"-","")),
