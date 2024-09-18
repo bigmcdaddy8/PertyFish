@@ -340,7 +340,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
                     //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
-                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 6});
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 18});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
                         UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)
@@ -390,43 +390,6 @@ Diagnostics As screen:
                                 " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
                                 " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_TEXT &
                                 " ACTUAL: " & lTEST_ACTUAL_RESULT_TEXT
-                            })
-                        );
-                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
-                
-                        // ELSE
-                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
-                            })
-                        )
-                    )
-                );
-                
-                If(!lTEST_FAILURE_DETECTED,
-                    // UDF_sqNameToSqNum(sqName:Text):Number=
-                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_sqNameToSqNum"});
-                    UpdateContext({lTEST_TEST_NUMBER: 0});
-                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
-                
-                    //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
-                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
-                    UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
-                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
-                
-                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 18});
-                
-                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
-                        UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)
-                    });
-                
-                    If(lTEST_EXPECTED_RESULT_NUMBER<>lTEST_ACTUAL_RESULT_NUMBER,
-                        // THEN 
-                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
-                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_NUMBER &
-                                " ACTUAL: " & lTEST_ACTUAL_RESULT_NUMBER
                             })
                         );
                         UpdateContext({lTEST_FAILURE_DETECTED: true}),
