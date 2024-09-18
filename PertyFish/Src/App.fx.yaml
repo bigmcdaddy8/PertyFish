@@ -285,7 +285,6 @@ App As appinfo:
         UDF_getPromo(sqName:Text):Text=If(Right(sqName,1) exactin "qrbn",Right(sqName,1),"");
         UDF_getSourceSqNamePACN(pacn:Text):Text=Left(pacn,2);
         UDF_getTargetSqNamePACN(pacn:Text):Text=Right(Left(pacn,4),2);
-        UDF_getPromoPACN(pacn:Text):Text=If(Right(pacn,1) exactin "qrbn",Right(pacn,1),"");
         UDF_createPACN(sourceSqName:Text,targetSqName:Text):Text=sourceSqName & targetSqName; // NOTE: the promo code is part of the targetSqName in this case
         
         UDF_makeMovePACN(board:Text,pacn:Text):Text=
