@@ -1169,7 +1169,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
                 
                     UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
-                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     //UpdateContext({lTEST_REFERENCE_SQNAME: "c6d5q"});
                     //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
@@ -1180,7 +1180,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_EXPECTED_RESULT_TEXT: lTEST_FEN});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
-                        UDF_CREATE_FEN("7k/1q1p4/8/8/8/8/4K3/8", BLACK, "-", "-", 0, 1)
+                        UDF_CREATE_FEN(lTEST_BOARD, BLACK, "-", "-", 0, 1)
                     });
                 
                     If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
