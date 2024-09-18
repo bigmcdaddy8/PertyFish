@@ -1373,7 +1373,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_TEST_NUMBER: 0});
                     UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
                 
-                    UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 w - h6 0 1"});
                     //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "h5"});
                     UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
