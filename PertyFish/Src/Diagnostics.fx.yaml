@@ -144,10 +144,81 @@ Diagnostics As screen:
                     )
                 );
                 
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getFileNumFromSqName(sqName:Text):Number=Find(UDF_getFileNameFromSqName(sqName),"abcdefgh");
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getFileNumFromSqName"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 3});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_getFileNumFromSqName(lTEST_REFERENCE_SQNAME)
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_NUMBER<>lTEST_ACTUAL_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getFileNumFromSqNum(sqNum:Number):Number=UDF_getFileNumFromSqName(UDF_sqNumToSqName(sqNum));
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getFileNumFromSqNum"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 3});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_getFileNumFromSqNum(lTEST_REFERENCE_SQNUM)
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_NUMBER<>lTEST_ACTUAL_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
                 /*
-                        
-                        UDF_getFileNumFromSqName(sqName:Text):Number=Find(UDF_getFileNameFromSqName(sqName),"abcdefgh");
-                        UDF_getFileNumFromSqNum(sqNum:Number):Number=UDF_getFileNumFromSqName(UDF_sqNumToSqName(sqNum));
                         UDF_getFileNameFromSqNum(sqNum:Number):Text=Index(Split("abcdefgh",""),Mod(sqNum,8)+1).Value;
                         UDF_getRankFromSqName(sqName:Text):Number=Value(Right(Left(sqName,2),1)); // make sure the rare pawn promotion in pacn is removed
                         UDF_getRankFromSqNum(sqNum:Number):Number=(8 - RoundDown(sqNum/8, 0));
