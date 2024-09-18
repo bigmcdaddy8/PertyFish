@@ -17,7 +17,7 @@ Diagnostics As screen:
             ZIndex: =1
 
         btnRunUDFDiagnostics As button:
-            OnSelect: |-
+            OnSelect: |
                 =
                 
                 
@@ -218,8 +218,45 @@ Diagnostics As screen:
                     )
                 );
                 
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getFileNameFromSqNum(sqNum:Number):Text=Index(Split("abcdefgh",""),Mod(sqNum,8)+1).Value;
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getFileNameFromSqNum"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum("c6")});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "c"});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
+                        UDF_getFileNameFromSqNum(lTEST_REFERENCE_SQNUM)
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_TEXT &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_TEXT
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
                 /*
-                        UDF_getFileNameFromSqNum(sqNum:Number):Text=Index(Split("abcdefgh",""),Mod(sqNum,8)+1).Value;
+                        
                         UDF_getRankFromSqName(sqName:Text):Number=Value(Right(Left(sqName,2),1)); // make sure the rare pawn promotion in pacn is removed
                         UDF_getRankFromSqNum(sqNum:Number):Number=(8 - RoundDown(sqNum/8, 0));
                         UDF_sqNameToSqNum(sqName:Text):Number=
@@ -1538,7 +1575,7 @@ Diagnostics As screen:
                         // ELSE
                         If(gblPF_DEBUG_UDF_DIAGNOSTICS,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " btnRunUDFDiagnostics.OnSelect(): lTEST_TEST_CATEGORY test #: " & lTEST_TEST_NUMBER & " PASSED"
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
                             })
                         )
                     )
@@ -1635,60 +1672,13 @@ Diagnostics As screen:
                         
                     })
                 );
-                
-                
-                /*
-                                        If(gblPF_TMP_Boolean01,
-                                            // THEN
-                                            Set(gblPF_TMP_Number01, gblPF_TMP_Number01 + 10);
-                                            Set(gblPF_TMP_Text01, "8/2p3p1/1b1r1q1k/8/8/K1Q1R1B1/1P3P2/8 w - - 0 1");
-                                            If(UDF_isSqNumPAWNProtected(
-                                                gblPF_TMP_Text01, 
-                                                UDF_sqNameToSqNum("b6"), 
-                                                UDF_FEN_TO_INACTIVE_COLOR(gblPF_TMP_Text01)),
-                                                // THEN - test passed
-                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                    " btnUDF_Tests_Set2_Code_CB.OnSelect(): test #" & gblPF_TMP_Number01 & " PASSED"
-                                                    
-                                                }),
-                                        
-                                                // ELSE - test failed
-                                                Set(gblPF_TMP_Boolean01, false);
-                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                    " btnUDF_Tests_Set2_Code_CB.OnSelect(): test #" & gblPF_TMP_Number01 & " FAILED"
-                                                })
-                                            );
-                                        
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " test #" & gblPF_TMP_Number01 & " DEBUG " &
-                                                " UDF_getSqNumRelativeToSqNum(b6,1,1): " & UDF_getSqNumRelativeToSqNum(UDF_sqNameToSqNum("b6"),-1,1) &
-                                                " UDF_getBitAtSqNum(): " &
-                                                    UDF_getBitAtSqNum(
-                                                        UDF_FEN_TO_BOARD(gblPF_TMP_Text01),
-                                                        UDF_getSqNumRelativeToSqNum(UDF_sqNameToSqNum("b6"),-1,1)
-                                                    ) &
-                                                " UDF_getSqNumRelativeToSqNum(b6,1,1): " & UDF_getSqNumRelativeToSqNum(UDF_sqNameToSqNum("b6"),1,1) &
-                                                " UDF_getBitAtSqNum(): " & 
-                                                    UDF_getBitAtSqNum(
-                                                        UDF_FEN_TO_BOARD(gblPF_TMP_Text01),
-                                                        UDF_getSqNumRelativeToSqNum(UDF_sqNameToSqNum("b6"),1,1)
-                                                    )
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                " DEBUG fen: " & LF & gblPF_TMP_Text01
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                " DEBUG UDF_FEN_TO_BOARD(fen): " & LF & UDF_FEN_TO_BOARD(gblPF_TMP_Text01)
-                                            })
-                                        );
-                 */
             Size: =10
             Text: ="Run UDF Diagnostics"
             X: =40
             Y: =40
             ZIndex: =2
 
-        Button2 As button:
+        btnGotoChessBoard As button:
             OnSelect: =Navigate(Chess_Board)
             Size: =12
             Text: ="Goto Chess Board"
@@ -1696,7 +1686,7 @@ Diagnostics As screen:
             Y: =664
             ZIndex: =3
 
-        Button2_1 As button:
+        btnGotoLogsFromDiagnostics As button:
             OnSelect: =Navigate(Logging_Screen)
             Size: =12
             Text: ="Goto Logs"
