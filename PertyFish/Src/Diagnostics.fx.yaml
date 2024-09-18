@@ -2074,7 +2074,7 @@ Diagnostics As screen:
             Y: =715
             ZIndex: =4
 
-        lblConvertedBoard As label:
+        lblBoardResult As label:
             BorderThickness: =1
             Font: =Font.'Courier New'
             Height: =30
@@ -2093,7 +2093,7 @@ Diagnostics As screen:
             ZIndex: =7
 
         txtFenToConvert As text:
-            Default: ="Text input"
+            Default: ="FEN to convert"
             Font: =Font.'Courier New'
             Height: =25
             Size: =10
@@ -2110,4 +2110,41 @@ Diagnostics As screen:
             X: =btnRunUDFDiagnostics.X
             Y: =btnRunUDFDiagnostics.Y + btnRunUDFDiagnostics.Height + 10
             ZIndex: =9
+
+        lblBoardToPPD As label:
+            Align: =Align.Center
+            Size: =12
+            Text: ="Board to PPD"
+            Width: =btnRunUDFDiagnostics.Width
+            X: =45
+            Y: =160
+            ZIndex: =10
+
+        txtBoardToConvert As text:
+            Default: ="Board to convert"
+            Font: =Font.'Courier New'
+            Height: =25
+            Size: =10
+            Width: =1000
+            X: =205
+            Y: =160
+            ZIndex: =11
+
+        lblPPDResult As label:
+            BorderThickness: =1
+            Font: =Font.'Courier New'
+            Height: =30
+            Size: =10
+            Text: |
+                =If(CountRows(Split(txtFenToConvert.Text, " "))<>6,
+                    // THEN
+                    "",
+                
+                    // ELSE
+                    UDF_FEN_TO_BOARD(txtFenToConvert.Text)
+                )
+            Width: =1000
+            X: =205
+            Y: =185
+            ZIndex: =12
 
