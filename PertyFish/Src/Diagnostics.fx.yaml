@@ -2319,7 +2319,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
                     //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "h5"});
-                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
                     //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
@@ -2328,7 +2328,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "g4 g5 g6 h4 h6"});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
-                        UDF_getSetOfAdjacentSqNames(lTEST_REFERENCE_SQNUM)
+                        UDF_getSetOfAdjacentSqNames(lTEST_REFERENCE_SQNAME)
                     });
                 
                     If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
