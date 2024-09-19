@@ -2558,78 +2558,179 @@ Diagnostics As screen:
                     )
                 );
                 
-                /*
-                        UDF_getSetofSqNamesInBox(refSqName1:Text, refSqName2:Text):Text=
-                            Trim(
-                                Concat(
-                                    Distinct(
-                                        Sort(
-                                            ForAll(
-                                                Sequence(64, 0) As theSqNum,
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_sqNumToFileSet(refSqNum:Number):Text=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_sqNumToFileSet"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "b6"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SQNAME2: "d5"});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "b1 b2 b3 b4 b5 b6 b7 b8"});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
+                        UDF_sqNumToFileSet(lTEST_REFERENCE_SQNUM)
+                    });
                         
-                                                With(
-                                                    {
-                                                        fileNumMin:     Min(UDF_getFileNumFromSqName(refSqName1), UDF_getFileNumFromSqName(refSqName2)),
-                                                        fileNumMax:     Max(UDF_getFileNumFromSqName(refSqName1), UDF_getFileNumFromSqName(refSqName2)),
-                                                        rankMin:        Min(UDF_getRankFromSqName(refSqName1), UDF_getRankFromSqName(refSqName2)),
-                                                        rankMax:        Max(UDF_getRankFromSqName(refSqName1), UDF_getRankFromSqName(refSqName2)),
-                                                        currentFileNum: UDF_getFileNumFromSqNum(theSqNum.Value),
-                                                        currentRank:    UDF_getRankFromSqNum(theSqNum.Value)
-                                                    } As localVars,
+                    If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_TEXT &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_TEXT
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_sqNumToRankSet(refSqNum:Number):Text=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_sqNumToRankSet"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "b6"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SQNAME2: "d5"});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "a6 b6 c6 d6 e6 f6 g6 h6"});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
+                        UDF_sqNumToRankSet(lTEST_REFERENCE_SQNUM)
+                    });
                         
-                                                    If(
-                                                        (localVars.currentFileNum>=localVars.fileNumMin && localVars.currentFileNum<=localVars.fileNumMax) &&
-                                                        (localVars.currentRank>=localVars.rankMin && localVars.currentRank<=localVars.rankMax),
-                                                        UDF_sqNumToSqName(theSqNum.Value),
-                                                        ""
-                                                    )
-                                                )
-                                            ), Value
-                                        ), Value
-                                    ), Value, " "
-                                )
-                            );
+                    If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_TEXT &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_TEXT
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_sqNumToRookSet(refSqNum:Number):Text=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_sqNumToRookSet"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "b6"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SQNAME2: "d5"});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSetOfSqNames("b1 b2 b3 b4 b5 b6 b7 b8 a6 b6 c6 d6 e6 f6 g6 h6")});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
+                        UDF_sqNumToRookSet(lTEST_REFERENCE_SQNUM)
+                    });
                         
-                        UDF_sqNumToFileSet(refSqNum:Number):Text=
-                        	With(
-                        		{
-                        			fileName:	UDF_getFileNameFromSqNum(refSqNum)
-                        		} As theData,
-                        	
-                                UDF_createSetOfSqNames(
-                                    Concat(
-                                        ForAll(
-                                            Sequence(8,1) As theRank,
+                    If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_TEXT &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_TEXT
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_sqNumToKingSet(refSqNum:Number):Text=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_sqNumToKingSet"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "b6"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SQNAME2: "d5"});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSetOfSqNames("a4 a5 a6 b4 b5 b6 c4 c5 c6")});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
+                        UDF_sqNumToKingSet(lTEST_REFERENCE_SQNUM)
+                    });
                         
-                                            theData.fileName & theRank.Value
-                                        ), Value, " "
-                                    )
-                                )
-                            );
-                        
-                        UDF_sqNumToRankSet(refSqNum:Number):Text=
-                        	With(
-                        		{
-                        			rank:	UDF_getRankFromSqNum(refSqNum)
-                        		} As theData,
-                        	
-                                UDF_createSetOfSqNames(
-                                    Concat(
-                                        ForAll(
-                                            Sequence(8,1) As theFileNum,
-                        
-                                            UDF_getFileNameFromFileNum(theFileNum.Value) & theData.rank
-                                        ), Value, " "
-                                    )
-                                )
-                            );
-                        
-                        UDF_sqNumToRookSet(refSqNum:Number):Text=
-                            UDF_getSetUnion(UDF_sqNumToFileSet(refSqNum), UDF_sqNumToRankSet(refSqNum));
-                        
-                        UDF_sqNumToKingSet(refSqNum:Number):Text=
-                            UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
-                        
+                    If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_TEXT &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_TEXT
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                /*      
                         // UDF isProtected code TODO this needs to be completed...
                         UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=false;
                         
