@@ -1754,7 +1754,212 @@ Diagnostics As screen:
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 300});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
-                        UDF_getPieceCentipawnMaterialValue("B", "KQRBNP")
+                        UDF_getPieceCentipawnMaterialValue("B", WHITE_PIECES)
+                    });
+                
+                    If(lTEST_ACTUAL_RESULT_NUMBER<>lTEST_EXPECTED_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_ACTUAL_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_EXPECTED_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_calcCentipawnMaterialValue(fen:Text,filter:Text):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_calcCentipawnMaterialValue"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    //UpdateContext({lTEST_REFERENCE_SQNAME: "h5"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: -900});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_calcCentipawnMaterialValue(lTEST_FEN, ALL_PIECES)
+                    });
+                
+                    If(lTEST_ACTUAL_RESULT_NUMBER<>lTEST_EXPECTED_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_ACTUAL_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_EXPECTED_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_isPathClear"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "b7"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_BOOLEAN: true});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_BOOLEAN:
+                        UDF_isPathClear(lTEST_FEN, lTEST_REFERENCE_SQNUM, 6, "b6 b5 b4 b3 b2")
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_BOOLEAN<>lTEST_ACTUAL_RESULT_BOOLEAN,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_BOOLEAN &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_BOOLEAN
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_isSqNumAttackedBySqNum(attackingPiece:Text, attackingSqNum:Number, attackedSqNum:Number):Boolean=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_isSqNumAttackedBySqNum"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    UpdateContext({lTEST_FEN: "7k/1q1p4/8/8/8/8/4K3/8 b - - 0 1"});
+                    UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "b7"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_BOOLEAN: true});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_BOOLEAN:
+                        UDF_isSqNumAttackedBySqNum(UDF_getBitAtSqNum(lTEST_BOARD, lTEST_REFERENCE_SQNUM), lTEST_REFERENCE_SQNUM, UDF_sqNameToSqNum("f3"))
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_BOOLEAN<>lTEST_ACTUAL_RESULT_BOOLEAN,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_BOOLEAN &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_BOOLEAN
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_countPiecesOnBoard(board:Text, piecesToCount:Text):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_countPiecesOnBoard"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    //UpdateContext({lTEST_REFERENCE_SQNAME: "h5"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 3});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_countPiecesOnBoard(lTEST_BOARD, BLACK_PIECES)
+                    });
+                
+                    If(lTEST_ACTUAL_RESULT_NUMBER<>lTEST_EXPECTED_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_ACTUAL_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_EXPECTED_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getOppositeDirection(dir:Number):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getOppositeDirection"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    //UpdateContext({lTEST_REFERENCE_SQNAME: "h5"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: N});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_getOppositeDirection(S)
                     });
                 
                     If(lTEST_ACTUAL_RESULT_NUMBER<>lTEST_EXPECTED_RESULT_NUMBER,
@@ -1778,65 +1983,6 @@ Diagnostics As screen:
                 );
                 
                 /*
-                        UDF_calcCentipawnMaterialValue(fen:Text,filter:Text):Number=
-                            Sum(
-                                ForAll(
-                                    Split(UDF_FEN_TO_PIECE_PLACEMENT(fen), "") As thePiece,
-                        
-                                    UDF_getPieceCentipawnMaterialValue(thePiece.Value, filter)
-                                ),
-                                Value
-                            );
-                        
-                        UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
-                            With(
-                                {
-                                    board: UDF_FEN_TO_BOARD(fen)
-                                } As theBoard,
-                            
-                                Switch(true,
-                                    IsBlank(UDF_getBitAtSqNum(theBoard.board,sqNum)),  false,
-                                    UDF_getBitAtSqNum(theBoard.board,sqNum) exactin UDF_getACPieceABBR(fen,"KN"), true,
-                                    distance=1, true,
-                                    !IsMatch(
-                                        Concat(
-                                            ForAll (
-                                                Split(slideOvers, " ") As aSliderOver,
-                            
-                                                If(UDF_getBitAtSqNum(theBoard.board, UDF_sqNameToSqNum(aSliderOver.Value))<>EMPTY_FILLER_ABBR,
-                                                    "BLOCKED",
-                                                    ""
-                                                )
-                                            ),Value,""
-                                        ), "BLOCKED", MatchOptions.Contains
-                                    ), true,
-                            
-                                    // default
-                                    false
-                                )
-                            );
-                        
-                        UDF_isSqNumAttackedBySqNum(attackingPiece:Text, attackingSqNum:Number, attackedSqNum:Number):Boolean=
-                            With(
-                                LookUp(colPF_LEGAL_MOVES,
-                                    sqNum=attackingSqNum && 
-                                    eligibleSqNum=attackedSqNum && 
-                                    pieceUpper=attackingPiece
-                                ) As theEligibleMove,
-                        
-                                If(IsBlank(theEligibleMove),false,true)
-                            );
-                        
-                        UDF_countPiecesOnBoard(board:Text, piecesToCount:Text):Number=
-                            Sum(
-                                ForAll(
-                                    Sequence(64,0) As theSqNum,
-                        
-                                    If(UDF_getBitAtSqNum(board, theSqNum.Value) exactin piecesToCount,1,0)
-                                ), Value
-                            );
-                        
-                        // User defined formulas
                         UDF_getOppositeDirection(dir:Number):Number=
                             Switch(true,
                                 dir=N,  S,
