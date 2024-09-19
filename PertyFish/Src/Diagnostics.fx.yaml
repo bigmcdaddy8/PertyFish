@@ -2270,8 +2270,6 @@ Diagnostics As screen:
                 );
                 
                 /*
-                        UDF_createSetOfSqNames(sqNameList:Text):Text=
-                            Trim(Concat(Distinct(Sort(Split(Trim(sqNameList), " "), Value), Value), Value, " "));
                         UDF_getElementFromSet(setA:Text, index:Number):Text=
                             If(index>=1 && index<=UDF_getSetSize(setA),
                                 Index(Split(setA, " "), index).Value,
