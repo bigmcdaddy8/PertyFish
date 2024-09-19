@@ -236,7 +236,7 @@ comChessEngineFunctions As CanvasComponent:
                                             If(gblPF_DEBUG_EVAL,
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " fCE_300(): DEBUG heuristic17 preMove active color WHITE " & 
-                                                    " # of BLACK pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "kqrbnp")
+                                                    " # of BLACK pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, BLACK_PIECES)
                                                 });
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " preMoveFEN: " & theCurrentNode.preMoveFEN
@@ -245,7 +245,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     " preMoveBoard: " & theCurrentNode.preMoveBoard
                                                 })
                                             );
-                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "kqrbnp")>1,
+                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, BLACK_PIECES)>1,
                                                 // THEN
                                                 0,
                 
@@ -376,10 +376,10 @@ comChessEngineFunctions As CanvasComponent:
                                             If(gblPF_DEBUG_EVAL,
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " fCE_300(): DEBUG heuristic17 preMove active color BLACK " & 
-                                                    " # of WHITE pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "KQRBNP")
+                                                    " # of WHITE pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, WHITE_PIECES)
                                                 })
                                             );
-                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "KQRBNP")>1,
+                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, WHITE_PIECES)>1,
                                                 // THEN
                                                 0,
                 
@@ -633,12 +633,12 @@ comChessEngineFunctions As CanvasComponent:
                                                 materialSource:
                                                     UDF_getPieceCentipawnMaterialValue(
                                                         theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier,
-                                                        "KQRBNPkqrbnp"
+                                                        ALL_PIECES
                                                     ),
                                                 materialCapture: 
                                                     UDF_getPieceCentipawnMaterialValue(
                                                         theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier,
-                                                        "KQRBNPkqrbnp"
+                                                        ALL_PIECES
                                                     ),
                                                 targetSqAttacked:
                                                     UDF_isSqNumAttacked(
@@ -663,7 +663,7 @@ comChessEngineFunctions As CanvasComponent:
                                             If(gblPF_DEBUG_EVAL,
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " fCE_400(): DEBUG heuristic17 preMove active color WHITE " & 
-                                                    " # of BLACK pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "kqrbnp")
+                                                    " # of BLACK pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, BLACK_PIECES)
                                                 });
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " preMoveFEN: " & theCurrentNode.preMoveFEN
@@ -672,7 +672,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     " preMoveBoard: " & theCurrentNode.preMoveBoard
                                                 })
                                             );
-                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "kqrbnp")>1,
+                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, BLACK_PIECES)>1,
                                                 // THEN
                                                 0,
                 
@@ -803,10 +803,10 @@ comChessEngineFunctions As CanvasComponent:
                                             If(gblPF_DEBUG_EVAL,
                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                     " fCE_400(): DEBUG heuristic17 preMove active color BLACK " & 
-                                                    " # of WHITE pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "KQRBNP")
+                                                    " # of WHITE pieces: " & UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, WHITE_PIECES)
                                                 })
                                             );
-                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "KQRBNP")>1,
+                                            If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, WHITE_PIECES)>1,
                                                 // THEN
                                                 0,
                 
@@ -1060,12 +1060,12 @@ comChessEngineFunctions As CanvasComponent:
                                                 materialSource:
                                                     UDF_getPieceCentipawnMaterialValue(
                                                         theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier,
-                                                        "KQRBNPkqrbnp"
+                                                        ALL_PIECES
                                                     ),
                                                 materialCapture: 
                                                     UDF_getPieceCentipawnMaterialValue(
                                                         theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier,
-                                                        "KQRBNPkqrbnp"
+                                                        ALL_PIECES
                                                     ),
                                                 targetSqAttacked:
                                                     UDF_isSqNumAttacked(
@@ -1107,7 +1107,7 @@ comChessEngineFunctions As CanvasComponent:
                                                 materialSource:
                                                     UDF_getPieceCentipawnMaterialValue(
                                                         theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier,
-                                                        "KQRBNPkqrbnp"
+                                                        ALL_PIECES
                                                     ),
                                                 sourceSqAttacked:
                                                     UDF_isSqNumAttacked(
@@ -1520,12 +1520,12 @@ comChessEngineFunctions As CanvasComponent:
                                                 materialSource:
                                                     UDF_getPieceCentipawnMaterialValue(
                                                         theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier,
-                                                        "KQRBNPkqrbnp"
+                                                        ALL_PIECES
                                                     ),
                                                 materialCapture: 
                                                     UDF_getPieceCentipawnMaterialValue(
                                                         theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier,
-                                                        "KQRBNPkqrbnp"
+                                                        ALL_PIECES
                                                     ),
                                                 targetSqAttacked:
                                                     UDF_isSqNumAttacked(
@@ -1567,7 +1567,7 @@ comChessEngineFunctions As CanvasComponent:
                                                 materialSource:
                                                     UDF_getPieceCentipawnMaterialValue(
                                                         theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier,
-                                                        "KQRBNPkqrbnp"
+                                                        ALL_PIECES
                                                     ),
                                                 sourceSqAttacked:
                                                     UDF_isSqNumAttacked(
@@ -1610,8 +1610,8 @@ comChessEngineFunctions As CanvasComponent:
                                             // THEN
                                             With(
                                                 {
-                                                    gettingForkedPieces:   If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,"kqrbnp","KQRBNP"),
-                                                    forkingPieces:         If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,"KQRBNP","kqrbnp")
+                                                    gettingForkedPieces:   If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,BLACK_PIECES,WHITE_PIECES),
+                                                    forkingPieces:         If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,WHITE_PIECES,BLACK_PIECES)
                                                 } As forkPieces,
                 
                                                 With(
@@ -2136,7 +2136,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     ForAll(
                                                         Sequence(64,0) As theSqNum,
                 
-                                                        If(UDF_getBitAtSqNum(theData.d0Node.postMoveBoard, theSqNum.Value) exactin UDF_getICPieceABBR(theData.d0Node.postMoveFEN, "kqrbnp"),
+                                                        If(UDF_getBitAtSqNum(theData.d0Node.postMoveBoard, theSqNum.Value) exactin UDF_getICPieceABBR(theData.d0Node.postMoveFEN, BLACK_PIECES),
                                                             // THEN - check if it is protected (i.e., attacked by its own Color)
                                                             If(UDF_isSqNumAttacked(theData.d0Node.postMoveBoard, theSqNum.Value, UDF_FEN_TO_INACTIVE_COLOR(theData.d0Node.postMoveFEN)),
                                                                 // THEN - not a weak square
@@ -2155,7 +2155,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     ForAll(
                                                         Sequence(64,0) As theSqNum,
                 
-                                                        If(UDF_getBitAtSqNum(theData.d0Node.postMoveBoard, theSqNum.Value) exactin UDF_getACPieceABBR(theData.d0Node.postMoveFEN, "kqrbnp"),
+                                                        If(UDF_getBitAtSqNum(theData.d0Node.postMoveBoard, theSqNum.Value) exactin UDF_getACPieceABBR(theData.d0Node.postMoveFEN, BLACK_PIECES),
                                                             // THEN - check if it is protected (i.e., attacked by its own Color)
                                                             If(UDF_isSqNumAttacked(theData.d0Node.postMoveBoard, theSqNum.Value, UDF_FEN_TO_ACTIVE_COLOR(theData.d0Node.postMoveFEN)),
                                                                 // THEN - not a weak square
@@ -2308,7 +2308,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                             moveBit: UDF_getBitAtSqNum(localVars.postMoveBoard,theSqNum.Value) 
                                                                         } As theMoveBit,
                 
-                                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin "kqrbnp",
+                                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin BLACK_PIECES,
                                                                             // THEN - there is no piece
                                                                             "",
                 
@@ -2341,7 +2341,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                                             UDF_getBitAtSqNum(
                                                                                                                 localVars.postMoveBoard, 
                                                                                                                 UDF_sqNameToSqNum(theSlideOverSqName.Value)
-                                                                                                            ) in "KQRBNP", // any piece of any color in slide zone ?
+                                                                                                            ) in WHITE_PIECES, // any piece of any color in slide zone ?
                                                                                                             true,
                                                                                                             false
                                                                                                         )
@@ -2418,7 +2418,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                             moveBit: UDF_getBitAtSqNum(localVars.postMoveBoard,theSqNum.Value) 
                                                                         } As theMoveBit,
                 
-                                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin "KQRBNP",
+                                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin WHITE_PIECES,
                                                                             // THEN - there is no piece
                                                                             "",
                 
@@ -2451,7 +2451,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                                             UDF_getBitAtSqNum(
                                                                                                                 localVars.postMoveBoard, 
                                                                                                                 UDF_sqNameToSqNum(theSlideOverSqName.Value)
-                                                                                                            ) in "KQRBNP", // any piece of any color in slide zone ?
+                                                                                                            ) in WHITE_PIECES, // any piece of any color in slide zone ?
                                                                                                             true,
                                                                                                             false
                                                                                                         )

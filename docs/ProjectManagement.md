@@ -31,9 +31,12 @@ The category that typo fixes and other minor updates are logged under.
 Additions/Updates to the ProjectManagement documentation.
 
 
-#### Feature 0002 - Create regression testing capability
+#### Feature 0002 - Create diagnostic testing capability
 In a private version I have built in regression testing, I may pull that forward or at least a simplified version of it. I ran into a problem where the sheer size (number of components) in that private version caused the program to basically become too large for the browser based Power Apps development tool to reliably load and save in a timely manner.
 
+##### Story 0002-01 Create UDF diagnostic testing 
+- create diagnostic screen
+- create UDF testing capability
 
 #### Feature 0003 - Create smarter embedded chess engines
 Create smarter chess engines that are written using PowerFx

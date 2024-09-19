@@ -31,25 +31,25 @@ Miscellaneous notes and thoughts about project related topics that are not well 
     UDF_FEN_TO_CASTLE_RIGHTS_ALL_TEXT(fen:Text):Text=Index(Split(fen, " "),3).Value;
     UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_BOOL(fen:Text,color:Number,side:Text):Boolean=
     UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_TEXT(fen:Text,color:Number,side:Text):Text=
-UDF_FEN_TO_ENPASSANT_SQNAME(fen:Text):Text=Index(Split(fen, " "),4).Value;  
-UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),5).Value;  
-UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),6).Value;  
-UDF_CREATE_CASTLE_RIGHTS(wks:Text,wqs:Text,bks:Text,bqs:Text):Text=
-UDF_CREATE_FEN(board:Text,activeColor:Number,castleAvail:Text,enpassantSqName:Text,halfmoveClock:Number,fullmoveClock:Number):Text=
-UDF_SearchBoardForPiece(board:Text,piece:Text):Number=
-UDF_getBitAtSqNum(board:Text,sqNum:Number):Text=
-UDF_getBitsAtSqNum(board:Text,startingSqNum:Number,direction:Number,numberOfSquares:Number):Text=
-UDF_setBitAtSqNum(board:Text,piece:Text,sqNum:Number):Text=
-UDF_getEPCaptureSqNum(fen:Text):Number=
-UDF_PieceToColor(piece:Text):Number=
-UDF_ColorToStr(color:Number):Text=If(color=WHITE,"White","Black");
-UDF_getOppositeColor(color:Number):Number=If(color=WHITE,BLACK,WHITE);
-UDF_getACPieceABBR(fen:Text,piece:Text):Text=
-UDF_getICPieceABBR(fen:Text,piece:Text):Text=
-UDF_isPieceAC(fen:Text,piece:Text):Boolean=
-UDF_PieceToIcon(piece:Text):Text=
-UDF_getPieceMaterialValue(piece:Text):Number=
-UDF_getPieceCentipawnMaterialValue(piece:Text, filter:Text):Number=
+    UDF_FEN_TO_ENPASSANT_SQNAME(fen:Text):Text=Index(Split(fen, " "),4).Value;  
+    UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),5).Value;  
+    UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),6).Value;  
+    UDF_CREATE_CASTLE_RIGHTS(wks:Text,wqs:Text,bks:Text,bqs:Text):Text=
+    UDF_CREATE_FEN(board:Text,activeColor:Number,castleAvail:Text,enpassantSqName:Text,halfmoveClock:Number,fullmoveClock:Number):Text=
+    UDF_SearchBoardForPiece(board:Text,piece:Text):Number=
+    UDF_getBitAtSqNum(board:Text,sqNum:Number):Text=
+    UDF_getBitsAtSqNum(board:Text,startingSqNum:Number,direction:Number,numberOfSquares:Number):Text=
+    UDF_setBitAtSqNum(board:Text,piece:Text,sqNum:Number):Text=
+    UDF_getEPCaptureSqNum(fen:Text):Number=
+    UDF_PieceToColor(piece:Text):Number=
+    UDF_ColorToStr(color:Number):Text=If(color=WHITE,"White","Black");
+    UDF_getOppositeColor(color:Number):Number=If(color=WHITE,BLACK,WHITE);
+    UDF_getACPieceABBR(fen:Text,piece:Text):Text=
+    UDF_getICPieceABBR(fen:Text,piece:Text):Text=
+    UDF_isPieceAC(fen:Text,piece:Text):Boolean=
+    UDF_PieceToIcon(piece:Text):Text=
+    UDF_getPieceMaterialValue(piece:Text):Number=
+    UDF_getPieceCentipawnMaterialValue(piece:Text, filter:Text):Number=
 UDF_calcCentipawnMaterialValue(fen:Text,filter:Text):Number=
 UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
 UDF_isSqNumAttackedBySqNum(attackingPiece:Text, attackingSqNum:Number, attackedSqNum:Number):Boolean=

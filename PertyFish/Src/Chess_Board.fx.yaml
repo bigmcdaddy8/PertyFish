@@ -1853,7 +1853,7 @@ Chess_Board As screen:
                                     Set(gblPF_UI_DisplayedBoard, theD0ParentNode.postMoveBoard);
                                     Set(gblPF_UI_GameTurn, UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN));
                                     Set(gblPF_UI_MaterialValueOverall,
-                                        UDF_calcCentipawnMaterialValue(theD0ParentNode.postMoveFEN,"KQRBNPkqrbnp")/100
+                                        UDF_calcCentipawnMaterialValue(theD0ParentNode.postMoveFEN,ALL_PIECES)/100
                                     );
                                     If(theD0ParentNode.inactiveColorMoveRecord.captureSquareNum<>EMPTY_SQUARE_NUM,
                                         If(theD0ParentNode.inactiveColorMoveRecord.captureSquarePieceColor=WHITE,
@@ -1958,7 +1958,7 @@ Chess_Board As screen:
                     
                                 If(
                                     Not(IsBlank(UDF_getBitAtSqNum(theD0ParentNode.postMoveBoard,theSqNum.Value))) && 
-                                    UDF_getBitAtSqNum(theD0ParentNode.postMoveBoard,theSqNum.Value) exactin UDF_getICPieceABBR(theD0ParentNode.postMoveFEN, "KQRBNP"),
+                                    UDF_getBitAtSqNum(theD0ParentNode.postMoveBoard,theSqNum.Value) exactin UDF_getICPieceABBR(theD0ParentNode.postMoveFEN, WHITE_PIECES),
                                     // THEN - got an inactive piece
                     
                                     // loop through all of the pieces to count number of active CHECKERS
@@ -2048,7 +2048,7 @@ Chess_Board As screen:
                                 If(
                                     Not(IsBlank(UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value))) &&
                                     UDF_getBitAtSqNum(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.noActiveKingBoard,theSqNum.Value) exactin 
-                                        UDF_getICPieceABBR(theD0ParentNode.postMoveFEN,"KQRBNP"),
+                                        UDF_getICPieceABBR(theD0ParentNode.postMoveFEN,WHITE_PIECES),
                     
                                     // THEN - got an inactive piece - loop through all of the moves to mark the attacked squares
                                     ForAll (
@@ -2373,7 +2373,7 @@ Chess_Board As screen:
                     
                                 If(
                                     Not(IsBlank(UDF_getBitAtSqNum(theD0ParentNode.postMoveBoard,theSqNum.Value))) &&
-                                    UDF_getBitAtSqNum(theD0ParentNode.postMoveBoard,theSqNum.Value) exactin UDF_getACPieceABBR(theD0ParentNode.postMoveFEN,"KQRBNP"),
+                                    UDF_getBitAtSqNum(theD0ParentNode.postMoveBoard,theSqNum.Value) exactin UDF_getACPieceABBR(theD0ParentNode.postMoveFEN,WHITE_PIECES),
                                     // THEN
                                     ForAll (
                                         SortByColumns(Filter(colPF_LEGAL_MOVES, 
@@ -2446,7 +2446,7 @@ Chess_Board As screen:
                                                 Not(IsBlank(UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard,theEligibleMove.eligibleSqNum))) &&
                                                 (
                                                     Not(IsBlank(UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard,theEligibleMove.eligibleSqNum))) &&
-                                                    UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard,theEligibleMove.eligibleSqNum) in "KQRBNP"
+                                                    UDF_getBitAtSqNum(theD0ParentNode.postMoveActiveKingDangerBoard,theEligibleMove.eligibleSqNum) in WHITE_PIECES
                                                 ),
                                                     // FILTERED - KING cannot move to an attacked square
                                                     Blank(),
