@@ -50,20 +50,20 @@ Miscellaneous notes and thoughts about project related topics that are not well 
     UDF_PieceToIcon(piece:Text):Text=
     UDF_getPieceMaterialValue(piece:Text):Number=
     UDF_getPieceCentipawnMaterialValue(piece:Text, filter:Text):Number=
-UDF_calcCentipawnMaterialValue(fen:Text,filter:Text):Number=
-UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
-UDF_isSqNumAttackedBySqNum(attackingPiece:Text, attackingSqNum:Number, attackedSqNum:Number):Boolean=
-UDF_countPiecesOnBoard(board:Text, piecesToCount:Text):Number=
-// User defined formulas
-UDF_getOppositeDirection(dir:Number):Number=
-UDF_getDirX(dir:Number):Number=
-UDF_getDirY(dir:Number):Number=
-UDF_getDirX_KNIGHT(dir:Number):Number=
-UDF_getDirY_KNIGHT(dir:Number):Number=
-UDF_sqNumToAdjacentSqNames(refSqNum:Number):Text=
-// UDF Set --------
-UDF_getSetSize(setA:Text):Number=
-UDF_createSetOfSqNames(sqNameList:Text):Text=
+    UDF_calcCentipawnMaterialValue(fen:Text,filter:Text):Number=
+    UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
+    UDF_isSqNumAttackedBySqNum(attackingPiece:Text, attackingSqNum:Number, attackedSqNum:Number):Boolean=
+    UDF_countPiecesOnBoard(board:Text, piecesToCount:Text):Number=
+    // User defined formulas
+    UDF_getOppositeDirection(dir:Number):Number=
+    UDF_getDirX(dir:Number):Number=
+    UDF_getDirY(dir:Number):Number=
+    UDF_getDirX_KNIGHT(dir:Number):Number=
+    UDF_getDirY_KNIGHT(dir:Number):Number=
+    UDF_sqNumToAdjacentSqNames(refSqNum:Number):Text=
+    // UDF Set --------
+    UDF_getSetSize(setA:Text):Number=
+    UDF_createSetOfSqNames(sqNameList:Text):Text=
 UDF_getElementFromSet(setA:Text, index:Number):Text=
 UDF_getSetOfAdjacentSqNames(refSqName:Text):Text=
 UDF_getSetDifference(setA:Text, setB:Text):Text=
