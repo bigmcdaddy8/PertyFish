@@ -2161,10 +2161,10 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
                     //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
                 
-                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "g4 g5 g6 h4 h6"});
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSetOfSqNames("g4 g5 g6 h4 h6")});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
-                        UDF_sqNumToAdjacentSqNames(lTEST_REFERENCE_SQNUM)
+                        UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(lTEST_REFERENCE_SQNUM))
                     });
                 
                     If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
