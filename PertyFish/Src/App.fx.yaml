@@ -929,24 +929,24 @@ App As appinfo:
         UDF_isSqNumKNIGHTAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
             Switch(true,
                 attackingColor=BLACK,
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,2))="n" ||
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,1))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,-1))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-2))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-2))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,-1))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,1))="n" || 
-                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,2))="n",
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(N),UDF_getDirY_KNIGHT(N)))="n" ||
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NE),UDF_getDirY_KNIGHT(NE)))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(E),UDF_getDirY_KNIGHT(E)))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SE),UDF_getDirY_KNIGHT(SE)))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(S),UDF_getDirY_KNIGHT(S)))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SW),UDF_getDirY_KNIGHT(SW)))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(W),UDF_getDirY_KNIGHT(W)))="n" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NW),UDF_getDirY_KNIGHT(NW)))="n",
                     
                 attackingColor=WHITE,
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,2))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,1))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,-1))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-2))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-2))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,-1))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,1))="N" || 
-                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,2))="N",
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(N),UDF_getDirY_KNIGHT(N)))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NE),UDF_getDirY_KNIGHT(NE)))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(E),UDF_getDirY_KNIGHT(E)))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SE),UDF_getDirY_KNIGHT(SE)))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(S),UDF_getDirY_KNIGHT(S)))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SW),UDF_getDirY_KNIGHT(SW)))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(W),UDF_getDirY_KNIGHT(W)))="N" || 
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NW),UDF_getDirY_KNIGHT(NW)))="N",
         
                 // default
                 false
@@ -1092,14 +1092,14 @@ App As appinfo:
                     re: If(attackingColor=WHITE,"N","n")
                 } As v,
                 Sum(
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,2))=v.re,1,0),
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,1))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,-1))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-2))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-2))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,-1))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,1))=v.re,1,0), 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,2))=v.re,1,0)
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(N),UDF_getDirY_KNIGHT(N)))=v.re,1,0),
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NE),UDF_getDirY_KNIGHT(NE)))=v.re,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(E),UDF_getDirY_KNIGHT(E)))=v.re,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SE),UDF_getDirY_KNIGHT(SE)))=v.re,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(S),UDF_getDirY_KNIGHT(S)))=v.re,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SW),UDF_getDirY_KNIGHT(SW)))=v.re,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(W),UDF_getDirY_KNIGHT(W)))=v.re,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NW),UDF_getDirY_KNIGHT(NW)))=v.re,1,0)
                 )
             );
         // is a square occupied by KQRBNP attacked by an opposite colored ROOK
@@ -1224,29 +1224,29 @@ App As appinfo:
                     re: If(attackingColor=WHITE,"N","n")
                 } As v,
                 Trim(
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,2))=v.re,
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,1,2)) & " ", ""
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(N),UDF_getDirY_KNIGHT(N)))=v.re,
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(N),UDF_getDirY_KNIGHT(N))) & " ", ""
                     ) &
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,1))=v.re,
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,2,1)) & " ", ""
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NE),UDF_getDirY_KNIGHT(NE)))=v.re,
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NE),UDF_getDirY_KNIGHT(NE))) & " ", ""
                     ) &
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,2,-1))=v.re,
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,2,-1)) & " ", ""
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(E),UDF_getDirY_KNIGHT(E)))=v.re,
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(E),UDF_getDirY_KNIGHT(E))) & " ", ""
                     ) & 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,1,-2))=v.re,
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,1,-2)) & " ", ""
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SE),UDF_getDirY_KNIGHT(SE)))=v.re,
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SE),UDF_getDirY_KNIGHT(SE))) & " ", ""
                     ) & 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,-2))=v.re,
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-1,-2)) & " ", ""
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(S),UDF_getDirY_KNIGHT(S)))=v.re,
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(S),UDF_getDirY_KNIGHT(S))) & " ", ""
                     ) & 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,-1))=v.re,
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-2,-1)) & " ", ""
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SW),UDF_getDirY_KNIGHT(SW)))=v.re,
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SW),UDF_getDirY_KNIGHT(SW))) & " ", ""
                     ) & 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-2,1))=v.re,
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-2,1)) & " ", ""
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(W),UDF_getDirY_KNIGHT(W)))=v.re,
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(W),UDF_getDirY_KNIGHT(W))) & " ", ""
                     ) & 
-                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,-1,2))=v.re,
-                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-1,2)) & " ", ""
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NW),UDF_getDirY_KNIGHT(NW)))=v.re,
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NW),UDF_getDirY_KNIGHT(NW))) & " ", ""
                     )
                 )
             );
