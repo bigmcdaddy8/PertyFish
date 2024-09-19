@@ -662,7 +662,7 @@ App As appinfo:
                 LookUp(colPF_LEGAL_MOVES,
                     sqNum=attackingSqNum && 
                     eligibleSqNum=attackedSqNum && 
-                    pieceUpper=attackingPiece
+                    pieceUpper=If(attackingPiece in "P", attackingPiece, Upper(attackingPiece)) // pawn moves are case sensitive
                 ) As theEligibleMove,
         
                 If(IsBlank(theEligibleMove),false,true)

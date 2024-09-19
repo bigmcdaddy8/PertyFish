@@ -65,7 +65,6 @@ Improve performance by putting log statements in an appropriate DEBUG check and 
 
 ##### Story 0004-03 GAME_NODES Performance Improvements
 - use localVars to reduce number of FEN/board conversions
-- change UDF_isPathClear() to UDF_isPathClearOnBoard
 - Reduce number of UpdateIf() calls
 - Use localVars w/ Patch() 
 - Remove unused/redundant fields to reduce update footprint
