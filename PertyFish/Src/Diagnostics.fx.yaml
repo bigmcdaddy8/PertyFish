@@ -2064,32 +2064,130 @@ Diagnostics As screen:
                     )
                 );
                 
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getDirX_KNIGHT(dir:Number):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getDirX_KNIGHT"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    //UpdateContext({lTEST_REFERENCE_SQNAME: "h5"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: -2});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_getDirX_KNIGHT(SW)
+                    });
+                
+                    If(lTEST_ACTUAL_RESULT_NUMBER<>lTEST_EXPECTED_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_ACTUAL_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_EXPECTED_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getDirY_KNIGHT(dir:Number):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getDirY_KNIGHT"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    //UpdateContext({lTEST_REFERENCE_SQNAME: "h5"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: -1});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_getDirY_KNIGHT(SW)
+                    });
+                
+                    If(lTEST_ACTUAL_RESULT_NUMBER<>lTEST_EXPECTED_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_ACTUAL_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_EXPECTED_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_sqNumToAdjacentSqNames(refSqNum:Number):Text=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_sqNumToAdjacentSqNames"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    //UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    //UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "h5"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "g4 g5 g6 h4 h6"});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
+                        UDF_sqNumToAdjacentSqNames(lTEST_REFERENCE_SQNUM)
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_TEXT &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_TEXT
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
                 /*
-                        UDF_getDirX_KNIGHT(dir:Number):Number=
-                            Switch(true,
-                                dir=N,  1,
-                                dir=NE, 2,
-                                dir=E,  2,
-                                dir=SE, 1,
-                                dir=S,  -1,
-                                dir=SW, -2,
-                                dir=W,  -2,
-                                dir=NW, -1,
-                                0
-                            );
-                        UDF_getDirY_KNIGHT(dir:Number):Number=
-                            Switch(true,
-                                dir=N,  2,
-                                dir=NE, 1,
-                                dir=E,  -1,
-                                dir=SE, -2,
-                                dir=S,  -2,
-                                dir=SW, -1,
-                                dir=W,  1,
-                                dir=NW, 2,
-                                0
-                            );
-                        
                         UDF_sqNumToAdjacentSqNames(refSqNum:Number):Text=
                             Trim(
                                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N))) & " " &
