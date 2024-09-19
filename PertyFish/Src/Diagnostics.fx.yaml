@@ -1983,18 +1983,6 @@ Diagnostics As screen:
                 );
                 
                 /*
-                        UDF_getOppositeDirection(dir:Number):Number=
-                            Switch(true,
-                                dir=N,  S,
-                                dir=NE, SW,
-                                dir=E,  W,
-                                dir=SE, NW,
-                                dir=S,  N,
-                                dir=SW, NE,
-                                dir=W,  E,
-                                dir=NW, SE,
-                                NO_DIRECTION
-                            );
                         UDF_getDirX(dir:Number):Number=
                             Switch(true,
                                 dir=N,  0,
