@@ -738,19 +738,6 @@ App As appinfo:
                 dir=NW, 2,
                 0
             );
-        
-        UDF_sqNumToAdjacentSqNames(refSqNum:Number):Text=
-            Trim(
-                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N))) & " " &
-                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE))) & " " &
-                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E))) & " " &
-                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE))) & " " &
-                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S))) & " " &
-                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW))) & " " &
-                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W))) & " " &
-                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))
-            );
-        
         // UDF Set --------
         UDF_getSetSize(setA:Text):Number=
             If(Trim(setA)="",
@@ -764,8 +751,6 @@ App As appinfo:
                 Index(Split(setA, " "), index).Value,
                 ""
             );
-        UDF_getSetOfAdjacentSqNames(refSqName:Text):Text=
-            UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(UDF_sqNameToSqNum(refSqName)));
         UDF_getSetDifference(setA:Text, setB:Text):Text=
             Trim(
                 Concat(
@@ -901,7 +886,17 @@ App As appinfo:
                     ), Value, " "
                 )
             );
-        
+        UDF_sqNumToAdjacentSqNamesSet(refSqNum:Number):Text=
+            Udf_createSetOfSqNames(
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))
+            );
         // UDF isAttacked code
         // is a square attacked by a PAWN
         UDF_isSqNumPAWNAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
