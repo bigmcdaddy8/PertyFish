@@ -2730,32 +2730,50 @@ Diagnostics As screen:
                     )
                 );
                 
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getSetOfOccupiedSqNames(board:Text, filter:Text):Text=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getSetOfOccupiedSqNames"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    UpdateContext({lTEST_FEN: "7k/1q6/8/6Pp/8/8/4K3/8 b - h6 0 1"});
+                    UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    //UpdateContext({lTEST_REFERENCE_SQNAME: "b5"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SQNAME2: "d5"});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "b7"});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
+                        UDF_getSetOfOccupiedSqNames(lTEST_REFERENCE_SQNUM, "q")
+                    });
+                        
+                    If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_TEXT &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_TEXT
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
                 /*      
-                        // UDF isProtected code TODO this needs to be completed...
-                        UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=false;
-                        
-                        // UDF getSetOfOccupiedSqNames
-                        UDF_getSetOfOccupiedSqNames(board:Text, filter:Text):Text=
-                            Trim(
-                                Concat(
-                                    Distinct(
-                                        Sort(
-                                            ForAll(
-                                                Sequence(64, 0) As theSqNum,
-                        
-                                                With(
-                                                    {
-                                                        thePiece: UDF_getBitAtSqNum(board, theSqNum.Value)
-                                                    } As localVars,
-                        
-                                                    If(localVars.thePiece exactin filter, UDF_sqNumToSqName(theSqNum.Value), "")
-                                                )
-                                            ), Value
-                                        ), Value
-                                    ), Value, " "
-                                )
-                            );
-                        
                         // UDF isAttacked code
                         // is a square occupied by KQRBNP attacked by an opposite colored PAWN
                         UDF_isSqNumPAWNAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
@@ -2908,6 +2926,8 @@ Diagnostics As screen:
                                 // default
                                 false
                             );
+                        // UDF isProtected code TODO this needs to be completed...
+                        UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=
                         // UDF countAttacks code
                         // is a square occupied by KQRBNP attacked by an opposite colored PAWN
                         UDF_countSqNumPAWNAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
