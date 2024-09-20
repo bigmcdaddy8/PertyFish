@@ -1030,7 +1030,7 @@ App As appinfo:
                 If(
                     attackingColor=WHITE &&
                     UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)))="P", 1, 0
-                )
+                ),
                 If(
                     attackingColor=BLACK &&
                     UDF_getBitAtSqNum(
