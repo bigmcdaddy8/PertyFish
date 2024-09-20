@@ -860,7 +860,7 @@ App As appinfo:
             UDF_getSetUnion(UDF_sqNumToFileSet(refSqNum), UDF_sqNumToRankSet(refSqNum));
         
         UDF_sqNumToKingSet(refSqNum:Number):Text=
-            UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
+            UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNamesSet(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
         
         // UDF isProtected code TODO this needs to be completed...
         UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=false;
@@ -887,7 +887,7 @@ App As appinfo:
                 )
             );
         UDF_sqNumToAdjacentSqNamesSet(refSqNum:Number):Text=
-            Udf_createSetOfSqNames(
+            UDF_createSetOfSqNames(
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N))) & " " &
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE))) & " " &
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E))) & " " &
