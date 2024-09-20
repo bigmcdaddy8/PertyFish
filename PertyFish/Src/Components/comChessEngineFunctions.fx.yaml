@@ -1616,8 +1616,8 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                 With(
                                                     {
-                                                        gettingForkedSet:   UDF_getSetOfOccupiedSqNames(theCurrentNode.postMoveBoard, forkPieces.gettingForkedPieces),
-                                                        forkingSet:         UDF_getSetOfOccupiedSqNames(theCurrentNode.postMoveBoard, forkPieces.forkingPieces)
+                                                        gettingForkedSet:   UDF_occupiedSqNamesSet(theCurrentNode.postMoveBoard, forkPieces.gettingForkedPieces),
+                                                        forkingSet:         UDF_occupiedSqNamesSet(theCurrentNode.postMoveBoard, forkPieces.forkingPieces)
                                                     } As forkSets,
                                                     
                                                     With(

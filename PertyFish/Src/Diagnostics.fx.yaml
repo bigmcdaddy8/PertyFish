@@ -2730,8 +2730,8 @@ Diagnostics As screen:
                 );
                 
                 If(!lTEST_FAILURE_DETECTED,
-                    // UDF_getSetOfOccupiedSqNames(board:Text, filter:Text):Text=
-                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getSetOfOccupiedSqNames"});
+                    // UDF_occupiedSqNamesSet(board:Text, filter:Text):Text=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_occupiedSqNamesSet"});
                     UpdateContext({lTEST_TEST_NUMBER: 0});
                     UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
                 
@@ -2749,7 +2749,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "b7"});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
-                        UDF_getSetOfOccupiedSqNames(lTEST_BOARD, "q")
+                        UDF_occupiedSqNamesSet(lTEST_BOARD, "q")
                     });
                         
                     If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,

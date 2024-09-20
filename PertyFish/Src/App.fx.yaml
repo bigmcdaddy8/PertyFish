@@ -864,9 +864,7 @@ App As appinfo:
         
         // UDF isProtected code TODO this needs to be completed...
         UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=false;
-        
-        // UDF getSetOfOccupiedSqNames
-        UDF_getSetOfOccupiedSqNames(board:Text, filter:Text):Text=
+        UDF_occupiedSqNamesSet(board:Text, filter:Text):Text=
             Trim(
                 Concat(
                     Distinct(
