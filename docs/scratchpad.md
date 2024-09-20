@@ -64,19 +64,17 @@ Miscellaneous notes and thoughts about project related topics that are not well 
     // UDF Set --------
     UDF_getSetSize(setA:Text):Number=
     UDF_createSetOfSqNames(sqNameList:Text):Text=
-UDF_getElementFromSet(setA:Text, index:Number):Text=
-UDF_getSetOfAdjacentSqNames(refSqName:Text):Text=
-UDF_getSetDifference(setA:Text, setB:Text):Text=
-UDF_getSetIntersection(setA:Text, setB:Text):Text=
-UDF_getSetUnion(setA:Text, setB:Text):Text=
-UDF_getSetComplement(setA:Text):Text=
-UDF_getSetofSqNamesInBox(refSqName1:Text, refSqName2:Text):Text=
-UDF_sqNumToFileSet(refSqNum:Number):Text=
-UDF_sqNumToRankSet(refSqNum:Number):Text=
-UDF_sqNumToRookSet(refSqNum:Number):Text=
-UDF_sqNumToKingSet(refSqNum:Number):Text=
-// UDF isProtected code TODO this needs to be completed...
-UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=false;
+    UDF_getElementFromSet(setA:Text, index:Number):Text=
+    UDF_getSetOfAdjacentSqNames(refSqName:Text):Text=
+    UDF_getSetDifference(setA:Text, setB:Text):Text=
+    UDF_getSetIntersection(setA:Text, setB:Text):Text=
+    UDF_getSetUnion(setA:Text, setB:Text):Text=
+    UDF_getSetComplement(setA:Text):Text=
+    UDF_getSetofSqNamesInBox(refSqName1:Text, refSqName2:Text):Text=
+    UDF_sqNumToFileSet(refSqNum:Number):Text=
+    UDF_sqNumToRankSet(refSqNum:Number):Text=
+    UDF_sqNumToRookSet(refSqNum:Number):Text=
+    UDF_sqNumToKingSet(refSqNum:Number):Text=
 // UDF getSetOfOccupiedSqNames
 UDF_getSetOfOccupiedSqNames(board:Text, filter:Text):Text=
 // UDF isAttacked code
@@ -93,6 +91,7 @@ UDF_isSqNumQUEENAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boo
 // is a square occupied by KQRBNP attacked by an opposite colored KING
 UDF_isSqNumKINGAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
 UDF_isSqNumAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=
 // UDF countAttacks code
 // is a square occupied by KQRBNP attacked by an opposite colored PAWN
 UDF_countSqNumPAWNAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
