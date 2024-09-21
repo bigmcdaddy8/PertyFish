@@ -1013,7 +1013,6 @@ App As appinfo:
                 false
             );
         // UDF countAttacks code
-        // is a square attacked by a PAWN
         UDF_countSqNumPAWNAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
             Sum(
                 If(
@@ -1034,7 +1033,6 @@ App As appinfo:
                     UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))="p", 1, 0
                 )
             );
-        // is a square attacked by KNIGHT
         UDF_countSqNumKNIGHTAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
             With(
                 {
@@ -1051,7 +1049,6 @@ App As appinfo:
                     If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NW),UDF_getDirY_KNIGHT(NW)))=theKnight.abbr,1,0)
                 )
             );
-        // is a square attacked by a ROOK
         UDF_countSqNumROOKAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
             // IsMatch() requires a constant value for the pattern
             If(attackingColor=WHITE,
@@ -1068,7 +1065,6 @@ App As appinfo:
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}r", MatchOptions.BeginsWith),1,0)
                 )
             );
-        // is a square attacked by a BISHOP  
         UDF_countSqNumBISHOPAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
             // IsMatch() requires a constant value for the pattern
             If(attackingColor=WHITE,
@@ -1085,7 +1081,6 @@ App As appinfo:
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}b", MatchOptions.BeginsWith),1,0)
                 )
             );
-        // is a square attacked by a QUEEN
         UDF_countSqNumQUEENAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
             // IsMatch() requires a constant value for the pattern
             If(attackingColor=WHITE,
@@ -1110,7 +1105,6 @@ App As appinfo:
                     If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}q", MatchOptions.BeginsWith),1,0)
                 )
             );
-        // is a square attacked by a KING
         UDF_countSqNumKINGAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
             With(
                 {
@@ -1136,7 +1130,7 @@ App As appinfo:
                 UDF_countSqNumBISHOPAttacks(board, refSqNum, attackingColor),
                 UDF_countSqNumQUEENAttacks(board, refSqNum, attackingColor)
             );
-        // UDF getAttackerSqNames code
+        // UDF getAttackerSqNamesSet code
         // get squares of attacking PAWNs
         UDF_getPAWNAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
             UDF_createSqNamesSet(
