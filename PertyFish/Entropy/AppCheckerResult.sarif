@@ -14,1124 +14,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_300"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_300",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 43,
-                  "charOffset": 3738,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theirKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_300",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_300"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_300",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 43,
-                  "charOffset": 15040,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theirKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_300",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_400"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_400",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 43,
-                  "charOffset": 5483,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theirKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_400",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_400"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_400",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 43,
-                  "charOffset": 16785,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theirKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_400",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_500"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_500",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 41,
-                  "charOffset": 9910,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_500",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 89,
-                  "charOffset": 7971,
-                  "snippet": {
-                    "text": "UDF_getSetOfOccupiedSqNames(theCurrentNode.postMoveBoard, forkPieces.gettingForkedPieces)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_getSetOfOccupiedSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 83,
-                  "charOffset": 8122,
-                  "snippet": {
-                    "text": "UDF_getSetOfOccupiedSqNames(theCurrentNode.postMoveBoard, forkPieces.forkingPieces)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_getSetOfOccupiedSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 9172,
-                  "snippet": {
-                    "text": ".gettingForkedSet"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrTypeError",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 11,
-                  "charOffset": 9545,
-                  "snippet": {
-                    "text": ".forkingSet"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Text",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrBadType-ExpectedType-ProvidedType",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 9565,
-                  "snippet": {
-                    "text": ".gettingForkedSet"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Text",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrBadType-ExpectedType-ProvidedType",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 15,
-                  "charOffset": 9521,
-                  "snippet": {
-                    "text": "UDF_getSetUnion"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_getSetUnion"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrInvalidArgs-Func",
-          "ruleIndex": 3
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 10885,
-                  "snippet": {
-                    "text": ".gettingForkedSet"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Text, Number, Decimal, Date, Time, DateTimeNoTimeZone, DateTime, Boolean, ViewValue, UntypedObject"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrBadType-ExpectedTypesCSV",
-          "ruleIndex": 4
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 11,
-                  "charOffset": 10979,
-                  "snippet": {
-                    "text": ".forkingSet"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Text, Number, Decimal, Date, Time, DateTimeNoTimeZone, DateTime, Boolean, ViewValue, UntypedObject"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrBadType-ExpectedTypesCSV",
-          "ruleIndex": 4
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "comChessEngineFunctions.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 41,
-                  "charOffset": 18239,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "comChessEngineFunctions",
-                "type": "comChessEngineFunctions"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_300"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_300",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 43,
-                  "charOffset": 3738,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theirKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_300",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_300"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_300",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 43,
-                  "charOffset": 15040,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theirKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_300",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_400"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_400",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 43,
-                  "charOffset": 5483,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theirKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_400",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_400"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_400",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 43,
-                  "charOffset": 16785,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theirKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_400",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_500"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_500",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 41,
-                  "charOffset": 9910,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_500",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 89,
-                  "charOffset": 7971,
-                  "snippet": {
-                    "text": "UDF_getSetOfOccupiedSqNames(theCurrentNode.postMoveBoard, forkPieces.gettingForkedPieces)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_getSetOfOccupiedSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 83,
-                  "charOffset": 8122,
-                  "snippet": {
-                    "text": "UDF_getSetOfOccupiedSqNames(theCurrentNode.postMoveBoard, forkPieces.forkingPieces)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_getSetOfOccupiedSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 9172,
-                  "snippet": {
-                    "text": ".gettingForkedSet"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrTypeError",
-          "ruleIndex": 1
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 11,
-                  "charOffset": 9545,
-                  "snippet": {
-                    "text": ".forkingSet"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Text",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrBadType-ExpectedType-ProvidedType",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 9565,
-                  "snippet": {
-                    "text": ".gettingForkedSet"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Text",
-              "Error"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrBadType-ExpectedType-ProvidedType",
-          "ruleIndex": 2
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 15,
-                  "charOffset": 9521,
-                  "snippet": {
-                    "text": "UDF_getSetUnion"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_getSetUnion"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrInvalidArgs-Func",
-          "ruleIndex": 3
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 10885,
-                  "snippet": {
-                    "text": ".gettingForkedSet"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Text, Number, Decimal, Date, Time, DateTimeNoTimeZone, DateTime, Boolean, ViewValue, UntypedObject"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrBadType-ExpectedTypesCSV",
-          "ruleIndex": 4
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 11,
-                  "charOffset": 10979,
-                  "snippet": {
-                    "text": ".forkingSet"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "Text, Number, Decimal, Date, Time, DateTimeNoTimeZone, DateTime, Boolean, ViewValue, UntypedObject"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrBadType-ExpectedTypesCSV",
-          "ruleIndex": 4
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "UsingComponents.comChessEngineFunctionsLibrary.fCE_600",
-                  "relativeAddress": 0
-                },
-                "region": {
-                  "charLength": 41,
-                  "charOffset": 18239,
-                  "snippet": {
-                    "text": "UDF_sqNumToAdjacentSqNames(theKing.sqNum)"
-                  }
-                }
-              },
-              "properties": {
-                "member": "fCE_600",
-                "module": "UsingComponents",
-                "type": "UsingComponents.comChessEngineFunctionsLibrary"
-              }
-            }
-          ],
-          "message": {
-            "arguments": [
-              "UDF_sqNumToAdjacentSqNames"
-            ],
-            "id": "issue"
-          },
-          "properties": {
-            "level": "High"
-          },
-          "ruleId": "app-ErrUnknownFunction",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "Chess_Board.conEntireScreen.conChessBoardWithCoordinates.galFileTopLabels.TabIndex"
                 }
               ],
@@ -1155,7 +37,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 5
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1185,7 +67,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1215,7 +97,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 5
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1245,7 +127,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1275,7 +157,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 5
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1305,7 +187,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 5
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1335,7 +217,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1365,7 +247,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 5
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1395,7 +277,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1425,7 +307,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 5
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1455,7 +337,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1485,7 +367,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 5
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1515,7 +397,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1545,7 +427,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1575,7 +457,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1605,7 +487,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1635,7 +517,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1665,7 +547,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1695,7 +577,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1725,7 +607,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1755,7 +637,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1785,7 +667,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1815,7 +697,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1845,7 +727,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 6
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -1875,7 +757,7 @@
             "level": "Medium"
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 5
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -1905,7 +787,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1935,7 +817,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1965,7 +847,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -1995,7 +877,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2025,7 +907,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2055,7 +937,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2085,7 +967,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2115,7 +997,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2145,7 +1027,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2175,7 +1057,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2205,7 +1087,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2235,7 +1117,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2265,7 +1147,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2295,7 +1177,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2325,7 +1207,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2355,7 +1237,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2385,7 +1267,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2415,7 +1297,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2445,7 +1327,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2475,7 +1357,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2505,7 +1387,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2535,7 +1417,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2565,7 +1447,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2595,7 +1477,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         },
         {
           "locations": [
@@ -2625,7 +1507,7 @@
             "level": "Medium"
           },
           "ruleId": "app-UnusedVariables",
-          "ruleIndex": 7
+          "ruleIndex": 2
         }
       ],
       "tool": {
@@ -2633,79 +1515,6 @@
           "fullName": "PowerApps app checker",
           "name": "PowerApps app checker",
           "rules": [
-            {
-              "id": "app-ErrUnknownFunction",
-              "messageStrings": {
-                "issue": {
-                  "text": "'{0}' is an unknown or unsupported function."
-                }
-              },
-              "properties": {
-                "componentType": "app",
-                "level": "High",
-                "primaryCategory": "formula",
-                "whyFix": ""
-              }
-            },
-            {
-              "id": "app-ErrTypeError",
-              "messageStrings": {
-                "issue": {
-                  "text": "Incompatible type. We can't evaluate your formula because of a type error."
-                }
-              },
-              "properties": {
-                "componentType": "app",
-                "howToFix": [
-                  "Check the types of the values involved in the formula and ensure the types match."
-                ],
-                "level": "High",
-                "primaryCategory": "formula",
-                "whyFix": ""
-              }
-            },
-            {
-              "id": "app-ErrBadType-ExpectedType-ProvidedType",
-              "messageStrings": {
-                "issue": {
-                  "text": "Invalid argument type ({1}). Expecting a {0} value instead."
-                }
-              },
-              "properties": {
-                "componentType": "app",
-                "level": "High",
-                "primaryCategory": "formula",
-                "whyFix": ""
-              }
-            },
-            {
-              "id": "app-ErrInvalidArgs-Func",
-              "messageStrings": {
-                "issue": {
-                  "text": "The function '{0}' has some invalid arguments."
-                }
-              },
-              "properties": {
-                "componentType": "app",
-                "level": "High",
-                "primaryCategory": "formula",
-                "whyFix": ""
-              }
-            },
-            {
-              "id": "app-ErrBadType-ExpectedTypesCSV",
-              "messageStrings": {
-                "issue": {
-                  "text": "Invalid argument type. Expecting one of the following: {0}."
-                }
-              },
-              "properties": {
-                "componentType": "app",
-                "level": "High",
-                "primaryCategory": "formula",
-                "whyFix": ""
-              }
-            },
             {
               "id": "acc-TabIndexShouldBeDefinedForInteractiveControl",
               "messageStrings": {

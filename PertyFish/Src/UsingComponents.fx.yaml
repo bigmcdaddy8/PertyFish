@@ -308,7 +308,7 @@ UsingComponents As screen:
             
                                                     With(
                                                         {
-                                                            adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
+                                                            adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNamesSet(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
                                                             noKingPreMoveBoard: UDF_setBitAtSqNum(
                                                                                     theCurrentNode.preMoveBoard,
                                                                                     EMPTY_FILLER_ABBR,
@@ -442,7 +442,7 @@ UsingComponents As screen:
             
                                                     With(
                                                         {
-                                                            adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
+                                                            adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNamesSet(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
                                                             noKingPreMoveBoard: UDF_setBitAtSqNum(
                                                                                     theCurrentNode.preMoveBoard,
                                                                                     EMPTY_FILLER_ABBR,
@@ -638,6 +638,10 @@ UsingComponents As screen:
                 })
             );
             
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                " comChessEngineFunctions.fCE_400(): entered2 pNodeID: " & pNodeID
+            });
+            
             With(
                 LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
             
@@ -731,7 +735,7 @@ UsingComponents As screen:
             
                                                     With(
                                                         {
-                                                            adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
+                                                            adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNamesSet(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
                                                             noKingPreMoveBoard: UDF_setBitAtSqNum(
                                                                                     theCurrentNode.preMoveBoard,
                                                                                     EMPTY_FILLER_ABBR,
@@ -865,7 +869,7 @@ UsingComponents As screen:
             
                                                     With(
                                                         {
-                                                            adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
+                                                            adjSquaresSet: UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNamesSet(theirKing.sqNum) & " " & UDF_sqNumToSqName(theirKing.sqNum)),
                                                             noKingPreMoveBoard: UDF_setBitAtSqNum(
                                                                                     theCurrentNode.preMoveBoard,
                                                                                     EMPTY_FILLER_ABBR,
@@ -1222,7 +1226,7 @@ UsingComponents As screen:
             
                                                             With(
                                                                 {
-                                                                    adjSquaresSet:  UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theKing.sqNum) & " " &  UDF_sqNumToSqName(theKing.sqNum)),
+                                                                    adjSquaresSet:  UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNamesSet(theKing.sqNum) & " " &  UDF_sqNumToSqName(theKing.sqNum)),
                                                                     noKingPreMoveBoard: UDF_setBitAtSqNum(theCurrentNode.preMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
                                                                     noKingPostMoveBoard:    UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
                                                                     // remove the moving piece so that we can determine if we can move to an adjacent protected square
@@ -1654,8 +1658,8 @@ UsingComponents As screen:
             
                                             With(
                                                 {
-                                                    gettingForkedSet:   UDF_getSetOfOccupiedSqNames(theCurrentNode.postMoveBoard, forkPieces.gettingForkedPieces),
-                                                    forkingSet:         UDF_getSetOfOccupiedSqNames(theCurrentNode.postMoveBoard, forkPieces.forkingPieces)
+                                                    gettingForkedSet:   UDF_occupiedSqNamesSet(theCurrentNode.postMoveBoard, forkPieces.gettingForkedPieces),
+                                                    forkingSet:         UDF_occupiedSqNamesSet(theCurrentNode.postMoveBoard, forkPieces.forkingPieces)
                                                 } As forkSets,
                                                 
                                                 With(
@@ -1799,7 +1803,7 @@ UsingComponents As screen:
             
                                                             With(
                                                                 {
-                                                                    adjSquaresSet:  UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNames(theKing.sqNum) & " " &  UDF_sqNumToSqName(theKing.sqNum)),
+                                                                    adjSquaresSet:  UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNamesSet(theKing.sqNum) & " " &  UDF_sqNumToSqName(theKing.sqNum)),
                                                                     noKingPreMoveBoard: UDF_setBitAtSqNum(theCurrentNode.preMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
                                                                     noKingPostMoveBoard:    UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
                                                                     // remove the moving piece so that we can determine if we can move to an adjacent protected square
