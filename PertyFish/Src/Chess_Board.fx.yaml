@@ -4136,7 +4136,7 @@ Chess_Board As screen:
                 OnSelect: |
                     =comUtilityFunctionsLibrary.fUtilInitData(1);
                     
-                    
+                    Set(gblPF_PAUSE, false);
                     
                     /*  -------------------------------------------------------------------------------------------------------------------------------------------------
                     NEW_GAME

@@ -2614,19 +2614,49 @@ comChessEngineFunctions As CanvasComponent:
                             
                             Switch(true,
                                 theEngine.selectedEngine=CE_PF_200,
+                                    If(gblPF_DEBUG_EVAL,
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                            " fME_EvaluateMove(): calling comChessEngineFunctions.fCE_200(" & pNodeID & ")"
+                                        })
+                                    );
                                     comChessEngineFunctions.fCE_200(pNodeID),
                                 theEngine.selectedEngine=CE_PF_300,
+                                    If(gblPF_DEBUG_EVAL,
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                            " fME_EvaluateMove(): calling comChessEngineFunctions.fCE_300(" & pNodeID & ")"
+                                        })
+                                    );
                                     comChessEngineFunctions.fCE_300(pNodeID),
                                 theEngine.selectedEngine=CE_PF_400,
+                                    If(gblPF_DEBUG_EVAL,
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                            " fME_EvaluateMove(): calling comChessEngineFunctions.fCE_400(" & pNodeID & ")"
+                                        })
+                                    );
                                     comChessEngineFunctions.fCE_400(pNodeID),
                                 theEngine.selectedEngine=CE_PF_500,
+                                    If(gblPF_DEBUG_EVAL,
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                            " fME_EvaluateMove(): calling comChessEngineFunctions.fCE_500(" & pNodeID & ")"
+                                        })
+                                    );
                                     comChessEngineFunctions.fCE_500(pNodeID),
                                 theEngine.selectedEngine=CE_PF_600,
                                     comChessEngineFunctions.fCE_600_preEvaluate();
+                                    If(gblPF_DEBUG_EVAL,
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                            " fME_EvaluateMove(): calling comChessEngineFunctions.fCE_600(" & pNodeID & ")"
+                                        })
+                                    );
                                     comChessEngineFunctions.fCE_600(pNodeID);
                                     comChessEngineFunctions.fCE_600_postEvaluate(),
                                     
                                 // default
+                                If(gblPF_DEBUG_EVAL,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " fME_EvaluateMove(): calling comChessEngineFunctions.fCE_100(" & pNodeID & ")"
+                                    })
+                                );
                                 comChessEngineFunctions.fCE_100(pNodeID)
                             );
                 
