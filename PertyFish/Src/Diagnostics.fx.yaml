@@ -2160,10 +2160,10 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
                     //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
                 
-                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSetOfSqNames("g4 g5 g6 h4 h6")});
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSqNamesSet("g4 g5 g6 h4 h6")});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
-                        UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNamesSet(lTEST_REFERENCE_SQNUM))
+                        UDF_createSqNamesSet(UDF_sqNumToAdjacentSqNamesSet(lTEST_REFERENCE_SQNUM))
                     });
                 
                     If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
@@ -2204,7 +2204,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 5});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
-                        UDF_getSetSize(UDF_createSetOfSqNames("g4 g5 g6 h4 h6"))
+                        UDF_getSetSize(UDF_createSqNamesSet("g4 g5 g6 h4 h6"))
                     });
                 
                     If(lTEST_EXPECTED_RESULT_NUMBER<>lTEST_ACTUAL_RESULT_NUMBER,
@@ -2228,8 +2228,8 @@ Diagnostics As screen:
                 );
                 
                 If(!lTEST_FAILURE_DETECTED,
-                    // UDF_createSetOfSqNames(sqNameList:Text):Text=
-                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_createSetOfSqNames"});
+                    // UDF_createSqNamesSet(sqNameList:Text):Text=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_createSqNamesSet"});
                     UpdateContext({lTEST_TEST_NUMBER: 0});
                     UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
                 
@@ -2245,7 +2245,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "g4 g5 g6 h4 h6"});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
-                        UDF_createSetOfSqNames("        g6 h4    g4 g5 h6      ")
+                        UDF_createSqNamesSet("        g6 h4    g4 g5 h6      ")
                     });
                 
                     If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
@@ -2286,7 +2286,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_EXPECTED_RESULT_TEXT: "g6"});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
-                        UDF_getElementFromSet(UDF_createSetOfSqNames("        g6 h4    g4 g5 h6      "), 3)
+                        UDF_getElementFromSet(UDF_createSqNamesSet("        g6 h4    g4 g5 h6      "), 3)
                     });
                 
                     If(lTEST_EXPECTED_RESULT_TEXT<>lTEST_ACTUAL_RESULT_TEXT,
@@ -2660,7 +2660,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
                     //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
                 
-                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSetOfSqNames("b1 b2 b3 b4 b5 b6 b7 b8 a6 b6 c6 d6 e6 f6 g6 h6")});
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSqNamesSet("b1 b2 b3 b4 b5 b6 b7 b8 a6 b6 c6 d6 e6 f6 g6 h6")});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
                         UDF_sqNumToRookSet(lTEST_REFERENCE_SQNUM)
@@ -2703,7 +2703,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
                     //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
                 
-                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSetOfSqNames("a4 a5 a6 b4 b5 b6 c4 c5 c6")});
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSqNamesSet("a4 a5 a6 b4 b5 b6 c4 c5 c6")});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
                         UDF_sqNumToKingSet(lTEST_REFERENCE_SQNUM)
@@ -3372,7 +3372,7 @@ Diagnostics As screen:
                                 UDF_getQUEENAttackerSqNames(board, refSqNum, attackingColor)
                             );
                         UDF_getAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-                            UDF_createSetOfSqNames(UDF_getAttackerSqNames(board, refSqNum, attackingColor));
+                            UDF_createSqNamesSet(UDF_getAttackerSqNames(board, refSqNum, attackingColor));
                         // get the material value of the weakest piece attacking a square
                         UDF_getSqNumAttackersMaterialCentipawn(board:Text, refSqNum:Number, attackingColor:Number):Number=
                             With(
