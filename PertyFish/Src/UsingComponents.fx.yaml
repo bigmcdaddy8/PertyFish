@@ -723,7 +723,7 @@ UsingComponents As screen:
                                             })
                                         );
                                         If(UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, BLACK_PIECES)>1,
-                                            // THEN
+                                            // THEN 
                                             0,
             
                                             // ELSE - the opponent is a lone king
