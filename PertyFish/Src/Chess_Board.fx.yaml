@@ -767,7 +767,7 @@ Chess_Board As screen:
                 tmrMakeNextGameMove As timer:
                     AutoPause: =false
                     DisplayMode: =DisplayMode.View
-                    Duration: =If(radWhitePiecesPlayerType.SelectedText.Value="Neither",3000,500)
+                    Duration: =If(radWhitePiecesPlayerType.SelectedText.Value="Human",3000,500)
                     Height: =27
                     OnTimerEnd: |-
                         =If(Mod(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.moveNumber,3)=0,
@@ -4233,7 +4233,9 @@ Chess_Board As screen:
                                         uiData: Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).uiData, {
                                                     statusText:             "Game in Progress" ,
                                                     statusFill:             COLOR_GREENish,
-                                                    diagnosticText:         "Computer's turn - please wait...",
+                                                    diagnosticText:         "Computer's turn (" &
+                                                                            If(UDF_FEN_TO_ACTIVE_COLOR(theD0ParentNode.postMoveFEN)=WHITE,"White","Black") &
+                                                                            ") - please wait...",
                                                     diagnosticFill:         COLOR_WHITEish
                                                 })
                                     })
