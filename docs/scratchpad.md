@@ -4,8 +4,6 @@ Miscellaneous notes and thoughts about project related topics that are not well 
 
 
 
-
-
     UDF_getFileNumFromFileName(file:Text):Number=Find(file,"abcdefgh");
     UDF_getFileNameFromFileNum(fileNum:Number):Text=Index(["a","b","c","d","e","f","g","h"], fileNum).Value;
     UDF_getFileNameFromSqName(sqName:Text):Text=Left(sqName,1);
@@ -32,8 +30,8 @@ Miscellaneous notes and thoughts about project related topics that are not well 
     UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_BOOL(fen:Text,color:Number,side:Text):Boolean=
     UDF_FEN_TO_CASTLE_RIGHTS_SPECIFIC_TEXT(fen:Text,color:Number,side:Text):Text=
     UDF_FEN_TO_ENPASSANT_SQNAME(fen:Text):Text=Index(Split(fen, " "),4).Value;  
-    UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),5).Value;  
-    UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),6).Value;  
+    UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=
+    UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=
     UDF_CREATE_CASTLE_RIGHTS(wks:Text,wqs:Text,bks:Text,bqs:Text):Text=
     UDF_CREATE_FEN(board:Text,activeColor:Number,castleAvail:Text,enpassantSqName:Text,halfmoveClock:Number,fullmoveClock:Number):Text=
     UDF_SearchBoardForPiece(board:Text,piece:Text):Number=
@@ -54,18 +52,14 @@ Miscellaneous notes and thoughts about project related topics that are not well 
     UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
     UDF_isSqNumAttackedBySqNum(attackingPiece:Text, attackingSqNum:Number, attackedSqNum:Number):Boolean=
     UDF_countPiecesOnBoard(board:Text, piecesToCount:Text):Number=
-    // User defined formulas
     UDF_getOppositeDirection(dir:Number):Number=
     UDF_getDirX(dir:Number):Number=
     UDF_getDirY(dir:Number):Number=
     UDF_getDirX_KNIGHT(dir:Number):Number=
     UDF_getDirY_KNIGHT(dir:Number):Number=
-    UDF_sqNumToAdjacentSqNames(refSqNum:Number):Text=
-    // UDF Set --------
     UDF_getSetSize(setA:Text):Number=
-    UDF_createSetOfSqNames(sqNameList:Text):Text=
+    UDF_createSqNamesSet(sqNameList:Text):Text=
     UDF_getElementFromSet(setA:Text, index:Number):Text=
-    UDF_getSetOfAdjacentSqNames(refSqName:Text):Text=
     UDF_getSetDifference(setA:Text, setB:Text):Text=
     UDF_getSetIntersection(setA:Text, setB:Text):Text=
     UDF_getSetUnion(setA:Text, setB:Text):Text=
@@ -73,53 +67,28 @@ Miscellaneous notes and thoughts about project related topics that are not well 
     UDF_getSetofSqNamesInBox(refSqName1:Text, refSqName2:Text):Text=
     UDF_sqNumToFileSet(refSqNum:Number):Text=
     UDF_sqNumToRankSet(refSqNum:Number):Text=
-    UDF_sqNumToRookSet(refSqNum:Number):Text=
-    UDF_sqNumToKingSet(refSqNum:Number):Text=
-// UDF getSetOfOccupiedSqNames
-UDF_getSetOfOccupiedSqNames(board:Text, filter:Text):Text=
-// UDF isAttacked code
-// is a square occupied by KQRBNP attacked by an opposite colored PAWN
+    UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=false;
+    UDF_occupiedSqNamesSet(board:Text, filter:Text):Text=
+UDF_sqNumToAdjacentSqNamesSet(refSqNum:Number):Text=
 UDF_isSqNumPAWNAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-// is a square occupied by KQRBNP attacked by an opposite colored KNIGHT
 UDF_isSqNumKNIGHTAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-// is a square occupied by KQRBNP attacked by an opposite colored ROOK
 UDF_isSqNumROOKAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-// is a square occupied by KQRBNP attacked by an opposite colored BISHOP  
 UDF_isSqNumBISHOPAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-// is a square occupied by KQRBNP attacked by an opposite colored QUEEN
 UDF_isSqNumQUEENAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-// is a square occupied by KQRBNP attacked by an opposite colored KING
 UDF_isSqNumKINGAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
 UDF_isSqNumAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
-UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=
-// UDF countAttacks code
-// is a square occupied by KQRBNP attacked by an opposite colored PAWN
 UDF_countSqNumPAWNAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
-// is a square occupied by KQRBNP attacked by an opposite colored KNIGHT
 UDF_countSqNumKNIGHTAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
-// is a square occupied by KQRBNP attacked by an opposite colored ROOK
 UDF_countSqNumROOKAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
-// is a square occupied by KQRBNP attacked by an opposite colored BISHOP  
 UDF_countSqNumBISHOPAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
-// is a square occupied by KQRBNP attacked by an opposite colored QUEEN
 UDF_countSqNumQUEENAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
-// is a square occupied by KQRBNP attacked by an opposite colored KING
 UDF_countSqNumKINGAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
 UDF_countSqNumAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
-// UDF getAttackerSqNames code
-// get squares of attacking PAWNs
-UDF_getPAWNAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
-// get squares of attacking KNIGHTs
-UDF_getKNIGHTAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
-// get squares of attacking ROOKs
-UDF_getROOKAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
-// get squares of attacking BISHOPs
-UDF_getBISHOPAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
-// get squares of attacking QUEENs
-UDF_getQUEENAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
-// get squares of attacking KINGs
-UDF_getKINGAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
-UDF_getAttackerSqNames(board:Text, refSqNum:Number, attackingColor:Number):Text=
+UDF_getPAWNAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+UDF_getKNIGHTAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+UDF_getROOKAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+UDF_getBISHOPAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+UDF_getQUEENAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+UDF_getKINGAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
 UDF_getAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-// get the material value of the weakest piece attacking a square
 UDF_getSqNumAttackersMaterialCentipawn(board:Text, refSqNum:Number, attackingColor:Number):Number=
