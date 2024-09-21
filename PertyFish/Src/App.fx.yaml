@@ -744,7 +744,7 @@ App As appinfo:
                 0,
                 CountRows(Distinct(Sort(Split(Trim(setA), " "), Value), Value))
             );
-        UDF_createSetOfSqNames(sqNameList:Text):Text=
+        UDF_createSqNamesSet(sqNameList:Text):Text=
             Trim(Concat(Distinct(Sort(Split(Trim(sqNameList), " "), Value), Value), Value, " "));
         UDF_getElementFromSet(setA:Text, index:Number):Text=
             If(index>=1 && index<=UDF_getSetSize(setA),
@@ -829,7 +829,7 @@ App As appinfo:
         		{
         			fileName:	UDF_getFileNameFromSqNum(refSqNum)
         		} As theData,
-                UDF_createSetOfSqNames(
+                UDF_createSqNamesSet(
                     Concat(
                         ForAll(
                             Sequence(8,1) As theRank,
@@ -845,7 +845,7 @@ App As appinfo:
         		{
         			rank:	UDF_getRankFromSqNum(refSqNum)
         		} As theData,
-                UDF_createSetOfSqNames(
+                UDF_createSqNamesSet(
                     Concat(
                         ForAll(
                             Sequence(8,1) As theFileNum,
@@ -860,7 +860,7 @@ App As appinfo:
             UDF_getSetUnion(UDF_sqNumToFileSet(refSqNum), UDF_sqNumToRankSet(refSqNum));
         
         UDF_sqNumToKingSet(refSqNum:Number):Text=
-            UDF_createSetOfSqNames(UDF_sqNumToAdjacentSqNamesSet(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
+            UDF_createSqNamesSet(UDF_sqNumToAdjacentSqNamesSet(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
         
         // UDF isProtected code TODO this needs to be completed...
         UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=false;
@@ -885,7 +885,7 @@ App As appinfo:
                 )
             );
         UDF_sqNumToAdjacentSqNamesSet(refSqNum:Number):Text=
-            UDF_createSetOfSqNames(
+            UDF_createSqNamesSet(
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N))) & " " &
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE))) & " " &
                 UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E))) & " " &
@@ -1139,7 +1139,7 @@ App As appinfo:
         // UDF getAttackerSqNames code
         // get squares of attacking PAWNs
         UDF_getPAWNAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-            UDF_createSetOfSqNames(
+            UDF_createSqNamesSet(
                 Trim(
                     If(
                         attackingColor=BLACK &&
@@ -1165,7 +1165,7 @@ App As appinfo:
             );
         // get squares of attacking KNIGHTs
         UDF_getKNIGHTAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-            UDF_createSetOfSqNames(
+            UDF_createSqNamesSet(
                 With(
                     {
                         abbr: If(attackingColor=WHITE,"N","n")
@@ -1201,7 +1201,7 @@ App As appinfo:
         // get squares of attacking ROOKs
         UDF_getROOKAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
             // IsMatch() requires a constant value for the pattern
-            UDF_createSetOfSqNames(
+            UDF_createSqNamesSet(
                 If(attackingColor=WHITE,
                     Trim(
                         If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}R", MatchOptions.BeginsWith),
@@ -1244,7 +1244,7 @@ App As appinfo:
         // get squares of attacking BISHOPs
         UDF_getBISHOPAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
             // IsMatch() requires a constant value for the pattern
-            UDF_createSetOfSqNames(
+            UDF_createSqNamesSet(
                 If(attackingColor=WHITE,
                     Trim(
                         If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}B", MatchOptions.BeginsWith),
@@ -1311,7 +1311,7 @@ App As appinfo:
         // get squares of attacking QUEENs
         UDF_getQUEENAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
             // IsMatch() requires a constant value for the pattern
-            UDF_createSetOfSqNames(
+            UDF_createSqNamesSet(
                 If(attackingColor=WHITE,
                     Trim(
                         If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}Q", MatchOptions.BeginsWith),
@@ -1409,7 +1409,7 @@ App As appinfo:
             );
         // get squares of attacking KINGs
         UDF_getKINGAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-            UDF_createSetOfSqNames(
+            UDF_createSqNamesSet(
                 With(
                     {
                         abbr: If(attackingColor=WHITE,"K","k")
@@ -1443,7 +1443,7 @@ App As appinfo:
                 )
             );
         UDF_getAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-            UDF_createSetOfSqNames(
+            UDF_createSqNamesSet(
                 UDF_getPAWNAttackerSqNamesSet(board, refSqNum, attackingColor) & " " &
                 UDF_getKNIGHTAttackerSqNamesSet(board, refSqNum, attackingColor) & " " &
                 UDF_getKINGAttackerSqNamesSet(board, refSqNum, attackingColor) & " " &
