@@ -1697,14 +1697,20 @@ UsingComponents As screen:
                                                                         ShowColumns(
                                                                             Filter(colPF_LEGAL_MOVES,
                                                                                 sqNum=theNodes.current.inactiveColorMoveRecord.targetSquareNum,
-                                                                                pieceUpper=Upper(theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier),
+                                                                                pieceUpper=
+                                                                                    If(theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "P",
+                                                                                        // THEN - maintain the case sensitivity for PAWNs
+                                                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier,
+                                                                                        // ELSE
+                                                                                        Upper(theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier)
+                                                                                    ),
                                                                                 eligibleSqName in forkSets.gettingForkedSet,
                                                                                 UDF_getSetSize(  
                                                                                     UDF_getSetIntersection(
                                                                                         slideOvers,
                                                                                         UDF_getSetUnion(forkSets.forkingSet,forkSets.gettingForkedSet)
                                                                                     )
-                                                                                )=0
+                                                                                )=0 // no blockers in the sliderovers (or no sliderovers at all) results in a "true"
                                                                             ), eligibleSqName
                                                                         ), eligibleSqName, " "
                                                                     )
@@ -1733,13 +1739,13 @@ UsingComponents As screen:
                                                             // ELSE
                                                             With(
                                                                 {
-                                                                    attackedTargetTargetsCount:
+                                                                    protectedTargetTargetsCount:
                                                                         Sum(
                                                                             ForAll(
                                                                                 Split(targetData.targetTargetsSet, " ") As theTargets,
             
                                                                                 If(
-                                                                                    UDF_isSqNumAttacked(
+                                                                                    UDF_isSqNumProtected(
                                                                                         theNodes.current.postMoveBoard,
                                                                                         UDF_sqNameToSqNum(theTargets.Value),
                                                                                         UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
@@ -1757,11 +1763,11 @@ UsingComponents As screen:
                                                                 If(gblPF_DEBUG_EVAL,
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                         " fCE_600(): DEBUG heuristic15" & 
-                                                                        " attackedTargetTargetsCount: " & counts.attackedTargetTargetsCount
+                                                                        " attackedTargetTargetsCount: " & counts.protectedTargetTargetsCount
                                                                     })
                                                                 );
             
-                                                                If(counts.attackedTargetTargetsCount>=UDF_getSetSize(targetData.targetTargetsSet),
+                                                                If(counts.protectedTargetTargetsCount>=UDF_getSetSize(targetData.targetTargetsSet),
                                                                     // THEN
                                                                     0,
             
