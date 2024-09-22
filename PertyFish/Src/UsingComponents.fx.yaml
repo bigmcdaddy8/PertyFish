@@ -2154,7 +2154,7 @@ UsingComponents As screen:
             
                 If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                        " comChessEngineFunctions.fCE_600_preEvaluate(): DEBUG is c3 attacked by BLACK ?" &
+                        " comChessEngineFunctions.fCE_600_preEvaluate(): DEBUG is c4 protected by WHITE ?" &
                         " c4 isProtected?: " & UDF_isSqNumProtected(theData.d0Node.postMoveBoard, UDF_sqNameToSqNum("c4"), WHITE) &
                         " c4 isPAWNAttacked?: " & UDF_isSqNumPAWNAttacked(theData.d0Node.postMoveBoard, UDF_sqNameToSqNum("c4"), WHITE)
                     })
