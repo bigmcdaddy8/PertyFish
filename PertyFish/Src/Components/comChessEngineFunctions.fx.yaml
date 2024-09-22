@@ -2123,54 +2123,10 @@ comChessEngineFunctions As CanvasComponent:
                         dynamicData:    LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME)
                     } As theData,
                 
-                    If(gblPF_DEBUG_EVAL,
-                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                            " comChessEngineFunctions.fCE_600_preEvaluate(): DEBUG is c4 protected by WHITE ?" &
-                            " c4 isProtected?: " & UDF_isSqNumProtected(theData.d0Node.postMoveBoard, UDF_sqNameToSqNum("c4"), WHITE) &
-                            " c4 isPAWNAttacked?: " & UDF_isSqNumPAWNAttacked(theData.d0Node.postMoveBoard, UDF_sqNameToSqNum("c4"), WHITE)
-                        })
-                    );
-                
                     UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                         evalData:   Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).evalData, {
-                                        theirHangingSquaresSet:
-                                            UDF_createSqNamesSet(
-                                                Concat(
-                                                    ForAll(
-                                                        Sequence(64,0) As theSqNum,
-                
-                                                        If(UDF_getBitAtSqNum(theData.d0Node.postMoveBoard, theSqNum.Value) exactin UDF_getICPieceABBR(theData.d0Node.postMoveFEN, WHITE_PIECES),
-                                                            // THEN - check if it is protected (i.e., attacked by its own Color)
-                                                            If(UDF_isSqNumProtected(theData.d0Node.postMoveBoard, theSqNum.Value, UDF_FEN_TO_INACTIVE_COLOR(theData.d0Node.postMoveFEN)),
-                                                                // THEN - not a weak square
-                                                                "",
-                
-                                                                // ELSE - a weak square
-                                                                UDF_sqNumToSqName(theSqNum.Value)
-                                                            )
-                                                        )
-                                                    ), Value, " "
-                                                )
-                                            ),
-                                        myHangingSquaresSet:
-                                            UDF_createSqNamesSet(
-                                                Concat(
-                                                    ForAll(
-                                                        Sequence(64,0) As theSqNum,
-                
-                                                        If(UDF_getBitAtSqNum(theData.d0Node.postMoveBoard, theSqNum.Value) exactin UDF_getACPieceABBR(theData.d0Node.postMoveFEN, WHITE_PIECES),
-                                                            // THEN - check if it is protected (i.e., attacked by its own Color)
-                                                            If(UDF_isSqNumProtected(theData.d0Node.postMoveBoard, theSqNum.Value, UDF_FEN_TO_ACTIVE_COLOR(theData.d0Node.postMoveFEN)),
-                                                                // THEN - not a weak square
-                                                                "",
-                
-                                                                // ELSE - a weak square
-                                                                UDF_sqNumToSqName(theSqNum.Value)
-                                                            )
-                                                        )
-                                                    ), Value, " "
-                                                )
-                                            )
+                                        theirHangingSquaresSet: UDF_getHangingSquareNamesSet(theData.d0Node.postMoveBoard, UDF_FEN_TO_INACTIVE_COLOR(theData.d0Node.postMoveFEN)),
+                                        myHangingSquaresSet:    UDF_getHangingSquareNamesSet(theData.d0Node.postMoveBoard, UDF_FEN_TO_ACTIVE_COLOR(theData.d0Node.postMoveFEN))
                                     })
                     })
                 );
