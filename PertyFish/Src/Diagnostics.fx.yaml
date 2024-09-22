@@ -3165,7 +3165,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_TEST_NUMBER: 0});
                     UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
                 
-                    UpdateContext({lTEST_FEN: "2b4k/1q6/8/6Pp/8/8/4K3/6r1 b - - 0 1"});
+                    UpdateContext({lTEST_FEN: "4k3/5p2/6p1/8/2P5/1P6/8/4K3 w - - 0 1"});
                     UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
                     UpdateContext({lTEST_REFERENCE_SQNAME: "g4"});
                     UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
@@ -3176,7 +3176,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
                     //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
                 
-                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: ""});
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSqNamesSet("d3 e1")});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
                         UDF_getHangingSquareNamesSet(lTEST_BOARD, UDF_FEN_TO_ACTIVE_COLOR(lTEST_FEN))
