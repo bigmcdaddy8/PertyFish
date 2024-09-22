@@ -3718,17 +3718,6 @@ Diagnostics As screen:
                     )
                 );
                 
-                /*      
-                UDF_getPAWNAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-                UDF_getKNIGHTAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-                UDF_getROOKAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-                UDF_getBISHOPAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-                UDF_getQUEENAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-                UDF_getKINGAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-                UDF_getAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
-                UDF_getSqNumAttackersMaterialCentipawn(board:Text, refSqNum:Number, attackingColor:Number):Number=
-                 */
-                
                 If(!lTEST_FAILURE_DETECTED,
                     UpdateContext({lTEST_TEST_CATEGORY: "UDF_getQUEENAttackerSqNamesSet"});
                     UpdateContext({lTEST_TEST_NUMBER: 0});
