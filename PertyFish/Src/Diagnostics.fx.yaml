@@ -3791,7 +3791,7 @@ Diagnostics As screen:
                 );
                 
                 If(!lTEST_FAILURE_DETECTED,
-                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getSqNumAttackersMaterialCentipawn"});
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_getSqNumAttackersMinMaterialCentipawn"});
                     UpdateContext({lTEST_TEST_NUMBER: 0});
                     UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
                 
@@ -3803,7 +3803,7 @@ Diagnostics As screen:
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: -100});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
-                        UDF_getSqNumAttackersMaterialCentipawn(lTEST_BOARD, lTEST_REFERENCE_SQNUM, UDF_FEN_TO_ACTIVE_COLOR(lTEST_FEN))
+                        UDF_getSqNumAttackersMinMaterialCentipawn(lTEST_BOARD, lTEST_REFERENCE_SQNUM, UDF_FEN_TO_ACTIVE_COLOR(lTEST_FEN))
                     });
                 
                     If(lTEST_EXPECTED_RESULT_NUMBER<>lTEST_ACTUAL_RESULT_NUMBER,

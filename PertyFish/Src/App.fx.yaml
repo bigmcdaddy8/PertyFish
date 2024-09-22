@@ -1446,7 +1446,7 @@ App As appinfo:
                 UDF_getQUEENAttackerSqNamesSet(board, refSqNum, attackingColor)
             );
         // get the material value of the weakest piece attacking a square
-        UDF_getSqNumAttackersMaterialCentipawn(board:Text, refSqNum:Number, attackingColor:Number):Number=
+        UDF_getSqNumAttackersMinMaterialCentipawn(board:Text, refSqNum:Number, attackingColor:Number):Number=
             With(
                 {
                     attackerSet: UDF_getAttackerSqNamesSet(board, refSqNum, attackingColor)
