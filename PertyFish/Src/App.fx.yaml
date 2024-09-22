@@ -862,8 +862,6 @@ App As appinfo:
         UDF_sqNumToKingSet(refSqNum:Number):Text=
             UDF_createSqNamesSet(UDF_sqNumToAdjacentSqNamesSet(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
         
-        // UDF isProtected code TODO this needs to be completed...
-        UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=false;
         UDF_occupiedSqNamesSet(board:Text, filter:Text):Text=
             Trim(
                 Concat(
@@ -1012,6 +1010,8 @@ App As appinfo:
                 // default
                 false
             );
+        UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=
+            UDF_isSqNumAttacked(board, refSqNum, protectingColor);
         // UDF countAttacks code
         UDF_countSqNumPAWNAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
             Sum(
