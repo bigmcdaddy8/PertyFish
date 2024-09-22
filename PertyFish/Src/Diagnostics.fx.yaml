@@ -3872,7 +3872,7 @@ Diagnostics As screen:
                 
                     UpdateContext({lTEST_FEN: "2b4k/1q6/8/6P1/8/8/4K3/6r1 b - - 0 1"});
                     UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
-                    UpdateContext({lTEST_REFERENCE_SQNAME: "c6"});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "g4"});
                     UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
                     UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: -300});
