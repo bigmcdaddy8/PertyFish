@@ -1612,97 +1612,102 @@ comChessEngineFunctions As CanvasComponent:
                                     heuristic15:
                                         If(!(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN)=GAME_PHASE_OPENING),
                                             // THEN
-                                            With(
-                                                {
-                                                    gettingForkedPieces:   If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,BLACK_PIECES,WHITE_PIECES),
-                                                    forkingPieces:         If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,WHITE_PIECES,BLACK_PIECES)
-                                                } As forkPieces,
-                
+                                            Sum(
+                                                // did number of hanging pices change BONUS/PENALTY
+                                                0,
+                                                // look for forks
                                                 With(
                                                     {
-                                                        gettingForkedSet:   UDF_occupiedSqNamesSet(theCurrentNode.postMoveBoard, forkPieces.gettingForkedPieces),
-                                                        forkingSet:         UDF_occupiedSqNamesSet(theCurrentNode.postMoveBoard, forkPieces.forkingPieces)
-                                                    } As forkSets,
-                                                    
+                                                        gettingForkedPieces:   If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,BLACK_PIECES,WHITE_PIECES),
+                                                        forkingPieces:         If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,WHITE_PIECES,BLACK_PIECES)
+                                                    } As forkPieces,
+                
                                                     With(
                                                         {
-                                                            targetTargetsSet:
-                                                                // get only the eligibleSqName column
-                                                                UDF_createSqNamesSet(
-                                                                    Concat(
-                                                                        ShowColumns(
-                                                                            Filter(colPF_LEGAL_MOVES,
-                                                                                sqNum=theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                                                pieceUpper=Upper(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier),
-                                                                                eligibleSqName in forkSets.gettingForkedSet,
-                                                                                UDF_getSetSize(  
-                                                                                    UDF_getSetIntersection(
-                                                                                        slideOvers,
-                                                                                        UDF_getSetUnion(forkSets.forkingSet,forkSets.gettingForkedSet)
-                                                                                    )
-                                                                                )=0
-                                                                            ), eligibleSqName
-                                                                        ), eligibleSqName, " "
-                                                                    )
-                                                                ),
-                                                            targetIsAttacked:
-                                                                UDF_isSqNumAttacked(
-                                                                    theCurrentNode.postMoveBoard, 
-                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                                    UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
-                                                                )
-                                                        } As targetData,
-                
-                                                        If(gblPF_DEBUG_EVAL,
-                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                " fCE_600(): DEBUG heuristic15" & 
-                                                                " gettingForkedSet: " & forkSets.gettingForkedSet &
-                                                                " forkingSet: " & forkSets.forkingSet &
-                                                                " targetTargetsSet: " & targetData.targetTargetsSet &
-                                                                " target IsAttacked?: " & targetData.targetIsAttacked
-                                                            })
-                                                        );
-                                                        If(targetData.targetIsAttacked,
-                                                            // THEN
-                                                            0,
-                
-                                                            // ELSE
-                                                            With(
-                                                                {
-                                                                    attackedTargetTargetsCount:
-                                                                        Sum(
-                                                                            ForAll(
-                                                                                Split(targetData.targetTargetsSet, " ") As theTargets,
-                
-                                                                                If(
-                                                                                    UDF_isSqNumAttacked(
-                                                                                        theCurrentNode.postMoveBoard,
-                                                                                        UDF_sqNameToSqNum(theTargets.Value),
-                                                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
-                                                                                    ),
-                                                                                    // THEN
-                                                                                    1,
-                
-                                                                                    // ELSE
-                                                                                    0
-                                                                                )
-                                                                            ), Value
+                                                            gettingForkedSet:   UDF_occupiedSqNamesSet(theCurrentNode.postMoveBoard, forkPieces.gettingForkedPieces),
+                                                            forkingSet:         UDF_occupiedSqNamesSet(theCurrentNode.postMoveBoard, forkPieces.forkingPieces)
+                                                        } As forkSets,
+                                                        
+                                                        With(
+                                                            {
+                                                                targetTargetsSet:
+                                                                    // get only the eligibleSqName column
+                                                                    UDF_createSqNamesSet(
+                                                                        Concat(
+                                                                            ShowColumns(
+                                                                                Filter(colPF_LEGAL_MOVES,
+                                                                                    sqNum=theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                                    pieceUpper=Upper(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier),
+                                                                                    eligibleSqName in forkSets.gettingForkedSet,
+                                                                                    UDF_getSetSize(  
+                                                                                        UDF_getSetIntersection(
+                                                                                            slideOvers,
+                                                                                            UDF_getSetUnion(forkSets.forkingSet,forkSets.gettingForkedSet)
+                                                                                        )
+                                                                                    )=0
+                                                                                ), eligibleSqName
+                                                                            ), eligibleSqName, " "
                                                                         )
-                                                                } As counts,
+                                                                    ),
+                                                                targetIsAttacked:
+                                                                    UDF_isSqNumAttacked(
+                                                                        theCurrentNode.postMoveBoard, 
+                                                                        theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
+                                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                                    )
+                                                            } As targetData,
                 
-                                                                If(gblPF_DEBUG_EVAL,
-                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                        " fCE_600(): DEBUG heuristic15" & 
-                                                                        " attackedTargetTargetsCount: " & counts.attackedTargetTargetsCount
-                                                                    })
-                                                                );
+                                                            If(gblPF_DEBUG_EVAL,
+                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                    " fCE_600(): DEBUG heuristic15" & 
+                                                                    " gettingForkedSet: " & forkSets.gettingForkedSet &
+                                                                    " forkingSet: " & forkSets.forkingSet &
+                                                                    " targetTargetsSet: " & targetData.targetTargetsSet &
+                                                                    " target IsAttacked?: " & targetData.targetIsAttacked
+                                                                })
+                                                            );
+                                                            If(targetData.targetIsAttacked,
+                                                                // THEN
+                                                                0,
                 
-                                                                If(counts.attackedTargetTargetsCount>=UDF_getSetSize(targetData.targetTargetsSet),
-                                                                    // THEN
-                                                                    0,
+                                                                // ELSE
+                                                                With(
+                                                                    {
+                                                                        attackedTargetTargetsCount:
+                                                                            Sum(
+                                                                                ForAll(
+                                                                                    Split(targetData.targetTargetsSet, " ") As theTargets,
                 
-                                                                    // ELSE
-                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,55,-55)
+                                                                                    If(
+                                                                                        UDF_isSqNumAttacked(
+                                                                                            theCurrentNode.postMoveBoard,
+                                                                                            UDF_sqNameToSqNum(theTargets.Value),
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                                                        ),
+                                                                                        // THEN
+                                                                                        1,
+                
+                                                                                        // ELSE
+                                                                                        0
+                                                                                    )
+                                                                                ), Value
+                                                                            )
+                                                                    } As counts,
+                
+                                                                    If(gblPF_DEBUG_EVAL,
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " fCE_600(): DEBUG heuristic15" & 
+                                                                            " attackedTargetTargetsCount: " & counts.attackedTargetTargetsCount
+                                                                        })
+                                                                    );
+                
+                                                                    If(counts.attackedTargetTargetsCount>=UDF_getSetSize(targetData.targetTargetsSet),
+                                                                        // THEN
+                                                                        0,
+                
+                                                                        // ELSE
+                                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,55,-55)
+                                                                    )
                                                                 )
                                                             )
                                                         )
