@@ -3117,6 +3117,49 @@ Diagnostics As screen:
                 );
                 
                 If(!lTEST_FAILURE_DETECTED,
+                    // UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_isSqNumProtected"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    UpdateContext({lTEST_FEN: "2b4k/1q6/8/6Pp/8/8/4K3/6r1 b - - 0 1"});
+                    UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    UpdateContext({lTEST_REFERENCE_SQNAME: "g4"});
+                    UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    //UpdateContext({lTEST_REFERENCE_SQNAME2: "d5"});
+                
+                    //UpdateContext({lTEST_REFERENCE_SOURCE_SQNAME: "d7"});
+                    //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
+                    //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_BOOLEAN: true});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_BOOLEAN:
+                        UDF_isSqNumProtected(lTEST_BOARD, lTEST_REFERENCE_SQNUM, UDF_FEN_TO_ACTIVE_COLOR(lTEST_FEN))
+                    });
+                        
+                    If(lTEST_EXPECTED_RESULT_BOOLEAN<>lTEST_ACTUAL_RESULT_BOOLEAN,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_BOOLEAN &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_BOOLEAN
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
                     // UDF_countSqNumPAWNAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
                     UpdateContext({lTEST_TEST_CATEGORY: "UDF_countSqNumPAWNAttacks"});
                     UpdateContext({lTEST_TEST_NUMBER: 0});
