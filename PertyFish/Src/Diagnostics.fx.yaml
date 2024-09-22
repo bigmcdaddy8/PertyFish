@@ -3176,7 +3176,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_REFERENCE_TARGET_SQNAME: "d5"});
                     //UpdateContext({lTEST_PACN: UDF_createPACN(lTEST_REFERENCE_SOURCE_SQNAME, lTEST_REFERENCE_TARGET_SQNAME)});
                 
-                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSqNamesSet("d3 e1")});
+                    UpdateContext({lTEST_EXPECTED_RESULT_TEXT: UDF_createSqNamesSet("b3 e1")});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_TEXT:
                         UDF_getHangingSquareNamesSet(lTEST_BOARD, UDF_FEN_TO_ACTIVE_COLOR(lTEST_FEN))
