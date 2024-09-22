@@ -3791,6 +3791,7 @@ Diagnostics As screen:
                 );
                 
                 If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getSqNumAttackersMinMaterialCentipawn(board:Text, refSqNum:Number, attackingColor:Number):Number=
                     UpdateContext({lTEST_TEST_CATEGORY: "UDF_getSqNumAttackersMinMaterialCentipawn"});
                     UpdateContext({lTEST_TEST_NUMBER: 0});
                     UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
@@ -3827,6 +3828,7 @@ Diagnostics As screen:
                 );
                 
                 If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getSqNumAttackersMinMaterialCentipawn(board:Text, refSqNum:Number, attackingColor:Number):Number=
                     UpdateContext({lTEST_TEST_CATEGORY: "UDF_getSqNumAttackersMinMaterialCentipawn"});
                     //UpdateContext({lTEST_TEST_NUMBER: 0});
                     UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
@@ -3863,6 +3865,7 @@ Diagnostics As screen:
                 );
                 
                 If(!lTEST_FAILURE_DETECTED,
+                    // UDF_getSqNumAttackersMinMaterialCentipawn(board:Text, refSqNum:Number, attackingColor:Number):Number=
                     UpdateContext({lTEST_TEST_CATEGORY: "UDF_getSqNumAttackersMinMaterialCentipawn"});
                     //UpdateContext({lTEST_TEST_NUMBER: 0});
                     UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
