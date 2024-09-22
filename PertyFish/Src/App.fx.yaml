@@ -1012,6 +1012,30 @@ App As appinfo:
             );
         UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=
             UDF_isSqNumAttacked(board, refSqNum, protectingColor);
+        UDF_getHangingSquareNamesSet(board:Text, hangingPiecesColor:Number):Text=
+            UDF_createSqNamesSet(
+                Concat(
+                    With(
+                        {
+                            piecesToCheck:  If(hangingPiecesColor=WHITE, WHITE_PIECES, BLACK_PIECES)
+                        } As theData,
+                        ForAll(
+                            Sequence(64,0) As theSqNum,
+
+                            If(UDF_getBitAtSqNum(board, theSqNum.Value) exactin theData.piecesToCheck,
+                                // THEN - check if it is protected (i.e., attacked by its own Color)
+                                If(UDF_isSqNumProtected(board, theSqNum.Value, hangingPiecesColor),
+                                    // THEN - not a hanging square
+                                    "",
+
+                                    // ELSE - a hanging square
+                                    UDF_sqNumToSqName(theSqNum.Value)
+                                )
+                            )
+                        )
+                    ), Value, " "
+                )
+            );
         // UDF countAttacks code
         UDF_countSqNumPAWNAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
             Sum(
