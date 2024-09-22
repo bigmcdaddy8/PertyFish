@@ -1487,14 +1487,17 @@ comChessEngineFunctions As CanvasComponent:
                     LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
                 
                     With(
-                        LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
+                        {
+                            current:    LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
+                            parent:     LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID)
+                        } As theNodes,
                 
                         If(gblPF_DEBUG_EVAL,
                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                " fCE_600(): san: " & theCurrentNode.inactiveColorMoveRecord.san &
-                                " pacn: " & theCurrentNode.inactiveColorMoveRecord.pacn &
-                                " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN) &
-                                " captureSquareOccupier: " & theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier
+                                " fCE_600(): san: " & theNodes.current.inactiveColorMoveRecord.san &
+                                " pacn: " & theNodes.current.inactiveColorMoveRecord.pacn &
+                                " move color: " & UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN) &
+                                " captureSquareOccupier: " & theNodes.current.inactiveColorMoveRecord.captureSquareOccupier
                             })
                         );
                 
@@ -1507,7 +1510,7 @@ comChessEngineFunctions As CanvasComponent:
                                                 materialDelta:
                                                     Sum(
                                                         ForAll(
-                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.postMoveFEN), "") As thePiece,
+                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theNodes.current.postMoveFEN), "") As thePiece,
                 
                                                             UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
                                                         ),
@@ -1515,7 +1518,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     ) -
                                                     Sum(
                                                         ForAll(
-                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.preMoveFEN), "") As thePiece,
+                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theNodes.current.preMoveFEN), "") As thePiece,
                 
                                                             UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
                                                         ),
@@ -1523,19 +1526,19 @@ comChessEngineFunctions As CanvasComponent:
                                                     ),
                                                 materialSource:
                                                     UDF_getPieceCentipawnMaterialValue(
-                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier,
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier,
                                                         ALL_PIECES
                                                     ),
                                                 materialCapture: 
                                                     UDF_getPieceCentipawnMaterialValue(
-                                                        theCurrentNode.inactiveColorMoveRecord.captureSquareOccupier,
+                                                        theNodes.current.inactiveColorMoveRecord.captureSquareOccupier,
                                                         ALL_PIECES
                                                     ),
                                                 targetSqAttacked:
                                                     UDF_isSqNumAttacked(
-                                                        theCurrentNode.postMoveBoard,
-                                                        theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                        theNodes.current.postMoveBoard,
+                                                        theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                        UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                     )
                                             } As localVars,
                 
@@ -1544,7 +1547,7 @@ comChessEngineFunctions As CanvasComponent:
                                                 localVars.materialDelta,
                 
                                                 // ELSE - discourage the move
-                                                If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,-25,25)
+                                                If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,-25,25)
                                             )
                                         ),
                                     heuristic12:
@@ -1554,7 +1557,7 @@ comChessEngineFunctions As CanvasComponent:
                                                 materialDelta:
                                                     Sum(
                                                         ForAll(
-                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.postMoveFEN), "") As thePiece,
+                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theNodes.current.postMoveFEN), "") As thePiece,
                 
                                                             UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
                                                         ),
@@ -1562,7 +1565,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     ) -
                                                     Sum(
                                                         ForAll(
-                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theCurrentNode.preMoveFEN), "") As thePiece,
+                                                            Split(UDF_FEN_TO_PIECE_PLACEMENT(theNodes.current.preMoveFEN), "") As thePiece,
                 
                                                             UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
                                                         ),
@@ -1570,38 +1573,38 @@ comChessEngineFunctions As CanvasComponent:
                                                     ),
                                                 materialSource:
                                                     UDF_getPieceCentipawnMaterialValue(
-                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier,
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier,
                                                         ALL_PIECES
                                                     ),
                                                 sourceSqAttacked:
                                                     UDF_isSqNumAttacked(
-                                                        theCurrentNode.preMoveBoard,
-                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareNum,
-                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                        theNodes.current.preMoveBoard,
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
+                                                        UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                     ),
                                                 sourceSqProtected:
                                                     UDF_isSqNumAttacked(
                                                         UDF_setBitAtSqNum(
-                                                            theCurrentNode.preMoveBoard,
+                                                            theNodes.current.preMoveBoard,
                                                             EMPTY_FILLER_ABBR,
-                                                            theCurrentNode.inactiveColorMoveRecord.sourceSquareNum
+                                                            theNodes.current.inactiveColorMoveRecord.sourceSquareNum
                                                         ),
-                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareNum,
-                                                        UDF_FEN_TO_INACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
+                                                        UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                     ),
                                                 // materialSourceAttacker:
                                                 targetSqAttacked:
                                                     UDF_isSqNumAttacked(
-                                                        theCurrentNode.postMoveBoard,
-                                                        theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                        theNodes.current.postMoveBoard,
+                                                        theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                        UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                     )
                                             } As localVars,
                 
                                             // If(localVars.sourceSqAttacked && (!localVars.sourceSqProtected)
                                             If(localVars.sourceSqAttacked && (!localVars.targetSqAttacked) && localVars.materialDelta=0,
                                                 // THEN
-                                                //If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,localVars.materialSource,-localVars.materialSource),
+                                                //If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,localVars.materialSource,-localVars.materialSource),
                                                 localVars.materialSource,
                 
                                                 // ELSE
@@ -1610,22 +1613,41 @@ comChessEngineFunctions As CanvasComponent:
                                         ),
                 
                                     heuristic15:
-                                        If(!(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN)=GAME_PHASE_OPENING),
+                                        If(!(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN)=GAME_PHASE_OPENING),
                                             // THEN
                                             Sum(
-                                                // did number of hanging pices change BONUS/PENALTY
-                                                0,
+                                                // are we capturing one of their hanging pieces ?
+                                                If((!IsBlank(theNodes.current.inactiveColorMoveRecord.captureSquareName)) &&
+                                                    theNodes.current.inactiveColorMoveRecord.captureSquareName in theData.evalData.theirHangingSquaresSet,
+                                                    // THEN
+                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,50,-50),
+                                                    // ELSE
+                                                    0
+                                                ),
+                                                // are we reducing the number of our hanging pieces ?
+                                                With(
+                                                    {
+                                                        myHangingSquaresSet: UDF_getHangingSquareNamesSet(theNodes.current.postMoveBoard, UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN))
+                                                    } As v,
+                
+                                                    If(UDF_getSetSize(v.myHangingSquaresSet)<UDF_getSetSize(theData.evalData.myHangingSquaresSet),
+                                                        // THEN
+                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,40,-40),
+                                                        // ELSE
+                                                        0
+                                                    )
+                                                ),
                                                 // look for forks
                                                 With(
                                                     {
-                                                        gettingForkedPieces:   If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,BLACK_PIECES,WHITE_PIECES),
-                                                        forkingPieces:         If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,WHITE_PIECES,BLACK_PIECES)
+                                                        gettingForkedPieces:   If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,BLACK_PIECES,WHITE_PIECES),
+                                                        forkingPieces:         If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,WHITE_PIECES,BLACK_PIECES)
                                                     } As forkPieces,
                 
                                                     With(
                                                         {
-                                                            gettingForkedSet:   UDF_occupiedSqNamesSet(theCurrentNode.postMoveBoard, forkPieces.gettingForkedPieces),
-                                                            forkingSet:         UDF_occupiedSqNamesSet(theCurrentNode.postMoveBoard, forkPieces.forkingPieces)
+                                                            gettingForkedSet:   UDF_occupiedSqNamesSet(theNodes.current.postMoveBoard, forkPieces.gettingForkedPieces),
+                                                            forkingSet:         UDF_occupiedSqNamesSet(theNodes.current.postMoveBoard, forkPieces.forkingPieces)
                                                         } As forkSets,
                                                         
                                                         With(
@@ -1636,8 +1658,8 @@ comChessEngineFunctions As CanvasComponent:
                                                                         Concat(
                                                                             ShowColumns(
                                                                                 Filter(colPF_LEGAL_MOVES,
-                                                                                    sqNum=theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                                                    pieceUpper=Upper(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier),
+                                                                                    sqNum=theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                                                    pieceUpper=Upper(theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier),
                                                                                     eligibleSqName in forkSets.gettingForkedSet,
                                                                                     UDF_getSetSize(  
                                                                                         UDF_getSetIntersection(
@@ -1651,9 +1673,9 @@ comChessEngineFunctions As CanvasComponent:
                                                                     ),
                                                                 targetIsAttacked:
                                                                     UDF_isSqNumAttacked(
-                                                                        theCurrentNode.postMoveBoard, 
-                                                                        theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                                        theNodes.current.postMoveBoard, 
+                                                                        theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                                        UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                                     )
                                                             } As targetData,
                 
@@ -1680,9 +1702,9 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                                                     If(
                                                                                         UDF_isSqNumAttacked(
-                                                                                            theCurrentNode.postMoveBoard,
+                                                                                            theNodes.current.postMoveBoard,
                                                                                             UDF_sqNameToSqNum(theTargets.Value),
-                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                                                         ),
                                                                                         // THEN
                                                                                         1,
@@ -1706,7 +1728,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                         0,
                 
                                                                         // ELSE
-                                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,55,-55)
+                                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,55,-55)
                                                                     )
                                                                 )
                                                             )
@@ -1720,7 +1742,7 @@ comChessEngineFunctions As CanvasComponent:
                                         ),
                 
                                     heuristic16:
-                                        If(!(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN)=GAME_PHASE_END),
+                                        If(!(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN)=GAME_PHASE_END),
                                             // THEN - not in the END GAME
                                             0,
                 
@@ -1730,19 +1752,19 @@ comChessEngineFunctions As CanvasComponent:
                                                     totalBonus:
                                                         Sum(
                                                             // Sum: Push Pawns forward - push the pawns forward (until we have enough Qs) - is this a pawn move ?
-                                                            If(theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theCurrentNode.preMoveBoard, "Q")<3,
+                                                            If(theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_countPiecesOnBoard(theNodes.current.preMoveBoard, "Q")<3,
                                                                 // THEN - push the pawn and bump up the promotion to a Q
                                                                 If(
-                                                                    (IsBlank(theCurrentNode.inactiveColorMoveRecord.promoteTo) || theCurrentNode.inactiveColorMoveRecord.promoteTo in "Q") &&
+                                                                    (IsBlank(theNodes.current.inactiveColorMoveRecord.promoteTo) || theNodes.current.inactiveColorMoveRecord.promoteTo in "Q") &&
                                                                     !UDF_isSqNumAttacked(
-                                                                        theCurrentNode.postMoveBoard,
-                                                                        theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                                        UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.postMoveFEN)
+                                                                        theNodes.current.postMoveBoard,
+                                                                        theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                                        UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                                     ),
                                                                     // THEN
-                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
-                                                                        UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName),
-                                                                        8 - UDF_getRankFromSqName(theCurrentNode.inactiveColorMoveRecord.targetSquareName)
+                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,
+                                                                        UDF_getRankFromSqName(theNodes.current.inactiveColorMoveRecord.targetSquareName),
+                                                                        8 - UDF_getRankFromSqName(theNodes.current.inactiveColorMoveRecord.targetSquareName)
                                                                      ) * RandBetween(8,21),
                 
                                                                     // ELSE
@@ -1756,7 +1778,7 @@ comChessEngineFunctions As CanvasComponent:
                                                             With(
                                                                 {
                                                                     sqNum:
-                                                                        UDF_SearchBoardForPiece(theCurrentNode.preMoveBoard, UDF_getICPieceABBR(theCurrentNode.preMoveFEN, "k"))
+                                                                        UDF_SearchBoardForPiece(theNodes.current.preMoveBoard, UDF_getICPieceABBR(theNodes.current.preMoveFEN, "k"))
                                                                 } As theKing,
                 
                                                                 If(gblPF_DEBUG_EVAL,
@@ -1764,21 +1786,21 @@ comChessEngineFunctions As CanvasComponent:
                                                                         " fCE_600(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" 
                                                                     });
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                        " current kingDangerBoard: " & theCurrentNode.postMoveActiveKingDangerBoard 
+                                                                        " current kingDangerBoard: " & theNodes.current.postMoveActiveKingDangerBoard 
                                                                     });
                                                                 );
                 
                                                                 With(
                                                                     {
                                                                         adjSquaresSet:  UDF_createSqNamesSet(UDF_sqNumToAdjacentSqNamesSet(theKing.sqNum) & " " &  UDF_sqNumToSqName(theKing.sqNum)),
-                                                                        noKingPreMoveBoard: UDF_setBitAtSqNum(theCurrentNode.preMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
-                                                                        noKingPostMoveBoard:    UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
+                                                                        noKingPreMoveBoard: UDF_setBitAtSqNum(theNodes.current.preMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
+                                                                        noKingPostMoveBoard:    UDF_setBitAtSqNum(theNodes.current.postMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum),
                                                                         // remove the moving piece so that we can determine if we can move to an adjacent protected square
                                                                         noKingNoPiecePostMoveBoard:
                                                                             UDF_setBitAtSqNum(
-                                                                                UDF_setBitAtSqNum(theCurrentNode.postMoveBoard,
+                                                                                UDF_setBitAtSqNum(theNodes.current.postMoveBoard,
                                                                                     EMPTY_FILLER_ABBR,
-                                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareNum
+                                                                                    theNodes.current.inactiveColorMoveRecord.targetSquareNum
                                                                                 ),
                                                                                 EMPTY_FILLER_ABBR,
                                                                                 theKing.sqNum
@@ -1814,7 +1836,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                                             UDF_getAttackerSqNamesSet(
                                                                                                                 nextToKing.noKingPreMoveBoard,
                                                                                                                 UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                                                UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                                UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                                             )
                                                                                                     })
                                                                                                 );
@@ -1824,7 +1846,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                                         UDF_getAttackerSqNamesSet(
                                                                                                             nextToKing.noKingPreMoveBoard,
                                                                                                             UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                                         )
                                                                                                     )>0,
                                                                                                     adjSqName.Value, ""
@@ -1847,7 +1869,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                                             UDF_getAttackerSqNamesSet(
                                                                                                                 nextToKing.noKingPostMoveBoard,
                                                                                                                 UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                                                UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                                UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                                             )
                                                                                                     })
                                                                                                 );
@@ -1857,7 +1879,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                                         UDF_getAttackerSqNamesSet(
                                                                                                             nextToKing.noKingPostMoveBoard,
                                                                                                             UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                                         )
                                                                                                     )>0,
                                                                                                     adjSqName.Value, ""
@@ -1867,13 +1889,13 @@ comChessEngineFunctions As CanvasComponent:
                                                                                     )
                                                                                 ),
                                                                             numTargetSquareAttackedPostMove:
-                                                                                If(theCurrentNode.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet,
+                                                                                If(theNodes.current.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet,
                                                                                     // THEN
                                                                                     UDF_getSetSize(
                                                                                         UDF_getAttackerSqNamesSet(
                                                                                             nextToKing.noKingNoPiecePostMoveBoard,
-                                                                                            theCurrentNode.inactiveColorMoveRecord.targetSquareNum,
-                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                            theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                         )
                                                                                     ),
                 
@@ -1898,7 +1920,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                         UDF_countSqNumAttacks(
                                                                                             nextToKing.noKingPreMoveBoard,
                                                                                             theKing.sqNum,
-                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                         )>0,
                                                                                         true,false
                                                                                     ),
@@ -1907,7 +1929,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                         UDF_countSqNumAttacks(
                                                                                             nextToKing.noKingPostMoveBoard,
                                                                                             theKing.sqNum,
-                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)
+                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                         )>0,
                                                                                         true,false
                                                                                     )
@@ -1932,7 +1954,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                                                 // ELSE
                                                                                 If(
-                                                                                    theCurrentNode.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet &&
+                                                                                    theNodes.current.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet &&
                                                                                     attackData.numTargetSquareAttackedPostMove=0,
                                                                                     // THEN - king can reach us and we are not protected - discourage move
                                                                                     -50,
@@ -1941,7 +1963,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                     If(attackData.numAdjSquaresAttackedPostMove=UDF_getSetSize(nextToKing.adjSquaresSet),
                                                                                         // THEN - checkmate !
                                                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                            " checkmate FEN: " & theCurrentNode.preMoveFEN
+                                                                                            " checkmate FEN: " & theNodes.current.preMoveFEN
                                                                                         });
                                                                                         10000, // strongly encourage the move
                                                                                         
@@ -1966,20 +1988,20 @@ comChessEngineFunctions As CanvasComponent:
                                                         )
                                                 } As totalBonus,
                 
-                                                If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,totalBonus.totalBonus,-totalBonus.totalBonus)
+                                                If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,totalBonus.totalBonus,-totalBonus.totalBonus)
                                             )
                                         ),
                 
                                     heuristic18:
                                         // add some order
-                                        If(UDF_FEN_TO_ACTIVE_COLOR(theCurrentNode.preMoveFEN)=WHITE,
+                                        If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,
                                             // THEN
-                                            Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
+                                            Switch(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN),
                                                 GAME_PHASE_OPENING,
                                                     Switch(true,
-                                                        IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
+                                                        IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
                                                             RandBetween(10,25),
-                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "BNP" && Text(theCurrentNode.inactiveColorMoveRecord.moveDirection) in "128",
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "BNP" && Text(theNodes.current.inactiveColorMoveRecord.moveDirection) in "128",
                                                             RandBetween(0,15),
                                                             
                                                         // default
@@ -1987,9 +2009,9 @@ comChessEngineFunctions As CanvasComponent:
                                                     ),
                                                 GAME_PHASE_MIDDLE,
                                                     Switch(true,
-                                                        IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
+                                                        IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
                                                             RandBetween(10,25),
-                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", 
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", 
                                                             RandBetween(0,15),
                 
                                                         // default
@@ -2001,12 +2023,12 @@ comChessEngineFunctions As CanvasComponent:
                                             ),
                 
                                             // ELSE
-                                            Switch(comChessEngineFunctions.fME_getGamePhase(theCurrentNode.preMoveFEN),
+                                            Switch(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN),
                                                 GAME_PHASE_OPENING,
                                                     Switch(true,
-                                                        IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
+                                                        IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
                                                             RandBetween(-25,-10),
-                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "BNP"  && Text(theCurrentNode.inactiveColorMoveRecord.moveDirection) in "456",
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "BNP"  && Text(theNodes.current.inactiveColorMoveRecord.moveDirection) in "456",
                                                             RandBetween(-15,0),
                                                             
                                                         // default
@@ -2014,9 +2036,9 @@ comChessEngineFunctions As CanvasComponent:
                                                     ),
                                                 GAME_PHASE_MIDDLE,
                                                     Switch(true,
-                                                        IsMatch(theCurrentNode.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
+                                                        IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
                                                             RandBetween(-25,-10),
-                                                        theCurrentNode.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP",
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP",
                                                             RandBetween(-15,0),
                                                         
                                                         // default
@@ -2109,7 +2131,7 @@ comChessEngineFunctions As CanvasComponent:
                 
     fCE_600_preEvaluate():
         ThisProperty:
-            Default: |+
+            Default: |
                 =If(gblPF_DEBUG_EVAL,
                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                         " comChessEngineFunctions.fCE_600_preEvaluate(): entering"
@@ -2148,325 +2170,6 @@ comChessEngineFunctions As CanvasComponent:
                         " comChessEngineFunctions.fCE_600_preEvaluate(): exiting"
                     })
                 );
-                
-                
-                /*
-                    ForAll(
-                        Sequence(64, 0) As theSqNum,
-                
-                        With(
-                            {
-                                occupier:       UDF_getBitAtSqNum(theData.d0Node.postMoveBoard, theSqNum.Value),
-                                isAttacked:     UDF_isSqNumAttacked(theData.d0Node.postMoveBoard, theSqNum.Value, UDF_FEN_TO_ACTIVE_COLOR(theData.d0Node.postMoveFEN)),
-                                isProtected:    UDF_isSqNumAttacked(theData.d0Node.postMoveBoard, theSqNum.Value, UDF_FEN_TO_INACTIVE_COLOR(theData.d0Node.postMoveFEN)),
-                        Switch(true,
-                
-                
-                        PF_EVAL_DATA_RECORD={
-                            myHangingSquaresSet:            BLANK_BOARD,
-                            theirHangingSquaresSet:         BLANK_BOARD,
-                            myStrongSquaresBoard:       BLANK_BOARD,
-                            theirStrongSquaresBoard:    BLANK_BOARD
-                        };
-                        
-                        DYNAMIC_DATA_PF_NAME="DYNAMIC_DATA_PF";
-                        
-                        PF_DYNAMIC_DATA={
-                            dataName:           DYNAMIC_DATA_PF_NAME,
-                            chessEngineData:    PF_CHESS_ENGINE_DATA_RECORD,
-                            uiData:             PF_UI_DATA_RECORD,
-                            evalData:           PF_EVAL_DATA_RECORD
-                        };
-                 */
-                /*
-                If(gblPF_DEBUG_EVAL,
-                    // THEN
-                    With(
-                        LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,
-                
-                        With(
-                            {
-                                theCurrentMoveTreeNode: LookUp(colPF_MOVE_TREE, nodeID=pNodeID),
-                                theParentMoveTreeNode:  LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_MOVE_TREE, nodeID=pNodeID).parentNodeID),
-                                theMoveHistoryTailNode:
-                                    If(CountRows(colPF_MOVE_HISTORY)>=1,LookUp(colPF_MOVE_HISTORY, nodeID=theData.chessEngineData.moveHistoryTAILNodeID),Blank())
-                            } As localVars,
-                
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " CountRows(colPF_MOVE_HISTORY): " & CountRows(colPF_MOVE_HISTORY)
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " current nodeID: " & pNodeID &
-                                " pacn: " & localVars.theCurrentMoveTreeNode.inactiveColorMoveRecord.pacn &
-                                " preMove-active color: " & UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theCurrentMoveTreeNode.preMoveFEN)) &
-                                " postMovePINs: " & localVars.theCurrentMoveTreeNode.postMovePINs
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " parent nodeID: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.nodeID) &
-                                " pacn: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.inactiveColorMoveRecord.pacn) &
-                                " preMove-active color: " &
-                                    If(IsBlank(localVars.theParentMoveTreeNode),"Blank", UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theParentMoveTreeNode.preMoveFEN))) &
-                                " postMovePINs: " & If(IsBlank(localVars.theParentMoveTreeNode),"Blank", localVars.theParentMoveTreeNode.postMovePINs)
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " History tail nodeID: " & If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.nodeID) &
-                                " pacn: " &
-                                    If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.inactiveColorMoveRecord.pacn) &
-                                " preMove-active color: " &
-                                    If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",UDF_ColorToStr(UDF_FEN_TO_ACTIVE_COLOR(localVars.theMoveHistoryTailNode.preMoveFEN))) &
-                                " postMovePINs: " & 
-                                    If(IsBlank(localVars.theMoveHistoryTailNode),"Blank",localVars.theMoveHistoryTailNode.postMovePINs)
-                            })
-                        )
-                    )
-                );
-                
-                
-                
-                
-                With(
-                    LookUp(colPF_MOVE_TREE, nodeID=pNodeID) As theCurrentNode,
-                
-                    With(
-                        {
-                            postMoveBoard:      UDF_FEN_TO_BOARD(theCurrentNode.postMoveFEN)
-                        } As localVars,
-                
-                        If(gblPF_DEBUG_EVAL,
-                            // THEN
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " pre-update whiteStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " pre-update blackStrongSqBoard: " & theCurrentNode.postMoveEvalRecord.blackStrongSqBoard
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " postMoveBoard: " & localVars.postMoveBoard
-                            });
-                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                " postMovePINs: " & theCurrentNode.postMovePINs
-                            })
-                        );
-                
-                        If(IsBlank(theCurrentNode.postMoveEvalRecord.whiteStrongSqBoard),
-                            // THEN - need to populate the whiteStrongSqBoard board
-                            With(
-                                {
-                                    whiteStrongSqNameList:
-                                        Concat(
-                                            Distinct(
-                                                Sort(
-                                                    Split(
-                                                        Trim(
-                                                            Concat(
-                                                                ForAll(
-                                                                    Sequence(64,0) As theSqNum,
-                
-                                                                    With(
-                                                                        {
-                                                                            moveBit: UDF_getBitAtSqNum(localVars.postMoveBoard,theSqNum.Value) 
-                                                                        } As theMoveBit,
-                
-                                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin BLACK_PIECES,
-                                                                            // THEN - there is no piece
-                                                                            "",
-                
-                                                                            // THEN - we got a piece - get its' moves and filter them
-                                                                            Concat(
-                                                                                ForAll(
-                                                                                    Filter(colPF_LEGAL_MOVES,
-                                                                                        sqNum=theSqNum.Value &&
-                                                                                        // the PAWN is case sensitive since it is uni-directional
-                                                                                        pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
-                                                                                    ) As theEligibleMove,
-                
-                                                                                    Switch(true,
-                                                                                        // pawn forward moves do not capture therefore do not make strong squares
-                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15",
-                                                                                            "",
-                
-                                                                                        // castle moves do not capture therefore do not make strong squares
-                                                                                        theEligibleMove.castle<>"-",
-                                                                                            "",
-                
-                                                                                        // make sure slider squares are unoccupied
-                                                                                        (!IsBlank(theEligibleMove.slideOvers)) &&
-                                                                                            (!IsEmpty(
-                                                                                                Filter(
-                                                                                                    ForAll (
-                                                                                                        Split(theEligibleMove.slideOvers, " ") As theSlideOverSqName,
-                                                                                    
-                                                                                                        If(
-                                                                                                            UDF_getBitAtSqNum(
-                                                                                                                localVars.postMoveBoard, 
-                                                                                                                UDF_sqNameToSqNum(theSlideOverSqName.Value)
-                                                                                                            ) in WHITE_PIECES, // any piece of any color in slide zone ?
-                                                                                                            true,
-                                                                                                            false
-                                                                                                        )
-                                                                                                    ), Value=true
-                                                                                                )
-                                                                                            )),
-                                                                                            "",
-                // /*
-                //  * PIN rules
-                // Rules:
-                // to find PINs for preMove-active color look at the PINs in MOVE_TREE D0
-                // to find PINs for preMove-inactive color look at the PINs in MOVE_HISTORY tail
-                // - adjust if MOVE TREE D0 source square is in MOVE_HISTORY tail PIN list
-                // -- if a MOVE_TREE D0 was a capture move - remove the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list
-                // -- else replace the MOVE TREE D0 source square from the MOVE_HISTORY tail PIN list with the MOVE_TREE D0 target square
-                //  * /
-                                                                                        // default
-                                                                                        theEligibleMove.eligibleSqName
-                                                                                    )
-                                                                                ), Value, " "
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                ), Value, " "
-                                                            )
-                                                        ), " "
-                                                    ), Value
-                                                ), Value
-                                            ), Value, " "
-                                        )
-                                } As theLists,
-                
-                                If(gblPF_DEBUG_EVAL,
-                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                        " comChessEngineFunctions.fME_prepNode(): DEBUG whiteStrongSqNameList: " & theLists.whiteStrongSqNameList
-                                    });
-                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                        " comChessEngineFunctions.fME_prepNode(): DEBUG postMovePINs: " & theCurrentNode.postMovePINs &
-                                        " postMovePINDirections: " & theCurrentNode.postMovePINDirections
-                                    });
-                                );
-                
-                                UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
-                                    postMoveEvalRecord: 
-                                        Patch(theCurrentNode.postMoveEvalRecord, {
-                                            whiteStrongSqBoard: Concat(
-                                                                    ForAll(
-                                                                        Sequence(64,0) As theSqNum,
-                
-                                                                        If(UDF_sqNumToSqName(theSqNum.Value) in theLists.whiteStrongSqNameList, ATTACKED_ABBR, EMPTY_FILLER_ABBR)
-                                                                    ), Value, ""
-                                                                )
-                                        })
-                                })
-                            )
-                        );
-                
-                        If(IsBlank(theCurrentNode.postMoveEvalRecord.blackStrongSqBoard),
-                            // THEN - need to populate the blackStrongSqBoard board
-                            With(
-                                {
-                                    blackStrongSqNameList:
-                                        Concat(
-                                            Distinct(
-                                                Sort(
-                                                    Split(
-                                                        Trim(
-                                                            Concat(
-                                                                ForAll(
-                                                                    Sequence(64,0) As theSqNum,
-                
-                                                                    With(
-                                                                        {
-                                                                            moveBit: UDF_getBitAtSqNum(localVars.postMoveBoard,theSqNum.Value) 
-                                                                        } As theMoveBit,
-                
-                                                                        If(theMoveBit.moveBit=EMPTY_FILLER_ABBR || theMoveBit.moveBit exactin WHITE_PIECES,
-                                                                            // THEN - there is no piece
-                                                                            "",
-                
-                                                                            // THEN - we got a piece - get its' moves and filter them
-                                                                            Concat(
-                                                                                ForAll(
-                                                                                    Filter(colPF_LEGAL_MOVES,
-                                                                                        sqNum=theSqNum.Value &&
-                                                                                        // the PAWN is case sensitive since it is uni-directional
-                                                                                        pieceUpper= If(theMoveBit.moveBit in "P",theMoveBit.moveBit,Upper(theMoveBit.moveBit))
-                                                                                    ) As theEligibleMove,
-                                                                                    
-                                                                                    Switch(true,
-                                                                                        // pawn forward moves do not capture therefore do not make strong squares
-                                                                                        theMoveBit.moveBit in "P" && Text(theEligibleMove.theDirection) in "15",
-                                                                                            "",
-                
-                                                                                        // castle moves do not capture therefore do not make strong squares
-                                                                                        theEligibleMove.castle<>"-",
-                                                                                            "",
-                
-                                                                                        // make sure slider squares are unoccupied
-                                                                                        (!IsBlank(theEligibleMove.slideOvers)) &&
-                                                                                            (!IsEmpty(
-                                                                                                Filter(
-                                                                                                    ForAll (
-                                                                                                        Split(theEligibleMove.slideOvers, " ") As theSlideOverSqName,
-                                                                                    
-                                                                                                        If(
-                                                                                                            UDF_getBitAtSqNum(
-                                                                                                                localVars.postMoveBoard, 
-                                                                                                                UDF_sqNameToSqNum(theSlideOverSqName.Value)
-                                                                                                            ) in WHITE_PIECES, // any piece of any color in slide zone ?
-                                                                                                            true,
-                                                                                                            false
-                                                                                                        )
-                                                                                                    ), Value=true
-                                                                                                )
-                                                                                            )),
-                                                                                            "",
-                
-                                                                                        // default
-                                                                                        theEligibleMove.eligibleSqName
-                                                                                    )
-                                                                                ), Value, " "
-                                                                            )
-                                                                        )
-                                                                    )
-                                                                ), Value, " "
-                                                            )
-                                                        ), " "
-                                                    ), Value
-                                                ), Value
-                                            ), Value, " "
-                                        )
-                                } As theLists,
-                
-                                If(gblPF_DEBUG_EVAL,
-                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                        " comChessEngineFunctions.fME_prepNode(): DEBUG blackStrongSqList: " & theLists.blackStrongSqNameList
-                                    })
-                                );
-                
-                                UpdateIf(colPF_MOVE_TREE, nodeID=pNodeID, {
-                                    postMoveEvalRecord: 
-                                        Patch(theCurrentNode.postMoveEvalRecord, {
-                                            blackStrongSqBoard: Concat(
-                                                                    ForAll(
-                                                                        Sequence(64,0) As theSqNum,
-                
-                                                                        If(UDF_sqNumToSqName(theSqNum.Value) in theLists.blackStrongSqNameList, ATTACKED_ABBR, EMPTY_FILLER_ABBR)
-                                                                    ), Value, ""
-                                                                )
-                                        })
-                                })
-                            )
-                        )
-                    )
-                );
-                
-                If(gblPF_DEBUG_EVAL,
-                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                        " comChessEngineFunctions.fME_prepNode(): exiting"
-                    })
-                );
-                
-                 */
-                
-                
     fME_END_GAME(pVersion As Number, pNodeID As Number):
         pVersion:
             Default: =100
