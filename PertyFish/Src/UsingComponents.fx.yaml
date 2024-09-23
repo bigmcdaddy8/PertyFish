@@ -1778,7 +1778,7 @@ UsingComponents As screen:
                                                                                     UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                 ),
                                                                             targetValue: 
-                                                                                UDF_minMaterialCentipawnValueFromSet(
+                                                                                -UDF_minMaterialCentipawnValueFromSet(
                                                                                     theNodes.current.postMoveBoard, 
                                                                                     targetData.targetTargetsSet,
                                                                                     UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
@@ -1806,14 +1806,14 @@ UsingComponents As screen:
                                                                             " fCE_600(): DEBUG heuristic15" & 
                                                                             " target: " & targetData.targetTargetsSet &
                                                                             " value: " & 
-                                                                                UDF_minMaterialCentipawnValueFromSet(
+                                                                                -UDF_minMaterialCentipawnValueFromSet(
                                                                                     theNodes.current.postMoveBoard, 
                                                                                     targetData.targetTargetsSet,
                                                                                     UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                 )
                                                                         })
                                                                     );
-                                                                    UDF_minMaterialCentipawnValueFromSet(
+                                                                    -UDF_minMaterialCentipawnValueFromSet(
                                                                         theNodes.current.postMoveBoard, 
                                                                         targetData.targetTargetsSet,
                                                                         UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
