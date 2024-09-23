@@ -1769,10 +1769,55 @@ UsingComponents As screen:
             
                                                                 If(counts.protectedTargetTargetsCount>=UDF_getSetSize(targetData.targetTargetsSet),
                                                                     // THEN
-                                                                    0,
+                                                                    With(
+                                                                        {
+                                                                            sourceValue: 
+                                                                                UDF_minMaterialCentipawnValueFromSet(
+                                                                                    theNodes.current.preMoveBoard, 
+                                                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareName,
+                                                                                    UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                                ),
+                                                                            targetValue: 
+                                                                                UDF_minMaterialCentipawnValueFromSet(
+                                                                                    theNodes.current.postMoveBoard, 
+                                                                                    targetData.targetTargetsSet,
+                                                                                    UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                                )
+                                                                        } As theValues,
+            
+                                                                        If(gblPF_DEBUG_EVAL,
+                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                " fCE_600(): DEBUG heuristic15" & 
+                                                                                " source: " & theNodes.current.inactiveColorMoveRecord.sourceSquareName &
+                                                                                " value: " & theValues.sourceValue &
+                                                                                " target: " & targetData.targetTargetsSet &
+                                                                                " value: " & theValues.targetValue
+                                                                            })
+                                                                        );
+                                                                        If(Abs(theValues.targetValue) < Abs(theValues.sourceValue),
+                                                                            0,
+                                                                            theValues.targetValue
+                                                                        )
+                                                                    ),
             
                                                                     // ELSE
-                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,55,-55)
+                                                                    If(gblPF_DEBUG_EVAL,
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " fCE_600(): DEBUG heuristic15" & 
+                                                                            " target: " & targetData.targetTargetsSet &
+                                                                            " value: " & 
+                                                                                UDF_minMaterialCentipawnValueFromSet(
+                                                                                    theNodes.current.postMoveBoard, 
+                                                                                    targetData.targetTargetsSet,
+                                                                                    UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                                )
+                                                                        })
+                                                                    );
+                                                                    UDF_minMaterialCentipawnValueFromSet(
+                                                                        theNodes.current.postMoveBoard, 
+                                                                        targetData.targetTargetsSet,
+                                                                        UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                    )
                                                                 )
                                                             )
                                                         )
