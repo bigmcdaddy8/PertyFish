@@ -1832,6 +1832,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                 EMPTY_FILLER_ABBR,
                                                                                 theKing.sqNum
                                                                             )
+                                                                        // adjBlockedSquares: UDF_occupiedSqNamesSet(noKingPreMoveBoard
                                                                     } As nextToKing,
                 
                                                                     If(gblPF_DEBUG_EVAL,
