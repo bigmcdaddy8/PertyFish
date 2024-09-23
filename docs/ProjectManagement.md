@@ -94,12 +94,7 @@ Document how a user plays chess within the PertyFish canvas app
 
 ## Open Bugs
 
-1n2kn1r/8/1p4p1/6Kp/1p1b2pr/2p2b2/8/8 b k - 1 47
-The value e7 cannot be converted to a number
-btnCheckGameResults.OnSelect()
-
-7k/8/8/8/1n2q3/8/8/2K5 b - - 0 1
-Qc2 postMove count and King checked is incorrect
+r4b2/6p1/1p1pkpr1/p1p5/7p/5N1P/1q6/4BK2 b - - 9 37 # checkmate in 1
 
 
 ## Completed Work
