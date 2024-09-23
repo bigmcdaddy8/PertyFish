@@ -1532,15 +1532,18 @@ App As appinfo:
                                         localVars.bit="K" && colorFilter=WHITE, 10000,
                                         localVars.bit="k" && colorFilter=BLACK, 10000,
                                         // default
-                                        0
+                                        1000000
                                     )
                                 )
                             ), Value
                         )
                 } As v,
-                If(colorFilter=WHITE,
-                    v.minMaterialValue,
-                    -v.minMaterialValue
+                If(v.minMaterialValue=1000000,
+                    0, // only happens when there were no pieces of the proper color found
+                    If(colorFilter=WHITE,
+                        v.minMaterialValue,
+                        -v.minMaterialValue
+                    )
                 )
             );
         // end of Perty Fish named formulas ------------------------------------------------------------------------
