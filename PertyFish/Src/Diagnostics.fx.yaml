@@ -3987,6 +3987,79 @@ Diagnostics As screen:
                     )
                 );
                 
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_minMaterialCentipawnValueFromSet(board:Text, setA:Text, colorFilter:Number):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_minMaterialCentipawnValueFromSet"});
+                    UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    UpdateContext({lTEST_FEN: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"});
+                    UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    //UpdateContext({lTEST_REFERENCE_SQNAME: "g4"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: 100});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_minMaterialCentipawnValueFromSet(lTEST_BOARD, UNIVERSAL_SQNAMES_SET, WHITE)
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_NUMBER<>lTEST_ACTUAL_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
+                
+                If(!lTEST_FAILURE_DETECTED,
+                    // UDF_minMaterialCentipawnValueFromSet(board:Text, setA:Text, colorFilter:Number):Number=
+                    UpdateContext({lTEST_TEST_CATEGORY: "UDF_minMaterialCentipawnValueFromSet"});
+                    //UpdateContext({lTEST_TEST_NUMBER: 0});
+                    UpdateContext({lTEST_TEST_NUMBER: lTEST_TEST_NUMBER + 1});
+                
+                    UpdateContext({lTEST_FEN: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"});
+                    UpdateContext({lTEST_BOARD: UDF_FEN_TO_BOARD(lTEST_FEN)});
+                    //UpdateContext({lTEST_REFERENCE_SQNAME: "g4"});
+                    //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
+                
+                    UpdateContext({lTEST_EXPECTED_RESULT_NUMBER: -100});
+                
+                    UpdateContext({lTEST_ACTUAL_RESULT_NUMBER:
+                        UDF_minMaterialCentipawnValueFromSet(lTEST_BOARD, UNIVERSAL_SQNAMES_SET, BLACK)
+                    });
+                
+                    If(lTEST_EXPECTED_RESULT_NUMBER<>lTEST_ACTUAL_RESULT_NUMBER,
+                        // THEN 
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " FAILED" &
+                                " RESULTS EXPECTED: " & lTEST_EXPECTED_RESULT_NUMBER &
+                                " ACTUAL: " & lTEST_ACTUAL_RESULT_NUMBER
+                            })
+                        );
+                        UpdateContext({lTEST_FAILURE_DETECTED: true}),
+                
+                        // ELSE
+                        If(gblPF_DEBUG_UDF_DIAGNOSTICS,
+                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                " btnRunUDFDiagnostics.OnSelect(): " & lTEST_TEST_CATEGORY & " test #: " & lTEST_TEST_NUMBER & " PASSED"
+                            })
+                        )
+                    )
+                );
                 
                 If(lTEST_FAILURE_DETECTED,
                     // THEN
