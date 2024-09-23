@@ -1506,6 +1506,38 @@ App As appinfo:
                     )
                 )
             );
+        // get the material value of the weakest piece in set of the color specified
+        UDF_minMaterialCentipawnValueFromSet(board:Text, setA:Text, colorFilter:Number):Number=
+            With(
+                {
+                    minMaterialValue:
+                        Min(
+                            ForAll(
+                                Sequence(UDF_getSetSize(setA), 1) As i,
+                                Switch(
+                                    UDF_getBitAtSqNum(board, UDF_sqNameToSqNum(UDF_getElementFromSet(setA, i.Value))),
+                                    "P" && colorFilter=WHITE, 100,
+                                    "p" && colorFilter=BLACK, 100,
+                                    "N" && colorFilter=WHITE, 300,
+                                    "n" && colorFilter=BLACK, 300,
+                                    "B" && colorFilter=WHITE, 300,
+                                    "b" && colorFilter=BLACK, 300,
+                                    "R" && colorFilter=WHITE, 500,
+                                    "r" && colorFilter=BLACK, 500,
+                                    "Q" && colorFilter=WHITE, 900,
+                                    "q" && colorFilter=BLACK, 900,
+                                    "K" && colorFilter=WHITE, 10000,
+                                    "k" && colorFilter=BLACK, 10000,
+                                    0
+                                )
+                            ), Value
+                        )
+                } As v,
+                If(colorFilter=WHITE,
+                    v.minMaterialValue,
+                    -v.minMaterialValue
+                )
+            );
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
