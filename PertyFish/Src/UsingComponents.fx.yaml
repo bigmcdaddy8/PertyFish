@@ -1589,26 +1589,9 @@ UsingComponents As screen:
                                         )
                                     ),
                                 heuristic12:
-                                    // no capture - but moving an attacked piece to a unattacked square needs a small bonus
+                                    // moving an attacked piece to a unattacked square needs a bonus
                                     With(
                                         {
-                                            materialDelta:
-                                                Sum(
-                                                    ForAll(
-                                                        Split(UDF_FEN_TO_PIECE_PLACEMENT(theNodes.current.postMoveFEN), "") As thePiece,
-            
-                                                        UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
-                                                    ),
-                                                    Value
-                                                ) -
-                                                Sum(
-                                                    ForAll(
-                                                        Split(UDF_FEN_TO_PIECE_PLACEMENT(theNodes.current.preMoveFEN), "") As thePiece,
-            
-                                                        UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
-                                                    ),
-                                                    Value
-                                                ),
                                             materialSource:
                                                 UDF_getPieceCentipawnMaterialValue(
                                                     theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier,
@@ -1620,17 +1603,6 @@ UsingComponents As screen:
                                                     theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
                                                     UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                 ),
-                                            sourceSqProtected:
-                                                UDF_isSqNumAttacked(
-                                                    UDF_setBitAtSqNum(
-                                                        theNodes.current.preMoveBoard,
-                                                        EMPTY_FILLER_ABBR,
-                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareNum
-                                                    ),
-                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
-                                                    UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.postMoveFEN)
-                                                ),
-                                            // materialSourceAttacker:
                                             targetSqAttacked:
                                                 UDF_isSqNumAttacked(
                                                     theNodes.current.postMoveBoard,
@@ -1639,10 +1611,8 @@ UsingComponents As screen:
                                                 )
                                         } As localVars,
             
-                                        // If(localVars.sourceSqAttacked && (!localVars.sourceSqProtected)
-                                        If(localVars.sourceSqAttacked && (!localVars.targetSqAttacked) && localVars.materialDelta=0,
+                                        If(localVars.sourceSqAttacked && (!localVars.targetSqAttacked),
                                             // THEN
-                                            //If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,localVars.materialSource,-localVars.materialSource),
                                             localVars.materialSource,
             
                                             // ELSE
