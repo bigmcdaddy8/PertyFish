@@ -3201,11 +3201,26 @@ comChessEngineFunctions As CanvasComponent:
                                 Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=3000 && 
                                 theMaterial.whiteTotalDevelopment<5 &&
                                 UDF_FEN_TO_FULLMOVE_COUNT(pFEN)<=10,
+                                    If(gblPF_DEBUG_EVAL,
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                            " comChessEngineFunctions.fME_getGamePhase(): GAME_PHASE_OPENING"
+                                        })
+                                    );
                                     GAME_PHASE_OPENING,
                                 Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=1700,
+                                    If(gblPF_DEBUG_EVAL,
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                            " comChessEngineFunctions.fME_getGamePhase(): GAME_PHASE_MIDDLE"
+                                        })
+                                    );
                                     GAME_PHASE_MIDDLE,
                 
                                 // default
+                                If(gblPF_DEBUG_EVAL,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                        " comChessEngineFunctions.fME_getGamePhase(): GAME_PHASE_END"
+                                    })
+                                );
                                 GAME_PHASE_END
                             ),
                 
@@ -3214,11 +3229,26 @@ comChessEngineFunctions As CanvasComponent:
                                 Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=3000 && 
                                 theMaterial.blackTotalDevelopment<5 &&
                                 UDF_FEN_TO_FULLMOVE_COUNT(pFEN)<=10,
+                                    If(gblPF_DEBUG_EVAL,
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                            " comChessEngineFunctions.fME_getGamePhase(): GAME_PHASE_OPENING"
+                                        })
+                                    );
                                     GAME_PHASE_OPENING,
                                 Min(theMaterial.whiteTotalMaterial, theMaterial.blackTotalMaterial)>=1700,
+                                    If(gblPF_DEBUG_EVAL,
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                            " comChessEngineFunctions.fME_getGamePhase(): GAME_PHASE_MIDDLE"
+                                        })
+                                    );
                                     GAME_PHASE_MIDDLE,
                 
                                 // default
+                                If(gblPF_DEBUG_EVAL,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                        " comChessEngineFunctions.fME_getGamePhase(): GAME_PHASE_END"
+                                    })
+                                );
                                 GAME_PHASE_END
                             )
                         )
