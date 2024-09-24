@@ -3193,26 +3193,40 @@ Chess_Board As screen:
                                 })
                             );
                     
-                            If(CountRows(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID))>0,
-                                // THEN
-                                Set(gblPF_NumberofLegalMoves, CountRows(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID)));
+                            With(
+                                {
+                                    count:  CountRows(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID)),
+                                    d0Node: LookUp(colPF_MOVE_TREE, nodeID=theD0ParentNode.nodeID)
+                                } As theRows,
                     
-                                If(gblPF_DEBUG_GAME_NODES,
-                                    ForAll(
-                                        Sort(Filter(colPF_MOVE_TREE, parentNodeID=theD0ParentNode.nodeID),inactiveColorMoveRecord.san) As aD1Node,
+                                If(theRows.count>0,
+                                    // THEN
+                                    Set(gblPF_NumberofLegalMoves, theRows.count);
                     
-                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                            "  MT D0(" & theD0ParentNode.nodeID  & "/" & theD0ParentNode.inactiveColorMoveRecord.pacn & ")" &
-                                            "->D1(" & aD1Node.nodeID &  "/" & aD1Node.inactiveColorMoveRecord.pacn & " " & aD1Node.inactiveColorMoveRecord.promoteTo &
-                                            "/" & aD1Node.inactiveColorMoveRecord.san & ")" &
-                                            " nodeDepth: " & aD1Node.nodeDepth & " # of checks: " & aD1Node.postMoveNumActiveChecks &
-                                            " centipawn: " & aD1Node.postMoveEvalRecord.centipawn
-                                        })
-                                    )
-                                ),
+                                    If(gblPF_DEBUG_GAME_NODES || gblPF_DEBUG_EVAL,
+                                        ForAll(
+                                            Sort(
+                                                Filter(
+                                                    colPF_MOVE_TREE, 
+                                                    parentNodeID=theD0ParentNode.nodeID
+                                                ),
+                                                postMoveEvalRecord.centipawn,
+                                                If(UDF_FEN_TO_ACTIVE_COLOR(theRows.d0Node.postMoveFEN)=WHITE,SortOrder.Descending,SortOrder.Ascending)
+                                            ) As aD1Node,
                     
-                                // ELSE
-                                Set(gblPF_NumberofLegalMoves, 0);
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                "  MT D0(" & theD0ParentNode.nodeID  & "/" & theD0ParentNode.inactiveColorMoveRecord.pacn & ")" &
+                                                "->D1(" & aD1Node.nodeID &  "/" & aD1Node.inactiveColorMoveRecord.pacn & " " & aD1Node.inactiveColorMoveRecord.promoteTo &
+                                                "/" & aD1Node.inactiveColorMoveRecord.san & ")" &
+                                                " nodeDepth: " & aD1Node.nodeDepth & " # of checks: " & aD1Node.postMoveNumActiveChecks &
+                                                " centipawn: " & aD1Node.postMoveEvalRecord.centipawn
+                                            })
+                                        )
+                                    ),
+                    
+                                    // ELSE
+                                    Set(gblPF_NumberofLegalMoves, 0);
+                                )
                             )
                         );
                         // END DUMP ===============================================================================================
