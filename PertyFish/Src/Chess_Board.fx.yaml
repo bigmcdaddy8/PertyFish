@@ -2879,7 +2879,7 @@ Chess_Board As screen:
                                                     postMoveNumActiveChecks:	0
                                                 });
                     
-                                                If(gblPF_DEBUG_GAME_NODES,
+                                                If(gblPF_DEBUG_GAME_NODES || gblPF_DEBUG_EVAL,
                                                     With ( 
                                                         LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME) As theData,      
                     
@@ -3146,7 +3146,7 @@ Chess_Board As screen:
                     
                                                 comChessEngineFunctionsLibrary.fME_EvaluateMove(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID);
                     
-                                                If(gblPF_DEBUG_GAME_NODES,
+                                                If(gblPF_DEBUG_GAME_NODES || gblPF_DEBUG_EVAL,
                                                     With(
                                                         LookUp(colPF_MOVE_TREE, nodeID=LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).chessEngineData.newNodeID) As theCurrentNode,
                     
