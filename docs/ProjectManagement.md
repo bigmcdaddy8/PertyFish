@@ -41,15 +41,19 @@ In a private version I have built in regression testing, I may pull that forward
 #### Feature 0003 - Create smarter embedded chess engines
 Create smarter chess engines that are written using PowerFx
 
-##### Story 0003-08 Developing CE_PF_600 (2nd Grade)
 
+##### Story 0003-09 Developing CE_PF_700 (3rd Grade)
+
+- do not back away when challenged
+- - determine if protected and if exchange is positive (or even)
+- - determine situations when to step into a potential PAWN exchange situation
+- - determine situation when to initiate a PAWN exchange
 - Look for simple tactics
 - - look for forks
 - - look for hung pieces
 - Simple board strength analysis
 - - number of attacked squares
 - - number of protected squares
-
 
 #### Feature 0004 - Application Improvements
 
@@ -98,6 +102,10 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Completed Work
+##### Story 0003-08 Developing CE_PF_600 (2nd Grade)
+- Look for simple tactics
+- - look for forks
+
 ##### Story 0003-07 Developing CE_PF_500 (1st Grade)
 - End game 
 - - avoid stalemate
