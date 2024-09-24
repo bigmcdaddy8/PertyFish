@@ -37,7 +37,6 @@
       "dynamicschema": false,
       "enableappembeddingux": false,
       "enablecanvasappruntimecopilot": true,
-      "enablechatbotfeature": false,
       "enablecomponentnamemaps": false,
       "enablecomponentscopeoldbehavior": false,
       "enablecopilotanswercontrol": true,
@@ -81,6 +80,7 @@
       "powerfxdecimal": false,
       "powerfxv1": false,
       "primaryoutputpropertycoerciondeprecated": true,
+      "proactivecontrolrename": false,
       "projectionmapping": true,
       "reliableconcurrent": true,
       "reservedkeywords": false,
@@ -88,7 +88,6 @@
       "rtlsupport": false,
       "showclassicthemes": false,
       "smartemaildatacard": false,
-      "sqlstoredprocedureenabled": true,
       "supportcolumnnamesasidentifiers": true,
       "tabledoesntwraprecords": true,
       "usedisplaynamemetadata": true,
@@ -138,6 +137,7 @@
   "ScreenOrder": [
     "Chess_Board",
     "Logging_Screen",
-    "UsingComponents"
+    "UsingComponents",
+    "Diagnostics"
   ]
 }

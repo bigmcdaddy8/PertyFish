@@ -11,3 +11,7 @@ From a VS Code perspective I open first set up a local repository with this comm
 6. In VS Code File->Open Folder c:\REPOs\MyProjects\chessStuff\M8_ChessEngine\PertyFish
 
 
+# Promoting DEV to Master
+- check in all code - turn DEBUGGING off in App.fx.yaml
+- update docs - especially README
+- 

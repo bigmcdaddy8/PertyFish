@@ -3,7 +3,6 @@ App As appinfo:
     Formulas: |+
         =
         // Perty Fish named formulas ------------------------------------------------------------------------
-        // named formulas
         LF=Char(10);          // LF
         CR=Char(13);          // CR
         CRLF=CR & LF;
@@ -23,10 +22,11 @@ App As appinfo:
         COLOR_LIGHT_GREYish=RGBA(241, 244, 249, 1); // light grey-ish
         COLOR_SKY_BLUEish=RGBA(197, 229, 159, .5); // sky blue-ish  
         
+        HUMAN=0;COMPUTER=1;
         WHITE=0;BLACK=1;NO_COLOR=-1;BOTH_COLORS=2;NEITHER_COLOR=3;
         EMPTY_SQUARE_NUM=64;
         EMPTY_SQUARE_NAME="";
-        EMPTY_BOARD="################################################################";
+        EMPTY_BOARD="################################################################";BLANK_BOARD="";
         EMPTY_ABBR="";EMPTY_FILLER_ABBR="#";ATTACKED_ABBR="X";EMPTY_ICON="";
         ROOT_NODE_ID=0;EMPTY_NODE_ID=-1;
         NO_DIRECTION=-1;N=1;NE=2;E=3;SE=4;S=5;SW=6;W=7;NW=8;
@@ -34,8 +34,10 @@ App As appinfo:
         
         WHITE_KING_ICON="♔";WHITE_QUEEN_ICON="♕";WHITE_ROOK_ICON="♖";WHITE_BISHOP_ICON="♗";WHITE_KNIGHT_ICON="♘";WHITE_PAWN_ICON="♙";
         BLACK_KING_ICON="♚";BLACK_QUEEN_ICON="♛";BLACK_ROOK_ICON="♜";BLACK_BISHOP_ICON="♝";BLACK_KNIGHT_ICON="♞";BLACK_PAWN_ICON="♟";
+        WHITE_PIECES="KQRBNP";BLACK_PIECES="kqrbnp";ALL_PIECES="KQRBNPkqrbnp";
         GAME_PHASE_OPENING=1;GAME_PHASE_MIDDLE=2;GAME_PHASE_END=3;
-        CE_PF_RANDOM="PertyFish Random";CE_PF_BEGINNER="PertyFish Beginner";CE_PF_INTERMEDIATE="PertyFish Intermediate";CE_PF_ADVANCED="PertyFish Advanced";
+        CE_PF_100="Random";CE_PF_200="Bully";CE_PF_300="Preschool";CE_PF_400="Kindergarten";CE_PF_500="1st Grade";CE_PF_600="2nd Grade";
+        CE_PF_NAMES=[CE_PF_100,CE_PF_200,CE_PF_300,CE_PF_400,CE_PF_500,CE_PF_600];
         
         // universal square names set
         UNIVERSAL_SQNAMES_SET="a1 a2 a3 a4 a5 a6 a7 a8 b1 b2 b3 b4 b5 b6 b7 b8 c1 c2 c3 c4 c5 c6 c7 c8 d1 d2 d3 d4 d5 d6 d7 d8 e1 e2 e3 e4 e5 e6 e7 e8 f1 f2 f3 f4 f5 f6 f7 f8 g1 g2 g3 g4 g5 g6 g7 g8 h1 h2 h3 h4 h5 h6 h7 h8";
@@ -68,14 +70,16 @@ App As appinfo:
             // the capture square data is the square data of the square containing the piece that is captured during the move, it is the square data prior to the move
             //  the capture square data will be "empty" if there is no capture, in non-en Passant captures the capture data is the same as the target square data,
             //  in an en passant move the data will be of square where the pawn is captured
-            captureSquareNum:           EMPTY_SQUARE_NUM, 
+            captureSquareNum:           EMPTY_SQUARE_NUM,
             captureSquareName:          EMPTY_SQUARE_NAME,
-            captureSquareOccupier:      EMPTY_ABBR, 
-            captureSquarePieceColor:    NO_COLOR, 
-            captureSquareIcon:          EMPTY_ICON,                              
-            promoteTo:                  EMPTY_ABBR,      
-            isISMDraw:                  false,          
-            is75MoveDraw:               false
+            captureSquareOccupier:      EMPTY_ABBR,
+            captureSquarePieceColor:    NO_COLOR,
+            captureSquareIcon:          EMPTY_ICON,
+            promoteTo:                  EMPTY_ABBR,
+            moveDirection:              NO_DIRECTION,
+            isISMDraw:                  false,
+            is75MoveDraw:               false,
+            is50MoveDraw:               false
         };
         
         EVAL_RECORD_PF={
@@ -106,8 +110,10 @@ App As appinfo:
             parentNodeID:                       EMPTY_NODE_ID,
             nodeDepth:                          0,
             preMoveFEN:                         "",
+            preMoveBoard:                       EMPTY_BOARD,
             inactiveColorMoveRecord:            MOVE_RECORD_PF, // the actual move just made (D0), or a potential move that could be made (D1+)
             postMoveFEN:                        "",
+            postMoveBoard:                      EMPTY_BOARD,
             postMoveNumActiveChecks:            0,
             postMoveCheckers:                   "",
             postMovePUSHs:                      "",
@@ -137,7 +143,8 @@ App As appinfo:
             runSingleTest:                  true,
             testCount:                      0,
             isGame:                         false,
-            playerColor:                    WHITE,
+            whitePiecesPlayerType:          HUMAN,
+            blackPiecesPlayerType:          COMPUTER,
             pacn:                           "",
             tmpBoard:                       EMPTY_BOARD,
             noActiveKingBoard:              EMPTY_BOARD,
@@ -179,12 +186,20 @@ App As appinfo:
             thinkingProgressWidth:      0
         };
         
+        PF_EVAL_DATA_RECORD={
+            myHangingSquaresSet:            BLANK_BOARD,
+            theirHangingSquaresSet:         BLANK_BOARD,
+            myStrongSquaresSet:             BLANK_BOARD,
+            theirStrongSquaresSet:          BLANK_BOARD
+        };
+        
         DYNAMIC_DATA_PF_NAME="DYNAMIC_DATA_PF";
         
         PF_DYNAMIC_DATA={
             dataName:           DYNAMIC_DATA_PF_NAME,
             chessEngineData:    PF_CHESS_ENGINE_DATA_RECORD,
-            uiData:             PF_UI_DATA_RECORD
+            uiData:             PF_UI_DATA_RECORD,
+            evalData:           PF_EVAL_DATA_RECORD
         };
         
         // the multiplier for a one-square move/jump in each direction
@@ -271,18 +286,17 @@ App As appinfo:
         UDF_getPromo(sqName:Text):Text=If(Right(sqName,1) exactin "qrbn",Right(sqName,1),"");
         UDF_getSourceSqNamePACN(pacn:Text):Text=Left(pacn,2);
         UDF_getTargetSqNamePACN(pacn:Text):Text=Right(Left(pacn,4),2);
-        UDF_getPromoPACN(pacn:Text):Text=If(Right(pacn,1) exactin "qrbn",Right(pacn,1),"");
         UDF_createPACN(sourceSqName:Text,targetSqName:Text):Text=sourceSqName & targetSqName; // NOTE: the promo code is part of the targetSqName in this case
         
         UDF_makeMovePACN(board:Text,pacn:Text):Text=
             UDF_setBitAtSqNum(
                 UDF_setBitAtSqNum(
                     board,
-                    If(IsBlank(UDF_getPromoPACN(pacn)),
+                    If(IsBlank(UDF_getPromo(pacn)),
                         // place original piece type on the target square
                         UDF_getBitAtSqNum(board,UDF_sqNameToSqNum(UDF_getSourceSqNamePACN(pacn))),
                         // place promo piece type on the target square
-                        If(UDF_getRankFromSqName(UDF_getTargetSqNamePACN(pacn))=1,UDF_getPromoPACN(pacn),Upper(UDF_getPromoPACN(pacn)))
+                        If(UDF_getRankFromSqName(UDF_getTargetSqNamePACN(pacn))=1,UDF_getPromo(pacn),Upper(UDF_getPromo(pacn)))
                     ), 
                     UDF_sqNameToSqNum(UDF_getTargetSqNamePACN(pacn))
                 ), 
@@ -290,13 +304,7 @@ App As appinfo:
                 UDF_sqNameToSqNum(UDF_getSourceSqNamePACN(pacn))
             );
         
-        UDF_getBoardDistance(refSqName1:Text, refSqName2:Text):Number=
-        	Max(
-                Abs(UDF_getFileNumFromSqName(refSqName1)-UDF_getFileNumFromSqName(refSqName2)), 
-                Abs(UDF_getRankFromSqName(refSqName1)-UDF_getRankFromSqName(refSqName2))
-            );
-        
-        UDF_FEN_TO_PIECE_PLACMENT(fen:Text):Text=Index(Split(fen, " "),1).Value;
+        UDF_FEN_TO_PIECE_PLACEMENT(fen:Text):Text=Index(Split(fen, " "),1).Value;
         
         UDF_FEN_TO_BOARD(fen:Text):Text=
             Substitute(
@@ -380,8 +388,20 @@ App As appinfo:
             );
         
         UDF_FEN_TO_ENPASSANT_SQNAME(fen:Text):Text=Index(Split(fen, " "),4).Value;  
-        UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),5).Value;  
-        UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=Index(Split(fen, " "),6).Value;  
+        UDF_FEN_TO_HALFMOVE_COUNT(fen:Text):Number=
+            If(CountRows(Split(fen, " "))<5,
+                // THEN
+                0,
+                // ELSE
+                Index(Split(fen, " "),5).Value
+            );
+        UDF_FEN_TO_FULLMOVE_COUNT(fen:Text):Number=
+            If(CountRows(Split(fen, " "))<6,
+                // THEN
+                0,
+                // ELSE
+                Index(Split(fen, " "),6).Value
+            );  
         
         UDF_CREATE_CASTLE_RIGHTS(wks:Text,wqs:Text,bks:Text,bqs:Text):Text=
         	If(IsBlank(Substitute(wks,"-","") & Substitute(wqs,"-","") & Substitute(bks,"-","") & Substitute(bqs,"-","")),
@@ -413,6 +433,85 @@ App As appinfo:
                 Right(Left(board,sqNum+1),1)
             );
         
+        UDF_getBitsAtSqNum(board:Text,startingSqNum:Number,direction:Number,numberOfSquares:Number):Text=
+            If(startingSqNum<0 || startingSqNum>=EMPTY_SQUARE_NUM,
+                "",
+                Concat(
+                    ForAll(
+                        Sequence(numberOfSquares,0) As theStep,
+        
+                        Switch(true,
+                            direction=N,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,0,theStep.Value)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,0,theStep.Value))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,0,theStep.Value))
+                                    )
+                                ),
+                            direction=NE,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,theStep.Value)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,theStep.Value))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,theStep.Value))
+                                    )
+                                ),
+                            direction=E,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,0)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,0))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,0))
+                                    )
+                                ),
+                            direction=SE,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,-theStep.Value)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,-theStep.Value))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,theStep.Value,-theStep.Value))
+                                    )
+                                ),
+                            direction=S,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,0,-theStep.Value)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,0,-theStep.Value))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,0,-theStep.Value))
+                                    )
+                                ),
+                            direction=SW,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,-theStep.Value)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,-theStep.Value))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,-theStep.Value))
+                                    )
+                                ),
+                            direction=W,
+                                If(UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,0)=EMPTY_SQUARE_NUM,
+                                    "",
+                                    If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,0))=EMPTY_ABBR,
+                                        EMPTY_FILLER_ABBR,
+                                        UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,0))
+                                    )
+                                ),
+        
+                            // default - direction=NW
+                            If(UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,theStep.Value)=EMPTY_SQUARE_NUM,
+                                "",
+                                If(UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,theStep.Value))=EMPTY_ABBR,
+                                    EMPTY_FILLER_ABBR,
+                                    UDF_getBitAtSqNum(board,UDF_getSqNumRelativeToSqNum(startingSqNum,-theStep.Value,theStep.Value))
+                                )
+                            )
+                        )
+                    ),
+                    Value,
+                    ""
+                )
+            );
         UDF_setBitAtSqNum(board:Text,piece:Text,sqNum:Number):Text=
             If(piece=EMPTY_ABBR,
                 Left(board,Max(0,sqNum)) & EMPTY_FILLER_ABBR & Right(board,Min(63,63-sqNum)),
@@ -425,7 +524,7 @@ App As appinfo:
                 0,
                 If(UDF_FEN_TO_ACTIVE_COLOR(fen)=WHITE,-1,1)
             );
-            
+        
         UDF_PieceToColor(piece:Text):Number=
             If(piece=EMPTY_ABBR || piece=EMPTY_FILLER_ABBR,
                 // THEN there is no piece return NO_COLOR
@@ -523,7 +622,7 @@ App As appinfo:
         UDF_calcCentipawnMaterialValue(fen:Text,filter:Text):Number=
             Sum(
                 ForAll(
-                    Split(UDF_FEN_TO_PIECE_PLACMENT(fen), "") As thePiece,
+                    Split(UDF_FEN_TO_PIECE_PLACEMENT(fen), "") As thePiece,
         
                     UDF_getPieceCentipawnMaterialValue(thePiece.Value, filter)
                 ),
@@ -531,25 +630,31 @@ App As appinfo:
             );
         
         UDF_isPathClear(fen:Text, sqNum:Number, distance:Number, slideOvers:Text):Boolean=
-            Switch(true,
-                IsBlank(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(fen),sqNum)),  false,
-                UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(fen),sqNum) exactin UDF_getACPieceABBR(fen,"KN"), true,
-                distance=1, true,
-                !IsMatch(
-                    Concat(
-                        ForAll (
-                            Split(slideOvers, " ") As aSliderOver,
-        
-                            If(UDF_getBitAtSqNum(UDF_FEN_TO_BOARD(fen), UDF_sqNameToSqNum(aSliderOver.Value))<>EMPTY_FILLER_ABBR,
-                                "BLOCKED",
-                                ""
-                            )
-                        ),Value,""
-                    ), "BLOCKED", MatchOptions.Contains
-                ), true,
-        
-                // default
-                false
+            With(
+                {
+                    board: UDF_FEN_TO_BOARD(fen)
+                } As theBoard,
+            
+                Switch(true,
+                    IsBlank(UDF_getBitAtSqNum(theBoard.board,sqNum)),  false,
+                    UDF_getBitAtSqNum(theBoard.board,sqNum) exactin UDF_getACPieceABBR(fen,"KN"), true,
+                    distance=1, true,
+                    !IsMatch(
+                        Concat(
+                            ForAll (
+                                Split(slideOvers, " ") As aSliderOver,
+            
+                                If(UDF_getBitAtSqNum(theBoard.board, UDF_sqNameToSqNum(aSliderOver.Value))<>EMPTY_FILLER_ABBR,
+                                    "BLOCKED",
+                                    ""
+                                )
+                            ),Value,""
+                        ), "BLOCKED", MatchOptions.Contains
+                    ), true,
+            
+                    // default
+                    false
+                )
             );
         
         UDF_isSqNumAttackedBySqNum(attackingPiece:Text, attackingSqNum:Number, attackedSqNum:Number):Boolean=
@@ -557,12 +662,890 @@ App As appinfo:
                 LookUp(colPF_LEGAL_MOVES,
                     sqNum=attackingSqNum && 
                     eligibleSqNum=attackedSqNum && 
-                    pieceUpper=attackingPiece
+                    pieceUpper=If(attackingPiece in "P", attackingPiece, Upper(attackingPiece)) // pawn moves are case sensitive
                 ) As theEligibleMove,
         
                 If(IsBlank(theEligibleMove),false,true)
             );
         
+        UDF_countPiecesOnBoard(board:Text, piecesToCount:Text):Number=
+            Sum(
+                ForAll(
+                    Sequence(64,0) As theSqNum,
+        
+                    If(UDF_getBitAtSqNum(board, theSqNum.Value) exactin piecesToCount,1,0)
+                ), Value
+            );
+        
+        // User defined formulas
+        UDF_getOppositeDirection(dir:Number):Number=
+            Switch(true,
+                dir=N,  S,
+                dir=NE, SW,
+                dir=E,  W,
+                dir=SE, NW,
+                dir=S,  N,
+                dir=SW, NE,
+                dir=W,  E,
+                dir=NW, SE,
+                NO_DIRECTION
+            );
+        UDF_getDirX(dir:Number):Number=
+            Switch(true,
+                dir=N,  0,
+                dir=NE, 1,
+                dir=E,  1,
+                dir=SE, 1,
+                dir=S,  0,
+                dir=SW, -1,
+                dir=W,  -1,
+                dir=NW, -1,
+                0
+            );
+        UDF_getDirY(dir:Number):Number=
+            Switch(true,
+                dir=N,  1,
+                dir=NE, 1,
+                dir=E,  0,
+                dir=SE, -1,
+                dir=S,  -1,
+                dir=SW, -1,
+                dir=W,  0,
+                dir=NW, 1,
+                0
+            );
+        UDF_getDirX_KNIGHT(dir:Number):Number=
+            Switch(true,
+                dir=N,  1,
+                dir=NE, 2,
+                dir=E,  2,
+                dir=SE, 1,
+                dir=S,  -1,
+                dir=SW, -2,
+                dir=W,  -2,
+                dir=NW, -1,
+                0
+            );
+        UDF_getDirY_KNIGHT(dir:Number):Number=
+            Switch(true,
+                dir=N,  2,
+                dir=NE, 1,
+                dir=E,  -1,
+                dir=SE, -2,
+                dir=S,  -2,
+                dir=SW, -1,
+                dir=W,  1,
+                dir=NW, 2,
+                0
+            );
+        // UDF Set --------
+        UDF_getSetSize(setA:Text):Number=
+            If(Trim(setA)="",
+                0,
+                CountRows(Distinct(Sort(Split(Trim(setA), " "), Value), Value))
+            );
+        UDF_createSqNamesSet(sqNameList:Text):Text=
+            Trim(Concat(Distinct(Sort(Split(Trim(sqNameList), " "), Value), Value), Value, " "));
+        UDF_getElementFromSet(setA:Text, index:Number):Text=
+            If(index>=1 && index<=UDF_getSetSize(setA),
+                Index(Split(setA, " "), index).Value,
+                ""
+            );
+        UDF_getSetDifference(setA:Text, setB:Text):Text=
+            Trim(
+                Concat(
+                    Distinct(
+                        Sort(
+                            ForAll(
+                                Split(setA, " ") As setA,
+        
+                                If(setA.Value in setB, "", setA.Value)
+                            ), Value
+                        ), Value
+                    ), Value, " "
+                )
+            );
+        UDF_getSetIntersection(setA:Text, setB:Text):Text=
+            Trim(
+                Concat(
+                    Distinct(
+                        Sort(
+                            ForAll(
+                                Split(setA, " ") As setA,
+        
+                                If(setA.Value in setB, setA.Value, "")
+                            ), Value
+                        ), Value
+                    ), Value, " "
+                )
+            );
+        UDF_getSetUnion(setA:Text, setB:Text):Text=
+            Trim(
+                Concat(
+                    Distinct(
+                        Sort(
+                            Split(Trim(setA & " " & setB), " "), Value
+                        ), Value
+                    ), Value, " "
+                )
+            );
+        
+        UDF_getSetComplement(setA:Text):Text=
+            UDF_getSetDifference(UNIVERSAL_SQNAMES_SET, setA);
+        
+        UDF_getSetofSqNamesInBox(refSqName1:Text, refSqName2:Text):Text=
+            Trim(
+                Concat(
+                    Distinct(
+                        Sort(
+                            ForAll(
+                                Sequence(64, 0) As theSqNum,
+        
+                                With(
+                                    {
+                                        fileNumMin:     Min(UDF_getFileNumFromSqName(refSqName1), UDF_getFileNumFromSqName(refSqName2)),
+                                        fileNumMax:     Max(UDF_getFileNumFromSqName(refSqName1), UDF_getFileNumFromSqName(refSqName2)),
+                                        rankMin:        Min(UDF_getRankFromSqName(refSqName1), UDF_getRankFromSqName(refSqName2)),
+                                        rankMax:        Max(UDF_getRankFromSqName(refSqName1), UDF_getRankFromSqName(refSqName2)),
+                                        currentFileNum: UDF_getFileNumFromSqNum(theSqNum.Value),
+                                        currentRank:    UDF_getRankFromSqNum(theSqNum.Value)
+                                    } As localVars,
+        
+                                    If(
+                                        (localVars.currentFileNum>=localVars.fileNumMin && localVars.currentFileNum<=localVars.fileNumMax) &&
+                                        (localVars.currentRank>=localVars.rankMin && localVars.currentRank<=localVars.rankMax),
+                                        UDF_sqNumToSqName(theSqNum.Value),
+                                        ""
+                                    )
+                                )
+                            ), Value
+                        ), Value
+                    ), Value, " "
+                )
+            );
+        
+        UDF_sqNumToFileSet(refSqNum:Number):Text=
+        	With(
+        		{
+        			fileName:	UDF_getFileNameFromSqNum(refSqNum)
+        		} As theData,
+                UDF_createSqNamesSet(
+                    Concat(
+                        ForAll(
+                            Sequence(8,1) As theRank,
+        
+                            theData.fileName & theRank.Value
+                        ), Value, " "
+                    )
+                )
+            );
+        
+        UDF_sqNumToRankSet(refSqNum:Number):Text=
+        	With(
+        		{
+        			rank:	UDF_getRankFromSqNum(refSqNum)
+        		} As theData,
+                UDF_createSqNamesSet(
+                    Concat(
+                        ForAll(
+                            Sequence(8,1) As theFileNum,
+        
+                            UDF_getFileNameFromFileNum(theFileNum.Value) & theData.rank
+                        ), Value, " "
+                    )
+                )
+            );
+        UDF_sqNumToRookSet(refSqNum:Number):Text=
+            UDF_getSetUnion(UDF_sqNumToFileSet(refSqNum), UDF_sqNumToRankSet(refSqNum));
+        UDF_sqNumToKingSet(refSqNum:Number):Text=
+            UDF_createSqNamesSet(UDF_sqNumToAdjacentSqNamesSet(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
+        UDF_occupiedSqNamesSet(board:Text, sqNamesFilter:Text, pieceFilter:Text):Text=
+            If(UDF_getSetSize(sqNamesFilter)<=0,
+                // THEN
+                "",
+                // ELSE
+                Trim(
+                    Concat(
+                        Distinct(
+                            Sort(
+                                ForAll(
+                                    Sequence(UDF_getSetSize(sqNamesFilter), 1) As i,
+                                    With(
+                                        {
+                                            thePiece: UDF_getBitAtSqNum(board, UDF_sqNameToSqNum(UDF_getElementFromSet(sqNamesFilter, i.Value)))
+                                        } As localVars,
+                                        If(localVars.thePiece exactin pieceFilter, UDF_getElementFromSet(sqNamesFilter, i.Value), "")
+                                    )
+                                ), Value
+                            ), Value
+                        ), Value, " "
+                    )
+                )
+            );
+        UDF_sqNumToAdjacentSqNamesSet(refSqNum:Number):Text=
+            UDF_createSqNamesSet(
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W))) & " " &
+                UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))
+            );
+        // UDF isAttacked code
+        // is a square attacked by a PAWN
+        UDF_isSqNumPAWNAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            Switch(true,
+                attackingColor=WHITE &&
+                (
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)))="P" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)))="P"
+                ),
+                    true,
+                attackingColor=BLACK &&
+                (
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)))="p" || 
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))="p"
+                ),
+                    true,
+                // default
+                false
+            );
+        // is a square attacked by a KNIGHT
+        UDF_isSqNumKNIGHTAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            With(
+                {
+                    abbr: If(attackingColor=WHITE,"N","n")
+                } As theKnight,
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(N),UDF_getDirY_KNIGHT(N)))=theKnight.abbr ||
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NE),UDF_getDirY_KNIGHT(NE)))=theKnight.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(E),UDF_getDirY_KNIGHT(E)))=theKnight.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SE),UDF_getDirY_KNIGHT(SE)))=theKnight.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(S),UDF_getDirY_KNIGHT(S)))=theKnight.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SW),UDF_getDirY_KNIGHT(SW)))=theKnight.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(W),UDF_getDirY_KNIGHT(W)))=theKnight.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NW),UDF_getDirY_KNIGHT(NW)))=theKnight.abbr
+            );
+        // is a square attacked by a ROOK
+        UDF_isSqNumROOKAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            Switch(true,
+                attackingColor=WHITE,
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}R", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}R", MatchOptions.BeginsWith),
+                attackingColor=BLACK,
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}r", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}r", MatchOptions.BeginsWith),
+                // default
+                false
+            );
+        // is a square attacked by a BISHOP  
+        UDF_isSqNumBISHOPAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            Switch(true,
+                attackingColor=WHITE,
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}B", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}B", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}B", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}B", MatchOptions.BeginsWith),
+                attackingColor=BLACK,
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}b", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}b", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}b", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}b", MatchOptions.BeginsWith),
+                // default
+                false
+            );
+        // is a square attacked by a QUEEN
+        UDF_isSqNumQUEENAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            Switch(true,
+                attackingColor=WHITE,
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}Q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}Q", MatchOptions.BeginsWith),
+                attackingColor=BLACK,
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}q", MatchOptions.BeginsWith) ||
+                    IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}q", MatchOptions.BeginsWith),
+                // default
+                false
+            );
+        // is a square attacked by a KING
+        UDF_isSqNumKINGAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            With(
+                {
+                    abbr: If(attackingColor=WHITE,"K","k")
+                } As theKing,
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)))=theKing.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)))=theKing.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)))=theKing.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)))=theKing.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)))=theKing.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)))=theKing.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)))=theKing.abbr || 
+                UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))=theKing.abbr
+            );
+        UDF_isSqNumAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+            Switch(true,
+                UDF_isSqNumPAWNAttacked(board, refSqNum, attackingColor), true,
+                UDF_isSqNumKNIGHTAttacked(board, refSqNum, attackingColor), true,
+                UDF_isSqNumBISHOPAttacked(board, refSqNum, attackingColor), true,
+                UDF_isSqNumROOKAttacked(board, refSqNum, attackingColor), true,
+                UDF_isSqNumQUEENAttacked(board, refSqNum, attackingColor), true,
+                UDF_isSqNumKINGAttacked(board, refSqNum, attackingColor), true,
+        
+                // default
+                false
+            );
+        UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=
+            UDF_isSqNumAttacked(board, refSqNum, protectingColor);
+        UDF_getHangingSquareNamesSet(board:Text, hangingPiecesColor:Number):Text=
+            UDF_createSqNamesSet(
+                Concat(
+                    With(
+                        {
+                            piecesToCheck:  If(hangingPiecesColor=WHITE, WHITE_PIECES, BLACK_PIECES)
+                        } As theData,
+                        ForAll(
+                            Sequence(64,0) As theSqNum,
+                            
+                            If(UDF_getBitAtSqNum(board, theSqNum.Value) exactin theData.piecesToCheck,
+                                // THEN - check if it is protected (i.e., attacked by its own Color)
+                                If(UDF_isSqNumProtected(board, theSqNum.Value, hangingPiecesColor),
+                                    // THEN - not a hanging square
+                                    "",
+                                    
+                                    // ELSE - a hanging square
+                                    UDF_sqNumToSqName(theSqNum.Value)
+                                )
+                            )
+                        )
+                    ), Value, " "
+                )
+            );
+        // UDF countAttacks code
+        UDF_countSqNumPAWNAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
+            Sum(
+                If(
+                    attackingColor=WHITE &&
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)))="P", 1, 0
+                ),
+                If(
+                    attackingColor=WHITE &&
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)))="P", 1, 0
+                ),
+                If(
+                    attackingColor=BLACK &&
+                    UDF_getBitAtSqNum(
+                        board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)))="p", 1, 0
+                ),
+                If(
+                    attackingColor=BLACK &&
+                    UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))="p", 1, 0
+                )
+            );
+        UDF_countSqNumKNIGHTAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
+            With(
+                {
+                    abbr: If(attackingColor=WHITE,"N","n")
+                } As theKnight,
+                Sum(
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(N),UDF_getDirY_KNIGHT(N)))=theKnight.abbr,1,0),
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NE),UDF_getDirY_KNIGHT(NE)))=theKnight.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(E),UDF_getDirY_KNIGHT(E)))=theKnight.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SE),UDF_getDirY_KNIGHT(SE)))=theKnight.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(S),UDF_getDirY_KNIGHT(S)))=theKnight.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SW),UDF_getDirY_KNIGHT(SW)))=theKnight.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(W),UDF_getDirY_KNIGHT(W)))=theKnight.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NW),UDF_getDirY_KNIGHT(NW)))=theKnight.abbr,1,0)
+                )
+            );
+        UDF_countSqNumROOKAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
+            // IsMatch() requires a constant value for the pattern
+            If(attackingColor=WHITE,
+                Sum(
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}R", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}R", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}R", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}R", MatchOptions.BeginsWith),1,0)
+                ),
+                Sum(
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}r", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}r", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}r", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}r", MatchOptions.BeginsWith),1,0)
+                )
+            );
+        UDF_countSqNumBISHOPAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
+            // IsMatch() requires a constant value for the pattern
+            If(attackingColor=WHITE,
+                Sum(
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}B", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}B", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}B", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}B", MatchOptions.BeginsWith),1,0)
+                ),
+                Sum(
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}b", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}b", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}b", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}b", MatchOptions.BeginsWith),1,0)
+                )
+            );
+        UDF_countSqNumQUEENAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
+            // IsMatch() requires a constant value for the pattern
+            If(attackingColor=WHITE,
+                Sum(
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}Q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}Q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}Q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}Q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}Q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}Q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}Q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}Q", MatchOptions.BeginsWith),1,0)
+                ),
+                Sum(
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}q", MatchOptions.BeginsWith),1,0),
+                    If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}q", MatchOptions.BeginsWith),1,0)
+                )
+            );
+        UDF_countSqNumKINGAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
+            With(
+                {
+                    abbr: If(attackingColor=WHITE,"K","k")
+                } As theKing,
+                Sum(
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)))=theKing.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)))=theKing.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)))=theKing.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)))=theKing.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)))=theKing.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)))=theKing.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)))=theKing.abbr,1,0), 
+                    If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))=theKing.abbr,1,0)
+                )
+            );
+        UDF_countSqNumAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
+            Sum(
+                UDF_countSqNumPAWNAttacks(board, refSqNum, attackingColor),
+                UDF_countSqNumKNIGHTAttacks(board, refSqNum, attackingColor),
+                UDF_countSqNumKINGAttacks(board, refSqNum, attackingColor),
+                UDF_countSqNumROOKAttacks(board, refSqNum, attackingColor),
+                UDF_countSqNumBISHOPAttacks(board, refSqNum, attackingColor),
+                UDF_countSqNumQUEENAttacks(board, refSqNum, attackingColor)
+            );
+        // UDF getAttackerSqNamesSet code
+        // get squares of attacking PAWNs
+        UDF_getPAWNAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+            UDF_createSqNamesSet(
+                Trim(
+                    If(
+                        attackingColor=BLACK &&
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NE)))="p",
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NE))) & " ", ""
+                    ) &
+                    If(
+                        attackingColor=BLACK &&
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NW)))="p",
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NW))) & " ", ""
+                    ) &
+                    If(
+                        attackingColor=WHITE &&
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SE)))="P",
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SE))) & " ", ""
+                    ) &
+                    If(
+                        attackingColor=WHITE &&
+                        UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SW)))="P",
+                        UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SW))) & " ", ""
+                    )
+                )
+            );
+        // get squares of attacking KNIGHTs
+        UDF_getKNIGHTAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+            UDF_createSqNamesSet(
+                With(
+                    {
+                        abbr: If(attackingColor=WHITE,"N","n")
+                    } As theKnight,
+                    Trim(
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(N),UDF_getDirY_KNIGHT(N)))=theKnight.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(N),UDF_getDirY_KNIGHT(N))) & " ", ""
+                        ) &
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NE),UDF_getDirY_KNIGHT(NE)))=theKnight.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NE),UDF_getDirY_KNIGHT(NE))) & " ", ""
+                        ) &
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(E),UDF_getDirY_KNIGHT(E)))=theKnight.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(E),UDF_getDirY_KNIGHT(E))) & " ", ""
+                        ) & 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SE),UDF_getDirY_KNIGHT(SE)))=theKnight.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SE),UDF_getDirY_KNIGHT(SE))) & " ", ""
+                        ) & 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(S),UDF_getDirY_KNIGHT(S)))=theKnight.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(S),UDF_getDirY_KNIGHT(S))) & " ", ""
+                        ) & 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SW),UDF_getDirY_KNIGHT(SW)))=theKnight.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(SW),UDF_getDirY_KNIGHT(SW))) & " ", ""
+                        ) & 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(W),UDF_getDirY_KNIGHT(W)))=theKnight.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(W),UDF_getDirY_KNIGHT(W))) & " ", ""
+                        ) & 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NW),UDF_getDirY_KNIGHT(NW)))=theKnight.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX_KNIGHT(NW),UDF_getDirY_KNIGHT(NW))) & " ", ""
+                        )
+                    )
+                )
+            );
+        // get squares of attacking ROOKs
+        UDF_getROOKAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+            // IsMatch() requires a constant value for the pattern
+            UDF_createSqNamesSet(
+                If(attackingColor=WHITE,
+                    Trim(
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}R", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,Find("R",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)),1,7)))) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}R", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,Find("R",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7)),0)) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}R", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,-Find("R",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7)))) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}R", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-Find("R",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7)),0)) & " ",
+                            ""
+                        )
+                    ),
+                    Trim(
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}r", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,Find("r",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)),1,7)))) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}r", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,Find("r",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7)),0)) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}r", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,-Find("r",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7)))) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}r", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-Find("r",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7)),0)) & " ",
+                            ""
+                        )
+                    )
+                )
+            );
+        // get squares of attacking BISHOPs
+        UDF_getBISHOPAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+            // IsMatch() requires a constant value for the pattern
+            UDF_createSqNamesSet(
+                If(attackingColor=WHITE,
+                    Trim(
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}B", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)),2,7)),
+                                Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)),2,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}B", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)),4,7)),
+                                -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)),4,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}B", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)),6,7)),
+                                -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)),6,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}B", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                -Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)),8,7)),
+                                Find("B",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)),8,7))
+                            )) & " ",
+                            ""
+                        )
+                    ),
+                    Trim(
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}b", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)),2,7)),
+                                Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)),2,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}b", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)),4,7)),
+                                -Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)),4,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}b", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                -Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)),6,7)),
+                                -Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)),6,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}b", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                -Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)),8,7)),
+                                Find("b",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)),8,7))
+                            )) & " ",
+                            ""
+                        )
+                    )
+                )
+            );
+        // get squares of attacking QUEENs
+        UDF_getQUEENAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+            // IsMatch() requires a constant value for the pattern
+            UDF_createSqNamesSet(
+                If(attackingColor=WHITE,
+                    Trim(
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}Q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,Find("Q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)),1,7)))) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}Q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,Find("Q",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7)),0)) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}Q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,-Find("Q",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7)))) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}Q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-Find("Q",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7)),0)) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}Q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                Find("Q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)),2,7)),
+                                Find("Q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)),2,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}Q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                Find("Q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)),4,7)),
+                                -Find("Q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)),4,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}Q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                -Find("Q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)),6,7)),
+                                -Find("Q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)),6,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}Q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                -Find("Q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)),8,7)),
+                                Find("Q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)),8,7))
+                            )) & " ",
+                            ""
+                        )
+                    ),
+                    Trim(
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)), 1, 7), "#{0,6}q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)),1,7)))) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7), "#{0,6}q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,Find("q",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)), 3, 7)),0)) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7), "#{0,6}q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,0,-Find("q",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)), 5, 7)))) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7), "#{0,6}q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,-Find("q",UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)), 7, 7)),0)) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)), 2, 7), "#{0,6}q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)),2,7)),
+                                Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)),2,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)), 4, 7), "#{0,6}q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)),4,7)),
+                                -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)),4,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)), 6, 7), "#{0,6}q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)),6,7)),
+                                -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)),6,7))
+                            )) & " ",
+                            ""
+                        ) &
+                        If(IsMatch(UDF_getBitsAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)), 8, 7), "#{0,6}q", MatchOptions.BeginsWith),
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,
+                                -Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)),8,7)),
+                                Find("q",UDF_getBitsAtSqNum(board,UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)),8,7))
+                            )) & " ",
+                            ""
+                        )
+                    )
+                )
+            );
+        // get squares of attacking KINGs
+        UDF_getKINGAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+            UDF_createSqNamesSet(
+                With(
+                    {
+                        abbr: If(attackingColor=WHITE,"K","k")
+                    } As theKing,
+                    Trim(
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N)))=theKing.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(N),UDF_getDirY(N))) & " ", ""
+                        ) &
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE)))=theKing.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NE),UDF_getDirY(NE))) & " ", ""
+                        ) & 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E)))=theKing.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(E),UDF_getDirY(E))) & " ", ""
+                        ) & 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE)))=theKing.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SE),UDF_getDirY(SE))) & " ", ""
+                        ) & 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S)))=theKing.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(S),UDF_getDirY(S))) & " ", ""
+                        ) & 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW)))=theKing.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(SW),UDF_getDirY(SW))) & " ", ""
+                        ) & 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W)))=theKing.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(W),UDF_getDirY(W))) & " ", ""
+                        ) & 
+                        If(UDF_getBitAtSqNum(board, UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW)))=theKing.abbr,
+                            UDF_sqNumToSqName(UDF_getSqNumRelativeToSqNum(refSqNum,UDF_getDirX(NW),UDF_getDirY(NW))) & " ", ""
+                        )
+                    )
+                )
+            );
+        UDF_getAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
+            UDF_createSqNamesSet(
+                UDF_getPAWNAttackerSqNamesSet(board, refSqNum, attackingColor) & " " &
+                UDF_getKNIGHTAttackerSqNamesSet(board, refSqNum, attackingColor) & " " &
+                UDF_getKINGAttackerSqNamesSet(board, refSqNum, attackingColor) & " " &
+                UDF_getROOKAttackerSqNamesSet(board, refSqNum, attackingColor) & " " &
+                UDF_getBISHOPAttackerSqNamesSet(board, refSqNum, attackingColor) & " " &
+                UDF_getQUEENAttackerSqNamesSet(board, refSqNum, attackingColor)
+            );
+        // get the material value of the weakest piece attacking a square
+        UDF_getSqNumAttackersMinMaterialCentipawn(board:Text, refSqNum:Number, attackingColor:Number):Number=
+            With(
+                {
+                    attackerSet: UDF_getAttackerSqNamesSet(board, refSqNum, attackingColor)
+                } As v,
+                With(
+                    {
+                        minMaterialValue:
+                            Min(
+                                ForAll(
+                                    Sequence(UDF_getSetSize(v.attackerSet), 1) As i,
+                                    Switch(
+                                        UDF_getBitAtSqNum(board, UDF_sqNameToSqNum(UDF_getElementFromSet(v.attackerSet, i.Value))),
+                                        "P", 100,
+                                        "p", 100,
+                                        "N", 300,
+                                        "n", 300,
+                                        "B", 300,
+                                        "b", 300,
+                                        "R", 500,
+                                        "r", 500,
+                                        "Q", 900,
+                                        "q", 900,
+                                        "K", 10000,
+                                        "k", 10000,
+                                        0
+                                    )
+                                ), Value
+                            )
+                    } As v2,
+                    If(attackingColor=WHITE,
+                        v2.minMaterialValue,
+                        -v2.minMaterialValue
+                    )
+                )
+            );
+        // get the material value of the weakest piece in set of the color specified
+        UDF_minMaterialCentipawnValueFromSet(board:Text, setA:Text, colorFilter:Number):Number=
+            With(
+                {
+                    minMaterialValue:
+                        Min(
+                            ForAll(
+                                Sequence(UDF_getSetSize(setA), 1) As i,
+                                With(
+                                    {
+                                        bit: UDF_getBitAtSqNum(board, UDF_sqNameToSqNum(UDF_getElementFromSet(setA, i.Value)))
+                                    } As localVars,
+                                    Switch(true,
+                                        localVars.bit="P" && colorFilter=WHITE, 100,
+                                        localVars.bit="p" && colorFilter=BLACK, 100,
+                                        localVars.bit="N" && colorFilter=WHITE, 300,
+                                        localVars.bit="n" && colorFilter=BLACK, 300,
+                                        localVars.bit="B" && colorFilter=WHITE, 300,
+                                        localVars.bit="b" && colorFilter=BLACK, 300,
+                                        localVars.bit="R" && colorFilter=WHITE, 500,
+                                        localVars.bit="r" && colorFilter=BLACK, 500,
+                                        localVars.bit="Q" && colorFilter=WHITE, 900,
+                                        localVars.bit="q" && colorFilter=BLACK, 900,
+                                        localVars.bit="K" && colorFilter=WHITE, 10000,
+                                        localVars.bit="k" && colorFilter=BLACK, 10000,
+                                        // default
+                                        1000000
+                                    )
+                                )
+                            ), Value
+                        )
+                } As v,
+                If(v.minMaterialValue=1000000,
+                    0, // only happens when there were no pieces of the proper color found
+                    If(colorFilter=WHITE,
+                        v.minMaterialValue,
+                        -v.minMaterialValue
+                    )
+                )
+            );
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
@@ -571,7 +1554,7 @@ App As appinfo:
         ClearCollect(colPF_LEGAL_MOVES, Table(PIECE_REACHABLE_SQUARES));
         
         Concurrent(
-            // gloabl variables
+            // global variables
             Set(gblPF_PAUSE, false),
             Set(gblPF_TMP_Boolean01, false),
             Set(gblPF_TMP_Boolean02, false),
@@ -590,14 +1573,13 @@ App As appinfo:
             Set(gblPF_TMP_Text04, ""),
             Set(gblPF_TMP_Text05, ""),
         
-            Set(gblPF_DEBUG_EVAL, true),
-            Set(gblPF_DEBUG_CE_UTILS, true),
-            Set(gblPF_DEBUG_EVAL_BASIC_EXCHANGE, true),
-            Set(gblPF_DEBUG_EVAL_BASIC_EXCHANGE_CALC, true),
-            Set(gblPF_DEBUG_EVAL_ENDGAME, true),
-            Set(gblPF_DEBUG_EVAL_ENDGAME_KR_K, false),
-            Set(gblPF_DEBUG_EVAL_FORK, true),
-            Set(gblPF_DEBUG_EVAL_GENERIC_TACTICS, true),
+            Set(gblPF_DEBUG, false),
+            Set(gblPF_DEBUG_GAME_NODES, false),
+            Set(gblPF_DEBUG_GAME_MOVE_HISTORY_D0, false),
+            Set(gblPF_DEBUG_EVAL, false),
+            Set(gblPF_DEBUG_EVAL_ENDGAME, false),
+            Set(gblPF_DEBUG_TIMERS, false),
+            Set(gblPF_DEBUG_UDF_DIAGNOSTICS, false),
             Set(gblPF_CLEAR_LOG_MOD, 3),
         
             Set(gblPF_BestMoveMaterial, "+0"),
@@ -624,13 +1606,13 @@ App As appinfo:
             Set(gblPF_UI_ThinkingFill, COLOR_WHITEish),
             Set(gblPF_UI_StatusFill, COLOR_WHITEish),
             Set(gblPF_UI_DiagnosticFill, COLOR_WHITEish),
+            Set(gblPF_UI_StartFromBeginning, false),
             Set(gblPF_UI_GamePhase, ""),
-            Set(gblPF_UI_SelectedChessEngine, CE_PF_RANDOM),
+            Set(gblPF_UI_WLT, "0 - 0 - 0"),
         
             // timer flags
-            Set(gblPF_TMR_RunNextTest, false),
-            Set(gblPF_TMR_MakeNextTestMove, false),
             Set(gblPF_TMR_MakeNextGameMove, false),
+            Set(gblPF_TMR_PlayAnotherGame, false),
         
             // Collections...
             ClearCollect(colPF_logs, Table({logOffset: 0, logEntry: ""})),
