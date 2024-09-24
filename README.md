@@ -6,7 +6,7 @@ This project is a Chess Game written entirely in PowerFx (the low code language 
 
 This is the author's first open source project and therefore the first attempt at managing an OSS project. At this time the author is the only contributor and is in the process of learning lots of new things Github related. Additional contributors are welcome however be warned that the author is new at all of this OSS, Github, and Power App technologies, so please be patient. The author works on this project as a hobby, and generally adds code and checks project status at least monthly (usually weekly).
 
-The current stable release of this project is release v0.2.0:
+The current stable release of this project is release v0.2.1:
 - Supports  human vs. human play, human vs. computer, and computer vs. computer
 - Only allows legal moves including castling, en passant captures, and pawn promotions.
 - Has some built in diagnostics that can be used for testing
