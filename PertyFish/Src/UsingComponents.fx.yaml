@@ -2352,7 +2352,13 @@ UsingComponents As screen:
                                                     theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
                                                     UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                 ),
-                                            targetSqProtected:
+                                            targetSqProtectedByMe:
+                                                UDF_isSqNumProtected(
+                                                    theNodes.current.postMoveBoard,
+                                                    theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                    UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                ),
+                                            targetSqAttackedByThem:
                                                 UDF_isSqNumProtected(
                                                     theNodes.current.postMoveBoard,
                                                     theNodes.current.inactiveColorMoveRecord.targetSquareNum,
@@ -2368,7 +2374,8 @@ UsingComponents As screen:
                                                 " sourceSqProtected: " & localVars.sourceSqProtected &
                                                 " sourceSqAttacked: " & localVars.sourceSqAttacked &
                                                 " sourceAttackerMaterial: " & localVars.sourceAttackerMaterial &
-                                                " targetSqProtected: " & localVars.targetSqProtected 
+                                                " targetSqProtectedByMe: " & localVars.targetSqProtectedByMe &
+                                                " targetSqAttackedByThem: " & localVars.targetSqAttackedByThem
                                             })
                                         );
             
@@ -2393,7 +2400,7 @@ UsingComponents As screen:
                                                     })
                                                 );
                                                 0,
-                                            localVars.materialCapture<>0 && (!localVars.targetSqProtected),
+                                            localVars.materialCapture<>0 && (!localVars.targetSqAttackedByThem),
                                                 // USE CASE: capture hanging piece
                                                 If(gblPF_DEBUG_EVAL,
                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
@@ -2402,7 +2409,7 @@ UsingComponents As screen:
                                                     })
                                                 );
                                                 -localVars.materialCapture,
-                                            localVars.materialCapture<>0 && localVars.targetSqProtected &&
+                                            localVars.materialCapture<>0 && localVars.targetSqAttackedByThem &&
                                             Abs(localVars.materialCapture)>=Abs(localVars.materialSource),
                                                 // USE CASE: capture protected piece
                                                 If(gblPF_DEBUG_EVAL,
