@@ -94,7 +94,7 @@ Document how a user plays chess within the PertyFish canvas app
 
 ## Open Bugs
 
-r4b2/6p1/1p1pkpr1/p1p5/7p/5N1P/1q6/4BK2 b - - 9 37 # checkmate in 1
+
 
 
 ## Completed Work
