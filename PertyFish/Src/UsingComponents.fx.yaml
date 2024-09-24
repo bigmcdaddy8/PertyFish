@@ -2387,7 +2387,7 @@ UsingComponents As screen:
                                         );
             
                                         Switch(true,
-                                            localVars.sourceSqAttacked && (!localVars.sourceSqProtected) && localVars.materialCapture=0,
+                                            localVars.sourceSqAttacked && (!localVars.sourceSqProtected) && (!localVars.targetSqAttackedByThem) && localVars.materialCapture=0,
                                                 // USE CASE: running from danger
                                                 If(gblPF_DEBUG_EVAL,
                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
