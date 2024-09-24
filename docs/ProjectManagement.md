@@ -30,6 +30,9 @@ The category that typo fixes and other minor updates are logged under.
 ##### Story 0001-05 - Project Management Work
 Additions/Updates to the ProjectManagement documentation.
 
+##### Story 0001-06 - Release Management
+- promote DEV to Master
+- create a new release
 
 #### Feature 0002 - Create diagnostic testing capability
 In a private version I have built in regression testing, I may pull that forward or at least a simplified version of it. I ran into a problem where the sheer size (number of components) in that private version caused the program to basically become too large for the browser based Power Apps development tool to reliably load and save in a timely manner.
@@ -102,6 +105,8 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Completed Work
+##### Story 0001-06 - Release Management v0.2.0 
+
 ##### Story 0003-08 Developing CE_PF_600 (2nd Grade)
 - Look for simple tactics
 - - look for forks
