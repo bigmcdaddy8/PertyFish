@@ -67,7 +67,6 @@ Miscellaneous notes and thoughts about project related topics that are not well 
     UDF_getSetofSqNamesInBox(refSqName1:Text, refSqName2:Text):Text=
     UDF_sqNumToFileSet(refSqNum:Number):Text=
     UDF_sqNumToRankSet(refSqNum:Number):Text=
-    UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=false;
     UDF_occupiedSqNamesSet(board:Text, filter:Text):Text=
     UDF_sqNumToAdjacentSqNamesSet(refSqNum:Number):Text=
     UDF_isSqNumPAWNAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
@@ -77,6 +76,7 @@ Miscellaneous notes and thoughts about project related topics that are not well 
     UDF_isSqNumQUEENAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
     UDF_isSqNumKINGAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
     UDF_isSqNumAttacked(board:Text, refSqNum:Number, attackingColor:Number):Boolean=
+    UDF_isSqNumProtected(board:Text, refSqNum:Number, protectingColor:Number):Boolean=
     UDF_countSqNumPAWNAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
     UDF_countSqNumKNIGHTAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
     UDF_countSqNumROOKAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
