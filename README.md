@@ -44,7 +44,7 @@ Another untested (by this project) method is to use the following steps:
 
 ## Usage
 
-![PertyFish Main Screen](docs/images/PertyFish_MainScreen.png)
+![PertyFish Main Screen](docs/images/PertyFish_MainScreen_v0.2.0.png)
 
 - Set the Player settings however you want.
 - Set the Chess Engine settings however you want.
@@ -61,17 +61,21 @@ Optionally you can start a game using a FEN string - paste a complete FEN string
 
 ## Testing
 
-Private versions of this program had lots of built in diagnostics and unit tests. There were also lots of perft tests that could be run at the press of a button to validate chess engine functionality. For those unfamiliar a perft test in chess can (among many things) be used to validate a chess engines' ability to generate the correct number of legal moves at a given depth. Until the time that the original performance limitations of this project improve, the original max search depth of 1 applies. In this public version most of the test/diagnostics code has been removed in order to reduce the footprint of the program and thereby speed up save/load times.
+Private versions of this program had lots of built in diagnostics and unit tests. There were also lots of perft tests that could be run at the press of a button to validate chess engine functionality. For those unfamiliar a perft test in chess can (among many things) be used to validate a chess engines' ability to generate the correct number of legal moves at a given depth. Until the time that the original performance limitations of this project improve, the original max search depth of 1 applies. In this public version most of the test/diagnostics code has been removed in order to reduce the footprint of the program and thereby speed up save/load times. Some diagnostics can be by going to the Diagnostics window, this is meant for the use of developer's not user's.
 
-Even though most of the automated tests and diagnostics were taken out, there is still a very useful and easy way to test validity of the chess engine. Do a manual perft test, do then setting the Player settings to not use the computer engine (i.e., human only play), paste in the FEN text input control a valid FEN string, and then press the Start from FEN.
+Even though most of the automated tests and diagnostics were taken out, there is still a very useful and easy way to test validity of the chess engine. Do a manual perft test:
+- set the all Player settings to Human
+- paste in the FEN text input control a valid FEN string
+- press the Start from FEN button
 - You will see the number of legal moves that the chess engine has calculated to be display in the "Number of legal Moves: " text label.
   - The reason we select Human only play was so that the program would not hurry off and work on a computer move, thereby changing the value of this field before we had a chance to analyze it.
 - The correct number of legal moves can be determined in any number of ways. A simple method for folks with experience using the stockfish chess engine is to enter the FEN into stockfish and make sure the PertyFish results match the "go perft 1" results that stockfish found. See [testing guide](docs/Testing.md).
+- If the number of legal moves determined by PertyFish does not match what stockfish determined, then there is a bug in PertyFish...
 
 
 ## Contributing
 
-Contributions may be made to this project. The project owner is new to the OSS world so asks for patience in this endeavor. The anticpated contribution process will be standard steps that look something like:
+Contributions may be made to this project. The project owner is new to the OSS world so asks for patience in this endeavor. The anticipated contribution process will be standard steps that look something like:
 
 1. Fork the Repository:
   - Create a copy of the PertyFish repository on your GitHub account.

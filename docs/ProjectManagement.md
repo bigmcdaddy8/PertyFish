@@ -105,6 +105,8 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Completed Work
+##### Story 0001-06 - Release Management v0.2.1
+
 ##### Story 0001-06 - Release Management v0.2.0 
 
 ##### Story 0003-08 Developing CE_PF_600 (2nd Grade)
