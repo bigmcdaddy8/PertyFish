@@ -855,27 +855,22 @@ App As appinfo:
                     )
                 )
             );
-        
         UDF_sqNumToRookSet(refSqNum:Number):Text=
             UDF_getSetUnion(UDF_sqNumToFileSet(refSqNum), UDF_sqNumToRankSet(refSqNum));
-        
         UDF_sqNumToKingSet(refSqNum:Number):Text=
             UDF_createSqNamesSet(UDF_sqNumToAdjacentSqNamesSet(refSqNum) & " " & UDF_sqNumToSqName(refSqNum));
-        
-        UDF_occupiedSqNamesSet(board:Text, filter:Text):Text=
+        UDF_occupiedSqNamesSet(board:Text, sqNameFilter:Text, pieceFilter:Text):Text=
             Trim(
                 Concat(
                     Distinct(
                         Sort(
                             ForAll(
-                                Sequence(64, 0) As theSqNum,
-        
+                                Sequence(UDF_getSetSize(sqNameFilter), 1) As i,
                                 With(
                                     {
-                                        thePiece: UDF_getBitAtSqNum(board, theSqNum.Value)
+                                        thePiece: UDF_getBitAtSqNum(board, UDF_sqNameToSqNum(UDF_getElementFromSet(sqNameFilter, i.Value))),
                                     } As localVars,
-        
-                                    If(localVars.thePiece exactin filter, UDF_sqNumToSqName(theSqNum.Value), "")
+                                    If(localVars.thePiece exactin pieceFilter, UDF_getElementFromSet(sqNameFilter, i.Value), "")
                                 )
                             ), Value
                         ), Value
