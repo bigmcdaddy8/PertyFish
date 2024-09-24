@@ -1654,8 +1654,8 @@ UsingComponents As screen:
             
                                                 With(
                                                     {
-                                                        gettingForkedSet:   UDF_occupiedSqNamesSet(theNodes.current.postMoveBoard, forkPieces.gettingForkedPieces),
-                                                        forkingSet:         UDF_occupiedSqNamesSet(theNodes.current.postMoveBoard, forkPieces.forkingPieces)
+                                                        gettingForkedSet:   UDF_occupiedSqNamesSet(theNodes.current.postMoveBoard, UNIVERSAL_SQNAMES_SET, forkPieces.gettingForkedPieces),
+                                                        forkingSet:         UDF_occupiedSqNamesSet(theNodes.current.postMoveBoard, UNIVERSAL_SQNAMES_SET, forkPieces.forkingPieces)
                                                     } As forkSets,
                                                     
                                                     With(
@@ -1869,14 +1869,22 @@ UsingComponents As screen:
                                                                             ),
                                                                             EMPTY_FILLER_ABBR,
                                                                             theKing.sqNum
+                                                                        ),
+                                                                    adjBlockedSquares:
+                                                                        UDF_occupiedSqNamesSet(
+                                                                            UDF_setBitAtSqNum(theNodes.current.preMoveBoard,EMPTY_FILLER_ABBR,theKing.sqNum), 
+                                                                            UDF_createSqNamesSet(
+                                                                                UDF_sqNumToAdjacentSqNamesSet(theKing.sqNum) & " " &  UDF_sqNumToSqName(theKing.sqNum)
+                                                                            ),
+                                                                            If(UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,WHITE_PIECES,BLACK_PIECES)
                                                                         )
-                                                                    // adjBlockedSquares: UDF_occupiedSqNamesSet(noKingPreMoveBoard
                                                                 } As nextToKing,
             
                                                                 If(gblPF_DEBUG_EVAL,
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                         " fCE_600(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
-                                                                        " adjSquaresSet: " & nextToKing.adjSquaresSet
+                                                                        " adjSquaresSet: " & nextToKing.adjSquaresSet &
+                                                                        " adjSquaresSet BLOCKED: " & nextToKing.adjBlockedSquares
                                                                     });
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                         " premove no king board: " & nextToKing.noKingPreMoveBoard
@@ -2026,7 +2034,9 @@ UsingComponents As screen:
                                                                                 -50,
             
                                                                                 // ELSE
-                                                                                If(attackData.numAdjSquaresAttackedPostMove=UDF_getSetSize(nextToKing.adjSquaresSet),
+                                                                                If(
+                                                                                    (attackData.numAdjSquaresAttackedPostMove + UDF_getSetSize(nextToKing.adjBlockedSquares))
+                                                                                    >=UDF_getSetSize(nextToKing.adjSquaresSet),
                                                                                     // THEN - checkmate !
                                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                         " checkmate FEN: " & theNodes.current.preMoveFEN
