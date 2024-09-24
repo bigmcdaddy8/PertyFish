@@ -2321,7 +2321,7 @@ UsingComponents As screen:
                                         )
                                     ),
                                 heuristic12:
-                                    // moving an attacked piece to a unattacked square needs a bonus
+                                    // bonus for moving - includes capturing a piece and/or running from danger
                                     With(
                                         {
                                             materialSource:
@@ -2329,25 +2329,97 @@ UsingComponents As screen:
                                                     theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier,
                                                     ALL_PIECES
                                                 ),
+                                            materialCapture:
+                                                UDF_getPieceCentipawnMaterialValue(
+                                                    theNodes.current.inactiveColorMoveRecord.captureSquareOccupier,
+                                                    ALL_PIECES
+                                                ),
+                                            sourceSqProtected:
+                                                UDF_isSqNumProtected(
+                                                    theNodes.current.preMoveBoard,
+                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
+                                                    UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                ),
                                             sourceSqAttacked:
                                                 UDF_isSqNumAttacked(
                                                     theNodes.current.preMoveBoard,
                                                     theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
                                                     UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                 ),
-                                            targetSqAttacked:
-                                                UDF_isSqNumAttacked(
+                                            sourceAttackerMaterial:
+                                                UDF_getSqNumAttackersMinMaterialCentipawn(
+                                                    theNodes.current.preMoveBoard,
+                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
+                                                    UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
+                                                ),
+                                            targetSqProtected:
+                                                UDF_isSqNumProtected(
                                                     theNodes.current.postMoveBoard,
                                                     theNodes.current.inactiveColorMoveRecord.targetSquareNum,
                                                     UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                 )
                                         } As localVars,
             
-                                        If(localVars.sourceSqAttacked && (!localVars.targetSqAttacked),
-                                            // THEN
-                                            localVars.materialSource,
+                                        If(gblPF_DEBUG_EVAL,
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                " fCE_700(): heuristic12" & 
+                                                " materialSource: " & localVars.materialSource &
+                                                " materialCapture: " & localVars.materialCapture &
+                                                " sourceSqProtected: " & localVars.sourceSqProtected &
+                                                " sourceSqAttacked: " & localVars.sourceSqAttacked &
+                                                " sourceAttackerMaterial: " & localVars.sourceAttackerMaterial &
+                                                " targetSqProtected: " & localVars.targetSqProtected 
+                                            })
+                                        );
             
-                                            // ELSE
+                                        Switch(true,
+                                            localVars.sourceSqAttacked && (!localVars.sourceSqProtected) && localVars.materialCapture=0,
+                                                // USE CASE: running from danger
+                                                If(gblPF_DEBUG_EVAL,
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                        " USE CASE: running from danger" &
+                                                        " bonus: " & localVars.materialSource
+                                                    })
+                                                );
+                                                localVars.materialSource,
+            
+                                            localVars.sourceSqAttacked && localVars.sourceSqProtected && localVars.materialCapture=0 &&
+                                            Abs(localVars.sourceAttackerMaterial)>=Abs(localVars.materialSource),
+                                                // USE CASE: facing our fears
+                                                If(gblPF_DEBUG_EVAL,
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                        " USE CASE: facing our fears" &
+                                                        " bonus: " & 0
+                                                    })
+                                                );
+                                                0,
+                                            localVars.materialCapture<>0 && (!localVars.targetSqProtected),
+                                                // USE CASE: capture hanging piece
+                                                If(gblPF_DEBUG_EVAL,
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                        " USE CASE: capture hanging piece" &
+                                                        " bonus: " & -localVars.materialCapture
+                                                    })
+                                                );
+                                                -localVars.materialCapture,
+                                            localVars.materialCapture<>0 && localVars.targetSqProtected &&
+                                            Abs(localVars.materialCapture)>=Abs(localVars.materialSource),
+                                                // USE CASE: capture protected piece
+                                                If(gblPF_DEBUG_EVAL,
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                        " USE CASE: capture hanging piece" &
+                                                        " bonus: " & -(localVars.materialCapture + localVars.materialSource)
+                                                    })
+                                                );
+                                                --(localVars.materialCapture + localVars.materialSource),
+            
+                                            // default
+                                            If(gblPF_DEBUG_EVAL,
+                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                    " USE CASE: default" &
+                                                    " bonus: 0"
+                                                })
+                                            );
                                             0
                                         )
                                     ),
@@ -2875,9 +2947,6 @@ UsingComponents As screen:
                                         
                                         If(gblPF_DEBUG_EVAL,
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
-                                                " heuristic11: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
-                                            });
-                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                 " heuristic12: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic12
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -2893,7 +2962,6 @@ UsingComponents As screen:
                                                 " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
                                             })
                                         );
-                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic12 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic15 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
