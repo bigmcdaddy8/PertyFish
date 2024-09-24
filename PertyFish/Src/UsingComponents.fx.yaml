@@ -2425,6 +2425,15 @@ UsingComponents As screen:
                                                     })
                                                 );
                                                 -(localVars.targetAttackerMaterial + localVars.materialSource),
+                                            localVars.sourceSqAttacked && (!localVars.targetSqAttackedByThem) && localVars.materialCapture<>0 && (!localVars.targetSqAttackedByThem),
+                                                // USE CASE: capture hanging piece
+                                                If(gblPF_DEBUG_EVAL,
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                        " USE CASE: capture hanging piece while running" &
+                                                        " bonus: " & -localVars.materialCapture + localVars.materialSource
+                                                    })
+                                                );
+                                                -localVars.materialCapture + localVars.materialSource,
                                             localVars.materialCapture<>0 && (!localVars.targetSqAttackedByThem),
                                                 // USE CASE: capture hanging piece
                                                 If(gblPF_DEBUG_EVAL,
