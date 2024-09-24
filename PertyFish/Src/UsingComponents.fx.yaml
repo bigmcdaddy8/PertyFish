@@ -3109,7 +3109,16 @@ UsingComponents As screen:
                                 );
                                 comChessEngineFunctions.fCE_600(pNodeID);
                                 comChessEngineFunctions.fCE_600_postEvaluate(),
-                                
+                            theEngine.selectedEngine=CE_PF_700,
+                                comChessEngineFunctions.fCE_700_preEvaluate();
+                                If(gblPF_DEBUG_EVAL,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " fME_EvaluateMove(): calling comChessEngineFunctions.fCE_700(" & pNodeID & ")"
+                                    })
+                                );
+                                comChessEngineFunctions.fCE_700(pNodeID);
+                                comChessEngineFunctions.fCE_700_postEvaluate(),
+            
                             // default
                             If(gblPF_DEBUG_EVAL,
                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
