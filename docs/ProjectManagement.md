@@ -46,13 +46,12 @@ Create smarter chess engines that are written using PowerFx
 
 
 ##### Story 0003-09 Developing CE_PF_700 (3rd Grade)
-
 - do not back away when challenged
 - - determine if protected and if exchange is positive (or even)
 - - determine situations when to step into a potential PAWN exchange situation
 - - determine situation when to initiate a PAWN exchange
 - Look for simple tactics
-- - look for forks
+- - look for skewers 4q3/B1pkb3/4p3/3p1p2/pnpN1P2/8/r7/3K2QB b - - 1 63 # Ra1+!
 - - look for hung pieces
 - Simple board strength analysis
 - - number of attacked squares
@@ -98,6 +97,7 @@ Document how a user plays chess within the PertyFish canvas app
 
 7k/8/8/1q6/8/8/4K3/5Q2 w - - 0 1   # Black queen should not back off when King moves and does not protect Queen
 7k/8/8/2p5/pn6/8/3Q2K1/8 b - - 0 1 # Black Knight should not be afraid of queen
+r2q4/n1pkb3/1pnpp3/p4p1P/P1PPbP2/2N4R/NP6/R1B1KB2 b Q - 29 39 # why doesn't BLACK do Nxd4 ?
 
 ## Open Bugs
 
