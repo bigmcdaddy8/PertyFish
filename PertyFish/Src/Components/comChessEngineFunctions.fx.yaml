@@ -2391,10 +2391,10 @@ comChessEngineFunctions As CanvasComponent:
                                                     If(gblPF_DEBUG_EVAL,
                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                             " USE CASE: bullseye move depends upon players" &
-                                                            " bonus: " & -(localVars.targetAttackerMaterial - localVars.materialSource)
+                                                            " bonus: " & -(localVars.targetAttackerMaterial + localVars.materialSource)
                                                         })
                                                     );
-                                                    -(localVars.targetAttackerMaterial - localVars.materialSource),
+                                                    -(localVars.targetAttackerMaterial + localVars.materialSource),
                                                 localVars.materialCapture<>0 && (!localVars.targetSqAttackedByThem),
                                                     // USE CASE: capture hanging piece
                                                     If(gblPF_DEBUG_EVAL,
@@ -2413,7 +2413,7 @@ comChessEngineFunctions As CanvasComponent:
                                                             " bonus: " & -(localVars.materialCapture + localVars.materialSource)
                                                         })
                                                     );
-                                                    --(localVars.materialCapture + localVars.materialSource),
+                                                    -(localVars.materialCapture + localVars.materialSource),
                 
                                                 // default
                                                 If(gblPF_DEBUG_EVAL,
