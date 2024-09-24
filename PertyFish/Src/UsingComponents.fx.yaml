@@ -1830,13 +1830,16 @@ UsingComponents As screen:
                                                                 If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,
                                                                     UDF_getRankFromSqName(theNodes.current.inactiveColorMoveRecord.targetSquareName),
                                                                     8 - UDF_getRankFromSqName(theNodes.current.inactiveColorMoveRecord.targetSquareName)
-                                                                 ) * RandBetween(8,21),
+                                                                 ) * RandBetween(8,21) + If(UDF_FEN_TO_HALFMOVE_COUNT(theNodes.current.preMoveFEN)>10,RandBetween(100,200),0),
             
                                                                 // ELSE
-                                                                0
+                                                                If(UDF_FEN_TO_HALFMOVE_COUNT(theNodes.current.preMoveFEN)>10,RandBetween(100,200),0)
                                                             ),
                                                             // ELSE
-                                                            0
+                                                            If(theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "P" && UDF_FEN_TO_HALFMOVE_COUNT(theNodes.current.preMoveFEN)>10,
+                                                                RandBetween(100,200),
+                                                                0
+                                                            )
                                                         ),
             
                                                         // Sum: trapping the king
