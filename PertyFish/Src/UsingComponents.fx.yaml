@@ -2363,6 +2363,12 @@ UsingComponents As screen:
                                                     theNodes.current.postMoveBoard,
                                                     theNodes.current.inactiveColorMoveRecord.targetSquareNum,
                                                     UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
+                                                ),
+                                            targetAttackerMaterial:
+                                                UDF_getSqNumAttackersMinMaterialCentipawn(
+                                                    theNodes.current.postMoveBoard,
+                                                    theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                    UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                 )
                                         } As localVars,
             
@@ -2375,7 +2381,8 @@ UsingComponents As screen:
                                                 " sourceSqAttacked: " & localVars.sourceSqAttacked &
                                                 " sourceAttackerMaterial: " & localVars.sourceAttackerMaterial &
                                                 " targetSqProtectedByMe: " & localVars.targetSqProtectedByMe &
-                                                " targetSqAttackedByThem: " & localVars.targetSqAttackedByThem
+                                                " targetSqAttackedByThem: " & localVars.targetSqAttackedByThem &
+                                                " targetAttackerMaterial: " & localVars.targetAttackerMaterial
                                             })
                                         );
             
@@ -2400,6 +2407,24 @@ UsingComponents As screen:
                                                     })
                                                 );
                                                 0,
+                                            (!localVars.sourceSqAttacked) && localVars.materialCapture=0 && localVars.targetSqAttackedByThem && (!localVars.targetSqProtectedByMe),
+                                                // USE CASE: discourage moving into a bullseye
+                                                If(gblPF_DEBUG_EVAL,
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                        " USE CASE: discourage moving into a bullseye" &
+                                                        " bonus: " & -localVars.materialSource
+                                                    })
+                                                );
+                                                -localVars.materialSource,
+                                            (!localVars.sourceSqAttacked) && localVars.materialCapture=0 && localVars.targetSqAttackedByThem && localVars.targetSqProtectedByMe,
+                                                // USE CASE: bullseye move depends upon players
+                                                If(gblPF_DEBUG_EVAL,
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                        " USE CASE: bullseye move depends upon players" &
+                                                        " bonus: " & -(localVars.targetAttackerMaterial - localVars.materialSource)
+                                                    })
+                                                );
+                                                -(localVars.targetAttackerMaterial - localVars.materialSource),
                                             localVars.materialCapture<>0 && (!localVars.targetSqAttackedByThem),
                                                 // USE CASE: capture hanging piece
                                                 If(gblPF_DEBUG_EVAL,
