@@ -2767,70 +2767,66 @@ UsingComponents As screen:
             
                                                                 With(
                                                                     {
-                                                                        numAdjSquaresAttackedPreMove:
-                                                                            UDF_getSetSize(
-                                                                                UDF_createSqNamesSet(
-                                                                                    Concat(
-                                                                                        ForAll(
-                                                                                            Split(nextToKing.adjSquaresSet, " ") As adjSqName,
+                                                                        adjSquaresAttackedPreMove:
+                                                                            UDF_createSqNamesSet(
+                                                                                Concat(
+                                                                                    ForAll(
+                                                                                        Split(nextToKing.adjSquaresSet, " ") As adjSqName,
             
-                                                                                            If(gblPF_DEBUG_EVAL,
-                                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                                    " fCE_700(): DEBUG heuristic16 adjSqName.Value: " & adjSqName.Value &
-                                                                                                    " premove AttackerSet: " &
-                                                                                                        UDF_getAttackerSqNamesSet(
-                                                                                                            nextToKing.noKingPreMoveBoard,
-                                                                                                            UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
-                                                                                                        )
-                                                                                                })
-                                                                                            );
-            
-                                                                                            If(
-                                                                                                UDF_getSetSize(
+                                                                                        If(gblPF_DEBUG_EVAL,
+                                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                                " fCE_700(): DEBUG heuristic16 adjSqName.Value: " & adjSqName.Value &
+                                                                                                " premove AttackerSet: " &
                                                                                                     UDF_getAttackerSqNamesSet(
                                                                                                         nextToKing.noKingPreMoveBoard,
                                                                                                         UDF_sqNameToSqNum(adjSqName.Value),
                                                                                                         UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                                     )
-                                                                                                )>0,
-                                                                                                adjSqName.Value, ""
-                                                                                            )
-                                                                                        ), Value, " "
-                                                                                    )
+                                                                                            })
+                                                                                        );
+            
+                                                                                        If(
+                                                                                            UDF_getSetSize(
+                                                                                                UDF_getAttackerSqNamesSet(
+                                                                                                    nextToKing.noKingPreMoveBoard,
+                                                                                                    UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                    UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                                                )
+                                                                                            )>0,
+                                                                                            adjSqName.Value, ""
+                                                                                        )
+                                                                                    ), Value, " "
                                                                                 )
                                                                             ),
-                                                                        numAdjSquaresAttackedPostMove:
-                                                                            UDF_getSetSize(
-                                                                                UDF_createSqNamesSet(
-                                                                                    Concat(
-                                                                                        ForAll(
-                                                                                            Split(nextToKing.adjSquaresSet, " ") As adjSqName,
+                                                                        adjSquaresAttackedPostMove:
+                                                                            UDF_createSqNamesSet(
+                                                                                Concat(
+                                                                                    ForAll(
+                                                                                        Split(nextToKing.adjSquaresSet, " ") As adjSqName,
             
-                                                                                            If(gblPF_DEBUG_EVAL,
-                                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                                    " fCE_700(): DEBUG heuristic16 adjSqName.Value: " & adjSqName.Value &
-                                                                                                    " postmove AttackerSet: " &
-                                                                                                        UDF_getAttackerSqNamesSet(
-                                                                                                            nextToKing.noKingPostMoveBoard,
-                                                                                                            UDF_sqNameToSqNum(adjSqName.Value),
-                                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
-                                                                                                        )
-                                                                                                })
-                                                                                            );
-            
-                                                                                            If(
-                                                                                                UDF_getSetSize(
+                                                                                        If(gblPF_DEBUG_EVAL,
+                                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                                " fCE_700(): DEBUG heuristic16 adjSqName.Value: " & adjSqName.Value &
+                                                                                                " postmove AttackerSet: " &
                                                                                                     UDF_getAttackerSqNamesSet(
                                                                                                         nextToKing.noKingPostMoveBoard,
                                                                                                         UDF_sqNameToSqNum(adjSqName.Value),
                                                                                                         UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                                     )
-                                                                                                )>0,
-                                                                                                adjSqName.Value, ""
-                                                                                            )
-                                                                                        ), Value, " "
-                                                                                    )
+                                                                                            })
+                                                                                        );
+            
+                                                                                        If(
+                                                                                            UDF_getSetSize(
+                                                                                                UDF_getAttackerSqNamesSet(
+                                                                                                    nextToKing.noKingPostMoveBoard,
+                                                                                                    UDF_sqNameToSqNum(adjSqName.Value),
+                                                                                                    UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                                                )
+                                                                                            )>0,
+                                                                                            adjSqName.Value, ""
+                                                                                        )
+                                                                                    ), Value, " "
                                                                                 )
                                                                             ),
                                                                         numTargetSquareAttackedPostMove:
@@ -2852,10 +2848,14 @@ UsingComponents As screen:
                                                                     If(gblPF_DEBUG_EVAL,
                                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                             " fCE_700(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
-                                                                            " numAdjSquaresAttackedPreMove: " & attackData.numAdjSquaresAttackedPreMove &
-                                                                            " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove &
+                                                                            " adjSquaresAttackedPreMove: " & attackData.adjSquaresAttackedPreMove &
+                                                                            " adjSquaresAttackedPostMove: " & attackData.adjSquaresAttackedPostMove &
                                                                             " numTargetSquareAttackedPostMove: " & attackData.numTargetSquareAttackedPostMove
-                                                                        })
+                                                                        });
+                                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                            " fCE_700(): heuristic16" &
+                                                                            " adj attacked or blocked: " & UDF_getSetUnion(attackData.adjSquaresAttackedPostMove, nextToKing.adjBlockedSquares)
+                                                                        });
                                                                     );
             
                                                                     With(
@@ -2877,7 +2877,9 @@ UsingComponents As screen:
                                                                                         UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                     )>0,
                                                                                     true,false
-                                                                                )
+                                                                                ),
+                                                                            numAdjAttackedOrBlocked:
+                                                                                UDF_getSetSize(UDF_getSetUnion(attackData.adjSquaresAttackedPostMove, nextToKing.adjBlockedSquares))
                                                                         } As theKingChecked,
             
                                                                         If(gblPF_DEBUG_EVAL,
@@ -2886,11 +2888,12 @@ UsingComponents As screen:
                                                                                 " # of adj Squares: " & UDF_getSetSize(nextToKing.adjSquaresSet) &
                                                                                 " theKingChecked.preMove: " & theKingChecked.preMove &
                                                                                 " theKingChecked.postMove: " & theKingChecked.postMove &
-                                                                                " numAdjSquaresAttackedPreMove: " & attackData.numAdjSquaresAttackedPreMove &
-                                                                                " numAdjSquaresAttackedPostMove: " & attackData.numAdjSquaresAttackedPostMove
+                                                                                " adjSquaresAttackedPreMove: " & attackData.adjSquaresAttackedPreMove &
+                                                                                " adjSquaresAttackedPostMove: " & attackData.adjSquaresAttackedPostMove &
+                                                                                " numAdjAttackedOrBlocked: " & theKingChecked.numAdjAttackedOrBlocked
                                                                             })
                                                                         );
-                                                                        If((UDF_getSetSize(nextToKing.adjSquaresSet) - attackData.numAdjSquaresAttackedPostMove)=1 && !theKingChecked.postMove,
+                                                                        If((UDF_getSetSize(nextToKing.adjSquaresSet) - UDF_getSetSize(attackData.adjSquaresAttackedPostMove))=1 && !theKingChecked.postMove,
                                                                             // THEN - this move would cause a stalemate
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                 " fCE_700(): DEBUG heuristic16 postmove stalemate detected "
@@ -2906,8 +2909,7 @@ UsingComponents As screen:
             
                                                                                 // ELSE
                                                                                 If(
-                                                                                    (attackData.numAdjSquaresAttackedPostMove + UDF_getSetSize(nextToKing.adjBlockedSquares))
-                                                                                    >=UDF_getSetSize(nextToKing.adjSquaresSet),
+                                                                                    theKingChecked.numAdjAttackedOrBlocked>=UDF_getSetSize(nextToKing.adjSquaresSet) && theKingChecked.postMove,
                                                                                     // THEN - checkmate !
                                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                         " checkmate FEN: " & theNodes.current.preMoveFEN
@@ -2915,10 +2917,9 @@ UsingComponents As screen:
                                                                                     10000, // strongly encourage the move
                                                                                     
                                                                                     // ELSE - encourage the move if warranted - early in game reduce impact
-                                                                                    If(attackData.numAdjSquaresAttackedPostMove>attackData.numAdjSquaresAttackedPreMove,
+                                                                                    If(UDF_getSetSize(attackData.adjSquaresAttackedPostMove)>UDF_getSetSize(attackData.adjSquaresAttackedPreMove),
                                                                                         // THEN
-                                                                                        (attackData.numAdjSquaresAttackedPostMove - attackData.numAdjSquaresAttackedPreMove) * 21,
-            
+                                                                                        (UDF_getSetSize(attackData.adjSquaresAttackedPostMove) - UDF_getSetSize(attackData.adjSquaresAttackedPreMove)) * 21,
                                                                                         // ELSE
                                                                                         0 
                                                                                     )
