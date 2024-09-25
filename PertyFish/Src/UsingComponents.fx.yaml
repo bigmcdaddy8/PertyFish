@@ -2934,14 +2934,22 @@ UsingComponents As screen:
                                         // THEN
                                         Switch(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN),
                                             GAME_PHASE_OPENING,
-                                                Switch(true,
-                                                    theNodes.current.inactiveColorMoveRecord.san in OPENING_BOOK_WHITE,
-                                                        RandBetween(15,35),
-                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "BNP" && Text(theNodes.current.inactiveColorMoveRecord.moveDirection) in "128",
-                                                        RandBetween(0,15),
-                                                        
-                                                    // default
-                                                        0
+                                                With(
+                                                    {
+                                                        inBook:    LookUp(Split(OPENING_BOOK_WHITE, " "),Value=theNodes.current.inactiveColorMoveRecord.san)
+                                                    } As theOpening,
+                                                    If(IsBlank(theOpening.inBook),
+                                                        // THEN - not a book move
+                                                        Switch(true,
+                                                            theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "BNP" &&
+                                                            Text(theNodes.current.inactiveColorMoveRecord.moveDirection) in "128",
+                                                                RandBetween(0,15),
+                                                            // default
+                                                            0
+                                                        ),
+                                                        // ELSE - the move is in the book
+                                                        RandBetween(15,35)
+                                                    )
                                                 ),
                                             GAME_PHASE_MIDDLE,
                                                 Switch(true,
@@ -2961,14 +2969,22 @@ UsingComponents As screen:
                                         // ELSE
                                         Switch(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN),
                                             GAME_PHASE_OPENING,
-                                                Switch(true,
-                                                    theNodes.current.inactiveColorMoveRecord.san in OPENING_BOOK_BLACK,
-                                                        RandBetween(-35,-15),
-                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "BNP"  && Text(theNodes.current.inactiveColorMoveRecord.moveDirection) in "456",
-                                                        RandBetween(-15,0),
-                                                        
-                                                    // default
-                                                    0
+                                                With(
+                                                    {
+                                                        inBook:    LookUp(Split(OPENING_BOOK_BLACK, " "),Value=theNodes.current.inactiveColorMoveRecord.san)
+                                                    } As theOpening,
+                                                    If(IsBlank(theOpening.inBook),
+                                                        // THEN - not a book move
+                                                        Switch(true,
+                                                            theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "BNP" &&
+                                                            Text(theNodes.current.inactiveColorMoveRecord.moveDirection) in "456",
+                                                                RandBetween(-15,0),
+                                                            // default
+                                                            0
+                                                        ),
+                                                        // ELSE - the move is in the book
+                                                        RandBetween(-35,-15)
+                                                    )
                                                 ),
                                             GAME_PHASE_MIDDLE,
                                                 Switch(true,
