@@ -192,7 +192,9 @@ App As appinfo:
             myHangingSquaresSet:            BLANK_BOARD,
             theirHangingSquaresSet:         BLANK_BOARD,
             myStrongSquaresSet:             BLANK_BOARD,
-            theirStrongSquaresSet:          BLANK_BOARD
+            theirStrongSquaresSet:          BLANK_BOARD,
+            gamePhasePreMove:               GAME_PHASE_OPENING,
+            gamePhasePostMove:              GAME_PHASE_OPENING
         };
         
         DYNAMIC_DATA_PF_NAME="DYNAMIC_DATA_PF";
