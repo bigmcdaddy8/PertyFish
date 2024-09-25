@@ -2925,7 +2925,8 @@ comChessEngineFunctions As CanvasComponent:
                                                     Switch(true,
                                                         IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
                                                             RandBetween(10,25),
-                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP", 
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP" &&
+                                                        (IsBlank(theNodes.current.inactiveColorMoveRecord.captureSquareOccupier) || theNodes.current.inactiveColorMoveRecord.captureSquareOccupier=EMPTY_FILLER_ABBR), // don't randomly step into a bad capture
                                                             RandBetween(0,15),
                 
                                                         // default
@@ -2960,7 +2961,8 @@ comChessEngineFunctions As CanvasComponent:
                                                     Switch(true,
                                                         IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
                                                             RandBetween(-25,-10),
-                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP",
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP" &&
+                                                        (IsBlank(theNodes.current.inactiveColorMoveRecord.captureSquareOccupier) || theNodes.current.inactiveColorMoveRecord.captureSquareOccupier=EMPTY_FILLER_ABBR), // don't randomly step into a bad capture
                                                             RandBetween(-15,0),
                                                         
                                                         // default
