@@ -2403,10 +2403,21 @@ comChessEngineFunctions As CanvasComponent:
                                                     If(gblPF_DEBUG_EVAL,
                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                             " USE CASE: bullseye move depends upon players" &
-                                                            " bonus: " & -(localVars.targetAttackerMaterial + localVars.materialSource)
+                                                            " bonus: " &
+                                                                If(theData.evalData.gamePhasePreMove=GAME_PHASE_OPENING,
+                                                                    // THEN - no bullseye during the opening
+                                                                    0,
+                                                                    // ELSE
+                                                                    -(localVars.targetAttackerMaterial + localVars.materialSource)
+                                                                )
                                                         })
                                                     );
-                                                    -(localVars.targetAttackerMaterial + localVars.materialSource),
+                                                    If(theData.evalData.gamePhasePreMove=GAME_PHASE_OPENING,
+                                                        // THEN - no bullseye during the opening
+                                                        0,
+                                                        // ELSE
+                                                        -(localVars.targetAttackerMaterial + localVars.materialSource)
+                                                    ),
                                                 localVars.sourceSqAttacked && (!localVars.targetSqAttackedByThem) && localVars.materialCapture<>0 && (!localVars.targetSqAttackedByThem),
                                                     // USE CASE: capture hanging piece
                                                     If(gblPF_DEBUG_EVAL,
@@ -2448,7 +2459,7 @@ comChessEngineFunctions As CanvasComponent:
                                         ),
                 
                                     heuristic15:
-                                        If(!(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN)=GAME_PHASE_OPENING),
+                                        If(!(theData.evalData.gamePhasePreMove=GAME_PHASE_OPENING),
                                             // THEN
                                             Sum(
                                                 // are we capturing one of their hanging pieces ?
@@ -2634,7 +2645,7 @@ comChessEngineFunctions As CanvasComponent:
                                         ),
                 
                                     heuristic16:
-                                        If(!(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN)=GAME_PHASE_END),
+                                        If(!(theData.evalData.gamePhasePreMove=GAME_PHASE_END),
                                             // THEN - not in the END GAME
                                             0,
                 
@@ -2902,7 +2913,7 @@ comChessEngineFunctions As CanvasComponent:
                                         // add some order
                                         If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,
                                             // THEN
-                                            Switch(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN),
+                                            Switch(theData.evalData.gamePhasePreMove,
                                                 GAME_PHASE_OPENING,
                                                     With(
                                                         {
@@ -2938,7 +2949,7 @@ comChessEngineFunctions As CanvasComponent:
                                             ),
                 
                                             // ELSE
-                                            Switch(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN),
+                                            Switch(theData.evalData.gamePhasePreMove,
                                                 GAME_PHASE_OPENING,
                                                     With(
                                                         {
@@ -3068,7 +3079,8 @@ comChessEngineFunctions As CanvasComponent:
                     UpdateIf(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME, {
                         evalData:   Patch(LookUp(colPF_DYNAMIC_DATA, dataName=DYNAMIC_DATA_PF_NAME).evalData, {
                                         theirHangingSquaresSet: UDF_getHangingSquareNamesSet(theData.d0Node.postMoveBoard, UDF_FEN_TO_INACTIVE_COLOR(theData.d0Node.postMoveFEN)),
-                                        myHangingSquaresSet:    UDF_getHangingSquareNamesSet(theData.d0Node.postMoveBoard, UDF_FEN_TO_ACTIVE_COLOR(theData.d0Node.postMoveFEN))
+                                        myHangingSquaresSet:    UDF_getHangingSquareNamesSet(theData.d0Node.postMoveBoard, UDF_FEN_TO_ACTIVE_COLOR(theData.d0Node.postMoveFEN)),
+                                        gamePhasePreMove:       comChessEngineFunctions.fME_getGamePhase(theData.d0Node.postMoveFEN) // D0 post move is D1 pre move...
                                     })
                     })
                 );
