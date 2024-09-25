@@ -104,4 +104,5 @@
     UDF_getKINGAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
     UDF_getAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
     UDF_getSqNumAttackersMinMaterialCentipawn(board:Text, refSqNum:Number, attackingColor:Number):Number=
+    UDF_isPieceinStartingPosition(piece:Text, sqNum:Number):Boolean=
 

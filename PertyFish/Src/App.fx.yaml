@@ -1550,6 +1550,22 @@ App As appinfo:
                     )
                 )
             );
+        UDF_isPieceinStartingPosition(piece:Text, sqNum:Number):Boolean=
+                Switch(true,
+                    piece="P" && sqNum>=48 && sqNum<56, true,
+                    piece="p" && sqNum>=8 && sqNum<16, true,
+                    piece="N" && (sqNum=57 || sqNum=62), true,
+                    piece="n" && (sqNum=1 || sqNum=6), true,
+                    piece="B" && (sqNum=58 || sqNum=61), true,
+                    piece="b" && (sqNum=2 || sqNum=5), true,
+                    piece="R" && (sqNum=56 || sqNum=63), true,
+                    piece="r" && (sqNum=0 || sqNum=7), true,
+                    piece="Q" && sqNum=59, true,
+                    piece="q" && sqNum=3, true,
+                    piece="K" && sqNum=60, true,
+                    piece="k" && sqNum=4, true,
+                    false
+                );
         // end of Perty Fish named formulas ------------------------------------------------------------------------
         
     OnStart: |-
