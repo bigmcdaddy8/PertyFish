@@ -2923,8 +2923,8 @@ UsingComponents As screen:
                                         Switch(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN),
                                             GAME_PHASE_OPENING,
                                                 Switch(true,
-                                                    IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
-                                                        RandBetween(10,25),
+                                                    theNodes.current.inactiveColorMoveRecord.san in OPENING_BOOK_WHITE,
+                                                        RandBetween(15,35),
                                                     theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "BNP" && Text(theNodes.current.inactiveColorMoveRecord.moveDirection) in "128",
                                                         RandBetween(0,15),
                                                         
@@ -2950,8 +2950,8 @@ UsingComponents As screen:
                                         Switch(comChessEngineFunctions.fME_getGamePhase(theNodes.current.preMoveFEN),
                                             GAME_PHASE_OPENING,
                                                 Switch(true,
-                                                    IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
-                                                        RandBetween(-25,-10),
+                                                    theNodes.current.inactiveColorMoveRecord.san in OPENING_BOOK_BLACK,
+                                                        RandBetween(-35,-15),
                                                     theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "BNP"  && Text(theNodes.current.inactiveColorMoveRecord.moveDirection) in "456",
                                                         RandBetween(-15,0),
                                                         
