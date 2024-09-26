@@ -2645,8 +2645,8 @@ comChessEngineFunctions As CanvasComponent:
                                         ),
                 
                                     heuristic16:
-                                        If(!(theData.evalData.gamePhasePreMove=GAME_PHASE_END),
-                                            // THEN - not in the END GAME
+                                        If(theData.evalData.gamePhasePreMove=GAME_PHASE_OPENING,
+                                            // THEN - still in GAME_PHASE_OPENING
                                             0,
                 
                                             // ELSE - do END GAME analysis
