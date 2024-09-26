@@ -2368,7 +2368,11 @@ comChessEngineFunctions As CanvasComponent:
                                                     localVars.materialSource,
                 
                                                 localVars.sourceSqAttacked && localVars.sourceSqProtected && localVars.materialCapture=0 &&
-                                                Abs(localVars.sourceAttackerMaterial)<Abs(localVars.materialSource),
+                                                Abs(localVars.sourceAttackerMaterial)<Abs(localVars.materialSource) &&
+                                                (
+                                                    (!localVars.targetSqAttackedByThem) ||
+                                                    Abs(localVars.sourceAttackerMaterial)<Abs(localVars.targetAttackerMaterial)
+                                                ),
                                                     // USE CASE: walking from danger
                                                     If(gblPF_DEBUG_EVAL,
                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
