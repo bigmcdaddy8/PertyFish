@@ -95,9 +95,8 @@ Document how a user plays chess within the PertyFish canvas app
 
 ## Short-Term ToDo List
 
-7k/8/8/1q6/8/8/4K3/5Q2 w - - 0 1   # Black queen should not back off when King moves and does not protect Queen
-7k/8/8/2p5/pn6/8/3Q2K1/8 b - - 0 1 # Black Knight should not be afraid of queen
-r2q4/n1pkb3/1pnpp3/p4p1P/P1PPbP2/2N4R/NP6/R1B1KB2 b Q - 29 39 # why doesn't BLACK do Nxd4 ?
+1r5Q/p1p1kp1p/3qpp2/8/2p2b1P/8/n2PP1P1/1N1QKBNR b K - 0 15 # why not Bg3#
+7r/p1p1kp1p/3qpp2/8/2p2b1P/6P1/n2PP3/1N1QKBNR b K - 0 16  # why not Bg3#
 
 ## Open Bugs
 
