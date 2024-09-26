@@ -4183,7 +4183,7 @@ Diagnostics As screen:
                     //UpdateContext({lTEST_REFERENCE_SQNAME: "g4"});
                     //UpdateContext({lTEST_REFERENCE_SQNUM: UDF_sqNameToSqNum(lTEST_REFERENCE_SQNAME)});
                 
-                    UpdateContext({lTEST_EXPECTED_RESULT_BOOLEAN: false});
+                    UpdateContext({lTEST_EXPECTED_RESULT_BOOLEAN: true});
                 
                     UpdateContext({lTEST_ACTUAL_RESULT_BOOLEAN:
                         UDF_isPieceinStartingPosition("P", 55)
