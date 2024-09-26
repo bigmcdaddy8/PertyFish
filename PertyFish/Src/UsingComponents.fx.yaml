@@ -2965,7 +2965,12 @@ UsingComponents As screen:
                                                 ),
                                             GAME_PHASE_MIDDLE,
                                                 Switch(true,
+                                                    // encourage a castle
                                                     IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
+                                                        RandBetween(10,25),
+                                                    // encourage a move out of starting position
+                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QRBN" &&
+                                                    UDF_isPieceinStartingPosition(theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier, theNodes.current.inactiveColorMoveRecord.sourceSquareNum),
                                                         RandBetween(10,25),
                                                     theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP" &&
                                                     (IsBlank(theNodes.current.inactiveColorMoveRecord.captureSquareOccupier) || theNodes.current.inactiveColorMoveRecord.captureSquareOccupier=EMPTY_FILLER_ABBR), // don't randomly step into a bad capture
@@ -3001,7 +3006,12 @@ UsingComponents As screen:
                                                 ),
                                             GAME_PHASE_MIDDLE,
                                                 Switch(true,
+                                                    // encourage a castle
                                                     IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
+                                                        RandBetween(-25,-10),
+                                                    // encourage a move out of starting position
+                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QRBN" &&
+                                                    UDF_isPieceinStartingPosition(theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier, theNodes.current.inactiveColorMoveRecord.sourceSquareNum),
                                                         RandBetween(-25,-10),
                                                     theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QBNP" &&
                                                     (IsBlank(theNodes.current.inactiveColorMoveRecord.captureSquareOccupier) || theNodes.current.inactiveColorMoveRecord.captureSquareOccupier=EMPTY_FILLER_ABBR), // don't randomly step into a bad capture
