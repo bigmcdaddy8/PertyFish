@@ -2803,7 +2803,13 @@ comChessEngineFunctions As CanvasComponent:
                                                                                         ), Value, " "
                                                                                     )
                                                                                 ),
-                                                                            numTargetSquareAttackedPostMove:
+                                                                            isTargetSquareProtectedByMe:
+                                                                                UDF_isSqNumProtected(
+                                                                                    nextToKing.noKingNoPiecePostMoveBoard,
+                                                                                    theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                                                    UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                                ),
+                                                                            numTargetSquareAttackedByThem:
                                                                                 If(theNodes.current.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet,
                                                                                     // THEN
                                                                                     UDF_getSetSize(
@@ -2824,7 +2830,8 @@ comChessEngineFunctions As CanvasComponent:
                                                                                 " fCE_700(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
                                                                                 " adjSquaresAttackedPreMove: " & attackData.adjSquaresAttackedPreMove &
                                                                                 " adjSquaresAttackedPostMove: " & attackData.adjSquaresAttackedPostMove &
-                                                                                " numTargetSquareAttackedPostMove: " & attackData.numTargetSquareAttackedPostMove
+                                                                                " isTargetSquareProtectedByMe: " & attackData.isTargetSquareProtectedByMe &
+                                                                                " numTargetSquareAttackedByThem: " & attackData.numTargetSquareAttackedByThem
                                                                             });
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                 " fCE_700(): heuristic16" &
@@ -2877,8 +2884,11 @@ comChessEngineFunctions As CanvasComponent:
                                                                                 // ELSE
                                                                                 If(
                                                                                     theNodes.current.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet &&
-                                                                                    attackData.numTargetSquareAttackedPostMove=0,
-                                                                                    // THEN - king can reach us and we are not protected - discourage move
+                                                                                    (
+                                                                                        attackData.numTargetSquareAttackedByThem>0 || // somebody can get me
+                                                                                        (attackData.numTargetSquareAttackedByThem=0 && (!attackData.isTargetSquareProtectedByMe)) // king can get me
+                                                                                    ),
+                                                                                    // THEN - somebody can reach us - discourage move
                                                                                     -50,
                 
                                                                                     // ELSE
