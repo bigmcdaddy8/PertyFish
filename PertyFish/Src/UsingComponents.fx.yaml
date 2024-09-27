@@ -2392,10 +2392,10 @@ UsingComponents As screen:
                                                 If(gblPF_DEBUG_EVAL,
                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                         " USE CASE: running from danger" &
-                                                        " bonus: " & localVars.materialSource
+                                                        " bonus: " & localVars.materialSource * 0.5
                                                     })
                                                 );
-                                                localVars.materialSource,
+                                                localVars.materialSource * 0.5,
             
                                             localVars.sourceSqAttacked && localVars.sourceSqProtected && localVars.materialCapture=0 &&
                                             Abs(localVars.sourceAttackerMaterial)<Abs(localVars.materialSource) &&
