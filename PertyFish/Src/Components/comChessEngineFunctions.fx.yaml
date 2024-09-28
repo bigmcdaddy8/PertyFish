@@ -2470,6 +2470,11 @@ comChessEngineFunctions As CanvasComponent:
                                                 If((!IsBlank(theNodes.current.inactiveColorMoveRecord.captureSquareName)) &&
                                                     theNodes.current.inactiveColorMoveRecord.captureSquareName in theData.evalData.theirHangingSquaresSet,
                                                     // THEN
+                                                    If(gblPF_DEBUG_EVAL,
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " fCE_700(): heuristic15 capturing a hanging piece"
+                                                        })
+                                                    );
                                                     If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,50,-50),
                                                     // ELSE
                                                     0
@@ -2482,7 +2487,14 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                     If(UDF_getSetSize(v.myHangingSquaresSet)<UDF_getSetSize(theData.evalData.myHangingSquaresSet),
                                                         // THEN
-                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,40,-40),
+                                                        If(gblPF_DEBUG_EVAL,
+                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                " fCE_700(): heuristic15 reducing number of hanging pieces" & 
+                                                                " prev hanging set size: " & v.myHangingSquaresSet &
+                                                                " new hanging set size: " & theData.evalData.myHangingSquaresSet
+                                                            })
+                                                        );
+                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,35,-35),
                                                         // ELSE
                                                         0
                                                     )
@@ -2537,7 +2549,7 @@ comChessEngineFunctions As CanvasComponent:
                 
                                                             If(gblPF_DEBUG_EVAL,
                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                    " fCE_700(): DEBUG heuristic15" & 
+                                                                    " fCE_700(): heuristic15" & 
                                                                     " gettingForkedSet: " & forkSets.gettingForkedSet &
                                                                     " forkingSet: " & forkSets.forkingSet &
                                                                     " targetTargetsSet: " & targetData.targetTargetsSet &
@@ -2961,7 +2973,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     Switch(true,
                                                         // encourage a castle
                                                         IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
-                                                            RandBetween(10,25),
+                                                            RandBetween(30,45),
                                                         // encourage a move out of starting position
                                                         theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QRBN" &&
                                                         UDF_isPieceinStartingPosition(theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier, theNodes.current.inactiveColorMoveRecord.sourceSquareNum),
@@ -3002,7 +3014,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     Switch(true,
                                                         // encourage a castle
                                                         IsMatch(theNodes.current.inactiveColorMoveRecord.san, "O-O", MatchOptions.BeginsWith),
-                                                            RandBetween(-25,-10),
+                                                            RandBetween(-45,-30),
                                                         // encourage a move out of starting position
                                                         theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "QRBN" &&
                                                         UDF_isPieceinStartingPosition(theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier, theNodes.current.inactiveColorMoveRecord.sourceSquareNum),
