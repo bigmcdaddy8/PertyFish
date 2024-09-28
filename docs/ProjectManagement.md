@@ -45,17 +45,20 @@ In a private version I have built in regression testing, I may pull that forward
 Create smarter chess engines that are written using PowerFx
 
 
-##### Story 0003-09 Developing CE_PF_700 (3rd Grade)
+
+
+##### Story 0003-19 Developing CE_PF_800 (4th Grade)
 - do not back away when challenged
 - - determine if protected and if exchange is positive (or even)
 - - determine situations when to step into a potential PAWN exchange situation
 - - determine situation when to initiate a PAWN exchange
 - Look for simple tactics
 - - look for skewers 4q3/B1pkb3/4p3/3p1p2/pnpN1P2/8/r7/3K2QB b - - 1 63 # Ra1+!
-- - look for hung pieces
+- - be aware of their pinned pieces (may create board where pinned pieces are removed ?)
 - Simple board strength analysis
 - - number of attacked squares
 - - number of protected squares
+- - number of weak squares
 
 #### Feature 0004 - Application Improvements
 
@@ -95,8 +98,7 @@ Document how a user plays chess within the PertyFish canvas app
 
 ## Short-Term ToDo List
 
-1r5Q/p1p1kp1p/3qpp2/8/2p2b1P/8/n2PP1P1/1N1QKBNR b K - 0 15 # why not Bg3#
-7r/p1p1kp1p/3qpp2/8/2p2b1P/6P1/n2PP3/1N1QKBNR b K - 0 16  # why not Bg3#
+r1b1k1nr/ppp2p1p/1bnpp1p1/1P1q4/P7/4P2P/2NP1PP1/R1BQKB1R b KQkq - 0 11 # why not move N from c6 ?
 
 ## Open Bugs
 
@@ -104,6 +106,13 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Completed Work
+##### Story 0003-09 Developing CE_PF_700 (3rd Grade)
+- do not back away when challenged
+- - determine if protected and if exchange is positive (or even)
+- - determine situations when to step into a potential PAWN exchange situation
+- Look for simple tactics
+- - look for hung pieces
+
 ##### Story 0001-06 - Release Management v0.2.1
 
 ##### Story 0001-06 - Release Management v0.2.0 
