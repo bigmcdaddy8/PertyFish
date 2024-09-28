@@ -2717,17 +2717,14 @@ UsingComponents As screen:
                                                         // Sum: trapping the king
                                                         With(
                                                             {
-                                                                sqNum:
+                                                                sqNum: // get the square their KING is on
                                                                     UDF_SearchBoardForPiece(theNodes.current.preMoveBoard, UDF_getICPieceABBR(theNodes.current.preMoveFEN, "k"))
                                                             } As theKing,
             
                                                             If(gblPF_DEBUG_EVAL,
                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                     " fCE_700(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" 
-                                                                });
-                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                    " current kingDangerBoard: " & theNodes.current.postMoveActiveKingDangerBoard 
-                                                                });
+                                                                })
                                                             );
             
                                                             With(
@@ -2851,7 +2848,13 @@ UsingComponents As screen:
                                                                                 ),
             
                                                                                 // ELSE
-                                                                                0
+                                                                                UDF_getSetSize(
+                                                                                    UDF_getAttackerSqNamesSet(
+                                                                                        nextToKing.noKingPostMoveBoard,
+                                                                                        theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                                                        UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                                    )
+                                                                                )
                                                                             )
                                                                     } As attackData,
             
