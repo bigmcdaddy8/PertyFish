@@ -2365,9 +2365,9 @@ comChessEngineFunctions As CanvasComponent:
                 
                                             Switch(true,
                                                 localVars.sourceSqAttacked && localVars.materialCapture=0 && UDF_getSetSize(localVars.sourceAttackerSqNames)=1 &&
-                                                localVars.sourceAttackerSqNames<>theNodes.current.inactiveColorMoveRecord.sourceSquareName &&
                                                 UDF_isSqNumAttacked(
-                                                    theNodes.current.preMoveBoard,
+                                                    // make sure that somebody other than the source piece is attacking the attacker
+                                                    UDF_setBitAtSqNum(theNodes.current.preMoveBoard,EMPTY_FILLER_ABBR,theNodes.current.inactiveColorMoveRecord.sourceSquareNum),
                                                     UDF_sqNameToSqNum(localVars.sourceAttackerSqNames),
                                                     UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                 ),
