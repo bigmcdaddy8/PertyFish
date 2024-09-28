@@ -2754,7 +2754,7 @@ UsingComponents As screen:
             
                                                                 If(gblPF_DEBUG_EVAL,
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                        " fCE_700(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
+                                                                        " fCE_700(): heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
                                                                         " adjSquaresSet: " & nextToKing.adjSquaresSet &
                                                                         " adjSquaresSet BLOCKED: " & nextToKing.adjBlockedSquares
                                                                     });
@@ -2807,7 +2807,7 @@ UsingComponents As screen:
             
                                                                                         If(gblPF_DEBUG_EVAL,
                                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                                " fCE_700(): DEBUG heuristic16 adjSqName.Value: " & adjSqName.Value &
+                                                                                                " fCE_700(): heuristic16 adjSqName.Value: " & adjSqName.Value &
                                                                                                 " postmove AttackerSet: " &
                                                                                                     UDF_getAttackerSqNamesSet(
                                                                                                         nextToKing.noKingPostMoveBoard,
@@ -2860,7 +2860,7 @@ UsingComponents As screen:
             
                                                                     If(gblPF_DEBUG_EVAL,
                                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                            " fCE_700(): DEBUG heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
+                                                                            " fCE_700(): heuristic16 theKing.sqNum: " & UDF_sqNumToSqName(theKing.sqNum) & "(" & theKing.sqNum & ")" &
                                                                             " adjSquaresAttackedPreMove: " & attackData.adjSquaresAttackedPreMove &
                                                                             " adjSquaresAttackedPostMove: " & attackData.adjSquaresAttackedPostMove &
                                                                             " isTargetSquareProtectedByMe: " & attackData.isTargetSquareProtectedByMe &
@@ -2898,7 +2898,7 @@ UsingComponents As screen:
             
                                                                         If(gblPF_DEBUG_EVAL,
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                " fCE_700(): DEBUG heuristic16 preMove" & 
+                                                                                " fCE_700(): heuristic16 preMove" & 
                                                                                 " # of adj Squares: " & UDF_getSetSize(nextToKing.adjSquaresSet) &
                                                                                 " theKingChecked.preMove: " & theKingChecked.preMove &
                                                                                 " theKingChecked.postMove: " & theKingChecked.postMove &
@@ -2907,41 +2907,48 @@ UsingComponents As screen:
                                                                                 " numAdjAttackedOrBlocked: " & theKingChecked.numAdjAttackedOrBlocked
                                                                             })
                                                                         );
-                                                                        If((UDF_getSetSize(nextToKing.adjSquaresSet) - UDF_getSetSize(attackData.adjSquaresAttackedPostMove))=1 && !theKingChecked.postMove,
-                                                                            // THEN - this move would cause a stalemate
-                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                " fCE_700(): DEBUG heuristic16 postmove stalemate detected "
-                                                                            });
-                                                                            -1000,  // discourage the move
-            
-                                                                            // ELSE
-                                                                            If(
-                                                                                theNodes.current.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet &&
-                                                                                (
-                                                                                    attackData.numTargetSquareAttackedByThem>0 || // somebody can get me
-                                                                                    (attackData.numTargetSquareAttackedByThem=0 && (!attackData.isTargetSquareProtectedByMe)) // king can get me
-                                                                                ),
-                                                                                // THEN - somebody can reach us - discourage move
+                                                                        Switch(true,
+                                                                            (UDF_getSetSize(nextToKing.adjSquaresSet) - UDF_getSetSize(attackData.adjSquaresAttackedPostMove))=1 &&
+                                                                            (!theKingChecked.postMove),
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " fCE_700(): heuristic16 postmove stalemate detected "
+                                                                                });
+                                                                                -1000,  // discourage the move
+                                                                            theNodes.current.inactiveColorMoveRecord.targetSquareName in nextToKing.adjSquaresSet &&
+                                                                            (
+                                                                                attackData.numTargetSquareAttackedByThem>0 || // somebody can get me
+                                                                                (attackData.numTargetSquareAttackedByThem=0 && (!attackData.isTargetSquareProtectedByMe)) // king can get me
+                                                                            ),
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " fCE_700(): heuristic16 adjacent target square is not safe"
+                                                                                });
+                                                                                -50,
+                                                                            attackData.numTargetSquareAttackedByThem>0 ,
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " fCE_700(): heuristic16 target square is not safe"
+                                                                                });
                                                                                 -50,
             
-                                                                                // ELSE
-                                                                                If(
-                                                                                    theKingChecked.numAdjAttackedOrBlocked>=UDF_getSetSize(nextToKing.adjSquaresSet) && theKingChecked.postMove,
-                                                                                    // THEN - checkmate !
-                                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                        " checkmate FEN: " & theNodes.current.preMoveFEN
-                                                                                    });
-                                                                                    10000, // strongly encourage the move
+                                                                            theKingChecked.numAdjAttackedOrBlocked>=UDF_getSetSize(nextToKing.adjSquaresSet) && theKingChecked.postMove,
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " checkmate detected FEN: " & theNodes.current.preMoveFEN
+                                                                                });
+                                                                                10000, // strongly encourage the move
                                                                                     
-                                                                                    // ELSE - encourage the move if warranted - early in game reduce impact
-                                                                                    If(UDF_getSetSize(attackData.adjSquaresAttackedPostMove)>UDF_getSetSize(attackData.adjSquaresAttackedPreMove),
-                                                                                        // THEN
-                                                                                        (UDF_getSetSize(attackData.adjSquaresAttackedPostMove) - UDF_getSetSize(attackData.adjSquaresAttackedPreMove)) * 21,
-                                                                                        // ELSE
-                                                                                        0 
-                                                                                    )
-                                                                                )
-                                                                            )
+                                                                            UDF_getSetSize(attackData.adjSquaresAttackedPostMove)>UDF_getSetSize(attackData.adjSquaresAttackedPreMove),
+                                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                    " detected increase in adj squares attacked BONUS:" &
+                                                                                    (
+                                                                                        UDF_getSetSize(attackData.adjSquaresAttackedPostMove) - 
+                                                                                        UDF_getSetSize(attackData.adjSquaresAttackedPreMove)
+                                                                                    ) * 21
+                                                                                });
+                                                                                    (
+                                                                                        UDF_getSetSize(attackData.adjSquaresAttackedPostMove) - 
+                                                                                        UDF_getSetSize(attackData.adjSquaresAttackedPreMove)
+                                                                                    ) * 21,
+                                                                            // default
+                                                                            0
                                                                         )
                                                                     )
                                                                 )
