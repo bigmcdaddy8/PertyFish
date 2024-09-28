@@ -2412,6 +2412,17 @@ UsingComponents As screen:
                                                 );
                                                 localVars.materialSource + localVars.sourceAttackerMaterial,
             
+                                            localVars.sourceSqAttacked && (!localVars.sourceSqProtected) && localVars.materialCapture=0 &&
+                                            localVars.targetSqAttackedByThem && localVars.targetSqProtectedByMe,
+                                                // USE CASE: switching danger - going to a protected square 
+                                                If(gblPF_DEBUG_EVAL,
+                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                        " USE CASE: switching danger - going to a protected square " &
+                                                        " bonus: " & -localVars.materialSource *.25
+                                                    })
+                                                );
+                                                -localVars.materialSource *.25,
+            
                                             localVars.sourceSqAttacked && localVars.sourceSqProtected && localVars.materialCapture=0 &&
                                             Abs(localVars.sourceAttackerMaterial)>=Abs(localVars.materialSource),
                                                 // USE CASE: facing our fears
@@ -2939,7 +2950,7 @@ UsingComponents As screen:
                                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                     " fCE_700(): heuristic16 target square is not safe"
                                                                                 });
-                                                                                -50,
+                                                                                0,
             
                                                                             theKingChecked.numAdjAttackedOrBlocked>=UDF_getSetSize(nextToKing.adjSquaresSet) && theKingChecked.postMove,
                                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
