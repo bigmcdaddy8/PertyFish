@@ -2322,6 +2322,12 @@ comChessEngineFunctions As CanvasComponent:
                                                         theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
                                                         UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                     ),
+                                                sourceAttackerSqNames:
+                                                    UDF_getAttackerSqNamesSet(
+                                                        theNodes.current.preMoveBoard,
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
+                                                        UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
+                                                    ),
                                                 targetSqProtectedByMe:
                                                     UDF_isSqNumProtected(
                                                         theNodes.current.postMoveBoard,
@@ -2350,6 +2356,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     " sourceSqProtected: " & localVars.sourceSqProtected &
                                                     " sourceSqAttacked: " & localVars.sourceSqAttacked &
                                                     " sourceAttackerMaterial: " & localVars.sourceAttackerMaterial &
+                                                    " sourceAttackerSqNames: " & localVars.sourceAttackerSqNames &
                                                     " targetSqProtectedByMe: " & localVars.targetSqProtectedByMe &
                                                     " targetSqAttackedByThem: " & localVars.targetSqAttackedByThem &
                                                     " targetAttackerMaterial: " & localVars.targetAttackerMaterial
@@ -2357,6 +2364,21 @@ comChessEngineFunctions As CanvasComponent:
                                             );
                 
                                             Switch(true,
+                                                localVars.sourceSqAttacked && localVars.materialCapture=0 && UDF_getSetSize(localVars.sourceAttackerSqNames)=1 &&
+                                                UDF_isSqNumAttacked(
+                                                    theNodes.current.preMoveBoard,
+                                                    UDF_sqNameToSqNum(localVars.sourceAttackerSqNames),
+                                                    UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                ),
+                                                    // USE CASE: face fear - trust another move will remove threat
+                                                    If(gblPF_DEBUG_EVAL,
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " USE CASE: face fear - trust another move will remove threat" &
+                                                            " sourceAttackerSqNames: " & localVars.sourceAttackerSqNames
+                                                        })
+                                                    );
+                                                    0,
+                
                                                 localVars.sourceSqAttacked && (!localVars.sourceSqProtected) && (!localVars.targetSqAttackedByThem) && localVars.materialCapture=0,
                                                     // USE CASE: running from danger
                                                     If(gblPF_DEBUG_EVAL,
