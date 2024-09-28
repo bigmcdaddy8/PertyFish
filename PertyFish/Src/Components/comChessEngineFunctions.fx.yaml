@@ -2412,7 +2412,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     // THEN - no bullseye during the opening
                                                                     0,
                                                                     // ELSE
-                                                                    -(localVars.targetAttackerMaterial + localVars.materialSource) * 0.25
+                                                                    -(localVars.targetAttackerMaterial + localVars.materialSource) * 0.15
                                                                 )
                                                         })
                                                     );
@@ -2420,7 +2420,7 @@ comChessEngineFunctions As CanvasComponent:
                                                         // THEN - no bullseye during the opening
                                                         0,
                                                         // ELSE
-                                                        -(localVars.targetAttackerMaterial + localVars.materialSource) * 0.25
+                                                        -(localVars.targetAttackerMaterial + localVars.materialSource) * 0.15
                                                     ),
                                                 localVars.sourceSqAttacked && (!localVars.targetSqAttackedByThem) && localVars.materialCapture<>0 && (!localVars.targetSqAttackedByThem),
                                                     // USE CASE: capture hanging piece
