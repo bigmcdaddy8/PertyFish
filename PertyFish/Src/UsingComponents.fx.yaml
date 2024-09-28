@@ -3209,6 +3209,9 @@ UsingComponents As screen:
                     " comChessEngineFunctions.fCE_700_preEvaluate(): exiting"
                 })
             );
+        fCE_800: =
+        fCE_800_postEvaluate: =
+        fCE_800_preEvaluate: =
         fME_END_GAME: |
             =If(gblPF_DEBUG_EVAL,
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -3350,6 +3353,15 @@ UsingComponents As screen:
                                 );
                                 comChessEngineFunctions.fCE_700(pNodeID);
                                 comChessEngineFunctions.fCE_700_postEvaluate(),
+                            theEngine.selectedEngine=CE_PF_800,
+                                comChessEngineFunctions.fCE_800_preEvaluate();
+                                If(gblPF_DEBUG_EVAL,
+                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                        " fME_EvaluateMove(): calling comChessEngineFunctions.fCE_800(" & pNodeID & ")"
+                                    })
+                                );
+                                comChessEngineFunctions.fCE_800(pNodeID);
+                                comChessEngineFunctions.fCE_800_postEvaluate(),
             
                             // default
                             If(gblPF_DEBUG_EVAL,

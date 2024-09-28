@@ -3183,6 +3183,17 @@ comChessEngineFunctions As CanvasComponent:
                         " comChessEngineFunctions.fCE_700_preEvaluate(): exiting"
                     })
                 );
+    fCE_800(pNodeID As Number):
+        pNodeID:
+            Default: =EMPTY_NODE_ID
+        ThisProperty:
+            Default: =
+    fCE_800_postEvaluate():
+        ThisProperty:
+            Default: =
+    fCE_800_preEvaluate():
+        ThisProperty:
+            Default: =
     fME_END_GAME(pVersion As Number, pNodeID As Number):
         pVersion:
             Default: =100
@@ -3334,6 +3345,15 @@ comChessEngineFunctions As CanvasComponent:
                                     );
                                     comChessEngineFunctions.fCE_700(pNodeID);
                                     comChessEngineFunctions.fCE_700_postEvaluate(),
+                                theEngine.selectedEngine=CE_PF_800,
+                                    comChessEngineFunctions.fCE_800_preEvaluate();
+                                    If(gblPF_DEBUG_EVAL,
+                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                            " fME_EvaluateMove(): calling comChessEngineFunctions.fCE_800(" & pNodeID & ")"
+                                        })
+                                    );
+                                    comChessEngineFunctions.fCE_800(pNodeID);
+                                    comChessEngineFunctions.fCE_800_postEvaluate(),
                 
                                 // default
                                 If(gblPF_DEBUG_EVAL,
