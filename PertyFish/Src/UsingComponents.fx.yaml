@@ -2395,6 +2395,7 @@ UsingComponents As screen:
             
                                         Switch(true,
                                             localVars.sourceSqAttacked && localVars.materialCapture=0 && UDF_getSetSize(localVars.sourceAttackerSqNames)=1 &&
+                                            localVars.sourceAttackerSqNames<>theNodes.current.inactiveColorMoveRecord.sourceSquareName &&
                                             UDF_isSqNumAttacked(
                                                 theNodes.current.preMoveBoard,
                                                 UDF_sqNameToSqNum(localVars.sourceAttackerSqNames),
