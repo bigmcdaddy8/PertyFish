@@ -2388,10 +2388,10 @@ comChessEngineFunctions As CanvasComponent:
                                                     If(gblPF_DEBUG_EVAL,
                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                             " USE CASE: switching danger - going to a protected square " &
-                                                            " bonus: " & -localVars.materialSource * 0.25
+                                                            " bonus: " & localVars.materialSource * 0.25
                                                         })
                                                     );
-                                                    -localVars.materialSource * 0.25,
+                                                    localVars.materialSource * 0.25,
                 
                                                 localVars.sourceSqAttacked && localVars.sourceSqProtected && localVars.materialCapture=0 &&
                                                 Abs(localVars.sourceAttackerMaterial)>=Abs(localVars.materialSource),
