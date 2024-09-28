@@ -2813,7 +2813,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                         UDF_getAttackerSqNamesSet(
                                                                                             nextToKing.noKingNoPiecePostMoveBoard,
                                                                                             theNodes.current.inactiveColorMoveRecord.targetSquareNum,
-                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                                            UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                         )
                                                                                     ),
                 
@@ -2822,7 +2822,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                         UDF_getAttackerSqNamesSet(
                                                                                             nextToKing.noKingPostMoveBoard,
                                                                                             theNodes.current.inactiveColorMoveRecord.targetSquareNum,
-                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                                            UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                                                         )
                                                                                     )
                                                                                 )
