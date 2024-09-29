@@ -3326,16 +3326,16 @@ comChessEngineFunctions As CanvasComponent:
                                                 Abs(localVars.sourceAttackerMaterial)<Abs(localVars.materialSource) &&
                                                 (
                                                     (!localVars.targetSqAttackedByThem) ||
-                                                    Abs(localVars.sourceAttackerMaterial)<Abs(localVars.targetAttackerMaterial)
+                                                    Abs(localVars.materialSource)<Abs(localVars.targetAttackerMaterial)
                                                 ),
                                                     // USE CASE: walking from danger
                                                     If(gblPF_DEBUG_EVAL,
                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                             " USE CASE: walking from danger" &
-                                                            " bonus: " & localVars.materialSource + localVars.sourceAttackerMaterial
+                                                            " bonus: " & localVars.materialSource + localVars.materialSource
                                                         })
                                                     );
-                                                    localVars.materialSource + localVars.sourceAttackerMaterial,
+                                                    localVars.materialSource + localVars.materialSource,
                 
                                                 localVars.sourceSqAttacked && (!localVars.sourceSqProtected) && localVars.materialCapture=0 &&
                                                 localVars.targetSqAttackedByThem && localVars.targetSqProtectedByMe,
