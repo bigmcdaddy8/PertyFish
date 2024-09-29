@@ -3559,7 +3559,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     If(gblPF_DEBUG_EVAL,
                                                                         Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                             " fCE_800(): DEBUG heuristic15" & 
-                                                                            " attackedTargetTargetsCount: " & counts.protectedTargetTargetsCount
+                                                                            " protectedTargetTargetsCount: " & counts.protectedTargetTargetsCount
                                                                         })
                                                                     );
                 
@@ -3568,56 +3568,34 @@ comChessEngineFunctions As CanvasComponent:
                                                                         0,
                 
                                                                         // ELSE - might be a fork worth counting
-                                                                        If(counts.protectedTargetTargetsCount>=UDF_getSetSize(targetData.targetTargetsSet),
-                                                                            // THEN
-                                                                            With(
-                                                                                {
-                                                                                    sourceValue: 
-                                                                                        UDF_minMaterialCentipawnValueFromSet(
-                                                                                            theNodes.current.preMoveBoard, 
-                                                                                            theNodes.current.inactiveColorMoveRecord.sourceSquareName,
-                                                                                            UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
-                                                                                        ),
-                                                                                    targetValue: 
-                                                                                        -UDF_minMaterialCentipawnValueFromSet(
-                                                                                            theNodes.current.postMoveBoard, 
-                                                                                            targetData.targetTargetsSet,
-                                                                                            UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
-                                                                                        )
-                                                                                } As theValues,
+                                                                        With(
+                                                                            {
+                                                                                sourceValue: 
+                                                                                    UDF_minMaterialCentipawnValueFromSet(
+                                                                                        theNodes.current.preMoveBoard, 
+                                                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareName,
+                                                                                        UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                                    ),
+                                                                                targetValue: 
+                                                                                    -UDF_minMaterialCentipawnValueFromSet(
+                                                                                        theNodes.current.postMoveBoard, 
+                                                                                        targetData.targetTargetsSet,
+                                                                                        UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                                    )
+                                                                            } As theValues,
                 
-                                                                                If(gblPF_DEBUG_EVAL,
-                                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
-                                                                                        " fCE_800(): DEBUG heuristic15" & 
-                                                                                        " source: " & theNodes.current.inactiveColorMoveRecord.sourceSquareName &
-                                                                                        " value: " & theValues.sourceValue &
-                                                                                        " target: " & targetData.targetTargetsSet &
-                                                                                        " value: " & theValues.targetValue
-                                                                                    })
-                                                                                );
-                                                                                If(Abs(theValues.targetValue) < Abs(theValues.sourceValue),
-                                                                                    0,
-                                                                                    theValues.targetValue
-                                                                                )
-                                                                            ),
-                
-                                                                            // ELSE
                                                                             If(gblPF_DEBUG_EVAL,
                                                                                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                     " fCE_800(): DEBUG heuristic15" & 
+                                                                                    " source: " & theNodes.current.inactiveColorMoveRecord.sourceSquareName &
+                                                                                    " value: " & theValues.sourceValue &
                                                                                     " target: " & targetData.targetTargetsSet &
-                                                                                    " value: " & 
-                                                                                        -UDF_minMaterialCentipawnValueFromSet(
-                                                                                            theNodes.current.postMoveBoard, 
-                                                                                            targetData.targetTargetsSet,
-                                                                                            UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
-                                                                                        )
+                                                                                    " value: " & theValues.targetValue
                                                                                 })
                                                                             );
-                                                                            -UDF_minMaterialCentipawnValueFromSet(
-                                                                                theNodes.current.postMoveBoard, 
-                                                                                targetData.targetTargetsSet,
-                                                                                UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                                            If(Abs(theValues.targetValue) < Abs(theValues.sourceValue),
+                                                                                0,
+                                                                                theValues.targetValue
                                                                             )
                                                                         )
                                                                     )
