@@ -3673,13 +3673,13 @@ UsingComponents As screen:
                                                                         // THEN
                                                                         IsMatch(
                                                                             v.bits, 
-                                                                            "#{0,6}k{0,6}q",
+                                                                            "#{0,6}k#{0,6}q",
                                                                             MatchOptions.BeginsWith
                                                                         ),
                                                                         // ELSE
                                                                         IsMatch(
                                                                             v.bits, 
-                                                                            "#{0,6}K{0,6}Q",
+                                                                            "#{0,6}K#{0,6}Q",
                                                                             MatchOptions.BeginsWith
                                                                         )
                                                                     ),
