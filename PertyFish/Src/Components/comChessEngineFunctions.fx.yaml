@@ -3635,7 +3635,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                                         UDF_getDirX(theDir.Value),
                                                                                         UDF_getDirY(theDir.Value)
                                                                                     ), 
-                                                                                    1, 
+                                                                                    theDir.Value, 
                                                                                     7
                                                                                 )
                                                                     } As v,
