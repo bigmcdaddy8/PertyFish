@@ -3636,6 +3636,12 @@ comChessEngineFunctions As CanvasComponent:
                                                                             7
                                                                         )
                                                             } As v,
+                                                            If(gblPF_DEBUG_EVAL,
+                                                                Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                    " fCE_800(): heuristic15 looking for a skewer" &
+                                                                    " v.bits: " & v.bits
+                                                                })
+                                                            );
                                                             Switch(true,
                                                                 If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,
                                                                     // THEN
