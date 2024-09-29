@@ -3510,6 +3510,12 @@ comChessEngineFunctions As CanvasComponent:
                                                                         theNodes.current.postMoveBoard, 
                                                                         theNodes.current.inactiveColorMoveRecord.targetSquareNum,
                                                                         UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
+                                                                    ),
+                                                                targetIsProtected:
+                                                                    UDF_isSqNumAttacked(
+                                                                        theNodes.current.postMoveBoard, 
+                                                                        theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                                        UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.postMoveFEN)
                                                                     )
                                                             } As targetData,
                 
@@ -3522,7 +3528,7 @@ comChessEngineFunctions As CanvasComponent:
                                                                     " target IsAttacked?: " & targetData.targetIsAttacked
                                                                 })
                                                             );
-                                                            If(targetData.targetIsAttacked,
+                                                            If(targetData.targetIsAttacked && (!targetData.targetIsProtected),
                                                                 // THEN
                                                                 0,
                 
