@@ -3650,7 +3650,7 @@ UsingComponents As screen:
                                                             // THEN
                                                             IsMatch(
                                                                 UDF_getBitsAtSqNum(
-                                                                    theNodes.current.preMoveBoard, 
+                                                                    theNodes.current.postMoveBoard, 
                                                                     UDF_getSqNumRelativeToSqNum(
                                                                         theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
                                                                         UDF_getDirX(theNodes.current.inactiveColorMoveRecord.moveDirection),
@@ -3665,7 +3665,7 @@ UsingComponents As screen:
                                                             // ELSE
                                                             IsMatch(
                                                                 UDF_getBitsAtSqNum(
-                                                                    theNodes.current.preMoveBoard, 
+                                                                    theNodes.current.postMoveBoard, 
                                                                     UDF_getSqNumRelativeToSqNum(
                                                                         theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
                                                                         UDF_getDirX(theNodes.current.inactiveColorMoveRecord.moveDirection),
