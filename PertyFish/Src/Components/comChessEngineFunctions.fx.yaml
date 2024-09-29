@@ -3619,6 +3619,49 @@ comChessEngineFunctions As CanvasComponent:
                                                             )
                                                         )
                                                     )
+                                                ),
+                                                // look for skewers
+                                                Switch(true,
+                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "R",
+                                                        Switch(true,
+                                                            If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,
+                                                                // THEN
+                                                                IsMatch(
+                                                                    UDF_getBitsAtSqNum(
+                                                                        theNodes.current.preMoveBoard, 
+                                                                        UDF_getSqNumRelativeToSqNum(
+                                                                            theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
+                                                                            UDF_getDirX(theNodes.current.inactiveColorMoveRecord.moveDirection),
+                                                                            UDF_getDirY(theNodes.current.inactiveColorMoveRecord.moveDirection)
+                                                                        ), 
+                                                                        1, 
+                                                                        7
+                                                                    ), 
+                                                                    "#{0,6}k{0,6}q",
+                                                                    MatchOptions.BeginsWith
+                                                                ),
+                                                                // ELSE
+                                                                IsMatch(
+                                                                    UDF_getBitsAtSqNum(
+                                                                        theNodes.current.preMoveBoard, 
+                                                                        UDF_getSqNumRelativeToSqNum(
+                                                                            theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
+                                                                            UDF_getDirX(theNodes.current.inactiveColorMoveRecord.moveDirection),
+                                                                            UDF_getDirY(theNodes.current.inactiveColorMoveRecord.moveDirection)
+                                                                        ), 
+                                                                        1, 
+                                                                        7
+                                                                    ), 
+                                                                    "#{0,6}K{0,6}Q",
+                                                                    MatchOptions.BeginsWith
+                                                                )
+                                                            ),
+                                                                If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,350,-350),
+                                                            // default
+                                                            0
+                                                        ),
+                                                    // default
+                                                    0
                                                 )
                                             ),
                 
