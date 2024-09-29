@@ -3664,6 +3664,7 @@ UsingComponents As screen:
                                                                 If(gblPF_DEBUG_EVAL,
                                                                     Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                         " fCE_800(): heuristic15 looking for a skewer" &
+                                                                        " source piece: " & theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier &
                                                                         " v.bits: " & v.bits &
                                                                         " theDir: " & theDir.Value
                                                                     })
@@ -3686,11 +3687,67 @@ UsingComponents As screen:
                                                                         If(gblPF_DEBUG_EVAL,
                                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                                 " fCE_800(): heuristic15 skewer detected" &
+                                                                                " source piece: " & theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier &
                                                                                 " v.bits: " & v.bits &
                                                                                 " theDir: " & theDir.Value
                                                                             })
                                                                         );
                                                                         If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,350,-350),
+                                                                    // default
+                                                                    0
+                                                                )
+                                                            )
+                                                        ), Value
+                                                    ),
+                                                theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier in "B",
+                                                    Sum(
+                                                        ForAll(
+                                                            Sequence(4, 2, 2) As theDir,
+                                                            With(
+                                                                {
+                                                                    bits:   UDF_getBitsAtSqNum(
+                                                                                theNodes.current.postMoveBoard, 
+                                                                                UDF_getSqNumRelativeToSqNum(
+                                                                                    theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                                                    UDF_getDirX(theDir.Value),
+                                                                                    UDF_getDirY(theDir.Value)
+                                                                                ), 
+                                                                                theDir.Value, 
+                                                                                7
+                                                                            )
+                                                                } As v,
+                                                                If(gblPF_DEBUG_EVAL,
+                                                                    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                        " fCE_800(): heuristic15 looking for a skewer" &
+                                                                        " source piece: " & theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier &
+                                                                        " v.bits: " & v.bits &
+                                                                        " theDir: " & theDir.Value
+                                                                    })
+                                                                );
+                                                                Switch(true,
+                                                                    If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,
+                                                                        // THEN
+                                                                        IsMatch(
+                                                                            v.bits, 
+                                                                            "#{0,6}k#{0,6}[qr]",
+                                                                            MatchOptions.BeginsWith
+                                                                        ),
+                                                                        // ELSE
+                                                                        IsMatch(
+                                                                            v.bits, 
+                                                                            "#{0,6}K#{0,6}[QR]",
+                                                                            MatchOptions.BeginsWith
+                                                                        )
+                                                                    ),
+                                                                        If(gblPF_DEBUG_EVAL,
+                                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                                " fCE_800(): heuristic15 skewer detected" &
+                                                                                " source piece: " & theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier &
+                                                                                " v.bits: " & v.bits &
+                                                                                " theDir: " & theDir.Value
+                                                                            })
+                                                                        );
+                                                                        If(UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)=WHITE,250,-250),
                                                                     // default
                                                                     0
                                                                 )
