@@ -3653,7 +3653,7 @@ UsingComponents As screen:
                                                                     bits:   UDF_getBitsAtSqNum(
                                                                                 theNodes.current.postMoveBoard, 
                                                                                 UDF_getSqNumRelativeToSqNum(
-                                                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
+                                                                                    theNodes.current.inactiveColorMoveRecord.targetSquareNum,
                                                                                     UDF_getDirX(theDir.Value),
                                                                                     UDF_getDirY(theDir.Value)
                                                                                 ), 
