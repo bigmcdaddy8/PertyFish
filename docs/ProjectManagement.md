@@ -78,7 +78,7 @@ Improve performance by putting log statements in an appropriate DEBUG check and 
 - Use localVars w/ Patch() 
 - Remove unused/redundant fields to reduce update footprint
 - Timings
-- - 3R2n1/8/4k2r/p5p1/1q6/4P2P/PP3PP1/6K1 b - - 0 29 # 43 moves
+- - r1b1k1nr/ppp2p1p/1bnpp1p1/1P1q4/P7/4P2P/2NP1PP1/R1BQKB1R b KQkq - 0 11 # 43 moves
 - - - Random: GAME_NODES 2.386 seconds
 - - - Bully: GAME_NODES 3.657 seconds
 - - - Preschool: GAME_NODES 3.221 seconds
@@ -112,7 +112,7 @@ Document how a user plays chess within the PertyFish canvas app
 
 
 ## Open Bugs
-
+r1b1k1nr/ppp2p1p/1bnpp1p1/1P1q4/P7/4P2P/2NP1PP1/R1BQKB1R b KQkq - 0 11
 
 
 
