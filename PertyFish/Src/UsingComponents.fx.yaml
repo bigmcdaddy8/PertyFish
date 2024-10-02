@@ -3627,7 +3627,7 @@ UsingComponents As screen:
                                                                         );
                                                                         If(Abs(theValues.targetValue) < Abs(theValues.sourceValue),
                                                                             0,
-                                                                            theValues.targetValue
+                                                                            theValues.targetValue * If(targetData.targetIsAttacked,0.5,0.75)
                                                                         )
                                                                     )
                                                                 )
