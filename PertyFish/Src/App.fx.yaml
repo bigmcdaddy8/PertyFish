@@ -1597,6 +1597,7 @@ App As appinfo:
             Set(gblPF_DEBUG_GAME_NODES, false),
             Set(gblPF_DEBUG_GAME_MOVE_HISTORY_D0, false),
             Set(gblPF_DEBUG_EVAL, true),
+            // Set(gblPF_DEBUG_EVAL, false),
             Set(gblPF_DEBUG_EVAL_ENDGAME, false),
             Set(gblPF_DEBUG_TIMERS, true),
             Set(gblPF_DEBUG_UDF_DIAGNOSTICS, true),
