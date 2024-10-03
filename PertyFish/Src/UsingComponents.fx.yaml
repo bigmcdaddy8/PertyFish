@@ -3248,6 +3248,81 @@ UsingComponents As screen:
                     Patch(colPF_MOVE_TREE, First(Filter(colPF_MOVE_TREE, nodeID=pNodeID)), {
                         postMoveEvalRecord: 
                             Patch(EVAL_RECORD_PF, {
+                                heuristic11:  // agressive-ness bonus
+                                    With(
+                                        {
+                                            materialDelta:
+                                                Sum(
+                                                    ForAll(
+                                                        Split(UDF_FEN_TO_PIECE_PLACEMENT(theNodes.current.postMoveFEN), "") As thePiece,
+            
+                                                        UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                                    ),
+                                                    Value
+                                                ) -
+                                                Sum(
+                                                    ForAll(
+                                                        Split(UDF_FEN_TO_PIECE_PLACEMENT(theNodes.current.preMoveFEN), "") As thePiece,
+            
+                                                        UDF_getPieceCentipawnMaterialValue(thePiece.Value, "QRBNPqrbnp")
+                                                    ),
+                                                    Value
+                                                ),
+                                            materialSource:
+                                                UDF_getPieceCentipawnMaterialValue(
+                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier,
+                                                    ALL_PIECES
+                                                ),
+                                            materialCapture: 
+                                                UDF_getPieceCentipawnMaterialValue(
+                                                    theNodes.current.inactiveColorMoveRecord.captureSquareOccupier,
+                                                    ALL_PIECES
+                                                ),
+                                            targetSqAttacked:
+                                                UDF_isSqNumAttacked(
+                                                    theNodes.current.postMoveBoard,
+                                                    theNodes.current.inactiveColorMoveRecord.targetSquareNum,
+                                                    UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
+                                                ),
+                                            activeColor: UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                        } As localVars,
+            
+                                        If(gblPF_DEBUG_EVAL,
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                " fCE_800(): heuristic11" &
+                                                " activeColor: " & localVars.activeColor &
+                                                " materialSource: " & localVars.materialSource &
+                                                " materialCapture: " & localVars.materialCapture &
+                                                " moveDirection: " & theNodes.current.inactiveColorMoveRecord.moveDirection
+                                            })
+                                        );
+            
+                                        Sum(
+                                            0,
+                                            Switch(true,
+                                                localVars.activeColor=WHITE && theNodes.current.inactiveColorMoveRecord.moveDirection in "128" && 
+                                                localVars.materialCapture<>0 && Abs(localVars.materialSource)<=Abs(localVars.materialCapture),
+                                                    If(gblPF_DEBUG_EVAL,
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " fCE_800(): heuristic11" &
+                                                            " bonus: " & localVars.materialSource * 0.34
+                                                        })
+                                                    );
+                                                    localVars.materialSource * 0.34,
+                                                localVars.activeColor=BLACK && theNodes.current.inactiveColorMoveRecord.moveDirection in "456" && 
+                                                localVars.materialCapture<>0 && Abs(localVars.materialSource)<=Abs(localVars.materialCapture),
+                                                    If(gblPF_DEBUG_EVAL,
+                                                        Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                            " fCE_800(): heuristic11" &
+                                                            " bonus: " & localVars.materialSource * 0.34
+                                                        })
+                                                    );
+                                                    localVars.materialSource * 0.34,
+                                                // default
+                                                0
+                                            )
+                                        )
+                                    ),
                                 heuristic12:
                                     // bonus for moving - includes capturing a piece and/or running from danger
                                     With(
@@ -4153,6 +4228,9 @@ UsingComponents As screen:
                                         
                                         If(gblPF_DEBUG_EVAL,
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                                                " heuristic11: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic11
+                                            });
+                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
                                                 " heuristic12: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic12
                                             });
                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
@@ -4168,6 +4246,7 @@ UsingComponents As screen:
                                                 " heuristic19 the God of Randomness BONUS/PENALTY sub-total: " & theCurrentNodeUpdated.postMoveEvalRecord.heuristic19
                                             })
                                         );
+                                        theCurrentNodeUpdated.postMoveEvalRecord.heuristic11 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic12 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic15 +
                                         theCurrentNodeUpdated.postMoveEvalRecord.heuristic16 +
