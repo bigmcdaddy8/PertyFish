@@ -98,7 +98,7 @@ Document how a user plays chess within the PertyFish canvas app
 
 ## Short-Term ToDo List
 
-r1b1k1nr/ppp2p1p/1bnpp1p1/1P1q4/P7/4P2P/2NP1PP1/R1BQKB1R b KQkq - 0 11 # why not move N from c6 ?
+
 
 ## Open Bugs
 
