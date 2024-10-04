@@ -3501,7 +3501,7 @@ UsingComponents As screen:
                                                                 // THEN - no bullseye during the opening
                                                                 0,
                                                                 // ELSE
-                                                                -(localVars.targetAttackerMaterial + localVars.materialSource) * 0.15
+                                                                -(localVars.targetAttackerMaterial + localVars.materialSource) * 0.05
                                                             )
                                                     })
                                                 );
@@ -3509,7 +3509,7 @@ UsingComponents As screen:
                                                     // THEN - no bullseye during the opening
                                                     0,
                                                     // ELSE
-                                                    -(localVars.targetAttackerMaterial + localVars.materialSource) * 0.15
+                                                    -(localVars.targetAttackerMaterial + localVars.materialSource) * 0.05
                                                 ),
                                             localVars.sourceSqAttacked && (!localVars.targetSqAttackedByThem) && localVars.materialCapture<>0 && (!localVars.targetSqAttackedByThem),
                                                 // USE CASE: capture hanging piece
