@@ -3256,10 +3256,10 @@ comChessEngineFunctions As CanvasComponent:
                                                         theNodes.current.inactiveColorMoveRecord.captureSquareOccupier,
                                                         ALL_PIECES
                                                     ),
-                                                numSourceSqAttacks:
+                                                numTargetSqProtections:
                                                     UDF_countSqNumProtections(
-                                                        theNodes.current.preMoveBoard,
-                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
+                                                        theNodes.current.postMoveBoard,
+                                                        theNodes.current.inactiveColorMoveRecord.targetSquareNum,
                                                         UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                     ),
                                                 numTargetSqAttacks:
@@ -3278,7 +3278,7 @@ comChessEngineFunctions As CanvasComponent:
                                                     " materialSource: " & localVars.materialSource &
                                                     " materialCapture: " & localVars.materialCapture &
                                                     " moveDirection: " & theNodes.current.inactiveColorMoveRecord.moveDirection &
-                                                    " numSourceSqAttacks: " & localVars.numSourceSqAttacks &
+                                                    " numTargetSqProtections: " & localVars.numTargetSqProtections &
                                                     " numTargetSqAttacks: " & localVars.numTargetSqAttacks
                                                 })
                                             );
@@ -3286,6 +3286,14 @@ comChessEngineFunctions As CanvasComponent:
                                             Sum(
                                                 0,
                                                 Switch(true,
+                                                    localVars.numTargetSqAttacks>localVars.numTargetSqProtections,
+                                                        If(gblPF_DEBUG_EVAL,
+                                                            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
+                                                                " fCE_800(): heuristic11" &
+                                                                " bonus: " & -localVars.materialSource * 0.13
+                                                            })
+                                                        );
+                                                        -localVars.materialSource * 0.13,
                                                     localVars.activeColor=WHITE && theNodes.current.inactiveColorMoveRecord.moveDirection in "128" && 
                                                     localVars.materialCapture<>0 && Abs(localVars.materialSource)<=Abs(localVars.materialCapture),
                                                         If(gblPF_DEBUG_EVAL,
