@@ -107,7 +107,7 @@ Create Outline of what and where technical documentation should be housed and wh
 Document how a user plays chess within the PertyFish canvas app
 
 ## Short-Term ToDo List
-
+r1q1kb1r/1pp3pp/2n1b3/p4p1P/P4Pn1/1PpQ1P2/2P1B3/R4RK1 w kq - 2 17 # Ng4?  why not Nxf1
 
 
 
