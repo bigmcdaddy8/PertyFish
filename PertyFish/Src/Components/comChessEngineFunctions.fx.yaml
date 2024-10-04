@@ -3290,10 +3290,10 @@ comChessEngineFunctions As CanvasComponent:
                                                         If(gblPF_DEBUG_EVAL,
                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                 " fCE_800(): heuristic11" &
-                                                                " bonus: " & -localVars.materialSource * 0.13
+                                                                " bonus: " & -localVars.materialSource * 0.34
                                                             })
                                                         );
-                                                        -localVars.materialSource * 0.13,
+                                                        -localVars.materialSource * 0.34,
                                                     localVars.activeColor=WHITE && theNodes.current.inactiveColorMoveRecord.moveDirection in "128" && 
                                                     localVars.materialCapture<>0 && Abs(localVars.materialSource)<=Abs(localVars.materialCapture),
                                                         If(gblPF_DEBUG_EVAL,
