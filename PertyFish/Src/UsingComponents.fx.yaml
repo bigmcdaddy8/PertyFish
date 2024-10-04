@@ -3306,7 +3306,17 @@ UsingComponents As screen:
                                         );
             
                                         Sum(
-                                            0,
+                                            // discourge move back to starting position
+                                            Switch(true,
+                                                UDF_isPieceinStartingPosition(
+                                                    theNodes.current.inactiveColorMoveRecord.sourceSquareOccupier,
+                                                    theNodes.current.inactiveColorMoveRecord.targetSquareNum
+                                                ),
+                                                    If(localVars.activeColor=WHITE,-0.13,0.13),
+                                                // default
+                                                0
+                                            ),
+                                            // encourage aggressive behaviour
                                             Switch(true,
                                                 localVars.materialCapture=0 && localVars.numTargetSqAttacks>localVars.numTargetSqProtections,
                                                     If(gblPF_DEBUG_EVAL,
