@@ -3256,11 +3256,17 @@ comChessEngineFunctions As CanvasComponent:
                                                         theNodes.current.inactiveColorMoveRecord.captureSquareOccupier,
                                                         ALL_PIECES
                                                     ),
-                                                targetSqAttacked:
-                                                    UDF_isSqNumAttacked(
+                                                numSourceSqAttacks:
+                                                    UDF_countSqNumProtections(
+                                                        theNodes.current.preMoveBoard,
+                                                        theNodes.current.inactiveColorMoveRecord.sourceSquareNum,
+                                                        UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
+                                                    ),
+                                                numTargetSqAttacks:
+                                                    UDF_countSqNumAttacks(
                                                         theNodes.current.postMoveBoard,
                                                         theNodes.current.inactiveColorMoveRecord.targetSquareNum,
-                                                        UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.postMoveFEN)
+                                                        UDF_FEN_TO_INACTIVE_COLOR(theNodes.current.preMoveFEN)
                                                     ),
                                                 activeColor: UDF_FEN_TO_ACTIVE_COLOR(theNodes.current.preMoveFEN)
                                             } As localVars,
@@ -3271,7 +3277,9 @@ comChessEngineFunctions As CanvasComponent:
                                                     " activeColor: " & localVars.activeColor &
                                                     " materialSource: " & localVars.materialSource &
                                                     " materialCapture: " & localVars.materialCapture &
-                                                    " moveDirection: " & theNodes.current.inactiveColorMoveRecord.moveDirection
+                                                    " moveDirection: " & theNodes.current.inactiveColorMoveRecord.moveDirection &
+                                                    " numSourceSqAttacks: " & localVars.numSourceSqAttacks &
+                                                    " numTargetSqAttacks: " & localVars.numTargetSqAttacks
                                                 })
                                             );
                 
