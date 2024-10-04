@@ -3286,7 +3286,7 @@ comChessEngineFunctions As CanvasComponent:
                                             Sum(
                                                 0,
                                                 Switch(true,
-                                                    localVars.numTargetSqAttacks>localVars.numTargetSqProtections,
+                                                    localVars.materialCapture=0 && localVars.numTargetSqAttacks>localVars.numTargetSqProtections,
                                                         If(gblPF_DEBUG_EVAL,
                                                             Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") & 
                                                                 " fCE_800(): heuristic11" &
