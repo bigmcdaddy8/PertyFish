@@ -1158,6 +1158,8 @@ App As appinfo:
                 UDF_countSqNumBISHOPAttacks(board, refSqNum, attackingColor),
                 UDF_countSqNumQUEENAttacks(board, refSqNum, attackingColor)
             );
+        UDF_countSqNumProtections(board:Text, refSqNum:Number, protectingColor:Number):Number=
+            UDF_countSqNumAttacks(board, refSqNum, protectingColor);
         // UDF getAttackerSqNamesSet code
         // get squares of attacking PAWNs
         UDF_getPAWNAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=

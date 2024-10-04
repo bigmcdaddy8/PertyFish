@@ -96,6 +96,7 @@
     UDF_countSqNumQUEENAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
     UDF_countSqNumKINGAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
     UDF_countSqNumAttacks(board:Text, refSqNum:Number, attackingColor:Number):Number=
+    UDF_countSqNumProtections(board:Text, refSqNum:Number, protectingColor:Number):Number=
     UDF_getPAWNAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
     UDF_getKNIGHTAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
     UDF_getROOKAttackerSqNamesSet(board:Text, refSqNum:Number, attackingColor:Number):Text=
