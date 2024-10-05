@@ -47,18 +47,17 @@ Create smarter chess engines that are written using PowerFx
 
 
 
-##### Story 0003-19 Developing CE_PF_800 (4th Grade)
+##### Story 0003-19 Developing CE_PF_900 (5th Grade)
 - do not back away when challenged
-- - determine if protected and if exchange is positive (or even)
 - - determine situations when to step into a potential PAWN exchange situation
 - - determine situation when to initiate a PAWN exchange
 - Look for simple tactics
-- - look for skewers 4q3/B1pkb3/4p3/3p1p2/pnpN1P2/8/r7/3K2QB b - - 1 63 # Ra1+!
 - - be aware of their pinned pieces (may create board where pinned pieces are removed ?)
 - Simple board strength analysis
 - - number of attacked squares
 - - number of protected squares
 - - number of weak squares
+
 
 #### Feature 0004 - Application Improvements
 
@@ -107,16 +106,22 @@ Create Outline of what and where technical documentation should be housed and wh
 Document how a user plays chess within the PertyFish canvas app
 
 ## Short-Term ToDo List
-r1q1kb1r/1pp3pp/2n1b3/p4p1P/P4Pn1/1PpQ1P2/2P1B3/R4RK1 w kq - 2 17 # Ng4?  why not Nxf1
 
 
 
-## Open Bugs
-r1b1k1nr/ppp2p1p/1bnpp1p1/1P1q4/P7/4P2P/2NP1PP1/R1BQKB1R b KQkq - 0 11
+## Open Bugs/Issues
+- FIXED r1b1k1nr/ppp2p1p/1bnpp1p1/1P1q4/P7/4P2P/2NP1PP1/R1BQKB1R b KQkq - 0 11 # wnhy not move Nc6
+- FIXED r1q1kb1r/1pp3pp/2n1b3/p4p1P/P4P2/1PpQnP2/2P1B3/R4RK1 b kq - 2 17 # Ng4?  why not Nxf1
 
 
 
 ## Completed Work
+##### Story 0003-19 Developing CE_PF_800 (4th Grade)
+- do not back away when challenged
+- - determine if protected and if exchange is positive (or even)
+- Look for simple tactics
+- - look for skewers 4q3/B1pkb3/4p3/3p1p2/pnpN1P2/8/r7/3K2QB b - - 1 63 # Ra1+!
+
 ##### Story 0003-09 Developing CE_PF_700 (3rd Grade)
 - do not back away when challenged
 - - determine if protected and if exchange is positive (or even)
