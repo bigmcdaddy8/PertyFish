@@ -4357,6 +4357,9 @@ UsingComponents As screen:
                     " comChessEngineFunctions.fCE_800_preEvaluate(): exiting"
                 })
             );
+        fCE_900: =
+        fCE_900_postEvaluate: =
+        fCE_900_preEvaluate: =
         fME_END_GAME: |
             =If(gblPF_DEBUG_EVAL,
                 Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &

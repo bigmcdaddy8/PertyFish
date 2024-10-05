@@ -107,9 +107,19 @@
     "txtStartingFEN": 58,
     "UsingComponents": 80
   },
-  "FunctionParamsInvariantScripts": {},
-  "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "10/04/2024 17:04:25",
+  "FunctionParamsInvariantScripts": {
+    "comChessEngineFunctions.fCE_900_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ]
+  },
+  "FunctionParamsInvariantScriptsOnInstances": {
+    "comChessEngineFunctionsLibrary.fCE_900_pNodeID": [
+      "100",
+      "EMPTY_NODE_ID"
+    ]
+  },
+  "HeaderLastSavedDateTimeUTC": "10/05/2024 23:19:27",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": true,
@@ -356,7 +366,7 @@
   "RuleScreenIdWithoutScreen": {},
   "TemplateVersions": {},
   "VolatileProperties": {
-    "AnalysisLoadTime": 4.084396,
+    "AnalysisLoadTime": 3.5070102,
     "ControlCount": {
       "8c2bb0b54c6149c580a48882153f6ad1": 2,
       "b953a316546441b9933cc2e2000b7cbb": 2,
@@ -372,7 +382,7 @@
       "text": 5,
       "timer": 2
     },
-    "DeserializationLoadTime": 2.7045558
+    "DeserializationLoadTime": 2.3826385
   },
   "WasLocalDatabaseReferencesEmpty": true
 }

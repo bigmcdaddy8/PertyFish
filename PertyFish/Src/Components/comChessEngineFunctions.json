@@ -193,9 +193,20 @@
         "InvariantPropertyName": "fCE_800_postEvaluate",
         "IsLockable": false,
         "NameMapSourceSchema": "?"
-      }
+      },
+      {
+        "AFDDataSourceName": "",
+        "AutoRuleBindingEnabled": false,
+        "AutoRuleBindingString": "100",
+        "InvariantPropertyName": "fCE_900_pNodeID",
+        "IsLockable": false,
+        "NameMapSourceSchema": "?"
+      },
+      "fCE_900",
+      "fCE_900_preEvaluate",
+      "fCE_900_postEvaluate"
     ],
-    "LastModifiedTimestamp": "638636582516002115",
+    "LastModifiedTimestamp": "638637671614513380",
     "Name": "comChessEngineFunctions",
     "Rules": [
       {
@@ -268,6 +279,12 @@
         "Category": "Data",
         "InvariantScript": "EMPTY_NODE_ID",
         "Property": "fCE_800_pNodeID",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Data",
+        "InvariantScript": "EMPTY_NODE_ID",
+        "Property": "fCE_900_pNodeID",
         "RuleProviderType": "System"
       },
       {
@@ -406,6 +423,24 @@
         "Category": "Behavior",
         "InvariantScript": "If(gblPF_DEBUG_EVAL,\n    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n        \" comChessEngineFunctions.fCE_800_postEvaluate(): entered\"\n    })\n);\n\n\n\n\n\nIf(gblPF_DEBUG_EVAL,\n    Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), \"mm/dd/yyyy hh:mm:ss.fff\") &\n        \" comChessEngineFunctions.fCE_800_postEvaluate(): exiting\"\n    })\n);\n\n",
         "Property": "fCE_800_postEvaluate",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Behavior",
+        "InvariantScript": "",
+        "Property": "fCE_900",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Behavior",
+        "InvariantScript": "",
+        "Property": "fCE_900_preEvaluate",
+        "RuleProviderType": "System"
+      },
+      {
+        "Category": "Behavior",
+        "InvariantScript": "",
+        "Property": "fCE_900_postEvaluate",
         "RuleProviderType": "System"
       }
     ]
@@ -831,6 +866,61 @@
       },
       "Tooltip": "logic to run after move evaluations",
       "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Void\",\"EnumString\":\"\",\"Type\":[]}}"
+    },
+    {
+      "Category": 2,
+      "DisplayName": "fCE_900",
+      "Hidden": true,
+      "Name": "fCE_900",
+      "PropertyDataTypeKey": "Void",
+      "PropertyScopeKey": {
+        "PropertyScopeRuleNamespaceKey": "4",
+        "PropertyScopeRulesKey": [
+          {
+            "DisplayName": "fCE_900_pNodeID",
+            "Name": "fCE_900_pNodeID",
+            "PropertyDataTypeKey": "Number",
+            "ScopeVariableInfo": {
+              "DependencyType": "New",
+              "Description": "node ID of the move to evaluate",
+              "IsRequired": true,
+              "ResolveExpands": false,
+              "ResolveSelects": false,
+              "ScopeVariableName": "pNodeID"
+            },
+            "Tooltip": "node ID of the move to evaluate",
+            "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Number\",\"EnumString\":\"\",\"Type\":[]}}"
+          }
+        ]
+      },
+      "Tooltip": "move evaluation level 900",
+      "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Void\",\"EnumString\":\"\",\"Type\":[]}}"
+    },
+    {
+      "Category": 2,
+      "DisplayName": "fCE_900_preEvaluate",
+      "Hidden": true,
+      "Name": "fCE_900_preEvaluate",
+      "PropertyDataTypeKey": "Void",
+      "PropertyScopeKey": {
+        "PropertyScopeRuleNamespaceKey": "4",
+        "PropertyScopeRulesKey": []
+      },
+      "Tooltip": "level 900 pre move evaluation",
+      "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Void\",\"EnumString\":\"\",\"Type\":[]}}"
+    },
+    {
+      "Category": 2,
+      "DisplayName": "fCE_900_postEvaluate",
+      "Hidden": true,
+      "Name": "fCE_900_postEvaluate",
+      "PropertyDataTypeKey": "Void",
+      "PropertyScopeKey": {
+        "PropertyScopeRuleNamespaceKey": "4",
+        "PropertyScopeRulesKey": []
+      },
+      "Tooltip": "level 900 post move evaluation",
+      "Type": "{\"Version\":\"1.343\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"Void\",\"EnumString\":\"\",\"Type\":[]}}"
     }
   ],
   "FirstParty": true,
@@ -841,7 +931,7 @@
   "IsPcfControl": false,
   "IsPremiumPcfControl": false,
   "IsWidgetTemplate": false,
-  "LastModifiedTimestamp": "638636582516002115",
+  "LastModifiedTimestamp": "638637671614513380",
   "Name": "8c2bb0b54c6149c580a48882153f6ad1",
   "OverridableProperties": {},
   "Version": "1.0"

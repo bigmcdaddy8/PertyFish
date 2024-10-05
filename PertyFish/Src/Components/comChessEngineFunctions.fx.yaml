@@ -4339,6 +4339,17 @@ comChessEngineFunctions As CanvasComponent:
                         " comChessEngineFunctions.fCE_800_preEvaluate(): exiting"
                     })
                 );
+    fCE_900(pNodeID As Number):
+        pNodeID:
+            Default: =EMPTY_NODE_ID
+        ThisProperty:
+            Default: =
+    fCE_900_postEvaluate():
+        ThisProperty:
+            Default: =
+    fCE_900_preEvaluate():
+        ThisProperty:
+            Default: =
     fME_END_GAME(pVersion As Number, pNodeID As Number):
         pVersion:
             Default: =100
