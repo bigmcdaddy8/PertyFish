@@ -1851,6 +1851,41 @@ App As appinfo:
             }
         );
         
+        If(gblPF_DEBUG_EVAL,
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                " App.OnStart() number of K moves (non-castle): " &
+                    CountRows(Filter(colPF_LEGAL_MOVES, pieceUpper="K" && castle="-"))
+            });
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                " App.OnStart() number of K moves (castle): " &
+                    CountRows(Filter(colPF_LEGAL_MOVES, pieceUpper="K" && castle<>"-"))
+            });
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                " App.OnStart() number of Q moves: " &
+                    CountRows(Filter(colPF_LEGAL_MOVES, pieceUpper="Q"))
+            });
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                " App.OnStart() number of R moves: " &
+                    CountRows(Filter(colPF_LEGAL_MOVES, pieceUpper="R"))
+            });
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                " App.OnStart() number of B moves: " &
+                    CountRows(Filter(colPF_LEGAL_MOVES, pieceUpper="B"))
+            });
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                " App.OnStart() number of N moves: " &
+                    CountRows(Filter(colPF_LEGAL_MOVES, pieceUpper="N"))
+            });
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                " App.OnStart() number of P moves: " &
+                    CountRows(Filter(colPF_LEGAL_MOVES, pieceUpper="P"))
+            });
+            Collect(colPF_logs, {logOffset: GET_LOG_INDEX, logEntry: Text(Now(), "mm/dd/yyyy hh:mm:ss.fff") &
+                " App.OnStart() number of p moves: " &
+                    CountRows(Filter(colPF_LEGAL_MOVES, pieceUpper="p"))
+            })
+        );
+        
         Set(gblPF_UI_StatusText, "Started...");
         
         
