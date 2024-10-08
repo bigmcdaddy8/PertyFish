@@ -2425,7 +2425,7 @@ Chess_Board As screen:
                                                     // FILTERED - PAWN can not move forward to an occupied square
                                                     Blank(),
                     
-                                                // PAWN cannot move diagonally to an unoccupied square unless the source square is the en passant square
+                                                // PAWN cannot move diagonally to an unoccupied square unless the target square is the en passant square
                                                 (
                                                     Not(IsBlank(UDF_getBitAtSqNum(theD0ParentNode.postMoveBoard,theEligibleMove.sqNum))) &&
                                                     UDF_getBitAtSqNum(theD0ParentNode.postMoveBoard,theEligibleMove.sqNum) in "P"
